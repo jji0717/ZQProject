@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TianShan>
+  <Syntax key="test">
+    <EventSource type="FileLog"/>
+    <Rule regex="([\d]{2}.[\d]{2} [\d]{2}:[\d]{2}:[\d]{2}.[\d]{3}).*===================== Loading service common interface.*">
+      <Event category="test" eventName="test" eventId="1" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="TestMachine">
+        <Param name="LocalTime" value="$1"/>
+      </Event>
+    </Rule>
+  </Syntax>
+  <Syntax key="test2">
+    <EventSource type="FileLog"/>
+    <Rule regex="([\d]{2}.[\d]{2} [\d]{2}:[\d]{2}:[\d]{2}.[\d]{3}).*===================== Loading service common interface.*">
+      <Event category="test" eventName="test2" eventId="2" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="TestMachine">
+        <Param name="LocalTime" value="$1"/>
+      </Event>
+    </Rule>
+  </Syntax>
+
+  <Syntax key ="test_sclog">
+    <EventSource type="SCLog"/>
+    <Rule regex="([\d]{2}/[\d]{2} [\d]{2}:[\d]{2}:[\d]{2}.[\d]{3}).*Requested to stop the service.*">
+      <Event category="test" eventName="UserInitiatedShutdown" eventId="0011" stampUTC="$SCLOGTIME2UTC( $1)" sourceNetId="TestMachine">
+        <Param name="#syslog.msg" value="&lt;GeneralEvent type=&quot;Shutdown&quot; msgSeq=&quot;${SEQ}&quot; reason=&quot;200&quot;/&gt;" />
+      </Event>
+    </Rule>
+  </Syntax>
+</TianShan>

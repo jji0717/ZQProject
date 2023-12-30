@@ -1,0 +1,181 @@
+<script type='text/javascript' src='AdminCtrl_Util.js'></script>
+<script type='text/javascript'>
+// typedef
+ function TSAppMount(siteName, mountedPath, appName){
+ 	this.siteName = siteName;
+ 	this.mountedPath = mountedPath;
+ 	this.appName = appName;
+ }
+ // globe var
+ var _template = '';
+ var _endpoint = '';
+var _srvrloadpath = '';
+ var _mounts = new Array();
+ var _sites = new Array();
+  var _apps = new Array();
+  // func
+function checkMountPath(path){
+    return (null != path.match(/^[\w]+$/g));
+}
+ function mountApp(){
+   var siteNode = document.getElementById('mnt-site');
+   var appNode = document.getElementById('mnt-app');
+   var pathNode = document.getElementById('mnt-path');
+   // validity check
+   if(siteNode.value == ''){
+       siteNode.focus();
+       return;
+   }
+   if(appNode.value == ''){
+       appNode.focus();
+       return;
+   }
+   if(!checkMountPath(pathNode.value)){
+       pathNode.select();
+       return;
+   }
+   siteNode.name = 'site#name';
+   appNode.name = 'site.app#name';
+   pathNode.name = 'site.mount#path';
+   document.getElementById('ctrl-action').value = 'm';
+   document.getElementById('ctrl-form').submit();
+ }
+ function unmountApp(){
+   var siteNode = document.getElementById('mnt-site');
+   var pathNode = document.getElementById('mnt-path');
+   // validity check
+   if(siteNode.value == ''){
+       siteNode.focus();
+       return;
+   }
+   if(pathNode.value == ''){
+       pathNode.select();
+       return;
+   }
+    if(!confirm("Unmount Path " + pathNode.value))
+        return;
+
+   siteNode.name = 'site#name';
+   pathNode.name = 'site.mount#path';
+   document.getElementById('ctrl-action').value = 'u';
+   document.getElementById('ctrl-form').submit();
+ }
+ function indexOfSite(siteName){
+   for(var i in _sites){
+     if(_sites[i] == siteName)
+       return i;
+   }
+   return _sites.length;
+  }
+  function indexOfApp(appName){
+    for(var i in _apps){
+      if(_apps[i] == appName)
+	return i;
+    }
+    return _apps.length;
+  }
+  function indexOfMount(siteName, appName){
+    for(var i in _mounts){
+      if(siteName == _mounts[i].siteName && appName == _mounts[i].appName)
+	return i;
+    }
+    return _mounts.length;
+  }
+
+  function mntDetail(idx){
+   var mount = _mounts[idx];
+   var siteNode = document.getElementById('mnt-site');
+   var appNode = document.getElementById('mnt-app');
+
+   // modify form fields
+   siteNode.selectedIndex = indexOfSite(mount.siteName);
+   appNode.selectedIndex = indexOfApp(mount.appName);
+
+   document.getElementById('mnt-path').value = mount.mountedPath;
+   // back to top
+   document.getElementById('current').getElementsByTagName('a')[0].focus();
+  }
+function mntApplyChange(){
+//     var mountIdx = indexOfMount(document.getElementById('mnt-site').value, document.getElementById('mnt-app').value);
+//     var pathNode = document.getElementById('mnt-path');
+//     if(mountIdx != _mounts.length){
+// 	pathNode.value = _mounts[mountIdx].mountedPath;
+//     }else{
+// 	pathNode.value = '';
+//     }
+    document.getElementById('mnt-path').value = '';
+}
+ function mntReset(){
+     document.getElementById('mnt-site').selectedIndex = _sites.length;
+     document.getElementById('mnt-app').selectedIndex = _apps.length;
+     document.getElementById('mnt-path').value = '';
+ }
+
+  function display(){
+   // app table
+   var tblNode = document.getElementById("mnt-tbl");
+   var tbodyNode = document.createElement("tbody");
+   for(var i in _mounts){
+	 var trNode = document.createElement("tr");
+	 trNode.className = 'lnk';
+	 trNode.onclick = new Function("mntDetail(" + i + ");");
+
+	 var tdNode = document.createElement('td');
+	 var spanNode = document.createElement('span');
+	 spanNode.onclick = new Function("mntDetail(" + i + ");unmountApp();");
+	 spanNode.className = 'ctrl';
+	 spanNode.appendChild(document.createTextNode('r'));
+	 tdNode.appendChild(spanNode);
+
+	 trNode.appendChild(tdNode);
+	 trNode.appendChild(createTableCell(_mounts[i].siteName));
+	 trNode.appendChild(createTableCell(_mounts[i].mountedPath));
+	 trNode.appendChild(createTableCell(_mounts[i].appName));
+
+	 tbodyNode.appendChild(trNode);
+   }
+   tblNode.appendChild(tbodyNode);
+	 // ctrl form
+	 // site
+   var siteNode = document.getElementById('mnt-site');
+   for(var i in _sites){
+       siteNode.appendChild(createOptionNode(_sites[i]));
+   }
+   // append a empty option as default value
+   siteNode.appendChild(createOptionNode(''));
+   // app
+   var appNode = document.getElementById('mnt-app');
+   for(var i in _apps){
+       appNode.appendChild(createOptionNode(_apps[i]));
+   }
+   // append a empty option as default value
+   appNode.appendChild(createOptionNode(''));
+  // setup page info
+  document.getElementById('page-tmpl').value = _template;
+  document.getElementById('page-endpoint').value = _endpoint;
+  document.getElementById('page-srvrloadpath').value = _srvrloadpath;
+  mntReset();
+ }</script>
+<div id='display-area'>
+<h3>Mount Path</h3>
+<form id='ctrl-form' method=post action="MountPage.ac.tswl">
+<input id = 'page-tmpl' type=hidden name='#template' value=''>
+<input id = 'page-endpoint' type=hidden name='#endpoint' value=''>
+<input id = 'page-srvrloadpath' type=hidden name='srvrloadpath' value=''>
+<input id = 'ctrl-action' type=hidden name='#action' value=''>
+<table>
+<tr><td>site</td><td>:</td><td>
+<select id='mnt-site' onchange="mntApplyChange();"></select></td></tr>
+<tr><td>app</td><td>:</td><td>
+<select id='mnt-app' onchange="mntApplyChange();"></select></td></tr>
+<tr><td>path</td><td>:</td><td><input id='mnt-path' type=text size='30' value=''></td></tr>
+</table>
+<input type=button value='clear' onclick="mntReset();">
+<input type=button value=mount onclick="mountApp();">
+</form>
+<hr>
+<table id='mnt-tbl' class='listTable'>
+<tr class='heading'><th>ctrl</th><th>site name</th><th>mounted path</th><th>app name</th></tr>
+</table>
+</div>
+

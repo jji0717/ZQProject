@@ -1,0 +1,4 @@
+DESCRIPTION	"Index Pacing Library"
+EXPORTS
+	CreatePacedIndexFactory
+	DestroyPacedIndexFactory

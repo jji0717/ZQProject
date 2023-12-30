@@ -1,0 +1,222 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "DODCSClient"=.\DODCSClient\DODCSClient.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "DODContentStore"=.\DODContentStore.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQAppshell
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCfgPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQShellMsgs
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQSNMPManPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name STBParser
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "DODGraphTest"=.\DODGraphTest\DODGraphTest.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name STBParser
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "STBParser"=.\itv_parse\STBParser.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "TianShanCommon"=..\..\..\TianShan\common\TianShanCommon.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/TianShan/common", XHTAAAAA
+    ..\..\..\tianshan\common
+    end source code control
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TianShanIce"=..\..\..\TianShan\Ice\TianShanIce.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/TianShan/Ice", YRSAAAAA
+    ..\..\..\tianshan\ice
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ZQAppshell"=..\..\..\TianShan\Shell\ZQAppShell\zqappshell.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    $/ZQProjs/TianShan/Shell/zqappshell
+    ..\..\..\tianshan\shell\zqappshell
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ZQCfgPkg"=..\..\..\TianShan\Shell\ZQCfgPkg\ZQcfgpkg.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/TianShan/Shell/ZQServiceSample", JGXAAAAA
+    ..\..\..\tianshan\shell\zqservicesample
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ZQCommonStlp"=..\..\..\Common\dll\ZQCommonStlp.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/Common/dll", INOAAAAA
+    ..\..\..\common\dll
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ZQSNMPManPkg"=..\..\..\TianShan\Shell\ZQSNMPManPkg\ZQSNMPManPkg.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/TianShan/Shell/ZQSNMPManPkg", AOXAAAAA
+    ..\..\..\tianshan\shell\zqsnmpmanpkg
+    end source code control
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ZQCfgPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ZQShellMsgs"=..\..\..\TianShan\Shell\ZQShellMsgs\ZQShellMsgs.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    $/ZQProjs/TianShan/Shell/ZQShellMsgs
+    ..\..\..\tianshan\shell\zqshellmsgs
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

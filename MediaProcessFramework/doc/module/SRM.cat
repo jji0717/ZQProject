@@ -1,0 +1,2090 @@
+
+(object Petal
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
+    charSet    	134)
+
+(object Class_Category "SRM"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    attributes 	(list Attribute_Set
+	(object Attribute
+	    tool       	"sc"
+	    name       	"SourceControlSpec"
+	    value      	(value Text 
+|"$/ZQProjs/MediaProcessFramework/doc/module", CYIAAAAA
+	    )))
+    quid       	"4271CCF301B7"
+    visible_categories 	(list visibility_relationship_list
+	(object Visibility_Relationship
+	    quid       	"42732BCD00D1"
+	    supplier   	"Logical View::MPF SDK::XMLRPC"
+	    quidu      	"4271B2FA0226")
+	(object Visibility_Relationship
+	    quid       	"42732BDB02A8"
+	    supplier   	"Logical View::MPF SDK::EntryDB"
+	    quidu      	"4271CC1C038E"))
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "MPFDatabase"
+	    quid       	"4271CD3800F7"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"4271CD4B0358"
+		    supplier   	"Logical View::MPF SDK::EntryDB::EDB"
+		    quidu      	"4271CC1D02C7"))
+	    operations 	(list Operations
+		(object Operation "enter"
+		    quid       	"42BFD6700196"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "leave"
+		    quid       	"42BFD681002E"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "CreateInstance"
+		    quid       	"42BFD69402DE"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "Release"
+		    quid       	"42BFD69E01B5"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "CountInstance"
+		    quid       	"42BFD6A20203"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)))
+	(object Class "MetaRecord"
+	    quid       	"4271CD6300B3"
+	    operations 	(list Operations
+		(object Operation "get"
+		    quid       	"4271CDE8035D"
+		    parameters 	(list Parameters
+			(object Parameter "attrname"
+			    quid       	"4271CE5C01AC"))
+		    result     	"string"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "set"
+		    quid       	"4271CE6C0014"
+		    parameters 	(list Parameters
+			(object Parameter "attrname"
+			    quid       	"4271CE770100")
+			(object Parameter "attrvalue"
+			    quid       	"4271CE7C0139"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "MetaRecord"
+		    quid       	"4271CF100024"
+		    documentation 	
+|open the entry record from the database
+|copy all record data in _attrs
+		    
+		    parameters 	(list Parameters
+			(object Parameter "database"
+			    quid       	"4271CF6C013F"
+			    type       	"MPFDatabase&"
+			    quidu      	"4271CD3800F7")
+			(object Parameter "entry"
+			    quid       	"4271CF790238")
+			(object Parameter "createIfNotExist"
+			    quid       	"4271CF9E00DC"
+			    type       	"bool"
+			    initv      	"false")
+			(object Parameter "txn"
+			    quid       	"4271CFC70212"
+			    type       	"EDBTxn*"
+			    initv      	"NULL"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "~MetaRecord"
+		    quid       	"4271CFF4023E"
+		    documentation 	"flush if _bDirty"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "setHiddenAttr"
+		    quid       	"42BFD6D7036B"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "getProp"
+		    quid       	"42BFD6DC03D8"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "getState"
+		    quid       	"42BFD6E10109"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "isReadOnly"
+		    quid       	"42BFD6E5009C"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "isImmediately"
+		    quid       	"42BFD6E9006D"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "isSaveLastAccess"
+		    quid       	"42BFD6EC032C"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "isSaveLastUpdate"
+		    quid       	"42BFD6F00261"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "isSaveLastStorage"
+		    quid       	"42BFD6F5006D"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "isSaveCreateTime"
+		    quid       	"42BFD6F8035B"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "listChildren"
+		    quid       	"42BFD700008C"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "getEntry"
+		    quid       	"42BFD70700EA"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "getKey"
+		    quid       	"42BFD7110271"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "save"
+		    quid       	"42BFD71903A9"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "load"
+		    quid       	"42BFD71E0213"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "print"
+		    quid       	"42BFD724003E"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "remove"
+		    quid       	"42BFD7280222"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "_db"
+		    quid       	"4271CE960065"
+		    type       	"MPFDatabase&"
+		    quidu      	"4271CD3800F7"
+		    Containment 	"By Reference")
+		(object ClassAttribute "_attrs"
+		    quid       	"4271D05C0284")
+		(object ClassAttribute "_bDirty"
+		    quid       	"4271D06202D3"
+		    documentation 	
+|flag that the data in this record have been changed, and need to  be flushed into database
+|
+		    )))
+	(object Class "MetaResource"
+	    quid       	"4271CEEA0047"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"4271CF05017D"
+		    supplier   	"Logical View::MPF SDK::SRM::MetaRecord"
+		    quidu      	"4271CD6300B3")))
+	(object Class "MetaSession"
+	    quid       	"4271D12D0393"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"4271D13F001E"
+		    supplier   	"Logical View::MPF SDK::SRM::MetaRecord"
+		    quidu      	"4271CD6300B3")))
+	(object Class "ResourceManager"
+	    quid       	"4271D150000E"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"42BFD84A007D"
+		    supplier   	"Logical View::MPF SDK::SRM::RecordManager"
+		    quidu      	"42BFD7A500DA"))
+	    used_nodes 	(list uses_relationship_list
+		(object Uses_Relationship
+		    quid       	"4271E2040070"
+		    label      	"alloc"
+		    supplier   	"Logical View::MPF SDK::SRM::MetaResource"
+		    quidu      	"4271CEEA0047"))
+	    operations 	(list Operations
+		(object Operation "allocate"
+		    quid       	"4271D1A20233"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter "resentry"
+			    quid       	"4271E0EB0050"
+			    type       	"string&"))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "free"
+		    quid       	"4271D1A20265"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter "resource"
+			    quid       	"4271D1A20266"
+			    type       	"MetaResource&"))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "score"
+		    quid       	"4271D1A20297"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter "resource"
+			    quid       	"4271D1A20298"
+			    type       	"MetaResource&")
+			(object Parameter "session"
+			    quid       	"4271E0660091"
+			    type       	"MetaSession&"))
+		    result     	"BYTE"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Protected"
+		    uid        	0)
+		(object Operation "OnLeaseTerm"
+		    quid       	"42BFD7EC00CB"
+		    stereotype 	"virtual"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "compose"
+		    quid       	"42BFD7FD03D8"
+		    stereotype 	"virtual"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "ResourceManager"
+		    quid       	"42BFD80D035B"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "getRootEntry"
+		    quid       	"42BFD8130232"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)))
+	(object Class "MetaNode"
+	    quid       	"4271E12402D5"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"4271E1370355"
+		    supplier   	"Logical View::MPF SDK::SRM::MetaResource"
+		    quidu      	"4271CEEA0047")
+		(object Inheritance_Relationship
+		    quid       	"42BFD8C40119"
+		    supplier   	"Logical View::MPF SDK::SRM::RecordManager"
+		    quidu      	"42BFD7A500DA")))
+	(object Class "NodeManager"
+	    quid       	"4271E1480291"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"4271E1DD00FF"
+		    supplier   	"Logical View::MPF SDK::SRM::ResourceManager"
+		    quidu      	"4271D150000E")
+		(object Inheritance_Relationship
+		    quid       	"4271E3EA013C"
+		    supplier   	"Logical View::MPF SDK::XMLRPC::RpcServerMethod"
+		    quidu      	"4271B2FA038D")
+		(object Inheritance_Relationship
+		    quid       	"42BFD84D000F"
+		    supplier   	"Logical View::MPF SDK::SRM::RecordManager"
+		    quidu      	"42BFD7A500DA"))
+	    used_nodes 	(list uses_relationship_list
+		(object Uses_Relationship
+		    quid       	"4271E21A0127"
+		    label      	"alloc"
+		    supplier   	"Logical View::MPF SDK::SRM::MetaNode"
+		    quidu      	"4271E12402D5"))
+	    operations 	(list Operations
+		(object Operation "allocate"
+		    quid       	"4271E1EA02D5"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter "resentry"
+			    quid       	"4271E1EA02D6"
+			    type       	"string&"))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "score"
+		    quid       	"4271E1F00003"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter "resource"
+			    quid       	"4271E1F00004"
+			    type       	"MetaResource&")
+			(object Parameter "session"
+			    quid       	"4271E1F00005"
+			    type       	"MetaSession&"))
+		    result     	"BYTE"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Protected"
+		    uid        	0)
+		(object Operation "execute"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271E3F8002E"
+		    documentation 	"response the machine heartbeats from worknode"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter "params"
+			    quid       	"4271E3F8002F"
+			    type       	"RpcValue&"
+			    quidu      	"4271B2FA0228")
+			(object Parameter "result"
+			    quid       	"4271E3F80030"
+			    type       	"RpcValue&"
+			    quidu      	"4271B2FA0228"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "compose"
+		    quid       	"42BFD8290399"
+		    stereotype 	"virtual"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)))
+	(object Class "SRMDaemon"
+	    quid       	"4271E4260111"
+	    stereotype 	"control"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"4271E4AA02D6"
+		    supplier   	"Logical View::MPF SDK::Thread"
+		    quidu      	"41C158800055")
+		(object Inheritance_Relationship
+		    quid       	"4271E4AE000B"
+		    supplier   	"Logical View::MPF SDK::XMLRPC::RpcServer"
+		    quidu      	"4271B2FA03D3"))
+	    operations 	(list Operations
+		(object Operation "init"
+		    quid       	"4271E4DB0364"
+		    stereotype 	"virtual"
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Protected"
+		    uid        	0)
+		(object Operation "run"
+		    quid       	"4271E4DB0382"
+		    stereotype 	"virtual"
+		    result     	"int"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Protected"
+		    uid        	0)
+		(object Operation "final"
+		    quid       	"4271E4DB0396"
+		    stereotype 	"virtual"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Protected"
+		    uid        	0)))
+	(object Class "MetaTask"
+	    quid       	"4271E54E0235"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"42BFD87802EE"
+		    supplier   	"Logical View::MPF SDK::SRM::MetaRecord"
+		    quidu      	"4271CD6300B3")))
+	(object Class "TaskUpdateSubscriber"
+	    quid       	"4271F8B5028B"
+	    operations 	(list Operations
+		(object Operation "OnUpdate"
+		    quid       	"4271FCA20196"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter "action"
+			    quid       	"4271FCAE020B")
+			(object Parameter "session"
+			    quid       	"4271FCB50099"
+			    type       	"MetaSession&")
+			(object Parameter "worknodeId"
+			    quid       	"4271FCC00171")
+			(object Parameter "taskid"
+			    quid       	"4271FCD30164"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)))
+	(object Class "TaskUpdate"
+	    quid       	"4271F90B0217")
+	(object Class "TaskSubScriberStack"
+	    quid       	"4271FBB103DE"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"4271FBC90049"
+		    supplier   	"Logical View::MPF SDK::XMLRPC::RpcServerMethod"
+		    quidu      	"4271B2FA038D"))
+	    operations 	(list Operations
+		(object Operation "reg"
+		    quid       	"4271FC27032A"
+		    result     	"TaskUpdateSubscriber*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0
+		    quidu      	"4271F8B5028B")
+		(object Operation "unreg"
+		    quid       	"4271FC6A02B8"
+		    result     	"TaskUpdateSubscriber*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0
+		    quidu      	"4271F8B5028B")))
+	(object Class "UserTask"
+	    quid       	"427201FD03DC")
+	(object Class "RecordManager"
+	    quid       	"42BFD7A500DA"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"42BFD8F001F4"
+		    supplier   	"Logical View::MPF SDK::SRM::MetaRecord"
+		    quidu      	"4271CD6300B3"))
+	    operations 	(list Operations
+		(object Operation "RecordManager"
+		    quid       	"42BFD7BA00EA"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "~RecordManager"
+		    quid       	"42BFD7C0036B"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "OnLeaseTerm"
+		    quid       	"42BFD7C40232"
+		    stereotype 	"virtual"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "beginLeaseTerm"
+		    quid       	"42BFD7D1034B"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)))
+	(object Class "SessionManager"
+	    quid       	"42BFD8950000"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"42BFD8C70119"
+		    supplier   	"Logical View::MPF SDK::SRM::RecordManager"
+		    quidu      	"42BFD7A500DA")))
+	(object Class "TaskManager"
+	    quid       	"42BFD8AC00EA"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"42BFE93301A5"
+		    supplier   	"Logical View::MPF SDK::SRM::RecordManager"
+		    quidu      	"42BFD7A500DA")))
+	(object Association "$UNNAMED$0"
+	    quid       	"4271CD730279"
+	    roles      	(list role_list
+		(object Role "$UNNAMED$1"
+		    quid       	"4271CD740389"
+		    supplier   	"Logical View::MPF SDK::SRM::MPFDatabase"
+		    quidu      	"4271CD3800F7"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$2"
+		    quid       	"4271CD74038B"
+		    supplier   	"Logical View::MPF SDK::SRM::MetaRecord"
+		    quidu      	"4271CD6300B3")))
+	(object Association "add method"
+	    quid       	"4271E4B8002E"
+	    roles      	(list role_list
+		(object Role "$UNNAMED$3"
+		    quid       	"4271E4BB008C"
+		    supplier   	"Logical View::MPF SDK::SRM::SRMDaemon"
+		    quidu      	"4271E4260111"
+		    exportControl 	"Protected"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$4"
+		    quid       	"4271E4BB008E"
+		    supplier   	"Logical View::MPF SDK::SRM::NodeManager"
+		    quidu      	"4271E1480291"
+		    exportControl 	"Protected")))
+	(object Association "belong"
+	    quid       	"4271E56001F5"
+	    roles      	(list role_list
+		(object Role "$UNNAMED$5"
+		    quid       	"4271E561005C"
+		    supplier   	"Logical View::MPF SDK::SRM::MetaSession"
+		    quidu      	"4271D12D0393"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$6"
+		    quid       	"4271E561005E"
+		    supplier   	"Logical View::MPF SDK::SRM::MetaTask"
+		    quidu      	"4271E54E0235")))
+	(object Association "$UNNAMED$7"
+	    quid       	"4271FBCF0305"
+	    roles      	(list role_list
+		(object Role "$UNNAMED$8"
+		    quid       	"4271FBD000EA"
+		    supplier   	"Logical View::MPF SDK::SRM::TaskUpdateSubscriber"
+		    quidu      	"4271F8B5028B"
+		    client_cardinality 	(value cardinality "0..n")
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$9"
+		    quid       	"4271FBD000EC"
+		    supplier   	"Logical View::MPF SDK::SRM::TaskSubScriberStack"
+		    quidu      	"4271FBB103DE"
+		    client_cardinality 	(value cardinality "1")
+		    is_aggregate 	TRUE)))
+	(object Association "add method"
+	    quid       	"4271FE0A02B6"
+	    roles      	(list role_list
+		(object Role "$UNNAMED$10"
+		    quid       	"4271FE0C020F"
+		    supplier   	"Logical View::MPF SDK::SRM::SRMDaemon"
+		    quidu      	"4271E4260111"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$11"
+		    quid       	"4271FE0C0211"
+		    supplier   	"Logical View::MPF SDK::SRM::TaskSubScriberStack"
+		    quidu      	"4271FBB103DE")))
+	(object Mechanism @1
+	    logical_models 	(list unit_reference_list
+		(object Object "$UNNAMED$12"
+		    quid       	"427201B90334"
+		    collaborators 	(list link_list
+			(object Link
+			    quid       	"427201CF0372"
+			    supplier   	"$UNNAMED$13"
+			    quidu      	"427201CA0021")
+			(object Link
+			    quid       	"427201D30183"
+			    supplier   	"$UNNAMED$13"
+			    quidu      	"427201CA0021"
+			    messages   	(list Messages
+				(object Message "request specific task with a session"
+				    quid       	"427201CF0373"
+				    frequency  	"Aperiodic"
+				    synchronization 	"Simple"
+				    dir        	"FromClientToSupplier"
+				    sequence   	"1"
+				    ordinal    	0
+				    quidu      	"000000000000"
+				    creation   	FALSE))))
+		    class      	"Use Case View::User"
+		    quidu      	"41C157DA0205"
+		    persistence 	"Transient"
+		    creationObj 	FALSE
+		    multi      	FALSE)
+		(object Object "$UNNAMED$13"
+		    quid       	"427201CA0021"
+		    collaborators 	(list link_list
+			(object Link
+			    quid       	"4272058E01D6"
+			    supplier   	"$UNNAMED$14"
+			    quidu      	"4272058A0235"
+			    messages   	(list Messages
+				(object Message "open"
+				    quid       	"4272058E01D7"
+				    frequency  	"Aperiodic"
+				    synchronization 	"Simple"
+				    dir        	"FromClientToSupplier"
+				    sequence   	"1.1"
+				    ordinal    	1
+				    quidu      	"000000000000"
+				    creation   	FALSE)
+				(object Message "set()s"
+				    quid       	"4272059A015B"
+				    frequency  	"Aperiodic"
+				    synchronization 	"Simple"
+				    dir        	"FromClientToSupplier"
+				    sequence   	"1.2"
+				    ordinal    	2
+				    Operation  	"set(, )"
+				    quidu      	"4271CE6C0014"
+				    creation   	FALSE))))
+		    class      	"Logical View::MPF SDK::SRM::SRMDaemon"
+		    quidu      	"4271E4260111"
+		    persistence 	"Transient"
+		    creationObj 	FALSE
+		    multi      	FALSE)
+		(object Object "$UNNAMED$14"
+		    quid       	"4272058A0235"
+		    class      	"Logical View::MPF SDK::SRM::MetaRecord"
+		    quidu      	"4271CD6300B3"
+		    persistence 	"Transient"
+		    creationObj 	FALSE
+		    multi      	FALSE))))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "overview"
+	    quid       	"4271CD0203A3"
+	    title      	"overview"
+	    zoom       	50
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::MPF SDK::EntryDB::EDB" @2
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(403, 925)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(39, 52)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	728
+			justify    	0
+			label      	"EDB")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271CC1D02C7"
+		    compartment 	(object Compartment
+			Parent_View 	@2
+			location   	(39, 173)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	29
+			max_width  	815)
+		    width      	746
+		    height     	1776
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MPF SDK::SRM::MPFDatabase" @3
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(1208, 253)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@3
+			location   	(1001, 53)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	414
+			justify    	0
+			label      	"MPFDatabase")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271CD3800F7"
+		    compartment 	(object Compartment
+			Parent_View 	@3
+			location   	(1001, 127)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	6
+			max_width  	485)
+		    width      	432
+		    height     	430
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MPF SDK::SRM::MetaRecord" @4
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(1206, 2000)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@4
+			location   	(940, 1296)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	532
+			justify    	0
+			label      	"MetaRecord")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271CD6300B3"
+		    compartment 	(object Compartment
+			Parent_View 	@4
+			location   	(940, 1370)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	24
+			max_width  	593)
+		    width      	550
+		    height     	1438
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object AssociationViewNew "$UNNAMED$0" @5
+		    location   	(1206, 874)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4271CD730279"
+		    roleview_list 	(list RoleViews
+			(object RoleView "$UNNAMED$1" @6
+			    Parent_View 	@5
+			    location   	(-417, -1051)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"4271CD740389"
+			    client     	@5
+			    supplier   	@3
+			    line_style 	0)
+			(object RoleView "$UNNAMED$2" @7
+			    Parent_View 	@5
+			    location   	(-417, -1051)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"4271CD74038B"
+			    client     	@5
+			    supplier   	@4
+			    line_style 	0)))
+		(object ClassView "Class" "Logical View::MPF SDK::SRM::MetaResource" @8
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(1169, 2929)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@8
+			location   	(990, 2873)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	358
+			justify    	0
+			label      	"MetaResource")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271CEEA0047"
+		    width      	376
+		    height     	142
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "" @9
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4271CF05017D"
+		    client     	@8
+		    supplier   	@4
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::MPF SDK::SRM::ResourceManager" @10
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(2041, 2882)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@10
+			location   	(1717, 2626)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	648
+			justify    	0
+			label      	"ResourceManager")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271D150000E"
+		    compartment 	(object Compartment
+			Parent_View 	@10
+			location   	(1717, 2700)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	8
+			max_width  	727)
+		    width      	666
+		    height     	542
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MPF SDK::SRM::MetaNode" @11
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(1172, 3478)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@11
+			location   	(1091, 3382)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	162
+			justify    	0
+			label      	"MetaNode")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271E12402D5"
+		    height     	222
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object UsesView "alloc" @12
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@12
+			location   	(1532, 2908)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	106
+			justify    	0
+			label      	"alloc")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4271E2040070"
+		    client     	@10
+		    supplier   	@8
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::MPF SDK::Thread" @13
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(3557, 816)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@13
+			location   	(3345, 560)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	424
+			justify    	0
+			label      	"Thread")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C158800055"
+		    compartment 	(object Compartment
+			Parent_View 	@13
+			location   	(3345, 681)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	7
+			max_width  	501)
+		    width      	442
+		    height     	542
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MPF SDK::SRM::MetaSession" @14
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(213, 1997)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@14
+			location   	(46, 1941)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	334
+			justify    	0
+			label      	"MetaSession")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271D12D0393"
+		    width      	352
+		    height     	142
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "" @15
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4271D13F001E"
+		    client     	@14
+		    supplier   	@4
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::MPF SDK::SRM::MetaTask" @16
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(181, 2360)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@16
+			location   	(50, 2304)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	262
+			justify    	0
+			label      	"MetaTask")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271E54E0235"
+		    width      	280
+		    height     	142
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MPF SDK::XMLRPC::RpcServerMethod" @17
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(3125, 3452)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@17
+			location   	(2746, 3140)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	758
+			justify    	0
+			label      	"RpcServerMethod")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271B2FA038D"
+		    compartment 	(object Compartment
+			Parent_View 	@17
+			location   	(2746, 3253)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	9
+			max_width  	851)
+		    width      	776
+		    height     	654
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MPF SDK::XMLRPC::RpcServer" @18
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(2544, 556)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@18
+			location   	(2247, 75)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	594
+			justify    	0
+			label      	"RpcServer")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271B2FA03D3"
+		    compartment 	(object Compartment
+			Parent_View 	@18
+			location   	(2247, 196)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	15
+			max_width  	682)
+		    width      	612
+		    height     	990
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MPF SDK::SRM::NodeManager" @19
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(2022, 3473)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@19
+			location   	(1753, 3301)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	538
+			justify    	0
+			label      	"NodeManager")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271E1480291"
+		    compartment 	(object Compartment
+			Parent_View 	@19
+			location   	(1753, 3374)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	5
+			max_width  	614)
+		    width      	556
+		    height     	374
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object UsesView "alloc" @20
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@20
+			location   	(1502, 3476)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	106
+			justify    	0
+			label      	"alloc")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4271E21A0127"
+		    client     	@19
+		    supplier   	@11
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::MPF SDK::SRM::TaskUpdateSubscriber" @21
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(4057, 2548)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@21
+			location   	(3778, 2460)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	558
+			justify    	0
+			label      	"TaskUpdateSubscriber")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271F8B5028B"
+		    compartment 	(object Compartment
+			Parent_View 	@21
+			location   	(3778, 2534)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	2
+			max_width  	637)
+		    width      	576
+		    height     	206
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MPF SDK::SRM::SRMDaemon" @22
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(3245, 1950)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@22
+			location   	(3244, 2111)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	474
+			justify    	0
+			label      	"SRMDaemon")
+		    icon       	"control"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271E4260111"
+		    compartment 	(object Compartment
+			Parent_View 	@22
+			location   	(2840, 2158)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			anchor     	2
+			nlines     	4
+			max_width  	807
+			justify    	0)
+		    width      	158
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "" @23
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4271E4AA02D6"
+		    client     	@22
+		    supplier   	@13
+		    line_style 	0)
+		(object InheritView "" @24
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4271E4AE000B"
+		    client     	@22
+		    supplier   	@18
+		    line_style 	0)
+		(object AssociationViewNew "add method" @25
+		    location   	(2523, 2847)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @26
+			Parent_View 	@25
+			location   	(2523, 2788)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	276
+			justify    	0
+			label      	"add method"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4271E4B8002E"
+		    roleview_list 	(list RoleViews
+			(object RoleView "$UNNAMED$3" @27
+			    Parent_View 	@25
+			    location   	(324, -250)
+			    font       	(object Font
+				size       	12
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @28
+				Parent_View 	@27
+				location   	(2774, 2472)
+				font       	(object Font
+				    size       	12
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				hidden     	TRUE
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	201
+				justify    	0
+				label      	""
+				pctDist    	0.800000
+				height     	42
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"4271E4BB008C"
+			    client     	@25
+			    supplier   	@22
+			    line_style 	0)
+			(object RoleView "$UNNAMED$4" @29
+			    Parent_View 	@25
+			    location   	(324, -250)
+			    font       	(object Font
+				size       	12
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @30
+				Parent_View 	@29
+				location   	(2204, 3267)
+				font       	(object Font
+				    size       	12
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				hidden     	TRUE
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	201
+				justify    	0
+				label      	""
+				pctDist    	0.939646
+				height     	15
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"4271E4BB008E"
+			    client     	@25
+			    supplier   	@19
+			    line_style 	0)))
+		(object ClassView "Class" "Logical View::MPF SDK::SRM::TaskSubScriberStack" @31
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(4057, 3430)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@31
+			location   	(3804, 3314)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	506
+			justify    	0
+			label      	"TaskSubScriberStack")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271FBB103DE"
+		    compartment 	(object Compartment
+			Parent_View 	@31
+			location   	(3804, 3387)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	3
+			max_width  	263)
+		    width      	524
+		    height     	262
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "" @32
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4271FBC90049"
+		    client     	@31
+		    supplier   	@17
+		    line_style 	0)
+		(object AssociationViewNew "$UNNAMED$7" @33
+		    location   	(4057, 2974)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4271FBCF0305"
+		    roleview_list 	(list RoleViews
+			(object RoleView "$UNNAMED$8" @34
+			    Parent_View 	@33
+			    location   	(861, -181)
+			    font       	(object Font
+				size       	12
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"4271FBD000EA"
+			    client     	@33
+			    supplier   	@21
+			    line_style 	0
+			    label      	(object SegLabel @35
+				Parent_View 	@34
+				location   	(4111, 2683)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..n"
+				pctDist    	0.900000
+				height     	54
+				orientation 	1))
+			(object RoleView "$UNNAMED$9" @36
+			    Parent_View 	@33
+			    location   	(861, -181)
+			    font       	(object Font
+				size       	12
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"4271FBD000EC"
+			    client     	@33
+			    supplier   	@31
+			    line_style 	0
+			    label      	(object SegLabel @37
+				Parent_View 	@36
+				location   	(4111, 3265)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.900000
+				height     	54
+				orientation 	0))))
+		(object AssociationViewNew "add method" @38
+		    location   	(3740, 2853)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @39
+			Parent_View 	@38
+			location   	(3925, 3150)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"add method"
+			pctDist    	3.600000
+			height     	297
+			orientation 	1)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4271FE0A02B6"
+		    roleview_list 	(list RoleViews
+			(object RoleView "$UNNAMED$10" @40
+			    Parent_View 	@38
+			    location   	(553, -238)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"4271FE0C020F"
+			    client     	@38
+			    supplier   	@22
+			    line_style 	0)
+			(object RoleView "$UNNAMED$11" @41
+			    Parent_View 	@38
+			    location   	(553, -238)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"4271FE0C0211"
+			    client     	@38
+			    supplier   	@31
+			    line_style 	0)))
+		(object InheritView "" @42
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4271CD4B0358"
+		    client     	@3
+		    supplier   	@2
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::MPF SDK::SRM::RecordManager" @43
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(2041, 2003)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@43
+			location   	(1766, 1846)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	550
+			justify    	0
+			label      	"RecordManager")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"42BFD7A500DA"
+		    compartment 	(object Compartment
+			Parent_View 	@43
+			location   	(1766, 1920)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	5
+			max_width  	635)
+		    width      	568
+		    height     	344
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "" @44
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"42BFD84A007D"
+		    client     	@10
+		    supplier   	@43
+		    line_style 	0)
+		(object InheritView "" @45
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"42BFD87802EE"
+		    client     	@16
+		    supplier   	@4
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::MPF SDK::SRM::SessionManager" @46
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(2031, 1518)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@46
+			location   	(1829, 1465)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	404
+			justify    	0
+			label      	"SessionManager")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"42BFD8950000"
+		    width      	422
+		    height     	136
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MPF SDK::SRM::TaskManager" @47
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(2563, 1506)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@47
+			location   	(2393, 1453)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	340
+			justify    	0
+			label      	"TaskManager")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"42BFD8AC00EA"
+		    width      	358
+		    height     	136
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "" @48
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"42BFD8F001F4"
+		    client     	@43
+		    supplier   	@4
+		    line_style 	0)
+		(object InheritView "" @49
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"42BFD8C70119"
+		    client     	@46
+		    supplier   	@43
+		    line_style 	0)
+		(object InheritView "" @50
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4271E1DD00FF"
+		    client     	@19
+		    supplier   	@10
+		    line_style 	0)
+		(object InheritView "" @51
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4271E3EA013C"
+		    client     	@19
+		    supplier   	@17
+		    line_style 	0)
+		(object InheritView "" @52
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4271E1370355"
+		    client     	@11
+		    supplier   	@8
+		    line_style 	0)
+		(object InheritView "" @53
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"42BFD8C40119"
+		    client     	@11
+		    supplier   	@43
+		    line_style 	0)
+		(object InheritView "" @54
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"42BFE93301A5"
+		    client     	@47
+		    supplier   	@43
+		    line_style 	0)))
+	(object InteractionDiagram "UserTaskRequest"
+	    mechanism_ref 	@1
+	    quid       	"427201960063"
+	    title      	"UserTaskRequest"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object InterObjView "$UNNAMED$12" @55
+		    location   	(197, 225)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	TRUE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@55
+			location   	(197, 254)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	360
+			justify    	0
+			label      	"")
+		    icon       	"Actor"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"427201B90334"
+		    width      	336
+		    height     	592
+		    icon_height 	162
+		    icon_width 	120
+		    icon_y_offset 	0
+		    annotation 	1
+		    Focus_Of_Control 	(object Focus_Of_Control "" @56
+			location   	(197, 389)
+			line_color 	3342489
+			InterObjView 	@55
+			height     	338
+			y_coord    	278
+			Nested     	FALSE))
+		(object InterObjView "$UNNAMED$13" @57
+		    location   	(667, 225)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	TRUE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@57
+			location   	(667, 254)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	471
+			justify    	0
+			label      	"")
+		    icon       	"control"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"427201CA0021"
+		    width      	446
+		    height     	592
+		    icon_height 	164
+		    icon_width 	157
+		    icon_y_offset 	0
+		    annotation 	1
+		    Focus_Of_Control 	(object Focus_Of_Control "" @58
+			location   	(667, 389)
+			line_color 	3342489
+			InterObjView 	@57
+			height     	278
+			y_coord    	218
+			Nested     	FALSE))
+		(object InterObjView "$UNNAMED$14" @59
+		    location   	(987, 225)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	TRUE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@59
+			location   	(987, 225)
+			fill_color 	13434879
+			anchor_loc 	1
+			nlines     	2
+			max_width  	286
+			justify    	0
+			label      	"")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4272058A0235"
+		    width      	304
+		    height     	592
+		    icon_height 	0
+		    icon_width 	0
+		    icon_y_offset 	0
+		    annotation 	1
+		    Focus_Of_Control 	(object Focus_Of_Control "" @60
+			location   	(987, 449)
+			line_color 	3342489
+			InterObjView 	@59
+			height     	60
+			y_coord    	0
+			Nested     	FALSE)
+		    Focus_Of_Control 	(object Focus_Of_Control "" @61
+			location   	(987, 547)
+			line_color 	3342489
+			InterObjView 	@59
+			height     	60
+			y_coord    	0
+			Nested     	FALSE))
+		(object InterMessView "" @62
+		    location   	(422, 389)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @63
+			Parent_View 	@62
+			location   	(431, 345)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			quidu      	"427201CF0373"
+			anchor_loc 	1
+			nlines     	1
+			max_width  	829
+			justify    	0
+			label      	"request specific task with a session"
+			pctDist    	0.500000
+			height     	45
+			orientation 	0)
+		    line_color 	3342489
+		    client     	@55
+		    supplier   	@57
+		    Focus_Src  	@56
+		    Focus_Entry 	@58
+		    origin     	(212, 389)
+		    terminus   	(651, 389)
+		    ordinal    	0)
+		(object InterMessView "" @64
+		    location   	(831, 449)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @65
+			Parent_View 	@64
+			location   	(826, 405)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			quidu      	"4272058E01D7"
+			anchor_loc 	1
+			nlines     	1
+			max_width  	172
+			justify    	0
+			label      	"open"
+			pctDist    	0.500000
+			height     	45
+			orientation 	0)
+		    line_color 	3342489
+		    client     	@57
+		    supplier   	@59
+		    Focus_Src  	@58
+		    Focus_Entry 	@60
+		    origin     	(682, 449)
+		    terminus   	(971, 449)
+		    ordinal    	1)
+		(object InterMessView "" @66
+		    location   	(831, 547)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @67
+			Parent_View 	@66
+			location   	(826, 503)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			quidu      	"4272059A015B"
+			anchor_loc 	1
+			nlines     	1
+			max_width  	185
+			justify    	0
+			label      	"set()s"
+			pctDist    	0.500000
+			height     	45
+			orientation 	0)
+		    line_color 	3342489
+		    client     	@57
+		    supplier   	@59
+		    Focus_Src  	@58
+		    Focus_Entry 	@61
+		    origin     	(682, 547)
+		    terminus   	(971, 547)
+		    ordinal    	2)))))

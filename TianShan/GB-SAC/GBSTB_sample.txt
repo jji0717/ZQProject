@@ -1,0 +1,71 @@
+SETUP rtsp://10.15.10.32:554 RTSP/1.0
+CSeq: 1
+Transport: MP2T/DVBC/QAM;unicast;ServiceGroup=1999
+x-userID: XUserID
+EntitlementCode: abcd123efg456
+User-Agent: Test Client
+
+RTSP/1.0 200 OK
+CSeq: 1
+ControlSession: 976451585;10.50.12.22:554
+GlobalSession: c8626ec1-ae2f-4fd0-878e-84de17b792e8
+Method-Code: SETUP
+Server: TianShan Component RtspProxy Service 1.15; ssm_GBstb 1.15
+Session: 958789632
+Transport: MP2T/DVBC/QAM;programid=15;frequency=1.150000;modulation=-1;symbolRat
+e=50.000000
+Date: 30 Jun 2011 15:09:12.046 GMT+08
+
+TEARDOWN * RTSP/1.0
+CSeq: 16
+User-Agent: ITVLibrary 1.0; amino
+Session: 958789632
+GlobalSession: aaaaaa
+
+RTSP/1.0 200 OK
+CSeq: 16
+Method-Code: TEARDOWN
+Server: TianShan Component RtspProxy Service 1.15; ssm_GBstb 1.15
+Session: 958789632
+Date: 30 Jun 2011 15:10:24.703 GMT+08
+
+
+PLAY * RTSP/1.0
+CSeq: 5085
+Session: 976451585
+GlobalSession: 123456789ABC
+Range: npt=0-
+Scale: 1.000000
+
+RTSP/1.0 200 OK
+CSeq: 5085
+Date: 2011-06-30T07:18:21.562Z
+GlobalSession: c8626ec1-ae2f-4fd0-878e-84de17b792e8
+Method-Code: PLAY
+Range: npt=0.0-79.959
+Scale: 1.000000
+Server: ssm_GBss/1.15
+Session: 976451585
+
+PLAY * RTSP/1.0
+CSeq: 5085
+Session: 976451585
+GlobalSession: 123456789ABC
+Range: npt=0-
+Scale: 1.000000
+
+RTSP/1.0 454 Session Not Found
+CSeq: 5085
+Date: 2011-06-30T07:19:02.890Z
+Method-Code: PLAY
+Notice: caught [Ice::ObjectNotExistException] when got session[976451585] contex
+t proxy
+Server: ssm_GBss/1.15
+Session: 976451585
+
+
+
+
+
+
+

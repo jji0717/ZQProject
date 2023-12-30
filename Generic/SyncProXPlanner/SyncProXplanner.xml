@@ -1,0 +1,70 @@
+<TianShan>
+
+  <SyncProXplanner>
+    <!--DataBase         
+	          host: Project open  DataBase Server IP
+	          port: Project open  DataBase Server Port
+	        dbname: Database Name
+	     username:  Database Login ID
+	       passwd:  Database Login Password
+	  -->    
+    <DataBase host="192.168.81.122" port="5432" dbname="projop" username="postgres" passwd="111111"/>
+    
+    <!--SyncData         
+	        username: Xplanner Super User ID
+	          passwd: Xplanner Super User Password
+	        endpoint: Soap interface URL
+	         timeout: Soap interface connect timeout
+	  -->  
+    <SyncData username="SE1_robot" passwd="12345678" endpoint="http://sp-server:9090/soap/XPlanner?wsdl" timeout="50"/>	
+    
+   <!--AutoSync         
+    totalDays: totaldays for sync data from current time
+	          dayofweek: day of week for sync data, compart with ';'(rang 0 - 6)
+	             hour: hours of everyday for sync data rang(0-23)
+	         interval: automatic sync thread interval (1 - 3540)  totalDays: totaldays for sync data from current time
+	          dayofweek: day of week for sync data, compart with ';'(rang 0 - 6)
+	             hour: hours of everyday for sync data rang(0-23)
+	         interval: automatic sync thread interval (1 - 3540)
+	  --> 
+    <AutoSync totalDays="7" dayofweek="1;3;5" hours="20" interval="1800"/>
+ 	      
+   <!--PeopleInfo         
+	        people: 
+	            userEmail: Project Open Login Email  
+	               userID: Xplanner Login User ID
+	       sample
+	       <people userEmail="sample@i-zq.com" userID="sample">
+			     <param name="1" value="1"/>
+		     </people> 
+	  -->           
+    <PeopleInfo>
+ 		  <people userEmail="li.huang@i-zq.com" userID="li.huang">
+			     <param name="1" value="1"/>
+		  </people> 
+		  <people userEmail="mei.zhang@i-zq.com" userID="mei.zhang"> 
+		  </people> 	
+		  <people userEmail="xia.chen@i-zq.com" userID="xia.chen"> 
+		  </people> 
+		  <people userEmail="haoyuan.lu@i-zq.com" userID="haoyuan.lu"> 
+		  </people> 	
+		  <people userEmail="fei.huang@i-zq.com" userID="fei.huang"> 
+		  </people> 
+		  <people userEmail="hongquan.zhang@i-zq.com" userID="hongquan.zhang"> 
+		  </people> 
+		  <people userEmail="jie.zhang@i-zq.com" userID="jie.zhang"> 
+		  </people> 
+		  <people userEmail="xiaohui.chai@i-zq.com" userID="xiaohui.chai"> 
+		  </people> 
+		  <people userEmail="yixin.tian@i-zq.com" userID="yixin.tian"> 
+		  </people> 
+		  <people userEmail="hui.shao@i-zq.com" userID="hui.shao"> 
+		  </people> 
+		  <people userEmail="junming.zheng@i-zq.com" userID="junming.zheng"> 
+		  </people>
+		  <people userEmail="min.wang@i-zq.com" userID="min.wang"> 
+		  </people>
+    </PeopleInfo>
+	
+  </SyncProXplanner>
+</TianShan>

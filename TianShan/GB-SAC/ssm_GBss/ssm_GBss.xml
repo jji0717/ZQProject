@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TianShan>
+	<!-- Notice: TianShanDef.xml has been preloaded when this configuration file is being parsed, 
+                 please refer to TianShanDef.xml for the common properties
+	-->
+	<Definitions src="TianShanDef.xml">
+	</Definitions>
+    
+    <!-- default configurations for the services of this TianShan deployment -->
+    <default>
+        <!-- The EventChannel service where the services of this TianShan deployment will deliver events to.
+		     attributes:
+		       endpoint - the ICE endpoint to the EventChannel service
+		-->
+        <EventChannel endpoint="${PrimeEventChannelEndpoint}" />
+
+        <!-- The Ice trace log setting for all the services of this TianShan deployment.
+		     attributes:
+		       enabled       - non-zero to enable
+		       level         - the log level of the ice trace log
+		       size          - the size that this trace log must roll
+		-->
+        <IceTrace enabled="1" level="7" size="50000000" maxCount="10" />
+
+        <!-- The following are performance tuning parameters, 
+             please don't modify if you are not an expert at them 
+		-->
+        <IceProperties>
+            <prop name="Ice.Trace.Network"                    value="0" />
+            <prop name="Ice.Logger.Timestamp"                 value="1" />
+            <prop name="Ice.Override.Timeout"                 value="20000"/>
+            <prop name="Ice.Override.ConnectTimeout"          value="2000"/>
+            <prop name="Ice.ThreadPool.Server.Size"           value="5"/>
+            <prop name="Ice.ThreadPool.Server.SizeMax"        value="15"/>
+            <prop name="Ice.ThreadPool.Client.Size"           value="5"/>
+            <prop name="Ice.ThreadPool.Client.SizeMax"        value="15"/>
+            <prop name="Freeze.Evictor.UseNonmutating"        value="1" />
+        </IceProperties>
+
+        <!-- The default folder where the services of this TianShan deployment accesses their local
+		     databases if it is not defined by their individual configurations
+		     attributes:
+		       path          - path to the location of database directory, default "../data/"
+		       runtimePath   - path to keep the runtime data, default as the value of path
+		-->
+        <Database path="${TianShanDatabaseDir}" runtimePath="${TianShanDatabaseDir}\runtime" />
+
+    </default>
+    
+    <ssm_GBss>
+        <!-- log file
+		     attributes:
+		       level         - the log level of this main log
+		       size          - the size that this trace log must roll
+		       maxCount      - config the max number of rolled log files.
+		       bufferSize    - the buffer size of log in byte
+		-->
+        <LogFile size="50000000" level="7" maxCount="10" bufferSize="8192"/>
+
+        <PublishedLogs>
+            <!-- Log file to publish thru SentryService
+			     	 attributes:
+			       		path    - full path of the log file
+			       		syntax  - the file defines the syntax of the events via the regular expressions
+			-->
+            <Log path="${TianShanLogDir}\ssm_eventISVodI5.log" syntax="${TianShanHomeDir}\etc\syntax.xml" key="SSM_OPENVBO" />
+            <Log path="${TianShanLogDir}\RTSPProxy.Log" syntax="${TianShanHomeDir}\etc\syntax.xml" key="RTSPProxy"/>
+            <Log path="${TianShanLogDir}\RTSPProxy_shell.Log" syntax="${TianShanHomeDir}\etc\syntax.xml" key="RTSPProxy_Shell"/>
+        </PublishedLogs>
+
+        <!-- The local bind endpoint that this plugin binds 
+		     attributes:
+		       endpoint      - the ICE adpater endpoint, format : "tcp -h ip -p port"
+               serviceName   - the ICE adapter name
+		-->
+        <Bind serviceName="EventSink" endpoint="tcp -h ${ServerNetIf} -p 11200" />
+
+        <!-- configurations on RTSP sessions
+		attributes:
+            cacheSize      - the count of sessions to cache from the database, 
+                             range [1000, 5000] are acceptable, default 1000                             
+			monitorThreads - the thread count to perform background maintenace, 
+                             minimal 3, default 5                             
+            timeout        - timeout of an unattended RTSP session in seconds, 
+                             minimal acceptable value 60, default 600s     
+            timeoutCount   - if a session is inactive during timeout * timeoutCount, 
+                             the session will be destroyed, arrage[3, 100] are acceptable, 
+		-->
+        <RTSPSession cacheSize="1000" monitorThreads="5" timeout="600" timeoutCount="5" />
+
+        <!-- playlistControl, control playlist behaviour
+		enableEOT : 
+              1 - stream will be forced normal play at the EOT proection area
+			  0 - no additional action will be performed when stream is in EOT protection area
+		ignoreDestMac : 
+              1 - ignore destination mac address in transport header, 
+              0 - use destination mac address
+		-->
+        <PlaylistControl enableEOT="0" ignoreDestMac="0"/>
+
+        <RequestAdjust defaultPID="" />
+
+        <!-- Configurations on RTSP Response
+             attributes:
+               setupFailureWithSessId, non-zero means enable provide the session id even if a SETUP is failed
+        -->
+        <Response setupFailureWithSessId="1" />
+
+        <!-- Configurations on RTSP ANNOUNCE
+		     attributes:
+			    useGlobalCSeq - non-zero means enable use global CSeq for ANNOUNCEs
+		-->
+        <Announce useGlobalCSeq="0" SRMEnabled="1" STBEnabled="1"/>
+
+        <PassThruStreaming>
+            <!-- Configurations on SOP restrictions:
+	     		attributes:
+	       			name      - the unique name to identify a import channel, 
+                                it is recommended to include the NIC name of the node
+	                bandwidth - the max bandwidth in Kbps of the import channel
+	       			maxImport - the max number of the simultaneous session the channel can support
+			-->
+            <ImportChannel name="10.15.10.220" bandwidth="100000000" maxImport="9000" />
+            <ImportChannel name="SEACnnnnn-Ny_PG" bandwidth="100000000" maxImport="1000" />
+        </PassThruStreaming>
+
+        <SourceStreamers fileName="${TianShanConfDir}\ssm_GBss_Streamers.xml" />
+        
+        
+        <!-- Configurations on AssetManagement:
+               attributes:
+                 type - "LAM" if SeaChange LAM is the implementation of asset management
+                 enableWarmup:
+                 1 - try to connect to LAM when ssm_OpenVBO starts up
+                 0 - to connect only when it is needed
+         -->
+        <AssetManagement  NASURLPrefix="http:\\127.0.0.1\">
+            <!-- Connfiguration of the commucation to LAM instance
+			     attributes:
+			     	name - unique name to identify to the instance of LAM
+				endpoint - the endpoint to connect to the LAM instance
+			-->
+            <LAMServer name="OSTR01" endpoint="tcp -h OSTR01_SS_CL -p 20089" >
+            <!-- Configuration of the Volume that the LAM manages
+	     	   attributes:
+			    name - name of the volume, wildcard is supported
+	       		cacheLevel - the priority to sort LAM instances to query for asset existance. 
+                             acceptable range [0, 100] 0 - highest, 100 - lowest; default 50
+	                         i.e. FMS cacheLevel="20" and HDS cacheLevel="10"
+	       		supportNasStreaming:
+                1 - indicate the volume is bind with streaming device(s) that can perform pass-thru streaming
+	                directly from the external storage.
+                0 - default
+			-->
+                <Volume name="CL2/*" cacheLevel="50" supportNasStreaming="1" />
+                <Volume name="SEACmmmmm/*" cacheLevel="60" supportNasStreaming="1" />
+            </LAMServer>
+            
+            <!--  TestMode reserved for internal use -->
+            <TestMode enabled="1">
+                <Item name="ZQ_C20037_SeaChangeChina" bandwidth="3750000" cuein="0" cueout="0">
+                    <RemoteURL>
+                        <URL name="\\10.15.10.250\c$\tianshan\test\00000001" />
+                    </RemoteURL>
+                    <Replicas>
+                        <Volume name="CL2/$" />
+                    </Replicas>
+                </Item>
+                <Item name="Mtest_005" bandwidth="3750000" cuein="0" cueout="0">
+                    <RemoteURL>
+                        <URL name="\\10.15.10.250\c$\tianshan\test\00000001" />
+                    </RemoteURL>
+                    <Replicas>
+                        <Volume name="CL2/$" />
+                    </Replicas>
+                </Item>
+            </TestMode>
+            
+        </AssetManagement>
+    </ssm_GBss>
+</TianShan>

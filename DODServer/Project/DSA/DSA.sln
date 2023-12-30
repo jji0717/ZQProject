@@ -1,0 +1,53 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DeviceInfo", "..\DeviceInfo.vcproj", "{F5E72BE7-7C4F-43D2-A2CF-B58667A84A5C}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DODServerController", "..\..\PortControllerdll\DODServerController.vcproj", "{B7B44C95-A507-4255-969D-3084F4EC1453}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DataWatcherSource", "..\..\..\filter\DATAWATCHERSOURCE\Async.vcproj", "{A5059946-71C1-4A57-9AAE-A499171916AB}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DataWrapper", "..\..\..\filter\DATAWRAPPERFILTER\DataWrapper.vcproj", "{6A4109EF-D8AC-44B4-A7ED-90732AECFBA7}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZQBroadcastFilter", "..\..\..\filter\ZQBroadcastFilter\ZQBroadcastFilter.vcproj", "{FE4D0DEC-6622-42A6-9F31-2E59A165063A}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{F5E72BE7-7C4F-43D2-A2CF-B58667A84A5C}.Debug.ActiveCfg = Debug|Win32
+		{F5E72BE7-7C4F-43D2-A2CF-B58667A84A5C}.Debug.Build.0 = Debug|Win32
+		{F5E72BE7-7C4F-43D2-A2CF-B58667A84A5C}.Release.ActiveCfg = Release|Win32
+		{F5E72BE7-7C4F-43D2-A2CF-B58667A84A5C}.Release.Build.0 = Release|Win32
+		{B7B44C95-A507-4255-969D-3084F4EC1453}.Debug.ActiveCfg = Debug|Win32
+		{B7B44C95-A507-4255-969D-3084F4EC1453}.Debug.Build.0 = Debug|Win32
+		{B7B44C95-A507-4255-969D-3084F4EC1453}.Release.ActiveCfg = Release|Win32
+		{B7B44C95-A507-4255-969D-3084F4EC1453}.Release.Build.0 = Release|Win32
+		{A5059946-71C1-4A57-9AAE-A499171916AB}.Debug.ActiveCfg = Debug|Win32
+		{A5059946-71C1-4A57-9AAE-A499171916AB}.Debug.Build.0 = Debug|Win32
+		{A5059946-71C1-4A57-9AAE-A499171916AB}.Release.ActiveCfg = Release|Win32
+		{A5059946-71C1-4A57-9AAE-A499171916AB}.Release.Build.0 = Release|Win32
+		{6A4109EF-D8AC-44B4-A7ED-90732AECFBA7}.Debug.ActiveCfg = Debug|Win32
+		{6A4109EF-D8AC-44B4-A7ED-90732AECFBA7}.Debug.Build.0 = Debug|Win32
+		{6A4109EF-D8AC-44B4-A7ED-90732AECFBA7}.Release.ActiveCfg = Release|Win32
+		{6A4109EF-D8AC-44B4-A7ED-90732AECFBA7}.Release.Build.0 = Release|Win32
+		{FE4D0DEC-6622-42A6-9F31-2E59A165063A}.Debug.ActiveCfg = Debug|Win32
+		{FE4D0DEC-6622-42A6-9F31-2E59A165063A}.Debug.Build.0 = Debug|Win32
+		{FE4D0DEC-6622-42A6-9F31-2E59A165063A}.Release.ActiveCfg = Release|Win32
+		{FE4D0DEC-6622-42A6-9F31-2E59A165063A}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

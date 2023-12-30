@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "auth5i", "auth5i.vcproj", "{E637CABB-BEAD-4A80-B628-ACAA6CC4389E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C0DEE18A-189A-444C-99E2-BCF2FE865792} = {C0DEE18A-189A-444C-99E2-BCF2FE865792}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZQCommonStlp", "..\..\..\Common\dll\ZQCommonStlp.vcproj", "{C0DEE18A-189A-444C-99E2-BCF2FE865792}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E637CABB-BEAD-4A80-B628-ACAA6CC4389E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E637CABB-BEAD-4A80-B628-ACAA6CC4389E}.Debug|Win32.Build.0 = Debug|Win32
+		{E637CABB-BEAD-4A80-B628-ACAA6CC4389E}.Release|Win32.ActiveCfg = Release|Win32
+		{E637CABB-BEAD-4A80-B628-ACAA6CC4389E}.Release|Win32.Build.0 = Release|Win32
+		{C0DEE18A-189A-444C-99E2-BCF2FE865792}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C0DEE18A-189A-444C-99E2-BCF2FE865792}.Debug|Win32.Build.0 = Debug|Win32
+		{C0DEE18A-189A-444C-99E2-BCF2FE865792}.Release|Win32.ActiveCfg = Release|Win32
+		{C0DEE18A-189A-444C-99E2-BCF2FE865792}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

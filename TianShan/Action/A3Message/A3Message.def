@@ -1,0 +1,6 @@
+; A3Message.def : Declares the module parameters for the DLL.
+
+EXPORTS
+    ; Explicit exports can go here
+Initialize
+UnInitialize

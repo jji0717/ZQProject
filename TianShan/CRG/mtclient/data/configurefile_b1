@@ -1,0 +1,13 @@
+#command;time(ms);path;protocol;ip:port
+setup;100;./data/setup.data;udp;192.168.81.112:9527
+play;6000;./data/lscpPlay.bin;udp;192.168.81.112:9528
+play;6000;./data/lscpPlay.bin;udp;192.168.81.112:9528
+play;6000;./data/lscpPlay.bin;udp;192.168.81.112:9528
+status;6000;./data/status.data;udp;192.168.81.112:9528
+status;6000;./data/status.data;udp;192.168.81.112:9528
+pause;6000;./data/lscpPause.bin;udp;192.168.81.112:9528
+play;6000;./data/lscpPlay.bin;udp;192.168.81.112:9528
+play;6000;./data/lscpPlay.bin;udp;192.168.81.112:9528
+play;6000;./data/lscpPlay.bin;udp;192.168.81.112:9528
+play;6000;./data/lscpPlay.bin;udp;192.168.81.112:9528
+close;3000;./data/rrs.bin;udp; 192.168.81.112:9527

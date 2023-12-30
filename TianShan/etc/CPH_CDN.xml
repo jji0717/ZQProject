@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<TianShan>
+    <!-- common definitions -->
+    <Definitions src="TianShanDef.xml" />
+    <!-- Configuration on RTFRDS provision helper. It is passivly fed with MPEG source (from FTP push), performs RTF trick genenration and index
+             pacing then save the results into Vstream file system
+             attributes:
+        -->
+    <CPH_CDN>
+        <!-- Configuration on media content r/w buffer
+                     attributes:
+                       bufferSize    - the buffer size in byte per each read/write on the input media content
+                -->
+		<MediaSample bufferSize="65536" maxAllocSampleCount= "400"/>		
+        <!-- ProvisionMethod propertis configuration
+          attributes:
+              maxSessions - the maximal concurrent sessions that this instance can host
+              maxBandwidth - the maximal bandwidth in Kbps that this instance can host
+       -->
+        <ProvisionMethod>
+            <Method name="SeaChange.CDN.FTPPropagation" maxSessions="30" maxBandwidth="115200" enable="1" />
+            <Method name="SeaChange.CDN.FTPRTF" maxSessions="30" maxBandwidth="115200" enable="1" />
+            <Method name="SeaChange.CDN.FTPRTF.H264" maxSessions="30" maxBandwidth="115200" enable="1" />
+            <Method name="SeaChange.CDN.NTFSRTF" maxSessions="30" maxBandwidth="115200" enable="1" />
+            <Method name="SeaChange.CDN.NTFSRTF.H264" maxSessions="10" maxBandwidth="115200" enable="1" />
+            <Method name="SeaChange.CDN.C2Pull" maxSessions="30" maxBandwidth="1152000" enable="1" />
+            <Method name="SeaChange.CDN.C2Pull.H264" maxSessions="30" maxBandwidth="1152000" enable="1" />
+            <Method name="SeaChange.CDN.HTTPPropagation" maxSessions="30" maxBandwidth="1152000" enable="1" />
+        </ProvisionMethod>
+        <PacedIndex enablePacing="0" pacedFile="${TianShanHomeDir}/bin/libPacing.so" />
+        <!-- Configuration on the download 
+          attributes:
+            waitTime       - the timeout period that filesize stops growing
+            bandwidthCtrlInterval  - bandwidth ctrl interval
+            targetDir      - target directory ,using in windows and linux enviorment, vstrm using "" as default value
+            enableResume   - enable resume for download, default is 0 which means didn't support
+            deleteOnFail        -       "1" delete file when propagation failed, "0" for not, rename file(filename+"_bak"), defaut is "1" 
+     -->
+        <DownLoad waitTime="10000" bandwidthCtrlInterval="10000" enableResume="1" targetDir="/tmp" deleteOnFail="1" />
+        <!-- Configuration on the ingestion session
+                     attributes:
+                       overSpeedRate  - the percentage of the encoded MPEG to allow over speed if the session is fed faster
+                       enableMD5           - enable/disable caculate MD5 checksum for provisioned file(main file), default is 1
+                       enableCacheModeForIndex          -       enable/disable cache mode for index file vstream write(VsOpen), default is 1
+                                        On a single node Vstream6.0, enable cache for index would cause "VsSeek failed with VSTRM_TIMECODE_OUTOF_RANGE" sometime
+                       localNetworkInterface    -       the local network interface to bind for ftp transfering, default is empty
+                -->
+        <Session overSpeedRate="110" enableMD5="1" enableCacheModeForIndex="1" localNetworkInterface="" />
+        <!-- Configuration on the url encode
+         attributes:
+           urlEncode -the location where to specify the type of url encode
+     -->
+        <Encode urlEncode="utf-8" decodePecentOfSourceURL="1" />
+        <!-- Configuration on the TrickGeneration parameters
+                     attributes:
+                       maxSessionNum  - max session number that the TrickGeneration will process. this parameter will affect memory allocation during
+                                        initialization, so only put the number as neccesary
+                       maxInputBufferBytes  - the size of RtfInputBuffer, should be equal or greater than the MediaSample::bufferSize
+                       maxInputBuffersPerSession  - the buffer per session for TrickGeneration, default 128
+                       sessionFailThreshold  - the session failure threshold. The TrickGeneration Libary will be shut down if failed session count more than this value. 0 to disable, default is 0
+                -->
+        <TrickGeneration maxSessionNum="40" maxInputBufferBytes="65536" maxInputBuffersPerSession="128" sessionFailThreshold="0" />
+        <!-- Configuration on the Vstream API
+                     attributes:
+                       BWMgrClientId  - the client Id of Vstream Bandwidth Management. Default 773220, 0 to disable bandwidth management
+                       disableBufDrvThrottle  - 1 would increased the vstrm write performance, default 1
+                -->
+        <Vstream BWMgrClientId="773220" disableBufDrvThrottle="1" />
+        <!-- Configuration on the process events
+                -->
+        <Event>
+            <!-- Configuration on the progress events
+                             attributes:
+                               enable  - 1 to enable sending progress events
+                        -->
+            <Progress enable="1" />
+            <!-- Configuration on the streamable events
+                             attributes:
+                               enable  - 1 to enable sending streamable events
+                               lagAfterStart  - the time lag in second after the provision starts to notify streamable
+                        -->
+            <Streamable enable="1" lagAfterStart="5" />
+        </Event>
+        <!-- Configuration on the NTFS output mode, if this mode is enabled, the provision will not output into Vstream file system,
+                     instead, it only save the output locally onto the NTFS storage
+                       enable  - 1 to enable this NTFS output mode, vstream IO will be eliminated
+                       homeDir  - the full path name of the home directory where to outuput the provision contents
+                -->
+        <NtfsOutputMode enable="1" homeDir="/opt/TianShan" />
+        <NormalizeSparseFile enable="0" />
+        <Augmentation pids="" />
+        <!-- Unified Trick File for .H264
+                       enable  - 1 to use unified trick file(FFR), 0 to use  separated trick file(FF, FR), default 1;
+                -->
+        <UnifiedTrickFile enable="1" />
+        <!--
+        0- default, 1-cisco 0x22333333, 2-objectId consistof PAID PID
+                -->
+        <FileExtName mode="0" />
+        <MountPath entry="/mnt/CPESvc/" />
+        <!-- C2Client
+                     ingressCapacity:  client ingress capacity . default=100000Kbps(100M)
+                     cacheDir:     temporary directory for storage Index files
+                     bind:        the ip which http client bind
+                     transferip:    the file transfer ip
+                     transferdelay:  file transfer delay time
+                     transferPort:  transfer file server port
+                     timeout: http receiver data timeout interval(second),default = 10s
+                -->
+        <C2Client ingressCapacity="1000000" cacheDir="/tmp" bind="" transferip="" speed="1" transferdelay="0" transferPort="12000" timeout="20" />
+        <DiskWrite maxSyncTimeout="5000" bytesToSync="1048576" />
+        <!-- <SparseFile sparseFilesize="10000000"/> -->
+        <!-- SleepTime :    timeInterval  time interval for download the same file -->
+        <!--     <SleepTime  timeInterval="5000"> -->
+    </CPH_CDN>
+</TianShan>

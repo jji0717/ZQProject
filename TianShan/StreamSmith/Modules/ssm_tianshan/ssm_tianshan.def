@@ -1,0 +1,10 @@
+
+; ssm_tianshan.def : Declares the module parameters for the DLL.
+
+LIBRARY      "ssm_tianshan"
+DESCRIPTION  'ssm_tianshan Windows Dynamic Link Library'
+
+EXPORTS
+    ; Explicit exports can go here
+Initialize
+UnInitialize

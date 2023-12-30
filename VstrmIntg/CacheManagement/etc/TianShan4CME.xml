@@ -1,0 +1,17 @@
+<TianShan>
+
+	<!-- SNMP extension agent -->
+	<SNMP loggingMask="1" logPath="/opt/CMEV2/logs">
+		<CMEV2Svc oid="3101" />
+	</SNMP>
+
+	<CMEV2Svc>
+		<log path="/opt/CMEV2/logs" snmpLoggingMask="1" size="40000000" count="10" level="7" bufferSize="2048" timeout="10" />
+		<config path="/opt/CMEV2/etc" />
+	</CMEV2Svc>
+	<CMEV2Svc_Shell>
+		<log loggingMask="1" snmpLoggingMask="1" path="/opt/CMEV2/logs" size="500000" level="6" />
+		<service restartInterval="120" restartTries="3" aliveTimeout="900" appAliveWait="25" imagePath="/opt/CMEV2/bin/CMEV2" />
+	</CMEV2Svc_Shell>
+
+</TianShan>

@@ -1,0 +1,257 @@
+﻿1,3.0|
+300,0,13|
+  301,1,1|
+    11,7,0|http://|1|1|/stbservlet?|attribute|=|&|
+  311,1,46|
+    101,9,0|0|1|1|300|0|1|0|201|stb_itvlib_get_folder|
+    102,9,0|0|1|1|1200|0|6|0|202|stb_itvlib_get_asset|
+    103,9,0|0|1|1|1200|0|5|0|202|stb_itvlib_get_bundle|
+    104,9,0|0|1|1|5|0|10|0|202|stb_itvlib_get_program|
+    105,9,0|0|1|1|1200|0|21|0|202|stb_itvlib_get_chatroom|
+    106,9,0|0|1|1|60|0|1306|0|202|stb_itvlib_get_LCM|
+    107,9,0|0|1|1|1200|0|7|0|201|stb_itvlib_get_symbollink|
+    108,9,0|0|1|1|1200|0|61|0|201|stb_itvlib_list_entry|
+    109,9,0|0|1|1|1200|3|1007|0|223|stb_itvlib_get_po|
+    110,9,0|0|1|1|5|0|10|0|202;201|stb_itvlib_get_schedule|
+    120,9,0|0|3|1|3|1|1007|0|205|ote_itvlib_get_product_offering|
+    121,9,0|0|3|1|3|1|1003|1|206|ote_itvlib_get_ticket|
+    122,9,0|0|3|1|60|1|1002|0|203|ote_itvlib_list_ticket|
+    123,9,0|0|3|1|3|1|1005|0|209|ote_itvlib_get_coupon|
+    124,9,0|0|3|1|3|1|1004|0|203|ote_itvlib_list_coupon|
+    125,9,0|0|3|1|3|3|1001|1|208|ote_itvlib_purchase_product|
+    126,9,0|0|3|1|3|3|1001|1|206|ote_itvlib_issue_ticket|
+    127,9,0|0|3|1|3|0|115|0|202|ote_itvlib_get_server_load_info|
+    128,9,0|0|3|1|3|3|1001|1|214|ote_itvlib_catch_program|
+    130,9,0|0|3|1|3|1|1007|0|202|ote_itvlib_get_basic_po|
+    131,9,0|0|3|1|3|1|1003|0|202|ote_itvlib_delete_ticket|
+    133,9,0|0|3|1|3|1|1001|0|202|ote_itvlib_modify_transaction|
+    134,9,0|0|3|1|60|1|1000|1|203|ote_itvlib_list_transaction|
+    135,9,0|0|3|1|3|1|1001|1|219|ote_itvlib_get_transaction|
+    136,9,0|0|3|1|3|1|1001|0|219|ote_itvlib_delete_transaction|
+    137,9,0|0|3|1|3|1|1001|0|208|ote_itvlib_prepurchase_product|
+    138,9,0|0|3|1|3|1|1001|0|228|ote_itvlib_update_ticket_suspend_position|
+    139,9,0|0|3|1|3|1|1122|0|0|ote_itvlib_get_favorite|
+    150,9,0|0|2|1|1200|0|1104|0|211|oss_itvlib_get_user_data|
+    151,9,0|0|2|1|1200|0|1104|0|202|oss_itvlib_check_vod_enabled|
+    152,9,0|0|2|1|1200|0|1104|0|202|oss_itvlib_check_account_status|
+    153,9,0|0|2|1|1200|0|1104|0|202|oss_itvlib_check_service_entitlement|
+    154,9,0|0|2|1|1200|0|1110|0|202|oss_itvlib_online_signup|
+    180,9,0|0|0|2|1200|0|0|0|281|/portal_E/|
+    181,9,0|0|0|1|1200|0|0|0|281|/portal_E/|
+    182,9,0|0|2|0|1200|0|0|0|281|/poster/|
+    183,9,0|0|1|0|1200|0|0|0|281|/mainpage/|
+    184,9,0|0|1|1|1200|0|0|0|281|/mainpage/|
+    185,9,0|0|2|0|1200|0|0|0|281|/mainpage/po/|
+    186,9,0|0|2|1|1200|0|0|0|281|/mainpage/po/|
+    187,9,0|0|3|1|3|0|1501|0|293|todas_itvlib_get_pausetv_channel_playlist|
+    188,9,0|0|3|1|3|0|1501|0|0|todas_itvlib_get_pausetv_channel_list|
+    189,9,0|0|3|1|3|3|1505|1|294|todas_itvlib_list_channel_bookmarks|
+    190,9,0|0|3|1|3|3|1505|1|294|todas_itvlib_save_pausetv_bookmark|
+    191,9,0|0|3|1|3|3|1505|1|297|todas_itvlib_delete_pausetv_bm|
+    161,9,0|1|3|3|0|0|1314|1|297|list_message_ilp|
+  321,1,43|
+    201,2,0|0|hierarchy_UID|
+    202,2,0|0|local_entry_UID|
+    203,2,0|0|home_id|
+    204,2,0|0|device_id|
+    205,2,0|0|product_offering_id|
+    206,2,0|0|ticket_id|
+    207,2,0|0|is_adult|
+    208,2,0|0|product_type|
+    209,2,0|0|coupon_id|
+    210,2,0|0|entry_type|
+    211,2,0|0|user_id|
+    212,2,0|0|program_id|
+    213,2,0|0|schedule_id|
+    214,2,0|0|catch_multi_program_type|
+    215,2,0|0|from_number|
+    216,2,0|0|to_number|
+    217,2,0|0|total_number_from_now|
+    218,2,0|0|operation|
+    219,2,0|0|transaction_id|
+    220,2,0|0|search_script|
+    221,2,0|0|parent_HUID|
+    222,2,0|1|service_tag|
+    223,2,0|1|po_id|
+    224,2,0|1|rule_id|
+    225,2,0|1|local_entry_id|
+    226,2,0|1|target_type|
+    227,2,0|1|source_HUID|
+    228,2,0|1|suspend_position|
+    260,2,0|1|type|
+    261,2,0|1|time|
+    262,2,0|1|destination_id|
+    263,2,0|1|topic_id|
+    280,2,0|0|fileURL|
+    281,2,0|0|filename|
+    290,2,0|0|home_id|
+    291,2,0|0|device_id|
+    292,2,0|0|user_id|
+    293,2,0|1|channel_id|
+    294,2,0|1|channel_id|
+    295,2,0|1|broadcast_time|
+    296,2,0|1|asset_name|
+    297,2,0|1|bookmark_id|
+    298,2,0|1|element_id|
+  331,1,10|
+    1008,5,0|1|5|0|||
+    1009,5,0|3|5|0|||
+    1010,5,0|4|5|0|||
+    1014,5,0|2|5|0|||
+    1011,5,0|1|6|0|||
+    1012,5,0|3|6|0|||
+    1013,5,0|4|6|0|||
+    1015,5,0|2|6|0|||
+    1310,5,0|0|0|1|||
+    1025,5,1|5|0|0|3000||
+      332,1,4|
+        11,3,0|0|2|0|
+        14,3,0|0|1|0|
+        15,3,0|0|4|0|
+        19,3,0|0|3|0|
+  341,1,3|
+    6,7,0|3539|3001|122|3002|3000|0|0|
+    10,7,0|3456|3001|122|3015|3000|2|0|
+    5,7,0|7890|3001|122|3019|0|0|3018|
+  371,1,3|
+    1,6,0|161|1|0|0|1|60000|
+    2,6,0|161|2|1|0|0|60000|
+    3,6,0|161|3|0|0|0|60000|
+  351,1,7|
+    250,1,0|SETUP|
+    251,1,0|CSeq|
+    252,1,0|Transport|
+    253,1,0|User-Agent|
+    254,1,0|SeaChange-Version|
+    255,1,0|SeaChange-MayNotify|
+    256,1,0|SeaChange-Server-Data|
+  352,1,8|
+    250,1,0|PLAY|
+    251,1,0|CSeq|
+    252,1,0|Session|
+    253,1,0|User-Agent|
+    254,1,0|Range|
+    255,1,0|Scale|
+    256,1,0|x-playNow|
+    257,1,0|PAUSE|
+  353,1,5|
+    250,1,0|TEARDOWN|
+    251,1,0|CSeq|
+    252,1,0|User-Agent|
+    253,1,0|Session|
+    254,1,0|x-Reason|
+  354,1,5|
+    250,1,0|rtsp|
+    251,1,0|CSeq|
+    252,1,0|Session|
+    253,1,0|Server|
+    254,1,0|SeaChange-Notice|
+  355,1,5|
+    250,1,0|GET_PARAMETER|
+    251,1,0|CSeq|
+    252,1,0|Session|
+    253,1,0|Content-Type|
+    254,1,0|Content-Length|
+  361,1,90|
+    101,2,0|Accept-Ranges|0|
+    102,2,0|BcastPos|0|
+    103,2,0|billing-id|0|
+    104,2,0|clock|0|
+    105,2,0|Content-Length|0|
+    106,2,0|Content-Type|0|
+    107,2,0|CSeq|0|
+    108,2,0|destination|0|
+    109,2,0|device-id|0|
+    110,2,0|frequency|0|
+    111,2,0|Method-Code|0|
+    112,2,0|node-group-id|0|
+    113,2,0|position|0|
+    114,2,0|presentation_state|0|
+    115,2,0|program-number|0|
+    116,2,0|purchase-id|0|
+    117,2,0|purchase-time|0|
+    118,2,0|qam-mode|0|
+    119,2,0|Range|0|
+    120,2,0|RTSP/1.0|0|
+    121,2,0|Scale|0|
+    122,2,0|SeaChange-MayNotify|0|
+    123,2,0|SeaChange-Mod-Data|0|
+    124,2,0|SeaChange-Reason|0|
+    125,2,0|SeaChange-Server-Data|0|
+    126,2,0|SeaChange-Transport|0|
+    127,2,0|SeaChange-Version|0|
+    128,2,0|Session|0|
+    129,2,0|symbol-rate|0|
+    130,2,0|timeout|0|
+    131,2,0|Transport|0|
+    132,2,0|User-Agent|0|
+    133,2,0|virtual-channel|0|
+    134,2,0|x-playNow|0|
+    135,2,0|x-Reason|0|
+    136,2,0|scale|0|
+    137,2,0|npt|0|
+    270,2,0|rtsp://%s/PauseTV?channelId=%s  RTSP/1.0|0|
+    271,2,0|: %d|1|
+    272,2,0|%s;destination=%s;client_port=%d;client_mac=%s|0|
+    273,2,0|: ITVLibrary 3.0; amino|2|
+    274,2,0|: 1|1|
+    275,2,0|: SeaChange-MayNotify ?|2|
+    276,2,0|: node-group-id=%010d;smartcard-id=%s;device-id=%s|4|
+    277,2,0|%s|0|
+    278,2,0|clock=%s-|0|
+    279,2,0|%.6f|0|
+    280,2,0|%s|0|
+    281,2,0|%s|0|
+    282,2,0|StreamSmith 1.0; ssm_tianshan_s1 1.0|0|
+    283,2,0|%d "%s" %s|0|
+    284,2,0|* RTSP/1.0|8|
+    285,2,0|: %d|0|
+    286,2,0|: %s|0|
+    287,2,0|: ITVLibrary 3.0; amino|0|
+    288,2,0|: clock=%sZ-|0|
+    289,2,0|: %d|0|
+    290,2,0|%s|0|
+    291,2,0|* RTSP/1.0|0|
+    292,2,0|: %d|0|
+    293,2,0|: ITVLibrary 3.0; amino|0|
+    294,2,0|: %s|0|
+    295,2,0|: %s|0|
+    296,2,0|//10.7.0.250/PauseTV?channelId=%d RTSP/1.0|0|
+    297,2,0|%s|0|
+    298,2,0|StreamSmith 1.0; ssm_tianshan_s1 1.0|0|
+    299,2,0|2101 "End-of-Stream Reached" 20060801T150707Z|0|
+    300,2,0|* RTSP/1.0|0|
+    301,2,0|: %d|0|
+    302,2,0|: %s|0|
+    303,2,0|: text/parameter|0|
+    304,2,0|: 14|0|
+    305,2,0|BcastPos Scale|0|
+    306,2,0|* RTSP/1.0|8|
+    350,2,0|ANNOUNCE|0|
+    351,2,0|Session|0|
+    352,2,0|SeaChange-Notice|0|
+    353,2,0|Scale|0|
+    354,2,0|BcastPos|0|
+    355,2,0|CSeq|0|
+    356,2,0|SeaChange-Transport|0|
+    357,2,0|frequency|0|
+    358,2,0|program-number|0|
+    359,2,0|timeout|0|
+    360,2,0|Transport MP2T|0|
+    361,2,0|MP2T/DVBC/QAM|0|
+    362,2,0|MP2T/AVP/UDP|0|
+    363,2,0|qam-mode|0|
+    364,2,0|SeaChange-Reason: 4600 Signal Lost Teardown|0|
+    365,2,0|SeaChange-Reason: 2000 User Requested Teardown|0|
+  800,1,11|
+    311,7,0|SETUP rtsp://%s/PauseTV?channelId=%s RTSP/1.0\r\nCSeq: %d\r\nTransport: MP2T/DVBC/QAM;unicast\r\nUser-Agent: ITVLibrary 3.0; amino\r\nSeaChange-Version: 1\r\nSeaChange-MayNotify: \r\nSeaChange-Server-Data: node-group-id=%d;smartcard-id=0000000001;device-id=%s;home-id=%s\r\n\r\n|108|100|117|111|103|106|
+    313,6,0|PLAY * RTSP/1.0\r\nCSeq: %d\r\nSession: %s\r\nUser-Agent: ITVLibrary 3.0; amino\r\nRange: clock=%s\r\nScale: %d\r\nx-playNow %s\r\n\r\n|117|118|125|114|121|
+    315,3,0|PAUSE * RTSP/1.0\r\nCSeq: %d\r\nSession: %s\r\nUser-Agent: ITVLibrary 3.0; amino\r\nx-Reason: User Requested pause\r\n\r\n|117|118|
+    317,4,0|TEARDOWN * RTSP/1.0\r\nCSeq: %d\r\nUser-Agent: ITVLibrary 3.0; amino\r\nSession: %s\r\nx-Reason: %s\r\n\r\n|117|118|122|
+    319,3,0|GET_PARAMETER * RTSP/1.0\r\nCSeq: %d\r\nSession: %s\r\nContent-Type: text/parameter\r\nContent-Length: 14\r\n\r\nBcastPos Scale|117|118|
+    511,9,0|SETUP rtsp://%s/mediacluster?%s RTSP/1.0\r\nCSeq: %d\r\nSeaChange-Version: 1\r\nTransport: MP2T/DVBC/QAM;unicast\r\nSeaChange-MayNotify: \r\nSeaChange-Server-Data: node-group-id=%d;device-id=%s\r\nSeaChange-Mod-Data: billing-id=%s;purchase-time=%s;purchase-id=%s\r\n\r\n|108|126|117|111|103|127|128|129|
+    513,5,0|PLAY * RTSP/1.0\r\nCSeq: %d\r\nSession: %s\r\nScale: %d\r\nRange: npt=%s-\r\n\r\n|117|118|114|130|
+    515,3,0|PAUSE * RTSP/1.0 \r\nCSeq: %d\r\nSession: %s\r\n\r\n|117|118|
+    517,4,0|TEARDOWN * RTSP/1.0 \r\nCSeq: %d \r\nSeaChange-Reason: %s\r\nSession: %s\r\n\r\n|117|122|118|
+    519,3,0|GET_PARAMETER * RTSP/1.0\r\nCSeq: %d\r\nSession: %s\r\nContent-Type: text/parameter\r\nContent-Length: 33\r\n\r\npresentation_state position scale|117|118|
+    613,4,0|PLAY * RTSP/1.0\r\nCSeq: %d\r\nSession: %s\r\nScale: %d\r\n\r\n|117|118|114|

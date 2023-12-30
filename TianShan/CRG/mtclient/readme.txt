@@ -1,0 +1,1 @@
+ --ms 160 --confile ./data/configurefile --logfile romalin99.log --threads 1  --timeout 150000 --suffix 0  --resourse dsmcctest0002

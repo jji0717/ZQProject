@@ -1,0 +1,197 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "NSS"=.\NSS.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQSNMPManPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name NSSRtspSession
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "NSSRtspSession"=..\NSSRtspSession\NSSRtspSession.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "NSSSvc"=..\NSSSvc\NSSSvc.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQSNMPManPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name NSSRtspSession
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCfgPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQAppshell
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "NSSTestClient"=.\NSSTestClient\NSSTestClient.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQSNMPManPkg
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TianShanCommon"=..\..\..\common\TianShanCommon.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TianShanIce"=..\..\..\Ice\TianShanIce.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ZQAppshell"=..\..\..\Shell\ZQAppShell\zqappshell.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ZQCfgPkg"=..\..\..\Shell\ZQCfgPkg\ZQcfgpkg.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ZQCommonStlp"=..\..\..\..\Common\dll\ZQCommonStlp.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ZQSNMPManPkg"=..\..\..\Shell\ZQSNMPManPkg\ZQSNMPManPkg.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCfgPkg
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

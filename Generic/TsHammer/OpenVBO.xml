@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--NOTICE : all time configuration's unit is ms -->
+
+<!-- the configuration of hammer test
+   attributes:
+     client:   the simultaneous client-side the test is running with, each client may represent a TCP connection to the server
+     iterationPerClient: the iterations that shares one client
+     loop:     the times that every iteration would loop sequentially, the total sessions of the test would be 
+     interval: the time interval, in millisecond, between one iteration and its next
+     timeout:  the max time wait for resonse
+     @note:    the configuration would lead the test to:
+                   maximal number of simultaneous sessions equals the total iterations, which is (client * iterationPerClient)
+                   total sessions equals (client * iterationPerClient) * loop
+-->
+<HammerTest client="1" clientType="RTSPClient" iterationPerClient="1" loop="1" interval="50" messageTimeout="5000" hammerThreads="3" clientThreads="4" clientIdleTimeout="600000">
+  <Log level="7" filename="TsHammer.log" size="50000000" count="10" hexdumpSentMsg="1" hexDumpRcvdMsg="1" traceTcpThreadPool="1" traceUserThreadPool="1" />
+
+  <!-- the configuration of the server-side that the test is connects to
+   	  attributes:
+     	     url:   url to the server-side
+	-->
+  <Server url="rtsp://172.16.21.27:554"/>
+
+  <!-- the configuration of a pool that respond to the script macro $POOLALLOC(PoolName), $POOLFIND(PoolName, name, paramName)
+   	  attributes:
+   	     name:  the unique name of the pool
+   	     spin:  1- spin, the item would not be taken twice until the full sequence had been walked over, 0- non-spin
+     	     sequencePrepare: 0 - keep the original sequence; 1- random suffle, every time after the sequence had been
+     	                      walked over by POOLALLOC(), the pool must initialize the sequence for next use by randomSuffling them
+	-->
+  <Pool name="AssetPool" spin="1" sequencePrepare="random">
+    <Item name="indemand.com#Y081177291705006001" >
+      <param key ="bitrate" value="3750000" />
+      <param key ="pidpaid" value="schange.com SEAC000000000038E4A1" />
+	  <param key ="paid" value="SEAC000000000038E4A1" />
+	</Item>
+    <Item name="indemand.com#Y081177291705006002" >
+      <param key ="bitrate" value="3750000" />
+      <param key ="pidpaid" value="schange.com SEAC000000000038E4A2" />
+  	  <param key ="paid" value="SEAC000000000038E4A2" />
+    </Item>
+    <Item name="indemand.com#Y081177291705006003" >
+      <param key ="bitrate" value="3750000" />
+      <param key ="pidpaid" value="schange.com SEAC000000000038E4A3" />
+	  <param key ="paid" value="SEAC000000000038E4A3" />
+    </Item>
+  </Pool>
+
+  <SessCtx name="destPort" value="49156" global="0"/>
+  <SessCtx name="source" value="192.168.100.10/24" />
+
+  <Session>
+    <!-- the initial context variables of each session
+   	  	  attributes:
+   	             name:  the name of the variable
+   	     	     value: the value or expression to initialize the default value of the variable
+   	     	     global: 1- exported as a global variable,  0- valid only within the session, default 0
+   	     	     note: some reserved macros are:
+   	     	       ${CLS} - new line \r\n
+   	     	       ${SERVERURL} - what in the above <Server url="" />
+   	     	       $(SessCSeq)  - an automatically increased cseq number offered by the hammer core
+   	     	       $(ClientId)  - the client instance id assigned by the hammer core
+		-->
+    <SessCtx name="asset1" value="$POOLALLOC(AssetPool)" global="0"/>
+    <SessCtx name="URL" value="${ServerURL}" global="0" />
+    <SessCtx name="dest" value="192.168.21.103" />
+    <SessCtx name="destPort" value="$INC(${destPort})" global="1"/>
+	
+    <!-- each out-going request in the sequence of the session
+   	  	  attributes:
+   	             skipable: 0- this request can not be skipped even if the session had error
+   	                       1- this request can be skipped, continue with the next request if this one has error
+		-->
+	<Request operation="GET_PARAMETER" continueOnFailure="1">
+		<Header name="Content-Type" value="text/parameters" />
+		<Body value="SRM_ID: ${ClientId}" />
+	</Request>
+
+	<Sleep wait="1000" />
+	
+    <Request operation="SETUP" continueOnFailures="0"  >
+	<Header name="Transport"
+			value="MP2T/DVBC/UDP;unicast;client=1;source=${source};destination=${dest};client_port=513" />
+  
+   <Body value="playlist_item:$POOLFIND(AssetPool,${Asset1},paid);ordinal=1;in=0;out=0" />
+
+    </Request>
+
+     <Response>
+      <Header name="Session" syntax="[0-9]+" >
+        <SessCtx key="SessId" value="${1}" global="0"/>
+      </Header>
+    </Response>
+
+   <Sleep wait="1000" />
+
+    <!-- some further request samples in the sequence-->
+    <Request operation="PLAY" continueOnFailures="1"  >
+      <Header name="Range" value="npt=0-" />
+      <Header name="Scale" value="1" />
+    </Request>
+    <Response/>
+    <Sleep wait="5000" />
+
+    <Request operation="TEARDOWN" continueOnFailures="0">
+    </Request>
+    <Response/>
+
+  </Session>
+
+</HammerTest>

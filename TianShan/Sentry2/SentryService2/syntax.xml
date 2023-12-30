@@ -1,0 +1,956 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TianShan>
+  <!-- snmp trap severity config 
+      add item like: <Param name="#snmp.severity" value="INFO" /> under Event node
+      value is one of "EMERG, ALERT, CRIT, ERROR, WARNING, NOTICE, INFO, DEBUG"
+      default value is "INFO"-->
+  <!-- ClusterCS service -->
+  <Syntax key="ClusterCS">
+    <EventSource type="FileLog"/>
+    <Rule enabled="1" regex="(.{18}).*========================= Service\[(.*)\] version\[(.*)\] starts =========================.*">
+      <Event category="ClusterContentStore" eventName="ServiceStarted" eventId="0001" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}">
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).*Service\[(.*)\]Recieve Stop message from service shell.*">
+      <Event category="ClusterContentStore" eventName="ServiceStopped" eventId="0002" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}">
+      </Event>
+    </Rule>
+  </Syntax>
+
+  <!-- Content Events -->
+  <Syntax key="CSEvents">
+    <EventSource type="FileLog"/>
+    <Rule enabled="1" regex="(.{18}).*Event\[Volume::Mounted\(3\)\] NetId\[(.*)\]: vol\[(.*)\] path\[(.*)\].*">
+      <Event category="Content" eventName="Mounted"  eventId="3" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="$2">
+        <Param name="volume" value="$3" />
+        <Param name="path" value="$4" />
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).*Event\[Content::Created\(0\)\] NetId\[(.*)\]: Content\[(.*)\] vol\[(.*)\] name\[(.*)\].*">
+      <Event category="Content" eventName="Created"  eventId="0" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="$2">
+        <Param name="content" value="$3" />
+        <Param name="volume" value="$4" />
+        <Param name="name" value="$5" />
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).*Event\[Content::Destroyed\(1\)\] NetId\[(.*)\]: Content\[(.*)\] vol\[(.*)\] name\[(.*)\].*">
+      <Event category="Content" eventName="Destroyed" eventId="1" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="$2">
+        <Param name="content" value="$3" />
+        <Param name="volume" value="$4"/>
+        <Param name="name" value="$5" />
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).*Event\[Content::StateChanged\(2\)\] NetId\[(.*)\]: Content\[(.*)\] vol\[(.*)\] name\[(.*)\] oldState\[(.*)\] newState\[(.*)\].*">
+      <Event category="Content" eventName="StateChanged"  eventId="2" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="$2">
+        <Param name="content" value="$3" />
+        <Param name="volume" value="$4" />
+        <Param name="name" value="$5" />
+        <Param name="oldState" value="$6" />
+        <Param name="newState" value="$7" />
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).*Event\[Content::ProvisionStarted\(20\)\] NetId\[(.*)\]: Content\[(.*)\] vol\[(.*)\] name\[(.*)\].*">
+      <Event category="Content" eventName="ProvisionStarted" eventId="20" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="$2">
+        <Param name="content" value="$3" />
+        <Param name="volume" value="$4"/>
+        <Param name="name" value="$5" />
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).*Event\[Content::ProvisionStopped\(21\)\] NetId\[(.*)\]: Content\[(.*)\] vol\[(.*)\] name\[(.*)\] LastError\[(\d+)\] LastErrMsg\[(.*)\].*">
+      <Event category="Content" eventName="ProvisionStopped" eventId="21" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="$2">
+        <Param name="content" value="$3" />
+        <Param name="volume" value="$4"/>
+        <Param name="name" value="$5" />
+        <Param name="lastError" value="$6" />
+        <Param name="lastErrMsg" value="$7" />
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).*Event\[Content::ProvisionProgress\(22\)\] NetId\[(.*)\]: Content\[(.*)\] vol\[(.*)\] name\[(.*)\] processed\[(\d+)\] total\[(\d+)\].*">
+      <Event category="Content" eventName="ProvisionProgress" eventId="1" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="$2">
+        <Param name="content" value="$3" />
+        <Param name="volume" value="$4"/>
+        <Param name="name" value="$5" />
+        <Param name="processed" value="$6" />
+        <Param name="total" value="$7" />
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).*Event\[Content::ProvisionStreamable\(23\)\] NetId\[(.*)\]: Content\[(.*)\] vol\[(.*)\] name\[(.*)\].*">
+      <Event category="Content" eventName="ProvisionStreamable" eventId="23" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="$2">
+        <Param name="content" value="$3" />
+        <Param name="volume" value="$4"/>
+        <Param name="name" value="$5" />
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).*Event\[Content::ProvisionGivenUp\(24\)\] NetId\[(.*)\]: Content\[(.*)\] vol\[(.*)\] name\[(.*)\] (.*)">
+      <Event category="Content" eventName="ProvisionGivenUp" eventId="24" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="$2">
+        <Param name="content" value="$3" />
+        <Param name="volume" value="$4" />
+        <Param name="name" value="$5" />
+        <Param name="lastErrMsg" value="$6" />
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).*Event\[Volume::FreeSpace\(5\)\] NetId\[(.*)\]: vol\[(.*)\] free space below (\d+)%: freeMB\[(\d+)\] totalMB\[(\d+)\].*">
+      <Event category="Volume" eventName="FreeSpace" eventId="5" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="$2">
+        <Param name="vol" value="$3" />
+        <Param name="warningPercent" value="$4" />
+        <Param name="freeMB" value="$5" />
+        <Param name="totalMB" value="$6" />
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).*Event\[Content::ProvisionScheduleAdjusted\(27\)\] NetId\[(.*)\]: Content\[(.*)\] vol\[(.*)\] name\[(.*)\] new inputted provisionStart\[(.*)\] provisionEnd\[(.*)\].*">
+      <Event category="Content" eventName="ProvisionScheduleAdjusted" eventId="27" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="$2">
+        <Param name="content" value="$3" />
+        <Param name="volume" value="$4" />
+        <Param name="name" value="$5" />
+        <Param name="startUTC" value="$6" />
+        <Param name="endUTC" value="$7" />
+      </Event>
+    </Rule>
+  </Syntax>
+
+  <!-- Node Content Store -->
+  <Syntax key="NodeCS">
+    <EventSource type="FileLog"/>
+    <Rule enabled="1" regex="(.{18}).*========================= Service\[(.*)\] version\[(.*)\] starts =========================.*">
+      <Event category="NodeContentStore" eventName="ServiceStarted" eventId="0001" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).*Service\[(.*)\]Recieve Stop message from service shell.*">
+      <Event category="NodeContentStore" eventName="ServiceStopped" eventId="0002" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+      </Event>
+    </Rule>
+  </Syntax>
+
+  <!-- RTFCPNode -->
+  <Syntax key="RTFCPNode">
+    <EventSource type="FileLog"/>
+    <Rule enabled="1" regex="(.{18}).*========================= Service\[(.*)\] version\[(.*)\] starts =========================.*">
+      <Event category="RTFCPNode" eventName="ServiceStarted" eventId="0001" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).*Service\[(.*)\]Recieve Stop message from service shell.*">
+      <Event category="RTFCPNode" eventName="ServiceStopped" eventId="0002" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+      </Event>
+    </Rule>
+  </Syntax>
+
+  <!-- RTICPNode -->
+  <Syntax key="RTICPNode">
+    <EventSource type="FileLog"/>
+    <Rule enabled="1" regex="(.{18}).*===================== Loading service common interface.*">
+      <Event category="RTICPNode" eventName="ServiceStarted" eventId="0001" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).*Service\[(.*)\]Recieve Stop message from service shell.*">
+      <Event category="RTICPNode" eventName="ServiceStopped" eventId="0002" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+      </Event>
+    </Rule>
+  </Syntax>
+
+  <!-- RTSP Proxy -->
+  <Syntax key="RTSPProxy">
+    <EventSource type="FileLog"/>
+    <Rule enabled="1" regex="(.{18}).*========================= Service\[(.*)\] version\[(.*)\] starts =========================.*">
+      <Event category="RTSPProxy" eventName="ServiceStarted" eventId="0001" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="#syslog.msg" value="&lt;GeneralEvent type=&quot;Startup&quot; msgSeq=&quot;${SEQ}&quot; /&gt;"/>
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).*OnInit\(\) failed with \[\d+\].*">
+      <Event category="RTSPProxy" eventName="InitializationFailure" eventId="0003" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="#syslog.msg" value="&lt;GeneralEvent type=&quot;Shutdown&quot; msgSeq=&quot;${SEQ}&quot; reason=&quot;500&quot;/&gt;"/>
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).*RtspProxy.*loadInfo\(\)\s*serverIP\[(.*)\]\s*serverPort\[(.*)\]\s*session\[(.*)\]\s*connection\[(.*)\]\s*load\[(.*)\]\s*.*">
+      <Event category="RTSPProxy" eventName="ServerLoad" eventId="0011" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="#snapshot.target" value="${snapshotTarget}"/>
+        <Param name="#snapshot.template" value="${snapshotTemplate}"/>
+        <Param name="#snapshot.env"    value="ip=${RtspProxyIP};port=${RtspProxyPort};load=$6"/>
+      </Event>
+    </Rule>
+  </Syntax>
+  
+  <!-- RTSP Proxy Shell -->
+  <Syntax key="RTSPProxy_Shell">
+    <EventSource type="SCLog"/>
+    <!-- User Initiated shutdown -->
+    <Rule enabled="1" regex="([\d]{2}/[\d]{2} [\d]{2}:[\d]{2}:[\d]{2}.[\d]{3}).*Requested to stop the service.*">
+      <Event category="RTSPProxy" eventName="UserInitiatedShutdown" eventId="0011" stampUTC="$SCLOGTIME2UTC($1)" sourceNetId="${SourceNetId}" targets="syslog">
+        <Param name="#syslog.msg"    value="&lt;GeneralEvent type=&quot;Shutdown&quot; msgSeq=&quot;${SEQ}&quot; reason=&quot;200&quot;/&gt;"/>
+      </Event>
+    </Rule>
+    <!-- System shutdown -->
+    <Rule enabled="1" regex="([\d]{2}/[\d]{2} [\d]{2}:[\d]{2}:[\d]{2}.[\d]{3}).*System is shutting down...*">
+      <Event category="RTSPProxy" eventName="SystemShutdown" eventId="0012" stampUTC="$SCLOGTIME2UTC($1)" sourceNetId="${SourceNetId}" targets="syslog">
+        <Param name="#syslog.msg"    value="&lt;GeneralEvent type=&quot;Shutdown&quot; msgSeq=&quot;${SEQ}&quot; reason=&quot;201&quot;/&gt;"/>
+      </Event>
+    </Rule>
+  </Syntax>
+
+  <!-- SSM_OSTR -->
+<Syntax key="SSM_OSTR">
+    <EventSource type="FileLog"/>
+    <Rule enabled="1" regex="(.{18}) \[   ERROR \].*connect to EventChannel.*">
+      <Event category="SSM_OSTR" eventName="Failed to connect EventChannel" eventId="0003" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+      </Event>
+    </Rule>
+    <!-- Initializing -->
+    <Rule enabled="1" regex="(.{18}).*NGOD initialize start.*">
+      <Event category="SSM_OSTR" eventName="Initializing" eventId="0002" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="#syslog.msg"    value="&lt;GeneralEvent type=&quot;DeviceStatus&quot; msgSeq=&quot;${SEQ}&quot; reason=&quot;100&quot;/&gt;"/>
+      </Event>
+    </Rule>
+
+    <!-- Operational -->
+    <Rule enabled="1" regex="(.{18}).*NGOD initialize OK.*">
+      <Event category="SSM_OSTR" eventName="Initialized" eventId="0003" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="#syslog.msg"    value="&lt;GeneralEvent type=&quot;DeviceStatus&quot; msgSeq=&quot;${SEQ}&quot; reason=&quot;202&quot;/&gt;"/>
+      </Event>
+    </Rule>
+    <!-- Operational -->
+    <Rule enabled="1" regex="(.{18}).*PenaltyManager streamer hasn't penalty.*">
+      <Event category="SSM_OSTR" eventName="NoPenalty" eventId="0004" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="#syslog.msg"    value="&lt;GeneralEvent type=&quot;DeviceStatus&quot; msgSeq=&quot;${SEQ}&quot; reason=&quot;202&quot;/&gt;"/>
+      </Event>
+    </Rule>
+    <!-- Reduced Capacity -->
+    <Rule enabled="1" regex="(.{18}).*PenaltyManager streamer has penalty.*">
+      <Event category="SSM_OSTR" eventName="HasPenalty" eventId="0005" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="#syslog.msg"    value="&lt;GeneralEvent type=&quot;DeviceStatus&quot; msgSeq=&quot;${SEQ}&quot; reason=&quot;502&quot;/&gt;"/>
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).*Sess\((.*)\)Seq\((.*)\)Req\((.*)\)Mtd\((.*)\)ODSess.*? state\((.*)\)">
+      <Event category="SSM_OSTR" eventName="SessionState" eventId="6" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" targets="sesslog">
+        <Param name="#Sess.sess"    value="$2"/>
+        <Param name="#Sess.Method"  value="$5"/>
+        <Param name="#Sess.State"   value="$6"/>
+      </Event>
+    </Rule>
+
+    <Rule enabled="1" regex="(.{18}).*Sess\((.*)\)Seq\((.*)\)Req\((.*)\)Mtd\(SETUP\)ODSess.*? SessionHistoryLog Streamer\((.*)\)Bandwidth\((\d*)\)PAID\((.*)\)">
+      <Event category="SSM_OSTR" eventName="SessionPropertiesUpdated" eventId="8" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" targets="sesslog" >
+        <Param name="#Sess.sess"      value="$2"/>
+        <Param name="#Sess.Streamer" value="$5"/>
+        <Param name="#Sess.BandWidth" value="$6"/>
+        <Param name="#Sess.PAID" value="$7"/>
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}) \[   ERROR \](.*)Sess\((.*)\)Seq\((.*)\)Req\((.*)\)Mtd\((.*)\)ODSess\(.*?\) (.*)">
+      <Event category="SSM_OSTR" eventName="SessionFailed" eventId="9" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" targets="sesslog" >
+        <Param name="#Sess.sess"   value="$3"/>
+        <Param name="#Sess.LastError"   value="$7"/>
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18})\s\[\s.*?ERROR.*\]\sPlayListEventSinkI\ssession\[(.*)\].*?,\sError:(.*)">
+      <Event category="SSM_OSTR" eventName="SessionFailed" eventId="9" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" targets="sesslog" >
+        <Param name="#Sess.sess"   value="$2"/>
+        <Param name="#Sess.LastError"   value="$3"/>
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).*Sess\((.*)\)Seq\((.*)\)Req\((.*)\)Mtd\(SETUP\)ODSess.*? SessionHistoryLog ClientSessionId\((.*)\)OnDemandSessionId\((.*)\)SOP\((.*)\)Destination\((.*)\)Port\((\d*)\)PAID\((.*)\)Bandwidth\((\d*)\)">
+      <Event category="SSM_OSTR" eventName="SessionCreated" eventId="10" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" targets="sesslog" >
+        <Param name="#Sess.sess"            value="$2"/>
+        <Param name="#Sess.ClientSessId"    value="$5"/>
+        <Param name="#Sess.OnDemandSessId"  value="$6"/>
+        <Param name="#Sess.SOP"             value="$7"/>
+        <Param name="#Sess.Destination"     value="$8"/>
+        <Param name="#Sess.Port"            value="$9"/>
+        <Param name="#Sess.PAID"            value="$10"/>
+        <Param name="#Sess.BandWidth"       value="$11"/>
+      </Event>
+    </Rule>
+</Syntax>
+
+<!-- StreamSmith -->
+<Syntax key="StreamSmith">
+  <EventSource type="FileLog"/>
+  <Rule enabled="1" regex="(.{18}).*========================= Service\[(.*)\] version\[(.*)\] starts =========================.*">
+    <Event category="StreamSmith" eventName="ServiceStarted" eventId="0001" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+    </Event>
+  </Rule>
+  <Rule enabled="1" regex="(.{18}).*Service\[(.*)\]Recieve Stop message from service shell.*">
+    <Event category="StreamSmith" eventName="ServiceStopped" eventId="0002" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+    </Event>
+  </Rule>
+  <Rule enabled="1" regex="(.{18}) \[   ERROR \] \[SuperPlugin\].*when connect to ice Storm.*">
+    <Event category="StreamSmith" eventName="Failed to connect IceStorm" eventId="0003" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}">
+    </Event>
+  </Rule>
+  <Rule enabled="1" regex="(.{18}) \[   ERROR \] \[CheckContent\].*when connecting to content store.*">
+    <Event category="StreamSmith" eventName="Failed to connect ContentStore" eventId="0004" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}">
+    </Event>
+    </Rule>
+  </Syntax>
+  
+  <!-- Weiwoo -->
+  <Syntax key="Weiwoo">
+    <EventSource type="FileLog"/>
+    <Rule enabled="1" regex="(.{18}).*========================= Service\[(.*)\] version\[(.*)\] starts =========================.*">
+      <Event category="Weiwoo" eventName="ServiceStarted" eventId="0001" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).*Service\[(.*)\]Recieve Stop message from service shell.*">
+      <Event category="Weiwoo" eventName="ServiceStopped" eventId="0002" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+      </Event>
+    </Rule>
+  </Syntax>
+  <!-- WindowsEvent log syntax
+         key: indicate parse which type of windows event log: there are three keys.
+              1>  WinEventSystem
+              2>  WinEventApp
+              3>  WinEventSecurity  -->
+  <Syntax key="WinEventSystem">
+    <EventSource type="WinEventLog"/>
+    <!-- <Rule enabled="1" regex="([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|desc=(.*)$"> -->
+    <Rule enabled="1" regex="([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|desc=The (.*) service entered the running state.*">
+      <Event category="ServiceControlManager" eventName="SysEventServiceStart" eventId="0001" stampUTC="$5" sourceNetId="${SourceNetId}">
+        <Param name="eventtype"       value="$2"/>
+        <Param name="eventid"         value="$4"/>
+        <Param name="servicename"     value="$6"/>
+        <Param name="time"            value="$ISOTIME2LOCALTIME($5)"/>
+        <Param name="code"            value="Windows_System_1001"/>
+        <Param name="#snmp.severity" value="INFO" />
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|desc=The (.*) service entered the stopped state.*">
+      <Event category="ServiceControlManager" eventName="SysEventServiceStop" eventId="0002" stampUTC="$5" sourceNetId="${SourceNetId}" >
+        <Param name="eventtype"       value="$2"/>
+        <Param name="eventid"         value="$4"/>
+        <Param name="servicename"     value="$6"/>
+        <Param name="time"            value="$ISOTIME2LOCALTIME($5)"/>
+        <Param name="code"            value="Windows_System_1002"/>
+        <Param name="#snmp.severity" value="ERROR"/>
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="([^|]*)\|([^|]*)\|([^|]*)\|((?:7000)|(?:7001)|(?:7002)|(?:7003)|(?:7022))\|([^|]*)\|desc=(.*)">
+      <Event category="ServiceControlManager" eventName="SysEventServiceStartFailed" eventId="0003" stampUTC="$5" sourceNetId="${SourceNetId}" >
+        <Param name="eventtype"       value="$2"/>
+        <Param name="description"     value="$6"/>
+        <Param name="time"            value="$ISOTIME2LOCALTIME($5)"/>
+        <Param  name="code"           value="Windows_System_1003"/>
+        <Param name="#snmp.severity" value="ERROR" />
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="([^|]*)\|([^|]*)\|([^|]*)\|((?:7023)|(?:7024)|(?:7031)|(?:7034))\|([^|]*)\|desc=(.*)">
+      <Event category="ServiceControlManager" eventName="SysEventServiceTerminated" eventId="0004" stampUTC="$5" sourceNetId="${SourceNetId}" >
+        <Param name="eventtype"       value="$2"/>
+        <Param name="description"     value="$6"/>
+        <Param name="time"            value="$ISOTIME2LOCALTIME($5)"/>
+        <Param name="code"            value="Windows_System_1004"/>
+        <Param name="#snmp.severity" value="ERROR" />
+      </Event>
+    </Rule>
+    
+    <Rule enabled="1" regex="([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|desc=The (.*) disk is at or near capacity.*">
+      <Event category="ServiceControlManager" eventName="DiskFull" eventId="0005" stampUTC="$5" sourceNetId="${SourceNetId}">
+        <Param name="eventtype"       value="$2"/>
+        <Param name="eventid"         value="$4"/>
+        <Param name="driver"          value="$6"/>
+        <Param name="time"            value="$ISOTIME2LOCALTIME($5)"/>
+        <Param name="code"            value="Windows_System_1005"/>
+      </Event>
+    </Rule>
+    
+    <Rule enabled="1" regex="([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|desc=Legato transport link connection failed.*">
+      <Event category="ServiceControlManager" eventName="LegatoTransportLinkFailed" eventId="0006" stampUTC="$5" sourceNetId="${SourceNetId}">
+        <Param name="eventtype"       value="$2"/>
+        <Param name="eventid"         value="$4"/>
+        <Param name="time"            value="$ISOTIME2LOCALTIME($5)"/>
+        <Param name="code"            value="Windows_System_1006"/>
+      </Event>
+    </Rule>
+    
+    <Rule enabled="1" regex="([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|desc=(.*)_Drive is Offline.*">
+      <Event category="ServiceControlManager" eventName="DriverOffline" eventId="0007" stampUTC="$5" sourceNetId="${SourceNetId}">
+        <Param name="eventtype"       value="$2"/>
+        <Param name="eventid"         value="$4"/>
+        <Param name="drivername"      value="$6"/>
+        <Param name="time"            value="$ISOTIME2LOCALTIME($5)"/>
+        <Param name="code"            value="Windows_System_1007"/>
+      </Event>
+    </Rule>
+    
+    
+    <Rule enabled="1" regex="([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|desc=Driver connected to other node.*">
+      <Event category="ServiceControlManager" eventName="DriverConnectedToOtherNode" eventId="0008" stampUTC="$5" sourceNetId="${SourceNetId}">
+        <Param name="eventtype"       value="$2"/>
+        <Param name="eventid"         value="$4"/>
+        <Param name="time"            value="$ISOTIME2LOCALTIME($5)"/>
+        <Param name="code"            value="Windows_System_1008"/>
+      </Event>
+    <Rule enabled="1" regex="([^|]*)\|([^|]*)\|([^|]*)\|(?:17052)\|([^|]*)\|desc=(.*)">
+      <Event category="ServiceControlManager" eventName="MSSQLServerCrash" eventId="0009" stampUTC="$5" sourceNetId="${SourceNetId}">
+        <Param name="eventtype"       value="$2"/>
+        <Param name="eventid"         value="$4"/>
+        <Param name="time"            value="$ISOTIME2LOCALTIME($5)"/>
+        <Param name="code"            value="Monitor_Alert_1014"/>
+      </Event>
+    </Rule>   
+    </Rule>
+    
+    <!-- CDN link status. from ken.qian@i-zq.com -->
+    <Rule enabled="1" regex="([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|desc=(.*)SeaChange HTTP Client Driver detected path up(.*)">
+      <Event category="SeaHTTP" eventName="CDNLinkUp" eventId="7" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}">
+        <Param name="eventtype"       value="$2"/>
+        <Param name="eventid"         value="$4"/>
+        <Param name="servicename"     value="$6"/>
+        <Param name="time"            value="$ISOTIME2LOCALTIME($5)"/>
+        <Param name="code"            value="Windows_System_1050"/>
+        <Param name="#snmp.severity" value="INFO"/>
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|desc=(.*)SeaChange HTTP Client Driver detected path loss(.*)">
+      <Event category="SeaHTTP" eventName="CDNLinkDown" eventId="8" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}">
+        <Param name="eventtype"       value="$2"/>
+        <Param name="eventid"         value="$4"/>
+        <Param name="servicename"     value="$6"/>
+        <Param name="time"            value="$ISOTIME2LOCALTIME($5)"/>
+        <Param name="code"            value="Windows_System_1051"/>
+        <Param name="#snmp.severity" value="ERROR"/>
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="([^|]*)\|([^|]*)\|([^|]*)\|(?:1714)\|([^|]*)\|desc=(.*)">
+      <Event category="ServiceControlManager" eventName="VstreamEventVolumeWriteLocked" eventId="9" stampUTC="$5" sourceNetId="${SourceNetId}" >
+        <Param name="eventtype"       value="$2"/>
+        <Param name="description"     value="$6"/>
+        <Param name="time"            value="$ISOTIME2LOCALTIME($5)"/>
+        <Param  name="code"           value="VST_1001"/>
+        <Param name="#snmp.severity" value="ERROR" />
+      </Event>
+    </Rule>
+    
+    <Rule enabled="1" regex="([^|]*)\|([^|]*)\|([^|]*)\|(?:262)\|([^|]*)\|desc=(.*)">
+      <Event category="ServiceControlManager" eventName="VstreamEventAdapteFailed" eventId="10" stampUTC="$5" sourceNetId="${SourceNetId}" >
+        <Param name="eventtype"       value="$2"/>
+        <Param name="description"     value="$6"/>
+        <Param name="time"            value="$ISOTIME2LOCALTIME($5)"/>
+        <Param  name="code"           value="VST_1002"/>
+        <Param name="#snmp.severity" value="ERROR" />
+      </Event>
+    </Rule>
+    
+    <Rule enabled="1" regex="([^|]*)\|([^|]*)\|([^|]*)\|(?:1113)\|([^|]*)\|desc=(.*)">
+      <Event category="ServiceControlManager" eventName="VstreamEventControllerRptError" eventId="11" stampUTC="$5" sourceNetId="${SourceNetId}" >
+        <Param name="eventtype"       value="$2"/>
+        <Param name="description"     value="$6"/>
+        <Param name="time"            value="$ISOTIME2LOCALTIME($5)"/>
+        <Param  name="code"           value="VST_1003"/>
+        <Param name="#snmp.severity" value="ERROR" />
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="([^|]*)\|([^|]*)\|([^|]*)\|(?:52306)\|([^|]*)\|desc=(.*)">
+      <Event category="ServiceControlManager" eventName="VstreamEventStreamSmithTimeOutOutofService" eventId="12" stampUTC="$5" sourceNetId="${SourceNetId}" >
+        <Param name="eventtype"       value="$2"/>
+        <Param name="description"     value="$6"/>
+        <Param name="time"            value="$ISOTIME2LOCALTIME($5)"/>
+        <Param  name="code"           value="VST_1004"/>
+        <Param name="#snmp.severity" value="ERROR" />
+      </Event>
+    </Rule>
+    
+ </Syntax>
+ <Syntax key="WinEventApp">
+    <EventSource type="WinEventLog"/>
+    <Rule enabled="1" regex="([^|]*)\|([^|]*)\|([^|]*)\|(?:52225)\|([^|]*)\|desc=(.*)Service application (.*), PID(.*)">
+      <Event category="ServiceControlManager" eventName="ServiceCrash" eventId="0001" stampUTC="$5" sourceNetId="${SourceNetId}" >
+      	<Param name="eventtype"       value="$2"/>
+      	<Param name="servicename"     value="$7"/>
+        <Param name="time"            value="$ISOTIME2LOCALTIME($5)"/>
+        <Param  name="code"           value="Windows_Application_1001"/>
+        <Param name="#snmp.severity" 	value="ERROR" />
+      </Event>
+    </Rule>  
+  </Syntax>
+ 
+ 
+  <!--  
+   <Syntax key="WinEventApp">
+    <EventSource type="WinEventLog"/>
+
+    <Rule enabled="1" regex="(.{18}).*===================== Loading service common interface.*">
+      <Event category="WindowsEventLog" eventName="ServiceStarted" eventId="0001" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).*Recieve Stop message from service shell.*">
+      <Event category="WindowsEvent" eventName="ServiceStopped" eventId="0002" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+      </Event>
+    </Rule>
+  </Syntax>
+  
+   <Syntax key="WinEventSecurity">
+    <EventSource type="WinEventLog"/>
+    <Rule enabled="1" regex="(.{18}).*===================== Loading service common interface.*">
+      <Event category="WindowsEventLog" eventName="ServiceStarted" eventId="0001" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).*Recieve Stop message from service shell.*">
+      <Event category="WindowsEvent" eventName="ServiceStopped" eventId="0002" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+      </Event>
+    </Rule>
+  </Syntax> -->
+      <!-- CLink Event log syntax
+         key: indicate parse which type of windows event log: there are three keys.
+              1>  CLinkEvent -->
+   <Syntax key="CLinkEvent">
+    <EventSource type="FileLog"/>
+    <!-- <Rule enabled="1" regex="([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|desc=(.*)$"> -->
+    <Rule enabled="1" regex="(.{18}).*\[TaskStatus\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|([\d]{4}-[\d]{2}-[\d]{2} [\d]{2}:[\d]{2}:[\d]{2}.[\d]{3})\].*">
+      <Event category="TaskStatus" eventName="TaskStatusChanged" eventId="0001" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}">
+        <Param name="msglevel"            value="$2"/>
+        <Param name="msgid"               value="$3"/>
+        <Param name="hostname"            value="$4"/>
+        <Param name="servicename"         value="$5"/>
+        <Param name="bundleid"            value="$6"/>
+        <Param name="taskid"              value="$7"/>
+        <Param name="description"         value="$8"/>
+        <Param name="currentstatus"       value="$9"/>
+        <Param name="provisoustatus"      value="$10"/>
+        <Param name="time"                value="$11"/>
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).*\[TaskofCatcherStatus\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|([\d]{4}-[\d]{2}-[\d]{2} [\d]{2}:[\d]{2}:[\d]{2}.[\d]{3})\].*">
+      <Event category="TaskStatus" eventName="TaskOfCatcherStatusChanged" eventId="0002" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}">
+        <Param name="msglevel"            value="$2"/>
+        <Param name="msgid"               value="$3"/>
+        <Param name="hostname"            value="$4"/>
+        <Param name="servicename"         value="$5"/>
+        <Param name="bundleid"            value="$6"/>
+        <Param name="taskid"              value="$7"/>
+        <Param name="description"         value="$8"/>
+        <Param name="currentstatus"       value="$9"/>
+        <Param name="provisoustatus"      value="$10"/>
+        <Param name="catchername"         value="$11"/>
+        <Param name="catcherid"           value="$12"/>
+        <Param name="time"                value="$13"/>
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).*\[CatcherStatus\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|([\d]{4}-[\d]{2}-[\d]{2} [\d]{2}:[\d]{2}:[\d]{2}.[\d]{3})\].*">
+      <Event category="CatcherStatus" eventName="CatcherStatusChanged" eventId="0003" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="msglevel"            value="$2"/>
+        <Param name="msgid"               value="$3"/>
+        <Param name="hostname"            value="$4"/>
+        <Param name="servicename"         value="$5"/>
+        <Param name="currentstatus"       value="$6"/>
+        <Param name="provisoustatus"      value="$7"/>
+        <Param name="catchername"         value="$8"/>
+        <Param name="catcherid"           value="$9"/>
+        <Param name="time"                value="$10"/>
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).*\[((?:PitcherSysinfo)|(?:CatcherSysinfo))\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|([\d]{4}-[\d]{2}-[\d]{2} [\d]{2}:[\d]{2}:[\d]{2}.[\d]{3})\].*">
+      <Event category="System" eventName="SystemInfo" eventId="0004" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="msglevel"            value="$3"/>
+        <Param name="msgid"               value="$4"/>
+        <Param name="hostname"            value="$5"/>
+        <Param name="servicename"         value="$6"/>
+        <Param name="message"             value="$7"/>     
+        <Param name="time"                value="$8"/>
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).*\[AutoUpgradeStatus\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)]\|([^|]*)\|([^|]*)\|([^|]*)\|([\d]{4}-[\d]{2}-[\d]{2} [\d]{2}:[\d]{2}:[\d]{2}.[\d]{3})\].*">
+      <Event category="Auto-UpgradeStatus" eventName="AutoUpgradeStatus" eventId="0005" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="msglevel"            value="$2"/>
+        <Param name="msgid"               value="$3"/>
+        <Param name="hostname"            value="$4"/>
+        <Param name="servicename"         value="$5"/>
+        <Param name="bundleid"            value="$6"/>               
+        <Param name="description"         value="$7"/>
+        <Param name="autoupgradestatus"   value="$8"/>
+        <Param name="version"             value="$9"/>
+        <Param name="comment"             value="$10"/>
+        <Param name="catchername"         value="$11"/>
+        <Param name="catcherid"           value="$12"/>
+        <Param name="time"                value="$13"/>
+      </Event>
+    </Rule>
+  </Syntax>
+
+  <Syntax key="CPESvc">
+    <EventSource type="FileLog"/>
+    <Rule enabled="1" regex="(.{18}).*========================= Service\[(.*)\] version\[(.*)\] starts =========================.*">
+      <Event category="CPESvc" eventName="ServiceStarted" eventId="0001" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+      	<Param name="#syslog.msg" value="&lt;GeneralEvent serviceName=&quot;CPESvc&quot; type=&quot;Startup&quot; msgSeq=&quot;${SEQ}&quot; /&gt;"/>
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).*Service\[(.*)\]Recieve Stop message from service shell.*">
+      <Event category="CPESvc" eventName="ServiceStopped" eventId="0002" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+      	<Param name="#syslog.msg" value="&lt;GeneralEvent serviceName=&quot;CPESvc&quot; type=&quot;Shutdown&quot; msgSeq=&quot;${SEQ}&quot; reason=&quot;200&quot;/&gt;"/>
+      </Event>
+    </Rule>
+    <!-- ProvisionBegin -->
+    <Rule enabled="1" regex="(.{18}).*ProvisionSession.*provision\[([^|]*)\|.*\] notify started to the owner\[(.*)\], stampNow\[(.*)\], content\[.*\], sourceUrl\[(.*)\], transferBitrate\[(\d*)\].*">
+      <Event category="CPESvc" eventName="ProvisionBegin" eventId="3" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="ContentName" value="$2"/>
+        <Param name="Owner" value="$3"/>
+        <Param name="ProvisionAt" value="$4"/>
+        <Param name="SourceURL" value="$5"/>
+        <Param name="TransferBitrate" value="$6"/>
+      </Event>
+    </Rule>
+    <!-- ProvisionEnd -->
+    <Rule enabled="1" regex="(.{18}).*ProvisionSession.*provision\[([^|]*)\|.*\] notifyStopped\(\) provision stopped, status\[(.*)\], error\[(.*)\], code\[(.*)\].*">
+      <Event category="CPESvc" eventName="ProvisionEnd" eventId="4" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="ContentName" value="$2"/>
+        <Param name="Status" value="$3"/>
+        <Param name="ErrorDescription" value="$4"/>
+        <Param name="ErrorCode" value="$5"/>
+      </Event>
+    </Rule>
+
+  </Syntax>
+
+  <Syntax key="CDNSS">
+    <EventSource type="FileLog"/>
+    <Rule enabled="1" regex="(.{18}).*========================= Service\[(.*)\] version\[(.*)\] starts =========================.*">
+      <Event category="CDNSS" eventName="ServiceStarted" eventId="0001" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+      	<Param name="#syslog.msg" value="&lt;GeneralEvent serviceName=&quot;CDNSS&quot; type=&quot;Startup&quot; msgSeq=&quot;${SEQ}&quot; /&gt;"/>
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).*Service\[(.*)\]Recieve Stop message from service shell.*">
+      <Event category="CDNSS" eventName="ServiceStopped" eventId="0002" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+      	<Param name="#syslog.msg" value="&lt;GeneralEvent serviceName=&quot;CDNSS&quot; type=&quot;Shutdown&quot; msgSeq=&quot;${SEQ}&quot; reason=&quot;200&quot;/&gt;"/>
+      </Event>
+    </Rule>
+  </Syntax>
+
+  <!--
+	For monitor Linux syslog macro SYSLOGTIME2UTC:     parse time format(Jan 10 10:10:11) to UTC time
+                                   SYSNORMALTIME2UTC:  parse time format(2010/01/10_10:10:11) to UTC time
+  --> 
+  <Syntax key="SysMessage">
+    <EventSource type="SysLog"/>
+    <Rule enabled="1" regex="([\S]{3} [ \d][\d] [\d]{2}:[\d]{2}:[\d]{2}).*[Ss]tart.*">
+      <Event category="SysMessage" eventName="ServiceStarted" eventId="0001" stampUTC="$SYSLOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="([\S]{3} [ \d][\d] [\d]{2}:[\d]{2}:[\d]{2}).*[Ss]top.*">
+      <Event category="SysMessage" eventName="ServiceStopped" eventId="0002" stampUTC="$SYSLOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="([\S]{3} [ \d][\d] [\d]{2}:[\d]{2}:[\d]{2}).(\S+)(.*)(IO Failure)(.*)">
+      <Event category="SysMessage" eventName="UMLHeadIOFailure" eventId="0003" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="time"            value="$ISOTIME2LOCALTIME($T)"/>
+        <Param name="umlid"           value="$2"/>
+        <Param name="description"     value="$5"/>
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="([\S]{3} [ \d][\d] [\d]{2}:[\d]{2}:[\d]{2}).(\S+)(.*)(authentication failure;)(.*)">
+      <Event category="SysMessage" eventName="UMLHeadLoginFail" eventId="0004" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="time"            value="$ISOTIME2LOCALTIME($T)"/>
+        <Param name="description"     value="$3"/>
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="([\S]{3} [ \d][\d] [\d]{2}:[\d]{2}:[\d]{2}).(\S+)(.*)(read-only)(.*)">
+      <Event category="SysMessage" eventName="UMLHeadReadOnly" eventId="0005" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="time"            value="$ISOTIME2LOCALTIME($T)"/>
+        <Param name="description"     value="$3"/>
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).(\S+)(.*)Drive ([ \d]+:[ \d]+) has logged many long-duration read I/O's(.*)">
+      <Event category="SysMessage" eventName="UMLHWSlowDiskRead" eventId="0006" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="time"            value="$ISOTIME2LOCALTIME($T)"/>
+        <Param name="description"     value="$3"/>
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).(\S+)(.*)Drive ([ \d]+:[ \d]+) has logged many long-duration write I/O's(.*)">
+      <Event category="SysMessage" eventName="UMLHWSlowDiskWrite" eventId="0007" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="time"            value="$ISOTIME2LOCALTIME($T)"/>
+        <Param name="description"     value="$3"/>
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).(\S+)(.*)Read performance has improved on drive ([ \d]+:[ \d]+) - replacement(.*)">
+      <Event category="SysMessage" eventName="UMLHWReadImproved" eventId="0008" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="time"            value="$ISOTIME2LOCALTIME($T)"/>
+        <Param name="description"     value="$3"/>
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).(\S+)(.*)Write performance has improved on drive ([ \d]+:[ \d]+) - replacement(.*)">
+      <Event category="SysMessage" eventName="UMLHWWriteImproved" eventId="0009" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="time"            value="$ISOTIME2LOCALTIME($T)"/>
+        <Param name="description"     value="$3"/>
+      </Event>
+    </Rule>
+  </Syntax>
+  
+  <Syntax key="SysNormal">
+    <EventSource type="SysLog"/>
+    <Rule enabled="1" regex="(\w{1,})\[([\d]*)\]: ([\d]{4}/[\d]{2}/[\d]{2}_[\d]{2}:[\d]{2}:[\d]{2}) (\w{1,}):.*[Ss]tart.*">
+      <Event category="SysNormal" eventName="ServiceStarted" eventId="0001" stampUTC="$SYSNORMALTIME2UTC($3)" sourceNetId="${SourceNetId}" >
+        <Param name="servicename"      value="$1"/>
+        <Param name="msgid"            value="$2"/>
+        <Param name="msglevel"         value="$4"/>
+      </Event>
+    </Rule>
+
+    <Rule enabled="1" regex="(\w{1,})\[([\d]*)\]: ([\d]{4}/[\d]{2}/[\d]{2}_[\d]{2}:[\d]{2}:[\d]{2}) (\w{1,}):.*[Ss]top.*">
+      <Event category="SysNormal" eventName="ServiceStopped" eventId="0002" stampUTC="$SYSNORMALTIME2UTC($3)" sourceNetId="${SourceNetId}" >
+        <Param name="servicename"      value="$1"/>
+        <Param name="msgid"            value="$2"/>
+        <Param name="msglevel"         value="$4"/>
+      </Event>
+    </Rule>
+
+  </Syntax>
+
+  <Syntax key="HttpCRG">
+    <EventSource type="FileLog"/>
+    <!-- C2Locator Startup -->
+    <Rule enabled="1" regex="(.{18}).*CRMManager.*loadModule\(\) Module.*CRM_C2Locator.*has been initialized successfully.*">
+      <Event category="ContentLocator" eventName="SuccessfulStartup" eventId="0001" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="#syslog.msg" value="&lt;GeneralEvent serviceName=&quot;HttpCRG&quot; type=&quot;Startup&quot; msgSeq=&quot;${SEQ}&quot; /&gt;"/>
+      </Event>
+    </Rule>
+    <!-- C2Locator Shutdown::UserInitiated -->
+    <Rule enabled="1" regex="(.{18}).*CRMManager.*module.*CRM_C2Locator.*uninit OK.*">
+      <Event category="ContentLocator" eventName="UserInitiatedShutdown" eventId="0002" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="#syslog.msg" value="&lt;GeneralEvent serviceName=&quot;HttpCRG&quot; type=&quot;Shutdown&quot; msgSeq=&quot;${SEQ}&quot; reason=&quot;200&quot;/&gt;"/>
+      </Event>
+    </Rule>
+    <!-- C2Locator Shutdown::InitializationFailure -->
+    <Rule enabled="1" regex="(.{18}).*CRMManager.*loadModule\(\) failed to load Module.*CRM_C2Locator.*">
+      <Event category="ContentLocator" eventName="InitializationFailure" eventId="0003" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="#syslog.msg" value="&lt;GeneralEvent serviceName=&quot;HttpCRG&quot; type=&quot;Shutdown&quot; msgSeq=&quot;${SEQ}&quot; reason=&quot;500&quot;/&gt;"/>
+      </Event>
+    </Rule>
+  </Syntax>
+
+  <Syntax key="C2Loc">
+    <EventSource type="FileLog"/>
+    <!-- Total Bandwidth increased -->
+    <Rule enabled="1" regex="(.{18}).*C2LocatorImpl.*updateReplica\(\) total bandwidth increased: current\((\d*)\) delta\((\d*)\).*">
+      <Event category="ContentLocator" eventName="TotalBwIncreased" eventId="1" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="#syslog.msg" value="&lt;GeneralEvent serviceName=&quot;HttpCRG&quot; type=&quot;DeviceStatus&quot; msgSeq=&quot;${SEQ}&quot; reason=&quot;202&quot;/&gt;"/>
+        <Param name="TotalBw" value="$2"/>
+        <Param name="Delta" value="$3"/>
+      </Event>
+    </Rule>
+    <!-- Total Bandwidth didn't change -->
+    <Rule enabled="1" regex="(.{18}).*C2LocatorImpl.*updateReplica\(\) total bandwidth report: current\(([^0]\d*)\).*">
+      <Event category="ContentLocator" eventName="TotalBwNoChange" eventId="0002" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="#syslog.msg" value="&lt;GeneralEvent serviceName=&quot;HttpCRG&quot; type=&quot;DeviceStatus&quot; msgSeq=&quot;${SEQ}&quot; reason=&quot;202&quot;/&gt;"/>
+        <Param name="TotalBw" value="$2"/>
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).*TransferPortManager.*removeUnavailablePorts\(\) total bandwidth report: current\(([^0]\d*)\).*">
+      <Event category="ContentLocator" eventName="TotalBwNoChange" eventId="0002" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="#syslog.msg" value="&lt;GeneralEvent serviceName=&quot;HttpCRG&quot; type=&quot;DeviceStatus&quot; msgSeq=&quot;${SEQ}&quot; reason=&quot;202&quot;/&gt;"/>
+        <Param name="TotalBw" value="$2"/>
+      </Event>
+    </Rule>
+    <!-- Total Bandwidth decreased -->
+    <Rule enabled="1" regex="(.{18}).*C2LocatorImpl.*updateReplica\(\) total bandwidth decreased: current\((\d*)\) delta\((\d*)\).*">
+      <Event category="ContentLocator" eventName="TotalBwDecreased" eventId="0003" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="#syslog.msg" value="&lt;GeneralEvent serviceName=&quot;HttpCRG&quot; type=&quot;DeviceStatus&quot; msgSeq=&quot;${SEQ}&quot; reason=&quot;502&quot;/&gt;"/>
+        <Param name="TotalBw" value="$2"/>
+        <Param name="Delta" value="$3"/>
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).*TransferPortManager.*removeUnavailablePorts\(\) total bandwidth decreased: current\((\d*)\) delta\((\d*)\).*">
+      <Event category="ContentLocator" eventName="TotalBwDecreased" eventId="0003" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="#syslog.msg" value="&lt;GeneralEvent serviceName=&quot;HttpCRG&quot; type=&quot;DeviceStatus&quot; msgSeq=&quot;${SEQ}&quot; reason=&quot;502&quot;/&gt;"/>
+        <Param name="TotalBw" value="$2"/>
+        <Param name="Delta" value="$3"/>
+      </Event>
+    </Rule>
+    <!-- Total Bandwidth Zero -->
+    <Rule enabled="1" regex="(.{18}).*C2LocatorImpl.*updateReplica\(\) total bandwidth report: current\(0\).*">
+      <Event category="ContentLocator" eventName="TotalBwZero" eventId="0004" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="#syslog.msg" value="&lt;GeneralEvent serviceName=&quot;HttpCRG&quot; type=&quot;DeviceStatus&quot; msgSeq=&quot;${SEQ}&quot; reason=&quot;502&quot;/&gt;"/>
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).*TransferPortManager.*removeUnavailablePorts\(\) total bandwidth report: current\(0\).*">
+      <Event category="ContentLocator" eventName="TotalBwZero" eventId="0004" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="#syslog.msg" value="&lt;GeneralEvent serviceName=&quot;HttpCRG&quot; type=&quot;DeviceStatus&quot; msgSeq=&quot;${SEQ}&quot; reason=&quot;502&quot;/&gt;"/>
+      </Event>
+    </Rule>
+    <!-- RemoteAssetResolved -->
+    <Rule enabled="1" regex="(.{18}).*LocateRequestHandler.*RemoteAssetResolved:.*AssetId\(([^\)]*)\)ProviderId\(([^\)]*)\)SubType\(([^\)]*)\)ContentName\(([^\)]*)\)DemandedBy\(([^\)]*)\)RemoteUrl\(([^\)]*)\)RequestedFrom\(([^\)]*)\)StatusCode\((\d+)\)LocalState\(([^\)]*)\)OutOfResource\(([^\)]*)\)">
+      <Event category="ContentLocator" eventName="RemoteAssetResolved" eventId="0004" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="ProviderAssetId" value="$2"/>
+        <Param name="ProviderId" value="$3"/>
+        <Param name="SubType" value="$4"/>
+        <Param name="Name" value="$5"/>
+        <Param name="DemandedBy" value="$6"/>
+        <Param name="RemoteLocator" value="$7"/>
+        <Param name="RequestedFrom" value="$8"/>
+        <Param name="StatusCode" value="$9"/>
+        <Param name="LocalState" value="$10"/>
+        <Param name="OutOfResource" value="$11"/>
+      </Event>
+    </Rule>
+
+    <!-- TransferCreated -->
+    <Rule enabled="1" regex="(.{18}).*LocateRequestHandler.*TransferCreated:.*AssetId\(([^\)]*)\)ProviderId\(([^\)]*)\)SubType\(([^\)]*)\)ContentName\(([^\)]*)\)DemandedBy\(([^\)]*)\)TransferPort\(([^\)]*)\)TransferId\(([^\)]*)\)RequestedFrom\(([^\)]*)\)StatusCode\((\d+)\)ReservedBw\((\d+)\)ReservedAt\(([^\)]*)\)">
+      <Event category="ContentLocator" eventName="TransferCreated" eventId="5" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="ProviderAssetId" value="$2"/>
+        <Param name="ProviderId" value="$3"/>
+        <Param name="SubType" value="$4"/>
+        <Param name="Name" value="$5"/>
+        <Param name="DemandedBy" value="$6"/>
+        <Param name="TransferPort" value="$7"/>
+        <Param name="TransferId" value="$8"/>
+        <Param name="RequestedFrom" value="$9"/>
+        <Param name="StatusCode" value="$10"/>
+        <Param name="ReservedBw" value="$11"/>
+        <Param name="ReservedAt" value="$12"/>
+      </Event>
+    </Rule>
+
+    <!-- TransferDestroyed -->
+    <Rule enabled="1" regex="(.{18}).*C2LocatorImpl.*destroy\(\) destroyed transfer session\(([^\)]*)\), TransferId\(([^\)]*)\).*">
+      <Event category="ContentLocator" eventName="TransferDestroyed" eventId="6" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="TransferId" value="$3"/>
+      </Event>
+    </Rule>
+
+    <!-- TransferNotExist -->
+    <Rule enabled="1" regex="(.{18}).*C2LocatorImpl.*destroy\(\) stream of transfer session is not exist now\. session\(([^\)]*)\).*">
+      <Event category="ContentLocator" eventName="TransferNotExist" eventId="7" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="TransferId" value="$3"/>
+      </Event>
+    </Rule>
+    <!-- TransferDestroyFailed -->
+    <Rule enabled="1" regex="(.{18}).*C2LocatorImpl.*destroy\(\) caught \[(.*)\] when destroy the stream of transfer session\(([^\)]*)\).*">
+      <Event category="ContentLocator" eventName="TransferDestroyFailed" eventId="8" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="Reason" value="$2" />
+        <Param name="TransferId" value="$4"/>
+      </Event>
+    </Rule>
+
+    <!-- TransferDestroyFailed -->
+    <Rule enabled="1" regex="(.{18}).*C2LocatorImpl.*destroy\(\) caught exception when destroy transfer session\(([^\)]*)\).*">
+      <Event category="ContentLocator" eventName="TransferDestroyFailed" eventId="8" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="Reason" value="Unknown" />
+        <Param name="TransferId" value="$3"/>
+      </Event>
+    </Rule>
+
+    <!-- LocateFailed -->
+    <Rule enabled="1" regex="(.{18}).*LocateRequestHandler.*errorResponse\(\) AssetId\(([^\)]*)\)ProviderId\(([^\)]*)\)SubType\(([^\)]*)\)DemandedBy\(([^\)]*)\)RequestedFrom\(([^\)]*)\)StatusCode\((\d+)\)ReasonPhrase\((.*)\)">
+      <Event category="ContentLocator" eventName="LocateFailed" eventId="9" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="ProviderAssetId" value="$2"/>
+        <Param name="ProviderId" value="$3"/>
+        <Param name="SubType" value="$4"/>
+        <Param name="DemandedBy" value="$5"/>
+        <Param name="RequestedFrom" value="$6"/>
+        <Param name="StatusCode" value="$7"/>
+        <Param name="Reason" value="$8"/>
+      </Event>
+    </Rule>
+
+  </Syntax>
+  
+  <Syntax key="LinuxSystemEvent">
+    <EventSource type="FileLog"/>
+    <Rule enabled="1" regex="(.{18}).(.*) is stopped$">
+      <Event category="ServicesStatus" eventName="LinuxServiceStatus" eventId="0001" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="servicename"     value="$2"/>
+        <Param name="time"            value="$ISOTIME2LOCALTIME($T)"/>
+        <Param name="status"          value="stopped"/>
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).DRBD Resource (.*) Error.*">
+      <Event category="ServicesStatus" eventName="LinuxDRBDStopped" eventId="0007" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="time"            value="$ISOTIME2LOCALTIME($T)"/>
+        <Param name="servername"      value="$2"/>
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).0\: cs\:(.*) st\:(.*)/(.*).*ds\:(\S+).*">
+      <Event category="ServicesStatus" eventName="LinuxDRBDResource0Error" eventId="0005" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="time"            value="$ISOTIME2LOCALTIME($T)"/>
+        <Param name="status"          value="$2$5"/>
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).1\: cs\:(.*) st\:(.*)/(.*).*ds\:(\S+).*">
+      <Event category="ServicesStatus" eventName="LinuxDRBDResource1Error" eventId="0006" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="time"            value="$ISOTIME2LOCALTIME($T)"/>
+        <Param name="status"          value="$2$5"/>
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).(\S+)\s*OFFLINE.*">
+      <Event category="ServicesStatus" eventName="LinuxHeartBeatdead" eventId="0007" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="time"            value="$ISOTIME2LOCALTIME($T)"/>
+        <Param name="servername"      value="$2"/>
+        <Param name="status"          value="OFFLINE"/>
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).Heartbeat is stopped on(.*)">
+      <Event category="ServicesStatus" eventName="LinuxHeartBeatStopped" eventId="0007" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="time"            value="$ISOTIME2LOCALTIME($T)"/>
+        <Param name="servername"      value="$2"/>
+      </Event>
+    </Rule>
+  </Syntax>
+  
+  <!-- TSS_Event and UML_Event-->  
+  <Syntax key="TSSAndUMLEvent">
+    <EventSource type="FileLog"/>
+    <Rule enabled="1" regex="(.{18}).(.*) is ((?:down)|(?:disconnected)) on node (.*)">
+      <Event category="ServicesStatus" eventName="EthernetDown" eventId="0101" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="ethernetname"     value="$2"/>
+        <Param name="status"           value="$3"/>
+        <Param name="time"              value="$ISOTIME2LOCALTIME($T)"/>
+        <Param name="umlid"             value="$4"/>
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).(.*) is stopped on node (.*)">
+      <Event category="ServicesStatus" eventName="TSSServiceStatus" eventId="0102" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="servicename"     value="$2"/>
+        <Param name="time"            value="$ISOTIME2LOCALTIME($T)"/>
+        <Param name="umlid"           value="$3"/>
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).(.*) is failed on node (.*)">
+      <Event category="ServicesStatus" eventName="UMLServiceStatusFailed" eventId="0103" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="servicename"     value="$2"/>
+        <Param name="time"            value="$ISOTIME2LOCALTIME($T)"/>
+        <Param name="umlid"           value="$3"/>
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).(.*) is degrade on node (.*)">
+      <Event category="ServicesStatus" eventName="UMLArrayDegraded" eventId="0104" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="servicename"     value="$2"/>
+        <Param name="time"            value="$ISOTIME2LOCALTIME($T)"/>
+        <Param name="umlid"           value="$3"/>
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).(.*) is critical on node (.*)">
+      <Event category="ServicesStatus" eventName="UMLArrayCritica" eventId="0105" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="servicename"     value="$2"/>
+        <Param name="time"            value="$ISOTIME2LOCALTIME($T)"/>
+        <Param name="umlid"           value="$3"/>
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).cluster is abnormal on node (.*)">
+      <Event category="ServicesStatus" eventName="UMLClusterAbnormal" eventId="0106" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="time"            value="$ISOTIME2LOCALTIME($T)"/>
+        <Param name="umlid"           value="$2"/>
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).(.*) is not mounted on node (.*)">
+      <Event category="ServicesStatus" eventName="UMLfsBWFSNotMounted" eventId="0107" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="servicename"     value="$2"/>
+        <Param name="time"            value="$ISOTIME2LOCALTIME($T)"/>
+        <Param name="umlid"           value="$3"/>
+      </Event>
+    </Rule>
+     <Rule enabled="1" regex="(.{18}).heartbeat is (.*) on node (.*)">
+      <Event category="ServicesStatus" eventName="HeartBeatStatus" eventId="0108" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="status"            value="$2"/>
+        <Param name="time"              value="$ISOTIME2LOCALTIME($T)"/>
+        <Param name="umlid"             value="$3"/>
+      </Event>
+    </Rule>    
+     <Rule enabled="1" regex="(.{18}).0\: cs\:(.*) st\:(.*)/(.*).*ds\:(\S+).*">
+      <Event category="ServicesStatus" eventName="LinuxDRBDResource0Error" eventId="0109" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="time"            value="$ISOTIME2LOCALTIME($T)"/>
+        <Param name="status"          value="$2$5"/>
+      </Event>
+    </Rule>
+    <Rule enabled="1" regex="(.{18}).1\: cs\:(.*) st\:(.*)/(.*).*ds\:(\S+).*">
+      <Event category="ServicesStatus" eventName="LinuxDRBDResource1Error" eventId="0110" stampUTC="$FILELOGTIME2UTC($1)" sourceNetId="${SourceNetId}" >
+        <Param name="time"            value="$ISOTIME2LOCALTIME($T)"/>
+        <Param name="status"          value="$2$5"/>
+      </Event>
+    </Rule>
+  </Syntax>
+</TianShan>

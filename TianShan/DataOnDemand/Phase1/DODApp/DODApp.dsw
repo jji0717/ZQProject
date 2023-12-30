@@ -1,0 +1,119 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "DODApp"=.\DODApp.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/DataOnDemand/Phase1/DODApp", FXXAAAAA
+    .
+    end source code control
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name JMSDispatch
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "JMSCpp"=..\..\..\Generic\JMSCppLib\JMSCpp\JMSCpp.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/Generic/JMSCppLib/JMSCpp", XUKAAAAA
+    ..\..\..\generic\jmscpplib\jmscpp
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "JMSDispatch"=.\JMSDispatch\JMSDispatch.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/DataOnDemand/Phase1/DODApp/JMSDispatch", IXXAAAAA
+    .\jmsdispatch
+    end source code control
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name JMSCpp
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TianShanIce"=..\..\..\tianshan\ice\TianShanIce.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/TianShan/Ice", YRSAAAAA
+    ..\..\..\tianshan\ice
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ZQCommonStlp"=..\..\..\Common\dll\ZQCommonStlp.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/Common/dll", INOAAAAA
+    ..\..\..\common\dll
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+    begin source code control
+    $/ZQProjs/DataOnDemand/Phase1/DODApp
+    .
+    end source code control
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

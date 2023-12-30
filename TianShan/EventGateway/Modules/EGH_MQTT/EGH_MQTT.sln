@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EGH_MQTT", "EGH_MQTT.vcproj", "{88E94B60-71DB-4DAC-8AAA-2AF46E3AC9A0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9F8ECD24-A06B-4F6D-BF2C-B51334E14C0F} = {9F8ECD24-A06B-4F6D-BF2C-B51334E14C0F}
+		{C0DEE18A-189A-444C-99E2-BCF2FE865792} = {C0DEE18A-189A-444C-99E2-BCF2FE865792}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZQCommonStlp", "D:\ZQProjs\Common\dll\ZQCommonStlp.vcproj", "{C0DEE18A-189A-444C-99E2-BCF2FE865792}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TianShanIce", "D:\ZQProjs\TianShan\Ice\TianShanIce.vcproj", "{9F8ECD24-A06B-4F6D-BF2C-B51334E14C0F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Java|Win32 = Java|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{88E94B60-71DB-4DAC-8AAA-2AF46E3AC9A0}.Debug|Win32.ActiveCfg = Debug|Win32
+		{88E94B60-71DB-4DAC-8AAA-2AF46E3AC9A0}.Debug|Win32.Build.0 = Debug|Win32
+		{88E94B60-71DB-4DAC-8AAA-2AF46E3AC9A0}.Java|Win32.ActiveCfg = Release|Win32
+		{88E94B60-71DB-4DAC-8AAA-2AF46E3AC9A0}.Java|Win32.Build.0 = Release|Win32
+		{88E94B60-71DB-4DAC-8AAA-2AF46E3AC9A0}.Release|Win32.ActiveCfg = Release|Win32
+		{88E94B60-71DB-4DAC-8AAA-2AF46E3AC9A0}.Release|Win32.Build.0 = Release|Win32
+		{C0DEE18A-189A-444C-99E2-BCF2FE865792}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C0DEE18A-189A-444C-99E2-BCF2FE865792}.Debug|Win32.Build.0 = Debug|Win32
+		{C0DEE18A-189A-444C-99E2-BCF2FE865792}.Java|Win32.ActiveCfg = Debug|Win32
+		{C0DEE18A-189A-444C-99E2-BCF2FE865792}.Java|Win32.Build.0 = Debug|Win32
+		{C0DEE18A-189A-444C-99E2-BCF2FE865792}.Release|Win32.ActiveCfg = Release|Win32
+		{C0DEE18A-189A-444C-99E2-BCF2FE865792}.Release|Win32.Build.0 = Release|Win32
+		{9F8ECD24-A06B-4F6D-BF2C-B51334E14C0F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9F8ECD24-A06B-4F6D-BF2C-B51334E14C0F}.Debug|Win32.Build.0 = Debug|Win32
+		{9F8ECD24-A06B-4F6D-BF2C-B51334E14C0F}.Java|Win32.ActiveCfg = Java|Win32
+		{9F8ECD24-A06B-4F6D-BF2C-B51334E14C0F}.Java|Win32.Build.0 = Java|Win32
+		{9F8ECD24-A06B-4F6D-BF2C-B51334E14C0F}.Release|Win32.ActiveCfg = Release|Win32
+		{9F8ECD24-A06B-4F6D-BF2C-B51334E14C0F}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

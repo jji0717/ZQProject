@@ -1,0 +1,5 @@
+<hr size="1"><address style="align: right;"><small><b>$projectname - $title</b>&nbsp;&nbsp;&nbsp; $datetime &nbsp;
+<a href="../TianShan/index.html"><img src="logo_tianshan2.png" alt="TianShan" align="middle" border="0" width="50"></a>
+</small></address>
+</body>
+</html>

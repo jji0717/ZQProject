@@ -1,0 +1,360 @@
+prototype SetModRegistry(STRING, INT);                    
+function SetModRegistry( szModSvrName, MODNum)  
+	STRING szKey, szName, szValue;
+	NUMBER nSize;
+
+	STRING szRootParam, szLogPath;
+	NUMBER nRetVal;  
+begin        
+	szRootParam = "ITVROOT";
+	nRetVal = GetEnvVar(szRootParam, szLogPath);
+	if(nRetVal != 0)then
+		MessageBox("No ITVROOT environment variable", SEVERE);
+		abort;                                     
+	endif;
+	if(MODNum == 1) then
+		szLogPath = szLogPath + "\\Log\\ModAuthorization.log";	
+	else                                                    
+		szLogPath = szLogPath + "\\Log\\ModAuthorization2.log";	
+	endif;
+	                                                           
+	RegDBSetDefaultRoot (HKEY_LOCAL_MACHINE);  
+	
+	//////////////////////////////////////////////////////
+	// 					Set registry for MOD			//
+	//////////////////////////////////////////////////////
+    szKey = "SOFTWARE\\seachange\\ITV Applications\\CurrentVersion\\services\\" + 
+    		szModSvrName + "\\";
+    nSize = -1;
+    // 
+    //	1. Config for AuthorizationDllPath
+    //
+	szName = "AuthorizationDllPath";
+	szValue = TARGETDIR;
+	RegDBSetKeyValueEx (szKey , szName , REGDB_STRING_EXPAND , szValue , nSize);
+	
+    // 
+    //	2. Config for AuthorizationDllName
+    //
+	szName = "AuthorizationDllName";
+	szValue = "MODAuthorization.dll";
+	RegDBSetKeyValueEx (szKey , szName , REGDB_STRING_EXPAND , szValue , nSize);
+
+    // 
+    //	3. Config for AuthorizeOnError
+    //
+	szName = "AuthorizeOnError";
+	szValue = "1";
+	RegDBSetKeyValueEx (szKey , szName , REGDB_NUMBER , szValue , nSize);
+
+    // 
+    //	4. Config for AuthorizationDllThreadPoolMin
+    //
+	szName = "AuthorizationDllThreadPoolMin";
+	szValue = "10";
+	RegDBSetKeyValueEx (szKey , szName , REGDB_NUMBER , szValue , nSize);
+
+    // 
+    //	5. Config for AuthorizationDllThreadPoolMax
+    //
+	szName = "AuthorizationDllThreadPoolMax";
+	szValue = "20";
+	RegDBSetKeyValueEx (szKey , szName , REGDB_NUMBER , szValue , nSize);
+
+    // 
+    //	6. Config for AuthorizationDllThreadPoolGrowBy
+    //
+	szName = "AuthorizationDllThreadPoolGrowBy";
+	szValue = "5";
+	RegDBSetKeyValueEx (szKey , szName , REGDB_NUMBER , szValue , nSize);
+
+    // 
+    //	7. Config for AuthorizationDllThreadPoolIdleTime
+    //
+	szName = "AuthorizationDllThreadPoolIdleTime";
+	szValue = "10";
+	RegDBSetKeyValueEx (szKey , szName , REGDB_NUMBER , szValue , nSize);
+         
+    // 
+    //	8. Config for AuthorizationDllThreadPoolReleaseTime
+    //
+	szName = "AuthorizationDllThreadPoolReleaseTime";
+	szValue = "120000";
+	RegDBSetKeyValueEx (szKey , szName , REGDB_NUMBER , szValue , nSize);
+         
+    // 
+    //	9. Config for AuthorizationDllThreadPoolReleaseTime
+    //
+	szName = "AuthorizationDllThreadPoolReleaseTime";
+	szValue = "120000";
+	RegDBSetKeyValueEx (szKey , szName , REGDB_NUMBER , szValue , nSize);
+
+    // 
+    //	10. Config for AuthorizationDllThreadPoolStartTime
+    //
+	szName = "AuthorizationDllThreadPoolStartTime";
+	szValue = "120000";
+	RegDBSetKeyValueEx (szKey , szName , REGDB_NUMBER , szValue , nSize);
+    
+    
+    // 
+    //	11. Config for AuthorizationDllTimeout
+    //
+	szName = "AuthorizationDllTimeout";
+	szValue = "10000";
+	RegDBSetKeyValueEx (szKey , szName , REGDB_NUMBER , szValue , nSize);
+    
+	//////////////////////////////////////////////////////
+	//		Set registry for MOD Authorization DLL  	//
+	////////////////////////////////////////////////////// 
+	
+    szKey = szKey + "AuthorizationDLL" + "\\";   
+    // 
+    //	1. Config for LogFilePath
+    //
+	szName = "LogFilePath";
+	szValue = szLogPath;
+	RegDBSetKeyValueEx (szKey , szName , REGDB_STRING , szValue , nSize);
+	
+    // 
+    //	2. Config for LogFileSize
+    //
+	szName = "LogFileSize";
+	szValue = "10000000";
+	RegDBSetKeyValueEx (szKey , szName , REGDB_NUMBER , szValue , nSize);
+
+    // 
+    //	3. Config for LogFileTraceLevel
+    //
+	szName = "LogFileTraceLevel";
+	szValue = "1000";
+	RegDBSetKeyValueEx (szKey , szName , REGDB_NUMBER , szValue , nSize);
+
+    // 
+    //	4. Config for SOAPWsdlPath
+    //
+	szName = "SOAPWsdlPath";
+	//szValue = TARGETDIR + "\\MoDSoapInterface.wsdl";
+	szValue = "http://ZAP_WFES:9090/services/MoDSoapInterface?wsdl";
+	RegDBSetKeyValueEx (szKey , szName , REGDB_STRING , szValue , nSize);
+	      
+    // 
+    //	5. Config for SOAPWsmlPath - only useful to MSToolKit3.0
+    //     Current MoDPlugin is based on gSOAP
+//	szName = "SOAPWsmlPath";
+//	szValue = TARGETDIR + "\\MoDSoapInterface.wsml";
+//	RegDBSetKeyValueEx (szKey , szName , REGDB_STRING , szValue , nSize);  
+    
+    // 
+    //	6. Config for SOAPConnectTimeout
+    //
+	szName = "SOAPConnectTimeout";
+	szValue = "5000";
+	RegDBSetKeyValueEx (szKey , szName , REGDB_NUMBER , szValue , nSize);  
+	
+    // 
+    //	7. Config for SOAPConnectTimeout
+    //
+	szName = "SOAPRetryCount";
+	szValue = "5";
+	RegDBSetKeyValueEx (szKey , szName , REGDB_NUMBER , szValue , nSize);  
+
+    // 
+    //	8. Config for AppSitesConfigurationFile
+    //
+	szName = "AppSitesConfigurationFile";
+	szValue = "";
+	RegDBSetKeyValueEx (szKey , szName , REGDB_STRING , szValue , nSize);  
+
+end;                   
+
+
+
+prototype RemoveModRegistry(STRING);                    
+function RemoveModRegistry( szModSvrName)  
+	STRING szKey, szValue;
+begin                       
+	
+	RegDBSetDefaultRoot (HKEY_LOCAL_MACHINE);               
+	
+	/////////////////////////////////////////////////
+	////          Remove Registery Key           ////
+	/////////////////////////////////////////////////
+    szKey = "SOFTWARE\\seachange\\ITV Applications\\CurrentVersion\\services\\" + 
+    		szModSvrName + "\\";
+	    
+    // 
+    //	1. Delete AuthorizationDllPath Value
+    //
+	szValue = "AuthorizationDllPath";
+	RegDBDeleteValue(szKey, szValue);
+    // 
+    //	2. Delete AuthorizationDllName Value
+    //
+	szValue = "AuthorizationDllName";
+	RegDBDeleteValue(szKey, szValue);
+
+    // 
+    //	3. Delete AuthorizeOnError Value
+    //
+	szValue = "AuthorizeOnError";
+	RegDBDeleteValue(szKey, szValue);
+
+    // 
+    //	4. Delete AuthorizationDllThreadPoolMin Value
+    //
+	szValue = "AuthorizationDllThreadPoolMin";
+	RegDBDeleteValue(szKey, szValue);
+
+    // 
+    //	5. Delete AuthorizationDllThreadPoolMax Value
+    //
+	szValue = "AuthorizationDllThreadPoolMax";
+	RegDBDeleteValue(szKey, szValue);
+
+    // 
+    //	6. Delete AuthorizationDllThreadPoolGrowBy Value
+    //
+	szValue = "AuthorizationDllThreadPoolGrowBy";
+	RegDBDeleteValue(szKey, szValue);
+
+    // 
+    //	7. Delete AuthorizationDllThreadPoolIdleTime Value
+    //
+	szValue = "AuthorizationDllThreadPoolIdleTime";
+	RegDBDeleteValue(szKey, szValue);
+         
+    // 
+    //	8. Delete AuthorizationDllThreadPoolReleaseTime Value
+    //
+	szValue = "AuthorizationDllThreadPoolReleaseTime";
+	RegDBDeleteValue(szKey, szValue);
+         
+    // 
+    //	9. Delete AuthorizationDllThreadPoolReleaseTime Value
+    //
+	szValue = "AuthorizationDllThreadPoolReleaseTime";
+	RegDBDeleteValue(szKey, szValue);
+
+    // 
+    //	10. Delete AuthorizationDllThreadPoolStartTime Value
+    //
+	szValue = "AuthorizationDllThreadPoolStartTime";
+	RegDBDeleteValue(szKey, szValue);
+    
+
+    // 
+    //	10. Delete AuthorizationDllTimeout Value
+    //
+	szValue = "AuthorizationDllTimeout";
+	RegDBDeleteValue(szKey, szValue);
+
+        
+	//////////////////////////////////////////////////////
+	//		Set registry for MOD Authorization DLL  	//
+	//////////////////////////////////////////////////////
+    szKey = szKey + "AuthorizationDLL" + "\\";
+
+    // 
+    //	1. Config for LogFilePath
+    //
+	szValue = "LogFilePath";
+	RegDBDeleteValue(szKey, szValue);	
+    // 
+    //	2. Config for LogFileSize
+    //
+	szValue = "LogFileSize";
+	RegDBDeleteValue(szKey, szValue);	
+
+    // 
+    //	3. Config for LogFileTraceLevel
+    //
+	szValue = "LogFileTraceLevel";
+	RegDBDeleteValue(szKey, szValue);	
+
+    // 
+    //	4. Config for SOAPWsdlPath
+    //
+	szValue = "SOAPWsdlPath";
+	RegDBDeleteValue(szKey, szValue);	
+
+	//
+    //	5. Config for SOAPWsmlPath - only useful to MSToolKit3.0
+    //     Current MoDPlugin is based on gSOAP
+    
+//	szValue = "SOAPWsmlPath";
+//	RegDBDeleteValue(szKey, szValue);	
+	
+    // 
+    //	6. Config for SOAPConnectTimeout
+    //
+	szValue = "SOAPConnectTimeout";
+	RegDBDeleteValue(szKey, szValue);	
+
+    // 
+    //	7. Config for SOAPRetryCount
+    //
+	szValue = "SOAPRetryCount";
+	RegDBDeleteValue(szKey, szValue);	
+	
+    // 
+    //	8. Config for AppSitesConfigurationFile
+    //
+	szValue = "AppSitesConfigurationFile";
+	RegDBDeleteValue(szKey, szValue);	
+	
+end;
+
+prototype StopModService(STRING);                    
+function StopModService( szModSvrName)
+	NUMBER nServiceState;    
+	NUMBER nResult;
+	STRING szApplication, szCommandLine;
+	
+begin
+	nResult = ServiceGetServiceState (szModSvrName, nServiceState);
+	if(nResult < ISERR_SUCCESS ) then   
+		MessageBox("Unknowm status of service "+ szModSvrName, SEVERE);
+		abort;
+	endif;                                                        
+	
+	if(nServiceState == SERVICE_RUNNING) then
+		szApplication = TARGETDIR +"\\instserv.exe";    
+		szCommandLine = " \"" + szModSvrName + "\""+ " stop";  
+		
+		SetStatusWindow(-1, "  instserv "+ szCommandLine + " ...");
+		if (LaunchAppAndWait(szApplication, szCommandLine,LAAW_OPTION_HIDDEN|LAAW_OPTION_WAIT) < 0) then
+  	      	MessageBox ("Unable to launch " + szApplication + szCommandLine, SEVERE);
+			abort;
+    	endif;    
+		return 1;
+	endif;
+	return 0;
+end;
+
+prototype StartModService(STRING);                    
+function StartModService( szModSvrName)
+	NUMBER nServiceState;
+	STRING szApplication, szCommandLine;
+	
+begin
+	if(ServiceGetServiceState (szModSvrName, nServiceState)< ISERR_SUCCESS ) then 
+	      MessageBox("Unknowm status of service "+ szModSvrName, SEVERE);
+	      abort;
+	endif; 
+
+	if(nServiceState == SERVICE_STOPPED) then
+		szApplication = TARGETDIR +"\\instserv.exe";    
+		szCommandLine = " \"" + szModSvrName + "\""+ " start";                           
+		
+		SetStatusWindow(-1, "  instserv "+ szCommandLine + " ...");
+		if (LaunchAppAndWait(szApplication, szCommandLine,LAAW_OPTION_HIDDEN|LAAW_OPTION_WAIT) < 0) then
+  	      	MessageBox ("Unable to launch " + szApplication + szCommandLine, SEVERE);
+			abort;
+    	endif;    
+		
+		return 1;
+	endif;    
+	return 0;
+end;
+                  

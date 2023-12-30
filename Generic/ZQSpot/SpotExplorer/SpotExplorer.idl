@@ -1,0 +1,51 @@
+// ATL_INFO.idl : IDL source for ATL_INFO.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (ATL_INFO.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+#include "olectl.h"
+	
+
+	[
+		object,
+		uuid(F0360E31-D0A5-4C8B-82FB-C1E982C0E995),
+		dual,
+		helpstring("IlistSample Interface"),
+		pointer_default(unique)
+	]
+	interface IlistSample : IDispatch
+	{
+	};
+[
+	uuid(1E617F1B-5BED-44FE-BD48-8C842BEA63E0),
+	version(1.0),
+	helpstring("ATL_INFO 1.0 Type Library")
+]
+library ATL_INFOLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	[
+		uuid(A09B6767-0326-4426-AD9D-306A72FBFF02),
+		helpstring("_IlistSampleEvents Interface")
+	]
+	dispinterface _IlistSampleEvents
+	{
+		properties:
+		methods:
+	};
+
+	[
+		uuid(1B9BD4AA-4B40-4C87-8CF0-5350BFE50854),
+		helpstring("listSample Class")
+	]
+	coclass listSample
+	{
+		[default] interface IlistSample;
+		[default, source] dispinterface _IlistSampleEvents;
+	};
+};

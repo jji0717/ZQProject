@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<TianShan>
+    <Definitions src="TianShanDef.xml"></Definitions>
+    <BroadcastChannel netId="LiveCh">
+        <!--BcastPublishPoint
+                             endpoint: EndPoint of BroadcastChannel service, format: tcp -h ip -p port 
+                            cacheSize: BroadCastPublishPointEvictorSize, default 60             
+                        itemCacheSize: CtrlNumChannelItemEvitSize, default: 1000
+                     inputAsLocalTime: the time communication with todas is local time, set to 0                                                        
+                defaultChannelBitrate: Default max bitrate for a channel, default 4000000 bps
+                               repeat: indicate the steamer repeat play or not. 0 is not repeat mode, 1 is repeat mode. default value = 0
+                                  url: SiteAdmin Service according to this url to find suitable application     
+                              groupid: service group id.
+                            renewtime: weiwoo session renew time. default value=900000(ms)
+                           windowsize: items number in playlist, if the windowLength <= 0, indicate the system doesn't support window(the item in playlist does not limit) 
+            minimumPLItemCount: if the system doesn't support window and is repeat mode, indicate the minimum playlist item count
+                expirationTime: BroadCastPublishPoint channel expired time, default 600000ms
+                -->
+        <BcastPublishPoint endpoint="tcp -h ${ServerNetIf} -p 11700" cacheSize="100" itemCacheSize="1000" inputAsLocalTime="0" defaultChannelBitrate="4000000" repeat="0" renewtime="900000" windowsize="20" minimumPLItemCount="5" expirationTime="600000" />
+        <AppInfo url="Rtsp://./BroadCastChannel?" groupid="9999" />
+        <IceLog path="${TianShanLogDir}\BcastChannelIce.log" level="7" size="10240000" count="5" />
+        <!--NVODPublishPoint         
+           portIncreaseBase: base destination port increase, default value="1"
+        -->
+        <NVODPublishPoint portIncreaseBase="1" />
+        <!-- ThreadPoolSize, default: 20 -->
+        <ThreadPool size="20" />
+        <!-- Specify crashdump settings -->
+        <CrashDump path="${TianShanCrashDumpDir}" fullDump="1" />
+        <!--
+        <SafeStore path="C:\TianShan\Data\"/>
+        -->
+        <Database path="${TianShanDatabaseDir}\" runtimeData="${TianShanDatabaseDir}\runtime" />
+        <!--
+        <Weiwoo endpoint="tcp -h *.*.*.* -p *"/>
+        endPoint: indicates the Weiwoo service
+        -->
+        <Weiwoo endpoint="${Domain.sessionMgr}" />
+        <!--
+                EventChannelEndPoint: the EventChannel service's endpoint, format: "tcp -h x.x.x.x -p 11000"
+                listenEndpoint: the local ip and port to receive event from EventChannel, format: "tcp -h x.x.x.x -p 10000"
+                runtimeData: new added-->
+        <TianShanEvents EventChannelEndPoint="${PrimeEventChannelEndpoint}" listenEndpoint="tcp -h ${ServerNetIf} -p 11701" runtimeData="${TianShanDatabaseDir}\runtime" />
+        <IceProperties>
+            <!--  the following are performance tuning parameters, please don't modify if you are not an expert at them 
+                -->
+            <prop name="Ice.Trace.Network" value="0" />
+            <prop name="Ice.Trace.Protocol" value="0" />
+            <prop name="Ice.Trace.Retry" value="1" />
+            <prop name="Ice.Warn.Connections" value="1" />
+            <prop name="Ice.Warn.Endpoints" value="1" />
+            <prop name="Freeze.Warn.Deadlocks" value="1" />
+            <prop name="Freeze.Trace.Map" value="0" />
+            <prop name="Freeze.Trace.DbEnv" value="2" />
+            <prop name="Freeze.Trace.Evictor" value="0" />
+            <prop name="Ice.Override.ConnectTimeout" value="30000" />
+            <prop name="Ice.Override.Timeout" value="10000" />
+            <prop name="Ice.ThreadPool.Server.Size" value="5" />
+            <prop name="Ice.ThreadPool.Server.SizeMax" value="20" />
+            <prop name="Ice.ThreadPool.Client.Size" value="5" />
+            <prop name="Ice.ThreadPool.Client.SizeMax" value="30" />
+            <prop name="Freeze.Evictor.UseNonmutating" value="1" />
+        </IceProperties>
+        
+        <MRTStreamer  enable="0" >
+            <Bind endpoint="tcp -h ${ServerNetIf} -p 21000" maxPenalty="100" penalty="20"/>
+            <RandomTime pausemax="50" pausemin="10" />
+            <Service replicaSubscriberEndpoint="ReplicaSubscriber:tcp -h *.*.*.* -p 11200" eventChannel="" />
+            <Streamers>
+                <streamer name="MRT0" mrtEndpoint="http://ip:port" connectTimeout="30" sendTimeOut="30" receiveTimeout="30"/>
+                <streamer name="MRT1" mrtEndpoint="http://ip:port" connectTimeout="30" sendTimeOut="30" receiveTimeout="30"/>
+            </Streamers>
+            <TimerWatch targettime="1000" />
+        </MRTStreamer>
+    </BroadcastChannel>
+</TianShan>

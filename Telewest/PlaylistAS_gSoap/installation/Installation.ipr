@@ -1,0 +1,417 @@
+[Components:Application Files:FileGroups]
+PlaylistAS Executables:=
+SeaChange DLLs:=
+
+[Components:Application Files:Properties]
+Object:=No
+Description:=Component Desc1
+Status:=Component Stat1
+Visible:=Yes
+FileNeed:=CRITICAL
+IncludeInBuild:=Yes
+Password:=
+Encrypt:=No
+Uninstallable:=Yes
+Comment:=
+DisplayText:=
+TargetDirCDROM:=
+HttpLocation:=
+FTPLocation:=
+Misc:=
+GUID:=2DCD95F3-D33F-40DE-861E-43237CB725CB
+HandlerOnInstalling:=
+HandlerOnInstalled:=ApplicationFiles_Installed
+HandlerOnUnInstalling:=ApplicationFiles_UnInstalling
+HandlerOnUnInstalled:=
+
+[Components:SubComponents]
+Application Files:=
+
+[FileGroups:FileGroups]
+PlaylistAS Executables:=
+SeaChange DLLs:=
+
+[FileGroups:PlaylistAS Executables:Properties]
+LinkType:=Static Link
+Uninstallable:=Yes
+GUID:=189714DE-6E3D-49B9-B77A-2FAE89F8FF46
+Diff:=Yes
+FileType:=No
+SelfRegistering:=No
+Potentially:=No
+Compress:=Yes
+OperatingSystem:=
+Language:=
+Comment:=
+HttpLocation:=
+FtpLocation:=
+Misc:=
+Installation:=NewerVersion\NewerDate
+Target:=<TARGETDIR>
+Assembly:=NOT_ASSEMBLY
+IncludeSubDir:=No
+Folder:=
+Wildcards:=
+ExclusionWildcards:=
+
+[FileGroups:SeaChange DLLs:Properties]
+LinkType:=Static Link
+Uninstallable:=No
+GUID:=2A95B345-B95B-4A0E-9AD4-096E50314162
+Diff:=Yes
+FileType:=Yes
+SelfRegistering:=No
+Potentially:=No
+Compress:=Yes
+OperatingSystem:=
+Language:=
+Comment:=
+HttpLocation:=
+FtpLocation:=
+Misc:=
+Installation:=NewerVersion\NewerDate
+Target:=<TARGETDIR>
+Assembly:=NOT_ASSEMBLY
+IncludeSubDir:=No
+Folder:=
+Wildcards:=
+ExclusionWildcards:=
+
+[FileList:ISFileDestList:<PROGRAMFILES>:Folders]
+<COMMONFILES>:=
+
+[FileList:ISFileDestList:<WINDIR>:Folders]
+<WINSYSDIR>:=
+
+[FileList:ISFileDestList:Folders]
+<WINDIR>:=
+<PROGRAMFILES>:=
+<TARGETDIR>:=
+USERDEFINED:=
+<SUPPORTDIR>:=
+
+[FileList:ISFileDestList:TYPE:Folders]
+<WINDIR>:=TEXTSUBFIXED
+<PROGRAMFILES>:=TEXTSUBFIXED
+<TARGETDIR>:=TEXTSUBFIXED
+USERDEFINED:=USERSTART
+<SUPPORTDIR>:=TEXTSUBFIXED
+<WINDIR>\<WINSYSDIR>:=TEXTSUBFIXED
+<PROGRAMFILES>\<COMMONFILES>:=TEXTSUBFIXED
+
+[FileList:PlaylistAS Executables:Files]
+PlaylistSoapInterface.wsdl:=e:\workpath\zqprojs\telewest\PlaylistAS
+PlaylistSoapInterface.wsml:=e:\workpath\zqprojs\telewest\PlaylistAS
+instserv.exe:=E:\WorkPath\Tech-Data\ITVSDK-v2.5.INTERNAL\Exe
+srvshell.exe:=E:\WorkPath\Tech-Data\ITVSDK-v2.5.INTERNAL\Exe
+PlaylistAS.exe:=E:\WorkPath\ZQProjs\Telewest\PlaylistAS_gSoap\Release
+
+[FileList:SeaChange DLLs:Files]
+mfc42u.dll:=C:\WINDOWS\system32
+MCastSvc.dll:=E:\WorkPath\Tech-Data\ITVSDK-v2.5.INTERNAL\Exe
+ManPkgU.dll:=E:\WorkPath\Tech-Data\ITVSDK-v2.5.INTERNAL\Exe
+MtTcpComm.dll:=E:\WorkPath\Tech-Data\ITVSDK-v2.5.INTERNAL\Exe
+Reporter.dll:=E:\WorkPath\Tech-Data\ITVSDK-v2.5.INTERNAL\Exe
+atomic_queues.dll:=E:\WorkPath\Tech-Data\ITVSDK-v2.5.INTERNAL\Exe
+cfgpkgU.dll:=E:\WorkPath\Tech-Data\ITVSDK-v2.5.INTERNAL\Exe
+CLog.dll:=E:\WorkPath\Tech-Data\ITVSDK-v2.5.INTERNAL\Exe
+ScThreadPool.dll:=E:\WorkPath\Tech-Data\ITVSDK-v2.5.INTERNAL\Exe
+queue.dll:=E:\WorkPath\Tech-Data\ITVSDK-v2.5.INTERNAL\Exe
+ItvMessages.dll:=E:\WorkPath\Tech-Data\ITVSDK-v2.5.INTERNAL\Exe
+ShellMsgs.dll:=E:\WorkPath\Tech-Data\ITVSDK-v2.5.INTERNAL\Exe
+
+[General]
+Version:=3.00.000
+
+[Media:New CD-ROM Media:CodeSign]
+Sign:=No
+SignPackage:=No
+URL:=
+SPC:=
+PVK:=
+
+[Media:New CD-ROM Media:Components]
+2DCD95F3-D33F-40DE-861E-43237CB725CB:=
+
+[Media:New CD-ROM Media:DataAsFilesComponents]
+Application Files:=No
+
+[Media:New CD-ROM Media:DiffFileList]
+
+[Media:New CD-ROM Media:DiffVerList]
+
+[Media:New CD-ROM Media:Filter]
+LanguageDefault:=0009
+
+[Media:New CD-ROM Media:GeneralInfo]
+Name:=New CD-ROM Media
+MediaType:=CDROM
+BuildType:=Full
+BuildSize:=
+Password:=
+GUID:=4EF50E5B-8FAB-4B18-9E3F-39671CFFABAD
+BuildFolder:=
+Demo:=
+SpecifyComponents:=No
+
+[Media:New CD-ROM Media:Internet]
+CompressScript:=No
+Netscape:=No
+SaveOptionsDlg:=No
+Security:=No
+WebPage:=
+CreateDefaultWebPage:=No
+SaveOptions:=15
+
+[Media:New CD-ROM Media:Languages]
+key0:=0009
+
+[Media:New CD-ROM Media:Package]
+Create:=Yes
+Welcome:=No
+File:=Setup.exe
+CommandLine:=
+ExtractFolder:=
+Password:=
+CompressPackage:=Yes
+
+[Media:New CD-ROM Media:Platforms]
+key0:=0000000000000010
+key1:=0000000000000040
+key2:=0000000000000080
+key3:=0000000000010000
+key4:=0000000000100000
+key5:=0000000000400000
+
+[Media:New CD-ROM Media:PostBuild]
+FTPSite:=
+FTPFolder:=
+FTPUser:=
+FTPPassword:=
+Folder:=
+Batch File:=
+
+[Media:New CD-ROM Media:SetupInfo]
+ApplicationName:=
+EnableLangDlg:=No
+
+[Media:New CD-ROM Media:UI]
+SmallProgress:=No
+UseSkin:=No
+
+[Media:New CD-ROM Media:Update]
+EnableDifference:=No
+SupportedVersions:=
+ObjectDiffOptions:=IncludeIfChanged
+
+[Project:General]
+Version:=20
+SubVersion:=11
+
+[Project:Languages]
+0009:=
+
+[Project:Media]
+New CD-ROM Media:=
+
+[Project:Properties:CompileLink]
+WaringLevel:=3
+WaringsAsErrors:=No
+WarningMaximum:=50
+ErrorMaximum:=50
+Preproccessor:=
+CompileBeforeBuild:=Yes
+Libraries:=isrt.obl ifx.obl
+LinkPath:=
+InlineDebugInfo:=No
+
+[Project:Properties:DepManager]
+Application:=
+CommandLine:=
+StartInFolder:=
+
+[Project:Properties:General]
+Platforms:=00000000005100d0
+
+[Project:Properties:Product]
+GUID:=23E98BD1-4C93-4E42-BA5A-23875F9BA291
+CompanyName:=SeaChange(ZQ)
+URL:=www.schange.com
+EmailAddress:=
+Copyright:=SeaChange(ZQ)
+Summary:=
+Name:=PlaylistAppServer
+Version:=1.0.8
+ExeFile:=
+Comments:=
+
+[Project:Properties:Project]
+Author:=
+Department:=
+Password:=
+
+[Project:Properties:RunDebug]
+SetupArguments:=
+GenerateMIF:=No
+MIFFileName:=Status
+MIFSerial:=
+
+[Project:Properties:Runtime]
+LogFile:=Standard
+EngineBinding:=Static
+UpdateModeSupported:=Yes
+UpdateServiceSupported:=No
+
+[Project:Properties:SourceControl]
+ProjName:=
+AuxProjPath:=
+
+[RegistryObj:<Default>]
+---Comment---:=
+---FileGroup0---:=
+---Default---:=Yes
+
+[RegistryObj:Data]
+Set0:=<Default>
+
+[SetupTypes]
+Complete:=
+Custom:=
+
+[SetupTypes:Complete:Components]
+Main App:=
+Tutorial:=
+Examples:=
+Application Files:=
+
+[SetupTypes:Complete:Properties]
+Descrip:=
+Comment:=
+DisplayText:=
+
+[SetupTypes:Custom:Components]
+Main App:=
+Tutorial:=
+Examples:=
+Application Files:=
+
+[SetupTypes:Custom:Properties]
+Descrip:=
+Comment:=
+DisplayText:=
+
+[ShellObj:Data]
+Folder0:=<FOLDER_DESKTOP>
+Folder1:=<FOLDER_STARTMENU>
+Folder2:=<FOLDER_PROGRAMS>
+Folder3:=<FOLDER_STARTUP>
+
+[StringTable:Data:General]
+Service Desc:=
+Component Desc1:=
+Component Stat1:=
+
+[TextSub:Build:<COMMONFILES>]
+Value:=
+KeyType:=4
+
+[TextSub:Build:<ISPROJECTDIR>]
+Value:=
+KeyType:=4
+
+[TextSub:Build:<PROGRAMFILES>]
+Value:=
+KeyType:=4
+
+[TextSub:Build:<WINDIR>]
+Value:=
+KeyType:=4
+
+[TextSub:Build:<WINSYSDIR>]
+Value:=
+KeyType:=4
+
+[TextSub:Build:Data]
+Key0:=<PROGRAMFILES>
+Key1:=<COMMONFILES>
+Key2:=<WINDIR>
+Key3:=<WINSYSDIR>
+Key4:=<ISPROJECTDIR>
+
+[TextSub:Setup:<COMMONFILES>]
+Value:=
+KeyType:=4
+
+[TextSub:Setup:<HKCC>]
+Value:=
+KeyType:=4
+
+[TextSub:Setup:<HKCR>]
+Value:=
+KeyType:=4
+
+[TextSub:Setup:<HKCU>]
+Value:=
+KeyType:=4
+
+[TextSub:Setup:<HKDD>]
+Value:=
+KeyType:=4
+
+[TextSub:Setup:<HKLM>]
+Value:=
+KeyType:=4
+
+[TextSub:Setup:<HKUS>]
+Value:=
+KeyType:=4
+
+[TextSub:Setup:<PROGRAMFILES>]
+Value:=
+KeyType:=4
+
+[TextSub:Setup:<SHELL_OBJECT_FOLDER>]
+Value:=
+KeyType:=4
+
+[TextSub:Setup:<SRCDIR>]
+Value:=
+KeyType:=4
+
+[TextSub:Setup:<SUPPORTDIR>]
+Value:=
+KeyType:=4
+
+[TextSub:Setup:<TARGETDIR>]
+Value:=
+KeyType:=4
+
+[TextSub:Setup:<UNINST>]
+Value:=
+KeyType:=4
+
+[TextSub:Setup:<WINDIR>]
+Value:=
+KeyType:=4
+
+[TextSub:Setup:<WINSYSDIR>]
+Value:=
+KeyType:=4
+
+[TextSub:Setup:Data]
+Key0:=<TARGETDIR>
+Key1:=<PROGRAMFILES>
+Key2:=<COMMONFILES>
+Key3:=<WINDIR>
+Key4:=<WINSYSDIR>
+Key5:=<SUPPORTDIR>
+Key6:=<SRCDIR>
+Key7:=<HKLM>
+Key8:=<HKCU>
+Key9:=<HKCC>
+Key10:=<HKDD>
+Key11:=<HKUS>
+Key12:=<HKCR>
+Key13:=<SHELL_OBJECT_FOLDER>
+Key14:=<UNINST>
+

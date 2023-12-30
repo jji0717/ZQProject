@@ -1,0 +1,30 @@
+<InfoClientConfig>
+      <ServiceSNMP Name="StreamSmith" OID=".1.3.6.1.4.1.2008.6.2.12"/> 
+      <!--ServiceSNMP Name="ChodSvc" OID=".1.3.6.1.4.1.2008.6.2.98" /--> 
+      <!--ServiceSNMP Name="ClusterContentStore" OID=".1.3.6.1.4.1.2008.6.2.33" /-->
+      <!--ServiceSNMP Name="Weiwoo" OID=".1.3.6.1.4.1.2008.6.2.0" /--> 
+      <!--ServiceSNMP Name="SiteAdminSvc" OID=".1.3.6.1.4.1.2008.6.2.1"/ --> 
+      <Config SnmpIp="127.0.0.1"/>
+      <Grid>
+         <!--Tab Name="Channels" /-->    <!-- this is the ChodSvc tabname -->
+         <Tab Name="Streamer" />       <!-- this is the StreamSmith tabname -->
+         <Tab Name="PlayList" />    <!-- this is the StreamSmith tabname -->
+         <!--Tab Name="Content"  /-->    <!-- this is the NodeContentStore/ClusterContentStore tabname -->
+         <!--Tab Name="Site"  /-->       <!-- this is the chodsvc tabname -->
+         <!--Tab Name="App"   /-->       <!-- this is the chodsvc tabname -->
+         <!--Tab Name="Storage"/-->      <!-- this is the weiwoo tabname -->
+         <!--Tab Name="Streamer"/-->     <!-- this is the weiwoo tabname -->
+         <!--Tab Name="ServiceGroup"/--> <!--this is the weiwoo tabname -->
+      </Grid>
+      <DataSource   Feeder="GetData_Proc" />
+      <EventSource  Feeder="OnEvent_Proc" />
+      <DSO Name="%ZQProjsPath%\TianShan\bin\TsCtrlClient.dll"/>
+      <!--IceStorm EndPoint="default -h 10.50.12.4 -p 10000" /--> <!-- this is the icestorm for weiwoo,contentstore -->
+      <IceStorm EndPoint="default -h 10.15.10.250 -p 10010" /> <!-- this is the icestorm for streamsmith -->
+      <!--Service  EndPoint="tcp -h 10.50.12.4 -p 33288" /-->   <!-- this is the ChodSvc 's endpoint -->
+      <!--Service  EndPoint="tcp -h 10.15.10.250 -p 55588" /--> <!-- this is the  NodeContentStore/ClusterContentStore 's endpoint -->
+      <Service  EndPoint ="tcp -h 10.15.10.250 -p 10000"/> <!-- this is the  StreamSmith 's endpoint  -->
+      <!--Service  EndPoint="tcp -h 10.50.12.4 -p 10001"/-->    <!-- this is the  Weiwoo 's endpoint -->
+      <!--Service EndPoint="tcp -h 10.50.12.4 -p 10003" /-->    <!-- this is the  SiteAdminSvc 's endpoint -->
+      <EventLog FileName="D:\ZQProjs\TianShan\Shell\SNMPXMLFiles\EventLog.log"/>
+</InfoClientConfig>

@@ -1,0 +1,20 @@
+
+[SystemSettings]
+Description=Testcases for ITV streaming and stream management
+
+[ProjectProfile]
+ProjectIni=C:\Autotest\Zodiac\Aquarius\Aquarius.ini
+[ProjectScript]
+Source=C:\Autotest\Zodiac\script\aquarius\aquarius.t
+[ProjectFrame]
+Source=C:\Autotest\Zodiac\inc\aquarius\aquariusdefs.inc
+Source=C:\Autotest\Zodiac\inc\aquarius\aquariusfunc.inc
+Source=C:\Autotest\Zodiac\inc\aquarius\aquariusmsgs.inc
+Source=C:\autotest\zodiac\inc\global\zodiacdatabase.inc
+Source=C:\Autotest\Zodiac\inc\global\zodiacdefs.inc
+Source=C:\autotest\zodiac\inc\global\zodiacfiles.inc
+Source=C:\Autotest\Zodiac\inc\global\zodiacfunc.inc
+Source=C:\Autotest\Zodiac\inc\global\zodiacmsgs.inc
+[ProjectPlan]
+[ProjectResults]
+[ProjectData]

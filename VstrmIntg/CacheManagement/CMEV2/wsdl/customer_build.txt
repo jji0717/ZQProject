@@ -1,0 +1,16 @@
+(These precomile was removed from VisualStudio to avoid buid them everytime.)
+CMEService.wsdl
+$(GSOAPPATH)\bin\win32\wsdl2h.exe -oCMESOAPService.h $(InputDir)$(InputFileName)
+$(ProjectDir)CMESOAPService.h
+
+CMESOAPService.h
+$(GSOAPPATH)\bin\win32\soapcpp2.exe -qCMESOAP -pCMESOAP $(InputFileName)
+CMESOAPStub.h;CMESOAPH.h;CMESOAPC.cpp;CMESOAPClient.cpp;CMESOAPClientLib.cpp;CMESOAPServer.cpp;CMESOAPServerLib.cpp;CMESOAPCMEServiceSoapBindingProxy.h;CMESOAPCMEServiceSoapBindingObject.h
+
+LAMServiceForCME.wsdl
+$(GSOAPPATH)\bin\win32\wsdl2h.exe -oLAMFacadeForCME.h $(InputDir)$(InputFileName)
+LAMFacadeForCME.h
+
+LAMFacadeForCME.h
+$(GSOAPPATH)\bin\win32\soapcpp2.exe -pLAMFacadeForCME "$(InputFileName)"
+LAMFacadeForCMEStub.h;LAMFacadeForCMEH.h;LAMFacadeForCMEC.cpp;LAMFacadeForCMEClient.cpp;LAMFacadeForCMEClientLib.cpp;LAMFacadeForCMEServer.cpp;LAMFacadeForCMEServerLib.cpp;LAMFacadeForCMESoapBindingProxy.h;LAMFacadeForCMESoapBindingObject.h

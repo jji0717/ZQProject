@@ -1,0 +1,47 @@
+<?xml version="1.0" ?>
+<Config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="McastFwd.xsd">
+    
+    <Default>
+        <!--  the listener to accept incoming tunnel connection from other McastFwds --> 
+        <TunnelListener localPort="1000">
+            <LocalAddress address="192.168.80.8" />
+        </TunnelListener>
+        
+        <!--  define the default bind addresses for multicast sniffing -->
+        <MulticastListener>
+            <!--  IPv6 sample: <LocalAddress address="::0" />  --> 
+            <LocalAddress address="192.168.80.8" /> 
+            <LocalAddress address="10.0.0.115" /> 
+        </MulticastListener>
+
+        <!--  define the default bind addresses/ports when re-multicast -->
+        <MulticastSender port="6000">
+            <LocalAddress address="192.168.80.8" />
+        </MulticastSender>
+        
+        <!--  define the default denied source addresses/ports during sniffing -->
+        <DenyList>
+            <!--  <Source address="xxx.xxx.xxx.xxx/nn"  port="mmm" /> -->
+            <!--  <Source address="xxx.xxx.xxx.*"  port="mmm" /> -->
+            <!--  <Source address="xxx.xxx.xxx.*" /> -->
+            <Source address="192.168.10.0/24" />
+        </DenyList>
+
+        <!--  default list of tunnel servers that this service should connect to when starts
+              and forward messages to --> 
+        <Tunnels>
+            <Connection remotePort="1000">
+                <LocalAddress address="192.168.80.8" /> 
+                <LocalAddress address="192.168.12.130" /> 
+                <RemoteAddress address="192.168.80.178" /> 
+                <RemoteAddress address="192.168.12.178" /> 
+            </Connection>
+        </Tunnels>
+
+    </Default>
+    
+    <!--  conversation definition starts here -->
+    <Conversation groupAddr="225.12.12.12" groupPort="1000" />
+    <Conversation groupAddr="225.12.12.12" groupPort="6002" />
+    
+</Config>

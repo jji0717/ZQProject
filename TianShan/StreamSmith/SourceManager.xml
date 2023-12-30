@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ResourceManage>
+	<DeliveryPath>
+		<ServiceGroup id="0" >
+		<!--service gourp id,this is the id to identify the service group,and it's unique-->
+			<Qam IP="224.0.0.100" mode="256" symbolRate="50000" mac="1:2:3:4:5:6"> 
+			<!--IP is useful now,you can specify any number for mode and symbolrate -->
+			<!--mac is the qam's mac address-->
+				<!--ServiceGroup is a virtual concept that it is consist of physical qam.and each qam has it's own max bandwith.meanwhile the service group has it's bandwith-->
+				<Channel frequency="250" baseport="6001" portStep="2" basePN="1" PNCount="20" bandwidth="200000000" spigot="0;1;3"/>
+				<!--virtual channel node,there is no chennel is needed,software will assign it automatially!-->
+				<!-- frequency ==> the qam's frequency for  -->
+				<!-- baseport  ==> the base udpport-->
+				<!-- portStep  ==> the step for assigning the port,ex,portStep=2 and baseport=6001,software will assign port as 6001,6003,6005...-->
+				<!-- basePN		 ==> base program number-->
+				<!-- PNCount 	 ==> program number count,that how many program number can be used in this frequency-->
+				<!-- bandwidth ==> available bandwidth in this frequency	-->
+				<!-- totalBandWidth==> physical qam available bandwidth -->
+				<!-- spigot ==> this tell streamsmith which spigot board is linked with curent channel -->
+				<Channel frequency="3150" baseport="4001" basePN="1" PNCount="20" bandwidth="200000000" spigot="0;2"/>
+			</Qam>
+		</ServiceGroup >
+	</DeliveryPath >
+</ResourceManage>

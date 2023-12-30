@@ -1,0 +1,4855 @@
+--*********************************************************************** 
+--    MIB for ZQ TianShan Components
+--*********************************************************************** 
+
+ZqServer-MIB DEFINITIONS ::= BEGIN
+    IMPORTS
+        enterprises, Counter64, NOTIFICATION-TYPE, MODULE-IDENTITY, OBJECT-TYPE
+            FROM SNMPv2-SMI
+        DisplayString
+            FROM SNMPv2-TC;
+
+    zqInteractive MODULE-IDENTITY
+    LAST-UPDATED "201005210000Z"
+    ORGANIZATION "SeaChange International"
+    CONTACT-INFO
+             "SeaChange International (China), ZQ Interactive Ltd.
+             ShangHai
+             China "
+    DESCRIPTION
+            "The MIB module to describe objects for the ZQ TianShan product."
+
+        REVISION "201005210000Z"
+
+        DESCRIPTION "ZQ Interactive Inc."
+
+    ::= { enterprises 22839}
+
+    application    OBJECT IDENTIFIER
+        -- DESCRIPTION "ZQ developed applications"
+        ::= {zqInteractive 1}
+
+    iTVExtensionService    OBJECT IDENTIFIER
+        -- DESCRIPTION "ZQ developed services as extension of ITV system"
+        ::= {zqInteractive 2}
+
+    standAloneService    OBJECT IDENTIFIER
+        -- DESCRIPTION "ZQ developed services not integrated within ITV system"
+        ::= {zqInteractive 3}
+
+    tianShanComponents    OBJECT IDENTIFIER
+        -- DESCRIPTION "ZQ implementations of TianShan architecture"
+        ::= {zqInteractive 4}
+
+--*********************************************************************** 
+
+   serverTrap    OBJECT IDENTIFIER
+    ::= {standAloneService 5}
+
+--***********************************************************************
+
+    trapVariables     OBJECT IDENTIFIER
+    ::= {serverTrap 1}
+
+
+    trapName OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "ZQ Server Side Trap event name. "
+      ::= {trapVariables 1}
+
+    trapCategory OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "ZQ Server Side Trap event category. "
+      ::= {trapVariables 2}
+
+
+    trapTime OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "The UTC time when the Trap occurred,in the format of ISO8601. "
+      ::= {trapVariables 3}
+
+    trapNetID OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "The hostname of the original trap sender. "
+      ::= {trapVariables 4}
+
+    trapDescription OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "Message in the Trap"
+      ::= {trapVariables 5}
+
+    trapSeverity OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "The severity of the trap, from highest to lowest: EMERG, ALERT, CRIT, ERROR, WARNING, NOTICE, INFO, DEBUG."
+      ::= {trapVariables 6}
+
+    trapEvents    OBJECT IDENTIFIER
+    ::= {serverTrap 2}
+
+    trapGenericEvent   NOTIFICATION-TYPE
+      OBJECTS {
+          trapName,
+          trapCategory,
+          trapTime,
+          trapNetID,
+          trapDescription,
+          trapSeverity
+      }
+    STATUS    current
+    DESCRIPTION "generic trap event."
+    ::= { trapEvents 1}
+
+--*********************************************************************** 
+--	TianShan Components in the distribution kit
+--***********************************************************************
+
+    tianShanService    OBJECT IDENTIFIER
+    ::= {tianShanComponents 1}
+
+-- *******************************
+-- ** Service of StreamSmith
+-- *******************************
+    streamSmith          OBJECT IDENTIFIER  ::= {tianShanService 100}
+    streamSmithSvcApp    OBJECT IDENTIFIER  ::= {streamSmith 2}
+    streamSmithAttr      OBJECT IDENTIFIER  ::= {streamSmithSvcApp 1}
+
+    streamSmith-Version  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "StreamSmith's version number"
+      ::= {streamSmithAttr 1}
+
+    streamSmith-SnmpLoggingMask  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "Snmp logging mask"
+      ::= {streamSmithAttr 2}
+
+    streamSmith-LogDir  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "StreamSmith Log file folder"
+      ::= {streamSmithAttr 3}
+
+    streamSmith-KeepAliveIntervals  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "the interval of service keep alive heartbeats"
+      ::= {streamSmithAttr 4}
+
+    streamSmith-ShutdownWaitTime  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "service shutdown wait time"
+      ::= {streamSmithAttr 5}
+
+    streamSmith-LogFileSize  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "maximal file size of the log"
+      ::= {streamSmithAttr 6}
+
+    streamSmith-LogWriteTimeOut  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "timeout, in msec, during writing log file"
+      ::= {streamSmithAttr 7}
+
+    streamSmith-LogBufferSize  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "the size of in-memory buffer for the delayed writing"
+      ::= {streamSmithAttr 8}
+
+    streamSmith-LogLevel  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "log level, acceptable value: 0(with least details) - 7(with most details)"
+      ::= {streamSmithAttr 9}
+
+    streamSmith-configDir  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "the full path of the configuration folder"
+      ::= {streamSmithAttr 10}
+
+    streamSmith-default-eventChannel-endpoint  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "the ICE endpoint to the eventChannel service"
+      ::= {streamSmithAttr 11}
+
+    streamSmith-default-CrashDump-path  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "the full path name where to keep the crash dump"
+      ::= {streamSmithAttr 12}
+
+    streamSmith-default-CrashDump-enabled  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "1 to enable crashdump"
+      ::= {streamSmithAttr 13}
+
+    streamSmith-default-IceTrace-enabled  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "1 to enable the Ice trace logger"
+      ::= {streamSmithAttr 14}
+
+    streamSmith-default-IceTrace-level  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "log level of the Ice logger, acceptable value: 0(with least details) - 7(with most details)"
+      ::= {streamSmithAttr 15}
+
+    streamSmith-default-IceTrace-size  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "maximal file size of the log"
+      ::= {streamSmithAttr 16}
+
+    streamSmith-default-Database-path  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "path to the location of database directory"
+      ::= {streamSmithAttr 17}
+
+    streamSmith-netId  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "StreamSmith's unique NetId"
+      ::= {streamSmithAttr 18}
+
+    streamSmith-mode  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "the running mode, acceptable values are:normal,nPVRServer,EdgeServer"
+      ::= {streamSmithAttr 19}
+
+    streamSmith-SuperPlugin-path  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "superplugin's full path"
+      ::= {streamSmithAttr 20}
+
+    streamSmith-SuperPlugin-enabled  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "enable superplugin or not, 1 for enable 0 for disable"
+      ::= {streamSmithAttr 21}
+
+    streamSmith-SuperPlugin-eventSinkTimeout  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "timeout, in millisecond, to post an event"
+      ::= {streamSmithAttr 22}
+
+    streamSmith-SuperPlugin-enableShowDetail  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "1 to show the event information will appear in log file"
+      ::= {streamSmithAttr 23}
+
+    streamSmith-Bind-endpoint  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "the bind endpoint of this streamSmith service"
+      ::= {streamSmithAttr 24}
+
+    streamSmith-Bind-dispatchSize  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "the initial thread pool size to dispatch client requests, values in the range 4-20 are acceptable"
+      ::= {streamSmithAttr 25}
+
+    streamSmith-Bind-dispatchMax  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "the max thread pool size to dispatch client requests"
+      ::= {streamSmithAttr 26}
+
+    streamSmith-RequestProcess-threads  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "the size of the thread pool"
+      ::= {streamSmithAttr 27}
+
+    streamSmith-LocalResource-configuration  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "full path to the local resource configuration file at standalone mode"
+      ::= {streamSmithAttr 28}
+
+    streamSmith-LocalResource-Streamer-defaultSpigotId  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "if streamSmith is running at standalone mode, streamSmith can allocate vtrsm port based on DefaultSpigotID, -1 for all spigot in current node"
+      ::= {streamSmithAttr 29}
+
+    streamSmith-DatabaseCache-playlistSize  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "the size of playlist records to cache, 200 ~ 2000 are acceptable"
+      ::= {streamSmithAttr 33}
+
+    streamSmith-DatabaseCache-dbHealthCheckThreshold  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "dbHealthCheckthreshold"
+      ::= {streamSmithAttr 34}
+
+    streamSmith-DatabaseCache-itemSize  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "the size of playlist item records to cache, 400 ~ 2000 are acceptable"
+      ::= {streamSmithAttr 35}
+
+    streamSmith-Playlist-pauseWhenUnload  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "playlist pause when unload, 1 to enable"
+      ::= {streamSmithAttr 36}
+
+    streamSmith-Playlist-sessionScanInterval  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "session Scan Interval in ms"
+      ::= {streamSmithAttr 37}
+
+    streamSmith-Playlist-bandwidthUsageScanInterval  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "scan interval in ms on bandwidth usage"
+      ::= {streamSmithAttr 38}
+
+    streamSmith-Playlist-timeout  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "timeout in millseconds when a playlist is unattended at any state other than streaming"
+      ::= {streamSmithAttr 39}
+
+    streamSmith-Playlist-keepOnPause  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "1 if the playlist will not be expired when it is at the state of pause"
+      ::= {streamSmithAttr 40}
+
+    streamSmith-Playlist-QueryLastItemPlayTime  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "query last item play time, 1 to enable"
+      ::= {streamSmithAttr 41}
+
+    streamSmith-Playlist-progressInterval  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "the interval in millseconds to scan streaming progress"
+      ::= {streamSmithAttr 42}
+
+    streamSmith-Playlist-EOTsize  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "the edge size in millseconds of the protection edge: End-Of-Tail"
+      ::= {streamSmithAttr 43}
+
+    streamSmith-Playlist-PreLoadTime  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "preload time"
+      ::= {streamSmithAttr 44}
+
+    streamSmith-Playlist-ForceNormalTimeBeforeEnd  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "force normal time before end"
+      ::= {streamSmithAttr 45}
+
+    streamSmith-Playlist-delayedCleanup  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "the delayed time millseconds to clean up the playlist context when it is out of service"
+      ::= {streamSmithAttr 46}
+
+    streamSmith-Playlist-repositionInaccuracy  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "if seek in stream wide and seek NPT - playlistDuration < repositionInaccuracy, the NPT will adjust to the last item's tail area"
+      ::= {streamSmithAttr 47}
+
+    streamSmith-CriticalStartPlayWait-enabled  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "1 if want to hold the play() call until stream starts, otherwise will leave the interval timer to drive based on the critical-start-time"
+      ::= {streamSmithAttr 48}
+
+    streamSmith-CriticalStartPlayWait-timeout  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "timeout in millisecond to delay PLAY calls"
+      ::= {streamSmithAttr 49}
+
+    streamSmith-MotoPreEncryption-cycle1  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "MotoPreEncryption cycle1"
+      ::= {streamSmithAttr 50}
+
+    streamSmith-MotoPreEncryption-freq1  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "MotoPreEncryption freq1"
+      ::= {streamSmithAttr 51}
+
+    streamSmith-MotoPreEncryption-cycle2  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "MotoPreEncryption cycle2"
+      ::= {streamSmithAttr 52}
+
+    streamSmith-MotoPreEncryption-freq2  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "MotoPreEncryption freq2"
+      ::= {streamSmithAttr 53}
+
+    streamSmith-Plugin-log-level  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "plugin log level, 0-7 is acceptable"
+      ::= {streamSmithAttr 54}
+
+    streamSmith-Plugin-log-fileSize  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "plugin log file size"
+      ::= {streamSmithAttr 55}
+
+    streamSmith-Plugin-log-buffer  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "plugin log file buffer size"
+      ::= {streamSmithAttr 56}
+
+    streamSmith-Plugin-log-flushTimeout  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "plugin log file flush timeout"
+      ::= {streamSmithAttr 57}
+
+    streamSmith-SessionMonitor-log-level  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "SessionMonitor log level, 0-7 is acceptable"
+      ::= {streamSmithAttr 58}
+
+    streamSmith-SessionMonitor-log-fileSize  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "the maximal file size of SessionMonitor log"
+      ::= {streamSmithAttr 59}
+
+    streamSmith-SessionMonitor-log-buffer  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "the buffer size of SessionMonitor log"
+      ::= {streamSmithAttr 60}
+
+    streamSmith-SessionMonitor-log-flushTimeout  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "SessionMonitor log file flush timeout"
+      ::= {streamSmithAttr 61}
+
+    streamSmith-PerfTune-IceFreezeEnvironment-CheckpointPeriod  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "Every Berkeley DB environment created by Freeze has an associated thread that checkpoints this environment every num seconds. If num is less than 0, no checkpoint is performed. The default is 120 seconds."
+      ::= {streamSmithAttr 62}
+
+    streamSmith-PerfTune-IceFreezeEnvironment-DbRecoverFatal  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "If num is set to a value larger than zero, fatal recovery is performed when the environment is opened. The default value is 0."
+      ::= {streamSmithAttr 63}
+
+    streamSmith-PerformanceTune-playlist-SavePeriod  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "Freeze uses a background thread to save updates to the database. After num milliseconds without saving, if any facet is created, modified, or destroyed, this background thread wakes up to save these facets. When num is 0, there is no periodic saving. The default is 60000."
+      ::= {streamSmithAttr 64}
+
+    streamSmith-PerformanceTune-playlist-SaveSizeTrigger  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "Freeze uses a background thread to save updates to the database. When num is 0 or positive, as soon as num or more facets have been created, modified, or destroyed, this background thread wakes up to save them. When num is negative, there is no size trigger. The default is 10."
+      ::= {streamSmithAttr 65}
+
+    streamSmith-PerformanceTune-item-SavePeriod  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "Freeze uses a background thread to save updates to the database. After num milliseconds without saving, if any facet is created, modified, or destroyed, this background thread wakes up to save these facets. When num is 0, there is no periodic saving. The default is 60000."
+      ::= {streamSmithAttr 66}
+
+    streamSmith-PerformanceTune-item-SaveSizeTrigger  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "Freeze uses a background thread to save updates to the database. When num is 0 or positive, as soon as num or more facets have been created, modified, or destroyed, this background thread wakes up to save them. When num is negative, there is no size trigger. The default is 10."
+      ::= {streamSmithAttr 67}
+
+    streamSmith-SocketServer-enabled  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "1 to enable SocketServer"
+      ::= {streamSmithAttr 68}
+
+    streamSmith-SocketServer-rtspPort  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "the RTSP server port to listen"
+      ::= {streamSmithAttr 69}
+
+    streamSmith-SocketServer-lscpPort  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "lscp Port"
+      ::= {streamSmithAttr 70}
+
+    streamSmith-SocketServer-maxConnections  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "the max TCP connections allowed by the server"
+      ::= {streamSmithAttr 71}
+
+    streamSmith-SocketServer-threads  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "count of threads which are used to receive rtsp message"
+      ::= {streamSmithAttr 72}
+
+    streamSmith-SocketServer-threadPriority  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "the priority of message receiving thread, You should not modify this value except you know what are you doing"
+      ::= {streamSmithAttr 73}
+
+    streamSmith-SocketServer-debugLevel  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "debug message level from 0 ~ 5"
+      ::= {streamSmithAttr 74}
+
+    streamSmith-SocketServer-debugDetail  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "debug detail level from 0 ~ 4"
+      ::= {streamSmithAttr 75}
+
+    streamSmith-SocketServer-idleTimeout  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "connection idle time in milliseconds"
+      ::= {streamSmithAttr 76}
+
+    streamSmith-SocketServer-idleScanInterval  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "scan interval in milliseconds for find out the idle connection"
+      ::= {streamSmithAttr 77}
+
+    streamSmith-SocketServer-SSL-enabled  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "1 to enable SSL"
+      ::= {streamSmithAttr 78}
+
+    streamSmith-SocketServer-IncomingMessage-maxLen  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "the max length of a incoming message"
+      ::= {streamSmithAttr 84}
+
+-- *******************************
+-- ** Service of Weiwoo
+-- *******************************
+    weiwoo          OBJECT IDENTIFIER   ::= {tianShanService 200}
+    weiwooSvcApp    OBJECT IDENTIFIER   ::= {weiwoo 2}
+    weiwooAttr      OBJECT IDENTIFIER   ::= {weiwooSvcApp 1}
+    
+    weiwooDumpSgUsage OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "1 to dump servicegroups' usage into logdir"
+      ::= {weiwooAttr 41}
+
+    weiwooStat      OBJECT IDENTIFIER   ::= {weiwooAttr 100}
+
+    weiwooStat-cSessions  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the count of active sessions in SRM"
+      ::= {weiwooStat 2}
+
+    weiwooStat-cPending  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the pending request size wait for process threads"
+      ::= {weiwooStat 3}
+
+    weiwooStat-BusyThreads  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the size of busy threads"
+      ::= {weiwooStat 4}
+
+    weiwooStat-ThreadPoolSize  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the size of process thread pool"
+      ::= {weiwooStat 5}
+
+-- *******************************
+-- ** Service of siteAdmin
+-- *******************************
+    siteAdmin    OBJECT IDENTIFIER ::= {tianShanService 300}
+    siteAdminSvcApp    OBJECT IDENTIFIER ::= {siteAdmin 2}
+
+-- *******************************
+-- ** Service of ChannelOnDemand
+-- *******************************
+    channelOnDemand    OBJECT IDENTIFIER ::= {tianShanService 800}
+    chodSvcApp         OBJECT IDENTIFIER ::= {channelOnDemand 2}
+
+-- *******************************
+-- ** Service of MovieOnDemand
+-- *******************************
+    modSvc           OBJECT IDENTIFIER   ::= {tianShanService 900}
+    modSvcApp        OBJECT IDENTIFIER   ::= {modSvc 2}
+
+-- *******************************
+-- ** Service of RtspProxy
+-- *******************************
+    rtspProxy        OBJECT IDENTIFIER ::= {tianShanService 1000}
+    rtspSvcApp       OBJECT IDENTIFIER ::= {rtspProxy 2}
+    rtspProxyAttr    OBJECT IDENTIFIER  ::= {rtspSvcApp 1}
+
+    rtspExtNGOD OBJECT IDENTIFIER
+    ::= {rtspProxy 3}
+
+    rtspNGODAttr OBJECT IDENTIFIER
+    ::= { rtspExtNGOD 1 }
+
+    sopTable OBJECT-TYPE
+      SYNTAX  SEQUENCE OF SOPEntry
+      MAX-ACCESS  not-accessible
+      STATUS  current
+      DESCRIPTION
+          "sop table"
+      ::= { rtspNGODAttr 1 }
+
+    -- sop table definition
+    sopEntry OBJECT-TYPE
+      SYNTAX  SOPEntry
+      MAX-ACCESS  not-accessible
+      STATUS current
+      DESCRIPTION
+          "sop entry"
+      INDEX   { sopIndex }
+      ::= { sopTable 1}
+
+	   SOPEntry ::=
+      SEQUENCE {
+          sopIndex
+              INTEGER,
+          sopName
+              DisplayString,
+          sopStreamer
+              DisplayString,
+          sopStreamService
+              DisplayString,
+          sopStatus
+              DisplayString,
+          sopPenalty
+              Counter64,
+          sopSessionUsed
+              Counter64,
+          sopSessionFailed
+              Counter64,
+          sopErrorRate
+              INTEGER,
+          sopUsedBandwidth
+              Counter64,
+          sopMaxBandwidth
+              Counter64,
+          sopActiveSession
+              Counter64,
+          sopMaxSession
+              Counter64,
+          sopLocalSession
+              Counter64,
+          sopVolume
+              DisplayString
+      }
+
+    sopIndex  OBJECT-TYPE
+      SYNTAX  INTEGER(1..255)
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "sop index"
+      ::= { sopEntry 1}
+
+    sopName  OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "sop name used for OSTR streaming parameter"
+      ::= { sopEntry 2}
+
+    sopStreamer  OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "streamer"
+      ::= { sopEntry 3}
+
+    sopStreamService  OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "sop streaming service endpoint"
+      ::= { sopEntry 4}
+
+    sopStatus  OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "streamer status, avail or unavail"
+      ::= { sopEntry 5}
+
+    sopPenalty  OBJECT-TYPE
+      SYNTAX  Counter64
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "streamer penalty"
+      ::= { sopEntry 6}
+
+    sopSessionUsed  OBJECT-TYPE
+      SYNTAX  Counter64
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "session used count on a streamer"
+      ::= { sopEntry 7}
+
+    sopSessionFailed  OBJECT-TYPE
+      SYNTAX  Counter64
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "session failed count on a streamer"
+      ::= { sopEntry 8}
+
+    sopErrorRate  OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "error percent on a streamer"
+      ::= { sopEntry 9}
+
+    sopUsedBandwidth  OBJECT-TYPE
+      SYNTAX  Counter64
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "used bandwidth on a streamer in bps"
+      ::= { sopEntry 10}
+
+    sopMaxBandwidth  OBJECT-TYPE
+      SYNTAX  Counter64
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "max bandwidth can be used on a streamer in bps"
+      ::= { sopEntry 11}
+
+    sopActiveSession  OBJECT-TYPE
+      SYNTAX  Counter64
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "active session list on a streamer"
+      ::= { sopEntry 12}
+
+    sopMaxSession  OBJECT-TYPE
+      SYNTAX  Counter64
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "max session count on a streamer"
+      ::= { sopEntry 13}
+
+    sopLocalSession  OBJECT-TYPE
+      SYNTAX  Counter64
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "local session on a streamer"
+      ::= { sopEntry 14}
+
+    sopVolume  OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS  current
+      DESCRIPTION
+          "the attached volume name"
+      ::= { sopEntry 15}
+
+    sopCount OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "sop table entries count"
+      ::= { rtspNGODAttr 101}
+
+    sopReset OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-write
+      STATUS current
+      DESCRIPTION
+          "reset counter statistics"
+      ::= { rtspNGODAttr 102}
+
+		icTable  OBJECT-TYPE
+      SYNTAX  SEQUENCE OF ICEntry
+      MAX-ACCESS  not-accessible
+      STATUS current
+      DESCRIPTION
+          "import channel table"
+      ::= { rtspNGODAttr 105}
+
+    icCount  OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "import channel table entries count"
+      ::= { rtspNGODAttr 106}
+
+    -- ic table definition
+    icEntry  OBJECT-TYPE
+      SYNTAX  ICEntry
+      MAX-ACCESS  not-accessible
+      STATUS current
+      DESCRIPTION
+          "a row of import channel info"
+      INDEX   { icIndex }
+      ::= { icTable 1}
+
+    ICEntry ::= SEQUENCE {
+          icIndex
+              INTEGER,
+          icChannelName
+              DisplayString,
+          icUsedBandwidth
+              Counter64,
+          icTotalBandwidth
+              Counter64,
+          icRunningSessCount
+              INTEGER,
+          icStatus
+              DisplayString
+      }
+
+    icIndex  OBJECT-TYPE
+      SYNTAX  INTEGER(1..255)
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "the unique index number of import channel"
+      ::= { icEntry 1}
+
+    icChannelName  OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "the name of import channel"
+      ::= { icEntry 2}
+
+    icUsedBandwidth  OBJECT-TYPE
+      SYNTAX  Counter64
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "used bandwidth of an importchannel in bps"
+      ::= { icEntry 3}
+
+    icTotalBandwidth  OBJECT-TYPE
+      SYNTAX  Counter64
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "total bandwidth of an importchannel in bps"
+      ::= { icEntry 4}
+
+    icRunningSessCount  OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "running session counts of an importchannel"
+      ::= { icEntry 5}
+
+    icStatus  OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS  current
+      DESCRIPTION
+          "the status of importchannel. 'avail' or 'unavail'"
+      ::= { icEntry 6}
+      
+    rtspLogNgod2 OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-write
+      STATUS current
+      DESCRIPTION
+          "Get/Reset ssm_ngod2.log log-level"
+      ::= { rtspNGODAttr 3}
+
+    rtspLogNgod2Ice OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-write
+      STATUS current
+      DESCRIPTION
+          "Get/Reset ssm_ngod2_icetrace.log log-level"
+      ::= { rtspNGODAttr 4}
+      
+    rtspLogNgod2Event OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-write
+      STATUS current
+      DESCRIPTION
+          "Get/Reset ssm_ngod2_events.log log-level"
+      ::= { rtspNGODAttr 5}
+      
+    ngod2-LogFile-size  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "maximal file size of the log"
+      ::= {rtspNGODAttr 6}
+
+    ngod2-LogFile-level  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "log level, acceptable value: 0(with least details) - 7(with most details)"
+      ::= {rtspNGODAttr 7}
+
+    ngod2-eventChannel-endpoint  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the ICE endpoint to the eventChannel service"
+      ::= {rtspNGODAttr 8}
+
+    ngod2-Bind-endpoint  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "ssm_ngod2 bind endpoint"
+      ::= {rtspNGODAttr 9}
+
+    ngod2-RTSPSession-timeout  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "timeout of an unattended RTSP session in seconds, minimal acceptable value 60, default 600s"
+      ::= {rtspNGODAttr 10}
+
+    ngod2-RTSPSession-cacheSize  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the count of sessions to cache from the database, range [1000, 5000] are acceptable, default 1000"
+      ::= {rtspNGODAttr 11}
+
+    ngod2-RTSPSession-defaultServiceGroup  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the default service group Id if not provided"
+      ::= {rtspNGODAttr 12}
+
+    ngod2-Database-path  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "path to the location of database directory"
+      ::= {rtspNGODAttr 13}
+
+    ngod2-Announce-useGlobalCSeq  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "non-zero means enable use global CSeq for ANNOUNCEs"
+      ::= {rtspNGODAttr 14}
+
+    ngod2-Response-setupFailureWithSessId  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "non-zero means enable provide the session id even if a SETUP is failed "
+      ::= {rtspNGODAttr 15}
+
+    ngod2-Response-streamCtrlPort  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "to specify the stream control protocol, acceptable value rtsp and lscp; default rtsp"
+      ::= {rtspNGODAttr 16}
+
+    ngod2-LAM-TestMode-enabled  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "1 to enable test mode"
+      ::= {rtspNGODAttr 17}
+
+    ngod2-playlistControl-enableEOT  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "enable EOT protection, if this value is 1, stream will be forced normal play at the EOT protection area if this value is 0, no additional action will be performed when stream is in EOT protection area"
+      ::= {rtspNGODAttr 18}
+
+    ngod2-playlistControl-nptByPrimary  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "seek by npt of primary item if this value is 1"
+      ::= {rtspNGODAttr 19}
+
+    rtspOpenVBO OBJECT IDENTIFIER
+    ::= {rtspProxy 4}
+
+    rtspVboAttr OBJECT IDENTIFIER
+    ::= { rtspOpenVBO 1}
+
+    vboStrTable OBJECT-TYPE
+      SYNTAX  SEQUENCE OF vboStrRow
+      MAX-ACCESS  not-accessible
+      STATUS  current
+      DESCRIPTION
+          "openVBO streamer table"
+      ::= { rtspVboAttr 100}
+
+    vboStrCount  OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "count of rows of vboStrTable"
+      ::= { rtspVboAttr 101 }
+
+    vboStatReset  OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-write
+      STATUS current
+      DESCRIPTION
+          "reset the stat table of vboIcTable and vboStrTable"
+      ::= { vboStrTable 102 }
+
+-- OpenVBO table definition
+    vboStrEntry OBJECT-TYPE
+      SYNTAX  vboStrRow
+      MAX-ACCESS  not-accessible
+      STATUS current
+      DESCRIPTION
+          "OpenVBO streamer table entry"
+      INDEX   { vboStrIndex }
+      ::= { vboStrTable 1}
+
+    vboStrRow ::=
+      SEQUENCE {
+          vboStrIndex
+              INTEGER,
+          vboStrNetId
+              DisplayString,
+          vboStrSourceAddr
+              DisplayString,
+          vboStrEndpoint
+              DisplayString,
+          vboStrStatus
+              DisplayString,
+          vboStrPenalty
+              Counter64,
+          vboStrSessionUsed
+              Counter64,
+          vboStrSessionFailed
+              Counter64,
+          vboStrUsedBandwidth
+              Counter64,
+          vboStrMaxBandwidth
+              Counter64,
+          vboStrActiveSession
+              Counter64,
+          vboStrMaxSession
+              Counter64,
+          vboStrLocalSession
+              Counter64,
+          vboStrVolume
+              DisplayString
+      }
+
+    vboStrIndex  OBJECT-TYPE
+      SYNTAX  INTEGER(1..255)
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "OpenVBO streamer index"
+      ::= { vboStrEntry 1}
+
+    vboStrNetId  OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "streamer"
+      ::= { vboStrEntry 2}
+
+    vboStrSourceAddr  OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "OpenVBO name used for OSTR streaming parameter"
+      ::= { vboStrEntry 3}
+
+    vboStrEndpoint  OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "OpenVBO streaming service endpoint"
+      ::= { vboStrEntry 4}
+
+    vboStrStatus  OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "streamer status, avail or unavail"
+      ::= { vboStrEntry 5}
+
+    vboStrPenalty  OBJECT-TYPE
+      SYNTAX  Counter64
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "streamer penalty"
+      ::= { vboStrEntry 6}
+
+    vboStrSessionUsed  OBJECT-TYPE
+      SYNTAX  Counter64
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "session used count on a streamer"
+      ::= { vboStrEntry 7}
+
+    vboStrSessionFailed  OBJECT-TYPE
+      SYNTAX  Counter64
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "session failed count on a streamer"
+      ::= { vboStrEntry 8}
+
+    vboStrUsedBandwidth  OBJECT-TYPE
+      SYNTAX  Counter64
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "used bandwidth on a streamer in bps"
+      ::= { vboStrEntry 9}
+
+    vboStrMaxBandwidth  OBJECT-TYPE
+      SYNTAX  Counter64
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "max bandwidth can be used on a streamer in bps"
+      ::= { vboStrEntry 10}
+
+    vboStrActiveSession  OBJECT-TYPE
+      SYNTAX  Counter64
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "active session list on a streamer"
+      ::= { vboStrEntry 11}
+
+    vboStrMaxSession  OBJECT-TYPE
+      SYNTAX  Counter64
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "max session count on a streamer"
+      ::= { vboStrEntry 12}
+
+    vboStrLocalSession  OBJECT-TYPE
+      SYNTAX  Counter64
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "local session on a streamer"
+      ::= { vboStrEntry 13}
+
+    vboStrVolume  OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS  current
+      DESCRIPTION
+          "the attached volume name"
+      ::= { vboStrEntry 14}
+
+  
+    vboIcTable  OBJECT-TYPE
+      SYNTAX  SEQUENCE OF vboIcRow
+      MAX-ACCESS  not-accessible
+      STATUS current
+      DESCRIPTION
+          "import channel table"
+      ::= { rtspVboAttr 105 }
+
+    vboIcCount  OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "count of rows of vboIcTable"
+      ::= { rtspVboAttr 106 }
+
+    -- VBO Ic table definition
+    vboIcEntry  OBJECT-TYPE
+      SYNTAX  vboIcRow
+      MAX-ACCESS  not-accessible
+      STATUS current
+      DESCRIPTION
+          "a row of import channel info"
+      INDEX   { vboIcIndex }
+      ::= { vboIcTable 1}
+
+    vboIcRow ::= SEQUENCE {
+          vboIcIndex
+              INTEGER,
+          vboIcNetId
+              DisplayString,
+          vboIcUsedBandwidth
+              Counter64,
+          vboIcTotalBandwidth
+              Counter64,
+          vboIcActiveSess
+              INTEGER,
+      }
+
+    vboIcIndex  OBJECT-TYPE
+      SYNTAX  INTEGER(1..255)
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "the unique index number of import channel"
+      ::= { vboIcEntry 1}
+
+    vboIcChannelName  OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "the name of import channel"
+      ::= { vboIcEntry 2}
+
+    vboIcUsedBandwidth  OBJECT-TYPE
+      SYNTAX  Counter64
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "used bandwidth of an importchannel in bps"
+      ::= { vboIcEntry 3}
+
+    vboIcTotalBandwidth  OBJECT-TYPE
+      SYNTAX  Counter64
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "total bandwidth of an importchannel in bps"
+      ::= { vboIcEntry 4}
+
+    vboIcRunningSessCount  OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "running session counts of an importchannel"
+      ::= { vboIcEntry 5}
+
+    rtspProxy-Version  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "service version number"
+      ::= {rtspProxyAttr 1}
+
+    rtspProxy-SnmpLoggingMask  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "Snmp Logging Mask"
+      ::= {rtspProxyAttr 2}
+
+    rtspProxy-LogDir  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "Log file folder"
+      ::= {rtspProxyAttr 3}
+
+    rtspProxy-LogFileSize  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "maximal file size of the log"
+      ::= {rtspProxyAttr 6}
+
+    rtspProxy-LogLevel  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "log level, acceptable value: 0(with least details) - 7(with most details)"
+      ::= {rtspProxyAttr 9}
+
+    rtspProxy-configDir  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "The full path of the configuration  folder"
+      ::= {rtspProxyAttr 10}
+
+    rtspProxy-RequestProcess-threads  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the size of the thread pool"
+      ::= {rtspProxyAttr 21}
+
+    rtspProxy-RequestProcess-maxPendingRequest  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "the max pending requests if non-zero. When this is reached, the new request will be rejected by the server"
+      ::= {rtspProxyAttr 22}
+
+    rtspProxy-EventPublisher-timeout  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "an event will be discarded if it failed to be sent out within this timeout in millisecond"
+      ::= {rtspProxyAttr 23}
+
+    rtspProxy-SocketServer-rtspPort  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the RTSP server port to listen"
+      ::= { rtspProxyAttr 24 }
+
+    rtspProxy-SocketServer-maxConnections  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the max TCP connections allowed by the server"
+      ::= { rtspProxyAttr 25 }
+
+    rtspProxy-SocketServer-threads  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "count of threads which are used to receive rtsp message"
+      ::= { rtspProxyAttr 26 }
+
+    rtspProxy-SocketServer-idleScanInterval  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "scan interval in milliseconds for find out the idle connection"
+      ::= { rtspProxyAttr 27 }
+
+    rtspProxy-SocketServer-maxSessions  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "session limit"
+      ::= { rtspProxyAttr 28 }
+
+    rtspProxy-SocketServer-IncomingMessage-maxLen  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the max length of a incoming message"
+      ::= { rtspProxyAttr 29 }
+
+    -- Plat Statistics Start
+    rtspProxy-Statistics-Measure-Reset  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "Rtsp Session page view reset"
+      ::= {rtspProxyAttr 40}
+
+    rtspProxy-Statistics-Measured-Since  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "rtsp session session stat. begin time"
+      ::= {rtspProxyAttr 41}
+
+    rtspProxy-Statistics-Request-Count  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "rtsp request count"
+      ::= {rtspProxyAttr 42}
+
+    rtspProxy-Statistics-Total-Succeeded-Request-Count  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the succeeded rtsp request count in total"
+      ::= {rtspProxyAttr 43}
+
+    rtspProxy-Statistics-Average-Process-Latency  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "process request average latency in ms"
+      ::= {rtspProxyAttr 44}
+
+    rtspProxy-Statistics-Max-Process-Latency  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "process request max latency in ms"
+      ::= {rtspProxyAttr 45}
+
+    rtspProxy-Statistics-Average-Latency  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "request from message receive to send response average latency in ms"
+      ::= {rtspProxyAttr 46}
+
+    rtspProxy-Statistics-Max-Latency  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "request from message receive to send response max latency in ms"
+      ::= {rtspProxyAttr 47}
+
+    rtspProxy-Statistics-Skip-Count  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "process request skip count"
+      ::= {rtspProxyAttr 48}
+
+    rtspProxy-Statistics-SETUP-Latency-Max  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "setup request max latency in ms"
+      ::= {rtspProxyAttr 49}
+
+    rtspProxy-Statistics-SETUP-Latency-Min  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "setup request min latency in ms"
+      ::= {rtspProxyAttr 50}
+
+    rtspProxy-Statistics-SETUP-Latency-Average  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "setup request average latency in ms"
+      ::= {rtspProxyAttr 51}
+
+    rtspProxy-Statistics-SETUP-Request-Count  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "processed setup request count"
+      ::= {rtspProxyAttr 52}
+
+    rtspProxy-Statistics-SETUP-Successed-Count  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the succeeded SETUP request count"
+      ::= {rtspProxyAttr 53}
+
+    rtspProxy-Statistics-PLAY-Latency-Max  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "PLAY Latency request max latency in ms"
+      ::= {rtspProxyAttr 54}
+
+    rtspProxy-Statistics-PLAY-Latency-Min  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "PLAY Latency request min latency in ms"
+      ::= {rtspProxyAttr 55}
+
+    rtspProxy-Statistics-PLAY-Latency-Average  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "PLAY Latency request average latency in ms"
+      ::= {rtspProxyAttr 56}
+
+    rtspProxy-Statistics-PLAY-Request-Count  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "processed play request counts"
+      ::= {rtspProxyAttr 57}
+
+    rtspProxy-Statistics-PLAY-Succeeded-Count  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the succeeded PLAY request count"
+      ::= {rtspProxyAttr 58}
+
+    rtspProxy-Statistics-GETPARAMETER-Latency-Max  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "GET_PARAMETER Latency request max latency in ms"
+      ::= {rtspProxyAttr 59}
+
+    rtspProxy-Statistics-GETPARAMETER-Latency-Min  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "GET_PARAMETER Latency request min latency in ms"
+      ::= {rtspProxyAttr 60}
+
+    rtspProxy-Statistics-GETPARAMETER-Latency-Average  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "GET_PARAMETER Latency request average latency in ms"
+      ::= {rtspProxyAttr 61}
+
+    rtspProxy-Statistics-GETPARAMETER-Request-Count  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "processed GET_PARAMETER request count"
+      ::= {rtspProxyAttr 62}
+
+    rtspProxy-Statistics-GETPARAMETER-Succeeded-Count  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the succeeded GET_PARAMETER request count"
+      ::= {rtspProxyAttr 63}
+
+    rtspProxy-Statistics-SETPARAMETER-Latency-Max  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "SET_PARAMETER Latency request max latency in ms"
+      ::= {rtspProxyAttr 64}
+
+    rtspProxy-Statistics-SETPARAMETER-Latency-Min  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "SET_PARAMETER Latency request min latency in ms"
+      ::= {rtspProxyAttr 65}
+
+    rtspProxy-Statistics-SETPARAMETER-Latency-Average  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "SET_PARAMETER Latency request average latency in ms"
+      ::= {rtspProxyAttr 66}
+
+    rtspProxy-Statistics-SETPARAMETER-Request-Count  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "processed SET_PARAMETER request count"
+      ::= {rtspProxyAttr 67}
+
+    rtspProxy-Statistics-SETPARAMETER-Succeeded-Count  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the succeeded SET_PARAMETER request count"
+      ::= {rtspProxyAttr 68}
+
+    rtspProxy-Statistics-OPTIONS-Latency-Max  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "OPTIONS Latency request max latency in ms"
+      ::= {rtspProxyAttr 69}
+
+    rtspProxy-Statistics-OPTIONS-Latency-Min  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "OPTIONS Latency request min latency in ms"
+      ::= {rtspProxyAttr 70}
+
+    rtspProxy-Statistics-OPTIONS-Latency-Average  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "OPTIONS Latency request average latency in ms"
+      ::= {rtspProxyAttr 71}
+
+    rtspProxy-Statistics-OPTIONS-Request-Count  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "processed OPTIONS request count"
+      ::= {rtspProxyAttr 72}
+
+    rtspProxy-Statistics-OPTIONS-Succeeded-Count  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the succeeded OPTIONS request count"
+      ::= {rtspProxyAttr 73}
+
+    rtspProxy-Statistics-TEARDOWN-Latency-Max  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "TEARDOWN Latency request max latency in ms"
+      ::= {rtspProxyAttr 74}
+
+    rtspProxy-Statistics-TEARDOWN-Latency-Min  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "TEARDOWN Latency request min latency in ms"
+      ::= {rtspProxyAttr 75}
+
+    rtspProxy-Statistics-TEARDOWN-Latency-Average  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "TEARDOWN Latency request average latency in ms"
+      ::= {rtspProxyAttr 76}
+
+    rtspProxy-Statistics-TEARDOWN-Request-Count  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "processed TEARDOWN request count"
+      ::= {rtspProxyAttr 77}
+
+    rtspProxy-Statistics-TEARDOWN-Succeeded-Count  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the succeeded TEARDOWN request count"
+      ::= {rtspProxyAttr 78}
+
+  
+    rtspProxy-Statistics-Responses-per-10min  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "Responses per 10min"
+      ::= {rtspProxyAttr 82}
+
+    rtspProxy-Statistics-SETUP-per-10min  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "Executed SETUP per 10min"
+      ::= {rtspProxyAttr 83}
+
+    rtspProxy-Statistics-PLAY-per-10min  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "Executed PLAY per 10min"
+      ::= {rtspProxyAttr 84}
+
+    rtspProxy-Statistics-PAUSE-per-10min  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "Executed PAUSE per 10min"
+      ::= {rtspProxyAttr 85}
+
+    rtspProxy-Statistics-TEARDOWN-per-10min  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "Executed TEARDOWN per 10min"
+      ::= {rtspProxyAttr 86}
+
+    rtspProxy-Statistics-GET_PARAMETER-per-10min  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "Executed GET_PARAMETER per 10min"
+      ::= {rtspProxyAttr 87}
+
+    rtspProxy-Statistics-SETUP500-per-10min  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "SETUP Server Error per 10min"
+      ::= {rtspProxyAttr 88}
+
+    rtspProxy-Statistics-PLAY500-per-10min  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "PLAY Server Error per 10min"
+      ::= {rtspProxyAttr 89}
+
+    rtspProxy-Statistics-PAUSE500-per-10min  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "PAUSE Server Error per 10min"
+      ::= {rtspProxyAttr 90}
+
+    rtspProxy-Statistics-TEARDOWN500-per-10min  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "TEARDOWN Server Error per 10min"
+      ::= {rtspProxyAttr 91}
+
+    rtspProxy-Statistics-GET_PARAMETER500-per-10min  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "GET_PARAMETER Server Error per 10min"
+      ::= {rtspProxyAttr 92}
+
+    rtspProxy-Statistics-SETUP503-per-10min  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "SETUP Server unavailable per 10min"
+      ::= {rtspProxyAttr 93}
+
+    rtspProxy-Statistics-PLAY503-per-10min  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "PLAY Server unavailable per 10min"
+      ::= {rtspProxyAttr 94}
+
+    rtspProxy-Statistics-PAUSE503-per-10min  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "PAUSE Server unavailable per 10min"
+      ::= {rtspProxyAttr 95}
+
+    rtspProxy-Statistics-TEARDOWN503-per-10min  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "TEARDOWN Server unavailable per 10min"
+      ::= {rtspProxyAttr 96}
+
+    rtspProxy-Statistics-GET_PARAMETER503-per-10min  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "GET_PARAMETER Server unavailable per 10min"
+      ::= {rtspProxyAttr 97}
+
+    rtspProxy-Statistics-404-per-10min  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "Error404 per 10min"
+      ::= {rtspProxyAttr 98}
+
+    rtspProxy-Statistics-454-per-10min  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "Error454 per 10min"
+      ::= {rtspProxyAttr 99}
+
+    rtspProxy-Statistics-455-per-10min  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "Error455 per 10min"
+      ::= {rtspProxyAttr 100}
+
+    rtspProxy-Statistics-OtherErrs-per-10min  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "OtherErrors per 10min"
+      ::= {rtspProxyAttr 101}
+
+    -- Plat Statistics Ends
+
+      
+    rtspProxy-Statistics-ANNOUNCE-Count OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "count of ANNOUNCEs have been sent"
+      ::= { rtspProxyAttr 300 }
+
+           
+    rtspCrStat    OBJECT IDENTIFIER
+    ::= { rtspProxyAttr 200 }
+       
+    rtspCrStat-SessionCount  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the count of active sessions in CRG"
+      ::= {rtspCrStat 2}
+
+    rtspCrStat-PendingSize  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the pending request size wait for process threads"
+      ::= {rtspCrStat 3}
+
+    rtspCrStat-BusyThreads  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the size of busy threads"
+      ::= {rtspCrStat 4}
+
+    rtspCrStat-ThreadPoolSize  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the size of process thread pool"
+      ::= {rtspCrStat 5}
+      
+    rtspS1    OBJECT IDENTIFIER
+    ::= {rtspProxy 6}
+    
+    rtspS1Attr    OBJECT IDENTIFIER
+    ::= {rtspS1 1}
+
+    rtspLogS1 OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-write
+      STATUS current
+      DESCRIPTION
+          "Get/Reset ssm_tianshan_s1.log log-level"
+      ::= { rtspS1Attr 1}
+      
+    rtspLogIcetrace OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-write
+      STATUS current
+      DESCRIPTION
+          "Get/Reset ssm_tianshan_s1.icetrace.log log-level"
+      ::= { rtspS1Attr 2}
+
+-- ** Service of rtspProxy    
+-- **  end 
+
+
+-- *******************************
+-- ** Service of DsmccCRG
+-- *******************************
+    dsmccCRG          OBJECT IDENTIFIER ::= {tianShanService 2700}
+    dsmccCRGSvcApp    OBJECT IDENTIFIER ::= {dsmccCRG 2}
+    dsmccCRGAttr      OBJECT IDENTIFIER ::= {dsmccCRGSvcApp 1}
+        
+    dsmccCrStat OBJECT-TYPE
+      SYNTAX  SEQUENCE OF reqStatRow
+      MAX-ACCESS  not-accessible
+      STATUS  current
+      DESCRIPTION
+          "Dsmcc statistic state table"
+      ::= { dsmccCRGAttr 100 }
+       
+    reqStatRow OBJECT-TYPE
+      MAX-ACCESS  not-accessible
+      STATUS current
+      DESCRIPTION
+          "Dsmcc statistic state table Entry"
+      INDEX   { rowName }
+      ::= { dsmccCrStat 1 }
+
+    reqStatRow ::=
+      SEQUENCE {
+          rowName
+              DisplayString,
+          countSubTotal
+              INTEGER,
+          latencyMax
+              INTEGER,
+          latencyAvg
+              INTEGER,
+          countOK
+              INTEGER,
+          countNoSess
+              INTEGER,
+          countBadRequest
+              INTEGER,
+          countInvalidMethod
+              INTEGER,
+          countServerError
+              INTEGER,
+      }
+
+    rowName OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "Dsmcc statistic state operator method"
+      ::= { reqStatRow 1}
+
+    countSubTotal OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "Dsmcc statistic state operator count subtotal"
+      ::= { reqStatRow 2}
+
+    latencyMax OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "the maximun time cost of Dsmcc statistic state operation"
+      ::= { reqStatRow 3}
+
+    latencyAvg OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "the average time cost of Dsmcc statistic state operation"
+      ::= { reqStatRow 4}
+  
+    countOK OBJECT-TYPE
+        SYNTAX  INTEGER
+        MAX-ACCESS  read-only
+        STATUS current
+        DESCRIPTION
+            "the secceed succeed of Dsmcc statistic state operation"
+        ::= { reqStatRow 5 }
+  
+    countNoSess OBJECT-TYPE
+        SYNTAX  INTEGER
+        MAX-ACCESS  read-only
+        STATUS current
+        DESCRIPTION
+            "the no session count of Dsmcc statistic state operation"
+        ::= { reqStatRow 6 }
+  
+    countBadRequest OBJECT-TYPE
+        SYNTAX  INTEGER
+        MAX-ACCESS  read-only
+        STATUS current
+        DESCRIPTION
+            "the bad request count of Dsmcc statistic state operation"
+        ::= { reqStatRow 7 }
+  
+    countInvalidMethod OBJECT-TYPE
+        SYNTAX  INTEGER
+        MAX-ACCESS  read-only
+        STATUS current
+        DESCRIPTION
+            "the invalid method count of Dsmcc statistic state operation"
+        ::= { reqStatRow 8 }
+  
+    countServerError OBJECT-TYPE
+        SYNTAX  INTEGER
+        MAX-ACCESS  read-only
+        STATUS current
+        DESCRIPTION
+            "the server error count of Dsmcc statistic state operation"
+        ::= { reqStatRow 9 }                        
+   --------------------------------------dsmcc staticstic state table  ends
+
+    dsmccStat-Measure-Reset  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "dsmcc stat view reset"
+      ::= {dsmccCRGAttr 101}
+
+    dsmccStat-Measured-Since  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "dsmcc stat beginning time"
+      ::= {dsmccCRGAttr 102}
+
+    dsmccStat-SessionCount  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the count of active sessions in CRG"
+      ::= {dsmccCRGAttr 105}
+      
+    dsmccStat-PendingSize  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the pending request size wait for process threads"
+      ::= {dsmccCRGAttr 106}
+
+    dsmccStat-BusyThreads  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the size of busy threads"
+      ::= {dsmccCRGAttr 107}
+
+    dsmccStat-ThreadPoolSize  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the size of process thread pool"
+      ::= {dsmccCRGAttr 108}
+      
+-- ** Service of DsmccCRG
+-- **  end 
+
+-- *******************************
+-- ** Service of Sentry
+-- *******************************
+
+    sentry          OBJECT IDENTIFIER ::= {tianShanService 1100}
+    sentrySvcApp    OBJECT IDENTIFIER ::= {sentry 2}
+    
+ --------------------------------------------------------added for test sentry moudules table   start
+    sentryAttr OBJECT IDENTIFIER
+    ::= {sentrySvcApp 1}
+    
+    tsModulesTable OBJECT-TYPE
+      SYNTAX  SEQUENCE OF tsModulesEntry
+      MAX-ACCESS  not-accessible
+      STATUS  current
+      DESCRIPTION
+          "sentry modules table"
+      ::= { sentryAttr 100 }
+
+    tsModulesEntry OBJECT-TYPE
+      SYNTAX  tsModulesEntry
+      MAX-ACCESS  not-accessible
+      STATUS current
+      DESCRIPTION
+          "Sentry Modules Entry"
+      INDEX   { hostName }
+      ::= { tsModulesTable 1}
+         
+    tsModulesEntry ::=
+      SEQUENCE {
+          hostName
+          DisplayString,
+          interface
+          DisplayString,
+          Adapter
+          DisplayString,
+          endpoint
+          DisplayString,
+          pid
+          INTEGER,
+          activated
+          DisplayString,
+          ip
+          DisplayString, 
+      }
+
+    hostName OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "module hostName"
+      ::= { tsModulesEntry 1}
+
+    interface OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "module Interface"
+      ::= { tsModulesEntry 2}
+
+    adapter OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "module Adapter"
+      ::= { tsModulesEntry 3}
+
+    endpoint OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "module  Endpoint"
+      ::= { tsModulesEntry 4}
+
+    pid OBJECT-TYPE
+      SYNTAX  INTEGER(1..255)
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "PID"
+      ::= { tsModulesEntry 5}
+
+    activated OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "module Activated"
+      ::= { tsModulesEntry 6}
+       
+    ip OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "module ip cut from Endpoint"
+      ::= { tsModulesEntry 7}
+   --------------------------------------sentry modules table  ends  
+
+
+   --------------------------------------------------------added for sentry Neighbors table   start  	
+    tsNeighborTable OBJECT-TYPE
+      SYNTAX  SEQUENCE OF tsNeighbor
+      MAX-ACCESS  not-accessible
+      STATUS  current
+      DESCRIPTION
+          "sentry Neighbors table"
+      ::= { sentryAttr 101 }
+
+    tsNeighbor OBJECT-TYPE
+      SYNTAX  tsNeighbor
+      MAX-ACCESS  not-accessible
+      STATUS current
+      DESCRIPTION
+          "Sentry Neighbors Entry"
+      INDEX   { NeighborName }
+      ::= { tsNeighborTable 1}
+
+    tsNeighbor ::=
+      SEQUENCE {
+          NeighborName
+              DisplayString,
+          NodeId
+              DisplayString,
+          rootURL
+              DisplayString,
+          Processor
+              DisplayString,
+          Memory
+              DisplayString,
+          OS
+              DisplayString,
+          startup
+              DisplayString, 
+      }
+
+    neighborName OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "Neighbor hostName"
+      ::= { tsNeighbor 1}
+
+    nodeId OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "Neighbor NodeId"
+      ::= { tsNeighbor 2}
+
+    rootURL OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "Neighbor rootURL"
+      ::= { tsNeighbor 3}
+
+    processor OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "Neighbor  Processor"
+      ::= { tsNeighbor 4}
+
+    memory OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "Neighbor  Memory"
+      ::= { tsNeighbor 5}
+
+    os OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "Neighbor OS"
+      ::= { tsNeighbor 6}
+
+    startup OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "Neighbor Startup time"
+      ::= { tsNeighbor 7}
+   --------------------------------------sentry Neighbors table  ends
+
+-- *******************************
+-- ** Service of CPE
+-- *******************************
+   --------------------------------------------------------added for ContentProvisionEngine Method list table   start  	
+    cpeSvc    OBJECT IDENTIFIER  ::= {tianShanService 700}
+    cpesvcApp OBJECT IDENTIFIER  ::= {cpeSvc 2}
+
+    cpesvcAttr OBJECT IDENTIFIER  ::= { cpesvcApp 1}
+
+    contentProvSessionTable OBJECT-TYPE
+      SYNTAX  SEQUENCE OF contentProvSessionEntry
+      MAX-ACCESS  not-accessible
+      STATUS  current
+      DESCRIPTION
+          "table of content provision sessions"
+      ::= { cpesvcAttr 100 }
+
+    contentProvSessionEntry OBJECT-TYPE
+      SYNTAX  contentProvSessionEntry
+      MAX-ACCESS  not-accessible
+      STATUS current
+      DESCRIPTION
+          "content provision sessions Entry"
+      INDEX   { cpeMethod }
+      ::= { contentProvSessionTable 1 }
+         
+    contentProvSessionEntry ::=
+      SEQUENCE {
+          cpeMethod
+              DisplayString,
+          cpeSessSubtotal
+              INTEGER,
+          cpeSessMax
+              INTEGER,
+          cpeBwSubtotal
+              INTEGER,
+          cpeBwMax
+              INTEGER,
+      }
+
+    cpeMethod OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "method type of content provision session"
+      ::= { contentProvSessionEntry 1}
+
+    cpeSessSubtotal OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "number of sessions of the method type"
+      ::= { contentProvSessionEntry 2}
+      
+      
+    cpeBwSubtotal OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "subtotal of bandwidth usage of the method type"
+      ::= { contentProvSessionEntry 3}
+
+    cpeSessMax OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "maximal allowed session count of the method type"
+      ::= { contentProvSessionEntry 4}
+
+    cpeBwMax OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "total of bandwidth allowed of the method type"
+      ::= { contentProvSessionEntry 5}
+   -------------------------------------- ContentProvisionEngine Method list table  ends
+
+-- *******************************
+-- ** Service of EventGateway
+-- *******************************
+    eventGateway     OBJECT IDENTIFIER ::= {tianShanService 1200}
+    eventGwSvcApp    OBJECT IDENTIFIER ::= {eventGateway 2}
+    
+    eventGwAttr    OBJECT IDENTIFIER   ::= {eventGwSvcApp 1}
+
+    eventGw-eventChEp  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the ICE endpoint to the eventChannel service"
+      ::= {eventGwAttr 20}
+
+    eventGw-ConnCheckIntv OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "the interval to check the connection in millisecond"
+      ::= {eventGwAttr 21}
+
+    eventGw-llevelIce OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "the interval to check the connection in millisecond"
+      ::= {eventGwAttr 23}
+
+-- *******************************
+-- ** Service of eventChannel
+-- *******************************
+    eventChannel       OBJECT IDENTIFIER       ::= {tianShanService 1300}
+    eventChApp         OBJECT IDENTIFIER       ::= {eventChannel 2}
+    eventChAttr        OBJECT IDENTIFIER       ::= {eventChApp 1}
+
+    eventCh-endpoint   OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the ICE endpoint that the eventChannel serves"
+      ::= {eventChAttr 20}
+
+    eventCh-llevelIce OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "the log level of ice trace"
+      ::= {eventChAttr 21}
+
+-- *******************************
+-- ** Service of NSS
+-- *******************************
+   nss			OBJECT IDENTIFIER ::= {tianShanService 1400}
+   nssSvcApp    OBJECT IDENTIFIER ::= {nss 2}
+
+   nssAttr    OBJECT IDENTIFIER ::= {nssSvcApp 1}
+
+   nssStat-cSessions  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the count of active sessions in NSS"
+      ::= {nssAttr 100}
+      
+-- *******************************
+-- ** Service of VLCVSS
+-- *******************************
+-- vlcvss    OBJECT IDENTIFIER  ::= {tianShanService 1420} !!! 1420 is conflict with nss2
+
+-- *******************************
+-- ** Service of MediaClusterCS
+-- *******************************
+    mediaClusterCS       OBJECT IDENTIFIER   ::= {tianShanService 1500}
+    mediaClusterCSApp    OBJECT IDENTIFIER   ::= {mediaClusterCS 2}
+
+    mediaClusterCSAttr    OBJECT IDENTIFIER  ::= {mediaClusterCSApp 1}
+
+    mediaClusterCS-Version  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "service version number"
+      ::= {mediaClusterCSAttr 1}
+
+    mediaClusterCS-SnmpLoggingMask  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "Snmp Logging Mask"
+      ::= {mediaClusterCSAttr 2}
+
+    mediaClusterCS-LogDir  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "Log file folder"
+      ::= {mediaClusterCSAttr 3}
+
+    mediaClusterCS-KeepAliveIntervals  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "the interval of service keep alive heartbeats"
+      ::= {mediaClusterCSAttr 4}
+
+    mediaClusterCS-ShutdownWaitTime  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "service shutdown wait time"
+      ::= {mediaClusterCSAttr 5}
+
+    mediaClusterCS-LogFileSize  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "maximal file size of the log"
+      ::= {mediaClusterCSAttr 6}
+
+    mediaClusterCS-LogWriteTimeOut  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "timeout, in msec, during writing log file"
+      ::= {mediaClusterCSAttr 7}
+
+    mediaClusterCS-LogBufferSize  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "the size of in-memory buffer for the delayed writing"
+      ::= {mediaClusterCSAttr 8}
+
+    mediaClusterCS-LogLevel  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "log level, acceptable value: 0(with least details) - 7(with most details)"
+      ::= {mediaClusterCSAttr 9}
+
+    mediaClusterCS-configDir  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "The full path of the configuration folder"
+      ::= {mediaClusterCSAttr 10}
+
+    mediaClusterCS-netId  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "The unique id of mediaClusterCS instance"
+      ::= {mediaClusterCSAttr 11}
+
+    mediaClusterCS-cacheMode  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "1 to enable cache mode"
+      ::= {mediaClusterCSAttr 12}
+
+    mediaClusterCS-cacheLevel  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "cache level for cache mode mediaclustercs"
+      ::= {mediaClusterCSAttr 13}
+
+    mediaClusterCS-threads  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "thread count"
+      ::= {mediaClusterCSAttr 14}
+
+    mediaClusterCS-Bind-endpoint  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "the bind endpoint of this ContentStore service"
+      ::= {mediaClusterCSAttr 15}
+
+    mediaClusterCS-Bind-dispatchSize  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "the initial thread pool size to dispatch client requests, values in the range 4-20 are acceptable "
+      ::= {mediaClusterCSAttr 16}
+
+    mediaClusterCS-Bind-dispatchMax  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "the max thread pool size to dispatch client requests"
+      ::= {mediaClusterCSAttr 17}
+
+    mediaClusterCS-Provision-defaultBandwidth  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "default provision bandwidth while called with 0 transfer bitrate (bps)"
+      ::= {mediaClusterCSAttr 18}
+
+    mediaClusterCS-Provision-trickSpeeds  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "speed collection required for trick generation represented as float numbers, multiple speeds are separated by space. eg: 7.5 12.5 15.0"
+      ::= {mediaClusterCSAttr 19}
+
+    mediaClusterCS-DatabaseCache-volumeSize  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "the size of volume records to cache, 20 ~ 200 are acceptable"
+      ::= {mediaClusterCSAttr 20}
+
+    mediaClusterCS-DatabaseCache-contentSize  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "the size of content records to cache, 400 ~ 4000 are acceptable"
+      ::= {mediaClusterCSAttr 21}
+
+    mediaClusterCS-DatabaseCache-contentSavePeriod  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "content background save interval in millsecond, default is 4000 (4 seconds)"
+      ::= {mediaClusterCSAttr 22}
+
+    mediaClusterCS-DatabaseCache-contentSaveSizeTrigger  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "content background save interval in millsecond, default is 4000 (4 seconds)"
+      ::= {mediaClusterCSAttr 23}
+
+    mediaClusterCS-CPC-Bind-endpoint  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "bind endpoint for CPC"
+      ::= {mediaClusterCSAttr 24}
+
+-- *******************************
+-- ** Service of DataOnDemand
+-- *******************************
+    dataOnDemand     OBJECT IDENTIFIER ::= {tianShanService 1600}
+    dodApp           OBJECT IDENTIFIER ::= {dataOnDemand 2}
+    
+-- *******************************
+-- ** Service of dodCS
+-- *******************************
+    dodCS            OBJECT IDENTIFIER ::= {tianShanService 1700}
+    dodCSApp         OBJECT IDENTIFIER ::= {dodCS 2}
+
+-- *******************************
+-- ** Service of DataStream
+-- *******************************
+    dataStream       OBJECT IDENTIFIER ::= {tianShanService 1800}
+    dataStreamApp    OBJECT IDENTIFIER ::= {dataStream 2}
+
+-- *******************************
+-- ** Service of BcastChannel
+-- *******************************
+    bcastChannel     OBJECT IDENTIFIER ::= {tianShanService 1900}
+    bcastChApp       OBJECT IDENTIFIER ::= {bcastChannel 2}
+
+-- *******************************
+-- ** Service of CDNCS
+-- *******************************
+    cdnCS            OBJECT IDENTIFIER ::= {tianShanService 2000}
+    cdnCSSvcApp      OBJECT IDENTIFIER ::= {cdnCS 2}
+
+-- *******************************
+-- ** Service of CDNSS
+-- *******************************
+    cdnss            OBJECT IDENTIFIER ::= {tianShanService 2100}
+    cdnssSvcApp      OBJECT IDENTIFIER ::= {cdnss 2}
+    cdnssAttr        OBJECT IDENTIFIER ::= {cdnssSvcApp 1}
+    
+    -- cdnss table definition  start
+    cdnssStat-cache-missedSize  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the size of missed contents of CacheStore"
+      ::= { cdnssAttr 20 }
+
+    cdnssStat-cache-hotLocalsSize  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the size of hot local contents of CacheStore"
+      ::= { cdnssAttr 21 }
+
+    cdnssStat-cache-requestsInTimeWin  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the request count ever received in the timewindow"
+      ::= { cdnssAttr 22 }
+
+    cdnssStat-cache-hitInTimeWin  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the hit count in the timewindow"
+      ::= { cdnssAttr 23 }
+    
+    --  ** hot contents  table
+    hotContentsTbl OBJECT-TYPE
+      SYNTAX  SEQUENCE OF hotContent
+      MAX-ACCESS  not-accessible
+      STATUS  current
+      DESCRIPTION
+          "table of hot contents"
+      ::= { cdnssAttr 100 }
+
+    hotContent OBJECT-TYPE
+      SYNTAX  hotContent
+      MAX-ACCESS  not-accessible
+      STATUS current
+      DESCRIPTION
+          "entry of processed request"
+      INDEX   { hcContentName }
+      ::= { hotContentsTbl 1}
+
+    hotContent ::=
+      SEQUENCE {
+          hcContentName
+              DisplayString,
+          hcAccessCount
+              INTEGER,
+          hcStampSince
+              INTEGER,
+          hcStampLatest
+              INTEGER,
+      }
+
+    hcContentName OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "the name of hot content"
+      ::= { hotContent 1}
+
+    hcAccessCount OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "the access counted since stampSince, maps to METADATA_AccessCount of Content rec"
+      ::= { hotContent 2}
+
+    hcStampSince OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "the time since when the access was counted, maps to METADATA_AccessCountSince of Content rec"
+      ::= { hotContent 3}
+
+    hcStampLatest OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "the latest timestamp  when the access recently was counted, maps to METADATA_AccessCountLatest of Content rec"
+      ::= { hotContent 4}
+
+
+    --   ** MissedContents  table
+    missedContentTable OBJECT-TYPE
+      SYNTAX  SEQUENCE OF missedContent
+      MAX-ACCESS  not-accessible
+      STATUS  current
+      DESCRIPTION
+          "table of hot contents"
+      ::= { cdnssAttr 101}
+
+    missedContent OBJECT-TYPE
+      SYNTAX  missedContent
+      MAX-ACCESS  not-accessible
+      STATUS current
+      DESCRIPTION
+          "entry of processed request"
+      INDEX   { mcContentName }
+      ::= { missedContentTable 1 }
+
+    missedContent ::=
+      SEQUENCE {
+          mcContentName
+              DisplayString,
+          mcAccessCount
+              INTEGER,
+          mcStampSince
+              INTEGER,
+          mcStampLatest
+              INTEGER,
+      }
+
+    mcContentName OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "the name of hot content"
+      ::= { missedContent 1}
+
+    mcAccessCount OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "the access counted since stampSince, maps to METADATA_AccessCount of Content rec"
+      ::= { missedContent 2}
+
+    mcStampSince OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "the time since when the access was counted, maps to METADATA_AccessCountSince of Content rec"
+      ::= { missedContent 3}
+
+    mcStampLatest OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "the latest timestamp  when the access recently was counted, maps to METADATA_AccessCountLatest of Content rec"
+      ::= { missedContent 4 }
+
+
+    --  **
+    cacheStoreNeighborTbl OBJECT-TYPE
+      SYNTAX  SEQUENCE OF cacheStoreNeighbor
+      MAX-ACCESS  not-accessible
+      STATUS  current
+      DESCRIPTION
+          "table of CacheStore Neighbour"
+      ::= { cdnssAttr 102 }
+
+    cacheStoreNeighbor OBJECT-TYPE
+      SYNTAX  cacheStoreNeighbor
+      MAX-ACCESS  not-accessible
+      STATUS current
+      DESCRIPTION
+          "entry of processed request"
+      INDEX   { csnNetId }
+      ::= { cacheStoreNeighborTbl 1 }
+
+    cacheStoreNeighbor ::=
+      SEQUENCE {
+          csnNetId
+              DisplayString,
+          csnState
+              INTEGER,
+          csnLoad
+              INTEGER,
+          csnLoadImport
+              INTEGER,
+          csnLoadCacheWrite
+              INTEGER,
+          csnStampAsOf
+              DisplayString,
+          csnEndpoint
+              DisplayString,
+          csnSessionInterface
+              DisplayString,
+      }
+
+    csnNetId OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "the unique netId of the CacheStore within the domain"
+      ::= { cacheStoreNeighbor 1}
+
+    csnState OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "the state of the CacheStore"
+      ::= { cacheStoreNeighbor 2}
+
+    csnLoad OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "the load value of the CacheStore as of the stamp of stampAsOf."
+      ::= { cacheStoreNeighbor 3}
+
+	csnLoadImport OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "the load value of import usage, including that of cache and pass-thru"
+      ::= { cacheStoreNeighbor 4}
+
+    csnLoadCacheWrite OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "the load value of disk write that used for caching external contents to the server"
+      ::= { cacheStoreNeighbor 5}
+
+    csnStampAsOf OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "the timestamp of load of the CacheStore"
+      ::= { cacheStoreNeighbor 6}
+
+    csnEndpoint OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "the endpoint of the CacheStore"
+      ::= { cacheStoreNeighbor 7}
+
+    csnSessionInterface OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "the session interface that can setup stream sessions of contents on the CacheStore"
+      ::= { cacheStoreNeighbor 8 }
+
+    --  **
+    cacheStoreStreamCounters OBJECT-TYPE
+      SYNTAX  SEQUENCE OF cacheStoreStreamCtr
+      MAX-ACCESS  not-accessible
+      STATUS  current
+      DESCRIPTION
+          "table of CacheStore on its export content as stream"
+      ::= { cdnssAttr 103 }
+
+    cacheStoreStreamCtr OBJECT-TYPE
+      SYNTAX  cacheStoreStreamCtr
+      MAX-ACCESS  not-accessible
+      STATUS current
+      DESCRIPTION
+          "entry of processed request"
+      INDEX   { scrName }
+      ::= { cacheStoreStreamCounters 1 }
+
+    cacheStoreStreamCtr ::=
+      SEQUENCE {
+          scrName
+              DisplayString,
+          scrCount
+              INTEGER,
+          scrFailCount
+              INTEGER,
+          scrLatencyAvg
+              INTEGER,
+          scrLatencyMax
+              INTEGER,
+        }
+
+    scrName OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "name of the counter"
+      ::= { cacheStoreStreamCtr 1}
+
+    scrCount OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "total count of the type"
+      ::= { cacheStoreStreamCtr 2}
+
+    scrFailCount OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "total failed count of the type"
+      ::= { cacheStoreStreamCtr 3}
+
+    scrLatencyAvg OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "the avarage latency in msec" -- scould be calucated by divding latecy total by count
+      ::= { cacheStoreStreamCtr 4}
+
+    scrLatencyMax OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "the max latency in msec ever seen"
+      ::= { cacheStoreStreamCtr 5}
+
+    cdnssStat-cache-Measure-Reset OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "to reset the stat counters"
+      ::= { cdnssAttr 110}
+
+    cdnssStat-cache-Measure-Since OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the beginning time when the stat counters"
+      ::= { cdnssAttr 111 }
+
+
+-- ** end of CDNSS
+
+-- *******************************
+-- ** Service of httpCRG
+-- *******************************
+    httpCRG        OBJECT IDENTIFIER ::= {tianShanService 2200}
+    httpSvcApp     OBJECT IDENTIFIER ::= {httpCRG 2}
+    httpCrgAttr    OBJECT IDENTIFIER ::= {httpSvcApp 1}
+
+    httpCRG-Version  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "HttpCRG's version number"
+      ::= {httpCrgAttr 1}
+
+    crgSnmpLoggingMask  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "Snmp logging mask"
+      ::= {httpCrgAttr 2}
+
+    crgLogDir  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "HttpCRG Log file folder"
+      ::= {httpCrgAttr 3}
+
+    crgLogFileSize  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "maximal file size of the log"
+      ::= {httpCrgAttr 6}
+
+    crgLogTimeout  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "timeout, in msec, during writing log file"
+      ::= {httpCrgAttr 7}
+
+    crgLogBufferSize  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the size of in-memory buffer for the delayed writing"
+      ::= {httpCrgAttr 8}
+
+    crgLogLevel  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "log level, acceptable value: 0(with least details) - 7(with most details)"
+      ::= {httpCrgAttr 9}
+
+    crgConfigDir  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the full path of the configuration folder"
+      ::= {httpCrgAttr 10}
+
+    -- variables in content locator module
+    extC2loc   OBJECT IDENTIFIER ::= {httpCRG 3}
+    c2locAttr   OBJECT IDENTIFIER ::= {extC2loc 1}
+
+    c2locLogLevel OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "log level, acceptable value: 0(with least details) - 7(with most details)"
+      ::= {c2locAttr 1}
+
+    c2locLogSize  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "maximal file size of the log"
+      ::= {c2locAttr 2}
+
+    c2locLamIf OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "endpoint of LAM interface."
+      ::= {c2locAttr 3}
+
+    c2locForwardLocator OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the remote locator's url for forwarding request"
+      ::= {c2locAttr 4}
+
+    c2locOptSelectionRetryMax OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the max retries of the port selection."
+      ::= {c2locAttr 5}
+
+    c2locOptIdxRate OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the transfer rate of index file."
+      ::= {c2locAttr 6}
+
+    c2locTotalBwKbps OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the total bandwidth of the maneged transfer ports(in kbps)."
+      ::= {c2locAttr 7}
+
+    c2locActiveBwKbps OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the total bandwidth of the running transfer(in kbps)"
+      ::= {c2locAttr 8}
+
+    c2locTransferCount OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the running transfer"
+      ::= {c2locAttr 9}
+
+    c2locPortTable OBJECT-TYPE
+      SYNTAX  SEQUENCE OF ClocPortEntry
+      MAX-ACCESS  not-accessible
+      STATUS  current
+      DESCRIPTION
+          "transfer port table"
+      ::= { c2locAttr 100 }
+
+    c2locPortCount OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "transfer port entries count"
+      ::= { c2locAttr 101 }
+
+    -- c2locator port table definition
+    c2locPortEntry OBJECT-TYPE
+      SYNTAX  ClocPortEntry
+      MAX-ACCESS  not-accessible
+      STATUS current
+      DESCRIPTION
+          "transfer port entry"
+      INDEX   { c2locPortIndex }
+      ::= { c2locPortTable 1}
+
+    ClocPortEntry ::=
+      SEQUENCE {
+          c2locPortIndex
+              INTEGER,
+          c2locPortName
+              DisplayString,
+          c2locPortSS
+              DisplayString,
+          c2locPortCapacityKbps
+              INTEGER,
+          c2locPortUsedBwKbps
+              INTEGER,
+          c2locPortTransferCount,
+              INTEGER,
+          c2locPortEnabled
+              INTEGER,
+          c2locPortPenalty
+              INTEGER,
+          c2locPortAddresses
+              DisplayString,
+          c2locPortErrorRatePercent
+              INTEGER
+      }
+
+    c2locPortIndex OBJECT-TYPE
+      SYNTAX  INTEGER(1..255)
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "transfer port index"
+      ::= { c2locPortEntry 1 }
+
+    c2locPortName OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "transfer port name"
+      ::= { c2locPortEntry 2 }
+
+    c2locPortSS OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "endpoint to the stream service that host the transfer port"
+      ::= { c2locPortEntry 3 }
+
+    c2locPortCapacityKbps OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "transfer port capacity in kbps"
+      ::= { c2locPortEntry 4 }
+
+    c2locPortUsedBwKbps OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "used bandwidth of the port, in kbps"
+      ::= { c2locPortEntry 5 }
+
+    c2locPortTransferCount OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "the transfer count of the port"
+      ::= { c2locPortEntry 6 }
+
+    c2locPortEnabled OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "the administrative status of the port, 1 for enabled, 0 for disabled"
+      ::= { c2locPortEntry 7 }
+
+    c2locPortPenalty OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "the penalty point of the port"
+      ::= { c2locPortEntry 8 }
+
+    c2locPortAddresses OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "the ip addresses of the port"
+      ::= { c2locPortEntry 9 }
+
+    c2locPortErrorRatePercent OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "the error rate of the stream creation"
+      ::= { c2locPortEntry 10 }
+
+
+    -- c2locator transfer Port table definition
+    transferPortTable OBJECT-TYPE
+      SYNTAX  SEQUENCE OF transferPortEntry
+      MAX-ACCESS  not-accessible
+      STATUS  current
+      DESCRIPTION
+          "table of C2 TransferPorts"
+      ::= { c2locAttr 105}
+
+   transferPortEntry OBJECT-TYPE
+     SYNTAX  transferPortEntry
+     MAX-ACCESS  not-accessible
+     STATUS current
+     DESCRIPTION
+         "C2 TransferPorts Entry"
+     INDEX   { tpName }
+     ::= { transferPortTable 1}
+      
+    transferPortEntry ::=
+      SEQUENCE {
+          tpName
+              DisplayString,
+          tpStatus
+              INTEGER,
+          tpSession
+              INTEGER,
+          tpBwSubtotal
+              INTEGER,
+          tpBwMax
+              INTEGER,
+          tpEnabled
+              INTEGER,
+          tpPenalty
+              INTEGER,
+          tpAddress
+              DisplayString,
+      }
+
+    tpName OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "name of C2 TransferPort"
+      ::= { transferPortEntry 1}
+
+    tpStatus OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "status of the C2 TransferPort"
+      ::= { transferPortEntry 2}
+
+    tpSession OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "number of sessions on the C2 TransferPort"
+      ::= { transferPortEntry 3}
+
+    tpBwSubtotal OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "subtotal of bandwidth usage on the C2 TransferPort"
+      ::= { transferPortEntry 4 }
+
+    tpBwMax OBJECT-TYPE
+        SYNTAX  INTEGER
+        MAX-ACCESS  read-only
+        STATUS current
+        DESCRIPTION
+            "total of bandwidth allowed on the C2 TransferPort"
+        ::= { transferPortEntry 5}
+        
+    tpEnabled OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "the C2 TransferPort is enabled"
+      ::= { transferPortEntry 6}
+
+    tpPenalty OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "the penalty of the C2 TransferPort"
+      ::= { transferPortEntry 7}
+
+    tpAddress OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "the address of this C2 TransferPort"
+      ::= { transferPortEntry 8}
+
+    -- end c2locator transfer Port table definition
+
+
+    -- c2locator client Port table definition
+    clientTransferTable OBJECT-TYPE
+      SYNTAX  SEQUENCE OF clientTransferEntry
+      MAX-ACCESS  not-accessible
+      STATUS  current
+      DESCRIPTION
+          "table of C2 ClientTransfers"
+      ::= { c2locAttr 102 }
+
+    clientTransferEntry OBJECT-TYPE
+      SYNTAX  clientTransferEntry
+      MAX-ACCESS  not-accessible
+      STATUS current
+      DESCRIPTION
+          "C2 ClientTransfers Entry"
+      INDEX   { ctName }
+      ::= { clientTransferTable 1}
+
+    clientTransferEntry ::=
+      SEQUENCE {
+          ctName
+              DisplayString,
+          ctSession
+              INTEGER,
+          ctBwSubtotal
+              INTEGER,
+          ctBwMax
+              INTEGER,
+      }
+
+    ctName OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "name of C2 ClientTransfer"
+      ::= { clientTransferEntry 1}
+
+    ctSession OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "number of sessions on the C2 ClientTransfer"
+      ::= { clientTransferEntry 2}
+
+    ctBwSubtotal OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "subtotal of bandwidth usage on the C2 ClientTransfer"
+      ::= { clientTransferEntry 3}
+
+    ctBwMax OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "total of bandwidth allowed on the C2 ClientTransfer"
+      ::= { clientTransferEntry 4}
+      
+    c2locLogIce OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "log level, acceptable value: 0(with least details) - 7(with most details)"
+      ::= {c2locAttr 15}
+
+    -- end c2locator client Port table definition
+
+    c2locHitRatePercent OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the local resource hitrate"
+      ::= {c2locAttr 105}
+
+    c2locHitRateReset OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "the hitrate reset triger"
+      ::= {c2locAttr 106}
+
+    httpReqTbl OBJECT-TYPE
+      SYNTAX  SEQUENCE OF httpReqEntry
+      MAX-ACCESS  not-accessible
+      STATUS  current
+      DESCRIPTION
+          "table of processed request"
+      ::= { httpCrgAttr 100 }
+
+    httpStat-Since OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "since when rtsp request static counts"
+      ::= {httpCrgAttr 101 }
+
+    httpStat-Measure-Reset OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "http stat view reset"
+      ::= {httpCrgAttr 102 }
+
+    httpReqEntry OBJECT-TYPE
+      SYNTAX  httpReqEntry
+      MAX-ACCESS  not-accessible
+      STATUS current
+      DESCRIPTION
+          "entry of processed request"
+      INDEX   { reqMethod }
+      ::= { httpReqTbl 1}
+
+    httpReqEntry ::=
+      SEQUENCE {
+          reqMethod
+              DisplayString,
+          reqCount
+              INTEGER,
+          reqLatencyAvg
+              INTEGER,
+          reqLatencyMax
+              INTEGER,
+          resp2xx
+              INTEGER,
+          resp400
+              INTEGER,
+          resp404
+              INTEGER,
+          resp500
+              INTEGER,
+          resp503
+              INTEGER,
+      }
+
+    reqMethod OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "method type of processed requests"
+      ::= { httpReqEntry 1}
+
+    reqCount OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "number of processed requests of the method"
+      ::= { httpReqEntry 2}
+
+    reqLatencyAvg OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "average latency in msec of the request processing"
+      ::= { httpReqEntry 3}
+
+    reqLatencyMax OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "max latency in msec of the request processing"
+      ::= { httpReqEntry 4}
+
+    resp2xx OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "number of response 2xx"
+      ::= { httpReqEntry 5}
+
+    resp400 OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "number of response 400"
+      ::= { httpReqEntry 6}
+
+    resp404 OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "number of response 404"
+      ::= { httpReqEntry 7}
+
+    resp500 OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "number of response 500"
+      ::= { httpReqEntry 8}
+
+    resp503 OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "number of response 503"
+      ::= { httpReqEntry 9}
+
+        --  end httpcrg HttpCRGStat-Since definition
+
+-- ** End of httpCRG
+
+-- *******************************
+-- ** Service of EdgeRM
+-- *******************************
+    edgeRM        OBJECT IDENTIFIER  ::= {tianShanService 2300}
+    edgeRMApp     OBJECT IDENTIFIER  ::= {edgeRM 2}
+
+    edgeRMAttr    OBJECT IDENTIFIER ::= {edgeRMApp 1}
+
+    -- EdgeRM devices definition
+    ermDevices  OBJECT IDENTIFIER
+    ::= {edgeRMAttr 200}
+   
+   devicesTable OBJECT-TYPE
+      SYNTAX  SEQUENCE OF DevicesEntry
+      MAX-ACCESS  not-accessible
+      STATUS  current
+      DESCRIPTION
+          "Table of devices's information"
+      ::= { ermDevices 1}
+
+    devicesEntry OBJECT-TYPE
+      SYNTAX  DevicesEntry
+      MAX-ACCESS  not-accessible
+      STATUS current
+      DESCRIPTION
+          "EdgeRM devices"
+      INDEX   { edZone }
+      ::= { devicesTable 1}
+
+    DevicesEntry ::=
+      SEQUENCE {
+          edZone
+              DisplayString,
+          edDeviceName
+              DisplayString,
+          edVendor
+              DisplayString,
+          edModel
+              DisplayString,
+          edDescription
+              DisplayString,
+          edTftp
+              DisplayString,
+          edAdminUrl
+              DisplayString,
+      }
+
+    edZone OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "Zone's name"
+      ::= { devicesEntry 1}
+
+    edDeviceName OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "Device's name"
+      ::= { devicesEntry 2}
+
+    edVendor OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "Device's vendor"
+      ::= { devicesEntry 3}
+
+    edModel OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "Device's model"
+      ::= { devicesEntry 4}
+
+    edDescription OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "Device's description"
+      ::= { devicesEntry 5}
+
+    edTftp OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "Device's tftp"
+      ::= { devicesEntry 6}
+
+    edAdminUrl OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "Admin URL"
+      ::= { devicesEntry 7}
+    --  End EdgeRM devices definition
+        
+
+    -- EdgeRM ports definition
+    ermPorts  OBJECT IDENTIFIER ::= {edgeRMAttr 201}
+
+    portsTable OBJECT-TYPE
+      SYNTAX  SEQUENCE OF PortsEntry
+      MAX-ACCESS  not-accessible
+      STATUS  current
+      DESCRIPTION
+          "Table of ports's informations"
+      ::= { ermPorts 1}
+
+    portsEntry OBJECT-TYPE
+      SYNTAX  PortsEntry
+      MAX-ACCESS  not-accessible
+      STATUS current
+      DESCRIPTION
+          "EdgeRM ports"
+      INDEX   { reqMethod }
+      ::= { portsTable 1}
+
+    PortsEntry ::=
+      SEQUENCE {
+          epPortID
+              INTEGER,
+          epPowerLevel
+              INTEGER,
+          epModulationFormat
+              INTEGER,
+          epInterLeaverMode
+              INTEGER,
+          epFEC
+              INTEGER,
+          epDeviceIP
+              DisplayString,
+          epDeviceGroup
+              DisplayString,
+      }
+
+    epPortID OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "Port's ID"
+      ::= { portsEntry 1}
+
+    epPowerLevel OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "Power level"
+      ::= { portsEntry 2} 
+ 
+    epModulationFormat OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "Modulation format"
+      ::= { portsEntry 3} 
+ 
+    epInterLeaverMode OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "Inter leaver mode"
+      ::= { portsEntry 4} 
+ 
+    epFEC OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "FEC"
+      ::= { portsEntry 5} 
+ 
+    epDeviceIP OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "Device's IP"
+      ::= { portsEntry 6} 
+ 
+    epDeviceGroup OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "Device's group"
+      ::= { portsEntry 7}
+      
+    --  End EdgeRM ports definition
+    
+    
+    -- EdgeRM channels definition
+    ermChannels  OBJECT IDENTIFIER ::= {edgeRMAttr 202}
+
+    channelsTable OBJECT-TYPE
+      SYNTAX  SEQUENCE OF ChannelsEntry
+      MAX-ACCESS  not-accessible
+      STATUS  current
+      DESCRIPTION
+          "Table of channels's informations"
+      ::= { ermChannels 1}
+
+    channelsEntry OBJECT-TYPE
+      SYNTAX  ChannelsEntry
+      MAX-ACCESS  not-accessible
+      STATUS current
+      DESCRIPTION
+          "EdgeRM Channels"
+      INDEX   { reqMethod }
+      ::= { channelsTable 1}
+
+    ChannelsEntry ::=
+      SEQUENCE {
+          ecName
+              DisplayString,
+          ecStampLastUpdated
+              DisplayString,
+          ecEnabled
+              DisplayString,
+          ecFreqRF
+              DisplayString,
+          ecTSID
+              DisplayString,
+          ecNITPID
+              DisplayString,
+          ecStartUDPPort
+              DisplayString,
+          ecUdpPortStepByPn
+              DisplayString,
+          ecStartProgramNumber
+              DisplayString,
+          ecLowBandwidthUtilization
+              DisplayString,
+          ecHighBandwidthUtilization
+              DisplayString,
+          ecMaxSessions
+              DisplayString,
+          ecIntervalPAT
+              DisplayString,
+          ecIntervalPMT
+              DisplayString,
+          ecSymbolRate
+              DisplayString,
+          ecAllocations
+              DisplayString,
+      }
+
+    ecName OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "QAM channel's name"
+      ::= { channelsEntry 1}
+
+    ecStampLastUpdated OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "The last updated stamp of current channel "
+      ::= { channelsEntry 2}
+ 
+    ecEnabled OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "If channel is enabled"
+      ::= { channelsEntry 3}
+ 
+    ecFreqRF OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "QAM channel's name"
+      ::= { channelsEntry 4}
+ 
+    ecTSID OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "TSID"
+      ::= { channelsEntry 5}
+ 
+    ecNITPID OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "NITPID"
+      ::= { channelsEntry 6}
+ 
+    ecStartUDPPort OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "Start UDP port"
+      ::= { channelsEntry 7}
+ 
+    ecUdpPortStepByPn OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "UDP port stepped by Pn"
+      ::= { channelsEntry 8}
+ 
+    ecStartProgramNumber OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "Start program number"
+      ::= { channelsEntry 9}
+ 
+    ecLowBandwidthUtilization OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "Low bandwidth utilization"
+      ::= { channelsEntry 10}
+ 
+    ecHighBandwidthUtilization OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "High bandwidth utilization"
+      ::= { channelsEntry 11}
+ 
+    ecMaxSessions OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "the max session's number of QAM channel"
+      ::= { channelsEntry 12}
+ 
+    ecIntervalPAT OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "QAM channel's interval PAT"
+      ::= { channelsEntry 13}
+ 
+    ecIntervalPMT OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "QAM channel's interval PMT"
+      ::= { channelsEntry 14}
+ 
+    ecSymbolRate OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "QAM channel's symbol rate"
+      ::= { channelsEntry 15}
+ 
+    ecAllocations OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "QAM channel's allocation count"
+      ::= { channelsEntry 16}
+ 
+    --  End EdgeRM Channels definition
+    
+-- ** End of EdgeRM
+-- *******************************
+-- ** Service of StreamSegmenter
+-- *******************************
+    streamSegementer   OBJECT IDENTIFIER ::= { tianShanService 2400 }
+    ssegApp            OBJECT IDENTIFIER ::= { streamSegementer 2 }
+    ssegAttr           OBJECT IDENTIFIER ::= { ssegApp 1 }
+
+-- *******************************
+-- ** Service of C2FrontEnd
+-- *******************************
+    c2fe               OBJECT IDENTIFIER ::= { tianShanService 2500 }
+    c2feApp            OBJECT IDENTIFIER ::= { c2fe 2 }
+    c2feAttr           OBJECT IDENTIFIER ::= { c2feApp 1 }
+
+-- *******************************
+-- ** Service of EdgeFE
+-- *******************************
+-- ** most likely duplicate from CDNSS
+    edgeFe           OBJECT IDENTIFIER ::= {tianShanService 3400}
+    edgeFeApp        OBJECT IDENTIFIER ::= {edgeFe 2}
+    edgeFeAttr       OBJECT IDENTIFIER ::= {edgeFeApp 1}
+    
+    efeHttpIP OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "The local bind addr that http server serves"
+      ::= { edgeFeAttr 1}
+			
+    efeHttpIP OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "The local bind port that http server serves"
+      ::= { edgeFeAttr 2}
+
+    efeProcThreads OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "threads of StreamService server-side"
+      ::= { edgeFeAttr 3}
+
+    efeLocateThreads OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "threads of the inner C2Locate server-side module"
+      ::= { edgeFeAttr 4}
+	  
+    efeMTU OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "MTU size"
+      ::= { edgeFeAttr 10}
+
+    efeMTUsPerSend OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "packetsPerSend - MTU counts per send"
+      ::= { edgeFeAttr 11}
+
+    efeMaxContinousSends OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "maxRoundPerRun - max sends before a forced yield"
+      ::= { edgeFeAttr 12}
+
+    efeFSReadThreshold OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "fsReadThreshold -"
+      ::= { edgeFeAttr 13}
+
+    efeFSReadThreshold OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "socketThreshhold -"
+      ::= { edgeFeAttr 14}
+	  
+    efeSOKernelSendBuf OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "socketThreshhold -"
+      ::= { edgeFeAttr 15}
+
+    efeSOKernelSendBuf OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "socketThreshhold -"
+      ::= { edgeFeAttr 16}
+	  
+	efeDefaultBitrate OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "defaultBitrate -"
+      ::= { edgeFeAttr 17}
+
+    efeCompensationRate OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "bitrateInflation -"
+      ::= { edgeFeAttr 18}
+
+	-- BEGIN-OF EdgeFE URIs.
+    efeURIs  OBJECT IDENTIFIER
+	  ::= {edgeFeAttr 100}
+	
+	efeUriTab OBJECT-TYPE
+      SYNTAX  SEQUENCE OF efeUriEntry
+      MAX-ACCESS  not-accessible
+      STATUS  current
+      DESCRIPTION
+          "Table of CachDir's information"
+      ::= { efeURIs 1}
+
+    efeUri OBJECT-TYPE
+      SYNTAX  efeUriEntry
+      MAX-ACCESS  not-accessible
+      STATUS current
+      DESCRIPTION
+          "EdgeFE URI"
+      INDEX   { efeuPath }
+      ::= { efeUriTab 1}
+
+    efeUriEntry ::=
+      SEQUENCE {
+          efeuPath
+              DisplayString,
+          efeuReader
+              DisplayString
+      }
+
+    efeuPath OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "Pathname of URI"
+      ::= { efeUri 1}
+
+    efeuReader OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "Reader to handle the request"
+      ::= { efeUri 2}
+    -- END-OF EdgeFE URIs.
+	
+	-- BEGIN-OF EdgeFE Streamers
+    efeStreamers  OBJECT IDENTIFIER
+	  ::= {edgeFeAttr 101}
+	
+	efeStreamerTab OBJECT-TYPE
+      SYNTAX  SEQUENCE OF efeStreamerEntry
+      MAX-ACCESS  not-accessible
+      STATUS  current
+      DESCRIPTION
+          "Table of Streamer information"
+      ::= { efeStreamers 1}
+
+    efeStreamer OBJECT-TYPE
+      SYNTAX  efeUriEntry
+      MAX-ACCESS  not-accessible
+      STATUS current
+      DESCRIPTION
+          "EdgeFE Streamer"
+      INDEX   { efesDev }
+      ::= { efeStreamerTab 1}
+
+    efeStreamerEntry ::=
+      SEQUENCE {
+          efesDev
+              DisplayString,
+          efesBandwidthKbps
+              INTEGER,
+          efesNatBasePort
+              INTEGER,
+          efesNatPorts
+              INTEGER,
+          efesUsedBwKbps
+              INTEGER,
+          efesSessions
+              INTEGER
+	  }
+
+    efesDev OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "dev name of the streamer"
+      ::= { efeStreamer 1}
+
+    efesBandwidthKbps OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "maximal bandwidth in Kbps allowed thru the streamer"
+      ::= { efeStreamer 2}
+
+    efesNatBasePort OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "the base NAT port thru the streamer"
+      ::= { efeStreamer 3}
+
+    efesNatPorts OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "the count of NAT ports thru the streamer"
+      ::= { efeStreamer 4}
+
+    efesUsedBwKbps OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "used bandwidth in Kbps of the streamer"
+      ::= { efeStreamer 5}
+    
+    efesSessions OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "the number of running sesssions on the streamer"
+      ::= { efeStreamer 6}
+
+    -- END-OF EdgeFE Streamers
+
+    -- BEGIN-OF EdgeFE CacheDir stat.
+    efeCache  OBJECT IDENTIFIER
+    ::= {edgeFeAttr 102}
+
+    efecReset OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "reset Cache statistics"
+      ::= { efeCache 1}
+   
+    efecSince  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the time when stat. since"
+      ::= { efeCache 2}
+
+    efecMemHits OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "counter of hits in memory"
+      ::= { efeCache 3}
+
+    efecDiskHits OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "counter of hits on disks"
+      ::= { efeCache 4}
+
+    efecDiskMisseds OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "counter of misseds"
+      ::= { efeCache 5}
+
+    efecDirTab OBJECT-TYPE
+      SYNTAX  SEQUENCE OF efecDirEntry
+      MAX-ACCESS  not-accessible
+      STATUS  current
+      DESCRIPTION
+          "Table of CachDir's information"
+      ::= { efeCache 6}
+
+    efecDir OBJECT-TYPE
+      SYNTAX  efecDirEntry
+      MAX-ACCESS  not-accessible
+      STATUS current
+      DESCRIPTION
+          "EdgeFE CacheDir"
+      INDEX   { ecdPath }
+      ::= { efecDirTab 1}
+
+    efecDirEntry ::=
+      SEQUENCE {
+          ecdPath
+              DisplayString,
+          ecdLRU
+              INTEGER,
+          ecdReaders
+              INTEGER,
+          ecdWriters
+              INTEGER,
+          ecdMaxMBps
+              INTEGER,
+          ecdFreeMB
+              INTEGER,
+          ecdTotalMB
+              INTEGER,
+          ecdReadLatAvg
+              INTEGER,
+          ecdReadLatMax
+              INTEGER,
+          ecdWriteLatAvg
+              INTEGER,
+          ecdWriteLatMax
+              INTEGER,
+      }
+
+    ecdPath OBJECT-TYPE
+      SYNTAX  DisplayString
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "Pathname of CacheDir"
+      ::= { efecDir 1}
+
+    ecdLRU OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "size of the LRU bound on the CacheDir"
+      ::= { efecDir 2}
+
+    ecdReaders OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "Readers bound on the CacheDir"
+      ::= { efecDir 3}
+
+    ecdWriters OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "Writers bound on the CacheDir"
+      ::= { efecDir 4}
+	  
+    ecdMaxMBps OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "Maximal write limitation in MBps"
+      ::= { efecDir 5}
+
+    ecdFreeMB OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "free space available in the CacheDir in MB"
+      ::= { efecDir 6}
+
+    ecdTotalMB OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "total space available in the CacheDir in MB"
+      ::= { efecDir 7}
+
+    ecdReadLatAvg OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "average read latency in msec in the CacheDir"
+      ::= { efecDir 8}
+
+    ecdReadLatMax OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "maximal read latency in msec in the CacheDir"
+      ::= { efecDir 9}
+
+    ecdWriteLatAvg OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "average write latency in msec in the CacheDir"
+      ::= { efecDir 10}
+
+    ecdWriteLatMax OBJECT-TYPE
+      SYNTAX  INTEGER
+      MAX-ACCESS  read-only
+      STATUS current
+      DESCRIPTION
+          "maximal write latency in msec in the CacheDir"
+      ::= { efecDir 11}
+    -- END-OF EdgeFE CacheDir stat.
+
+-- *************** Duplicated Service[nss] Begin ****************
+nss1  OBJECT IDENTIFIER  ::= { tianShanService 1410 }
+   nss1SvcApp    OBJECT IDENTIFIER ::= {nss1 2}
+   nss1Attr    OBJECT IDENTIFIER ::= {nss1SvcApp 1}
+
+   nss1Stat-cSessions  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the count of active sessions in NSS"
+      ::= {nss1Attr 100}
+      
+
+nss2  OBJECT IDENTIFIER  ::= { tianShanService 1420 }
+   nss2SvcApp    OBJECT IDENTIFIER ::= {nss2 2}
+   nss2Attr    OBJECT IDENTIFIER ::= {nss2SvcApp 1}
+
+   nss2Stat-cSessions  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the count of active sessions in NSS"
+      ::= {nss2Attr 100}
+      
+
+nss3  OBJECT IDENTIFIER  ::= { tianShanService 1430 }
+   nss3SvcApp    OBJECT IDENTIFIER ::= {nss3 2}
+   nss3Attr    OBJECT IDENTIFIER ::= {nss3SvcApp 1}
+
+   nss3Stat-cSessions  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the count of active sessions in NSS"
+      ::= {nss3Attr 100}
+      
+
+nss4  OBJECT IDENTIFIER  ::= { tianShanService 1440 }
+   nss4SvcApp    OBJECT IDENTIFIER ::= {nss4 2}
+   nss4Attr    OBJECT IDENTIFIER ::= {nss4SvcApp 1}
+
+   nss4Stat-cSessions  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the count of active sessions in NSS"
+      ::= {nss4Attr 100}
+      
+
+nss5  OBJECT IDENTIFIER  ::= { tianShanService 1450 }
+   nss5SvcApp    OBJECT IDENTIFIER ::= {nss5 2}
+   nss5Attr    OBJECT IDENTIFIER ::= {nss5SvcApp 1}
+
+   nss5Stat-cSessions  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the count of active sessions in NSS"
+      ::= {nss5Attr 100}
+      
+
+nss6  OBJECT IDENTIFIER  ::= { tianShanService 1460 }
+   nss6SvcApp    OBJECT IDENTIFIER ::= {nss6 2}
+   nss6Attr    OBJECT IDENTIFIER ::= {nss6SvcApp 1}
+
+   nss6Stat-cSessions  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the count of active sessions in NSS"
+      ::= {nss6Attr 100}
+      
+
+nss7  OBJECT IDENTIFIER  ::= { tianShanService 1470 }
+   nss7SvcApp    OBJECT IDENTIFIER ::= {nss7 2}
+   nss7Attr    OBJECT IDENTIFIER ::= {nss7SvcApp 1}
+
+   nss7Stat-cSessions  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the count of active sessions in NSS"
+      ::= {nss7Attr 100}
+      
+
+nss8  OBJECT IDENTIFIER  ::= { tianShanService 1480 }
+   nss8SvcApp    OBJECT IDENTIFIER ::= {nss8 2}
+   nss8Attr    OBJECT IDENTIFIER ::= {nss8SvcApp 1}
+
+   nss8Stat-cSessions  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the count of active sessions in NSS"
+      ::= {nss8Attr 100}
+      
+
+nss9  OBJECT IDENTIFIER  ::= { tianShanService 1490 }
+   nss9SvcApp    OBJECT IDENTIFIER ::= {nss9 2}
+   nss9Attr    OBJECT IDENTIFIER ::= {nss9SvcApp 1}
+
+   nss9Stat-cSessions  OBJECT-TYPE
+      SYNTAX INTEGER
+      MAX-ACCESS read-only
+      STATUS current
+      DESCRIPTION
+          "the count of active sessions in NSS"
+      ::= {nss9Attr 100}
+--*********************************************************************** 
+-- NGOD NMS export
+--***********************************************************************
+    
+    ngodExport    OBJECT IDENTIFIER
+        -- DESCRIPTION "Comcast-SP-NGOD-GEN-NMS"
+        ::= {tianShanComponents 100}
+        
+   nodeNMS    OBJECT IDENTIFIER
+    ::= {ngodExport 1}
+    
+    DHCP-IP  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "DHCP-IP"
+      ::= {nodeNMS 1}
+
+    NTPServer  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "NTPServer"
+      ::= {nodeNMS 2}
+   
+   TFTPserver  OBJECT-TYPE
+      SYNTAX DisplayString
+      MAX-ACCESS read-write
+      STATUS current
+      DESCRIPTION
+          "TFTPserver"
+      ::= {nodeNMS 3}    
+ END

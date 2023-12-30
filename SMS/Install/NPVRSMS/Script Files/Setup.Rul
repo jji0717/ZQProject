@@ -1,0 +1,354 @@
+//===========================================================================
+//
+//  File Name:    Setup.rul
+//
+//  Description:  Blank setup main script file
+//
+//  Comments:     Blank setup is an empty setup project. If you want to
+//				  create a new project via. step-by step instructions use the
+//				  Project Assistant.
+//
+//===========================================================================
+
+// Included header files ----------------------------------------------------
+#include "ifx.h"   
+
+// ----- DLL function prototypes -----
+
+
+    // your DLL function prototypes
+
+
+// ---- script function prototypes -----
+
+
+    // your script function prototypes
+
+    // your global variables
+string szLocation;
+string szServiceName;
+string szServicePort;
+string szServiceShellPort;
+string szExecutableName;
+string szAccount;
+string szPassWord;
+string szDisplayName;
+string szProductName;
+                     
+string szUpdatePath; 
+                    
+#include "s.rul"   
+
+
+//---------------------------------------------------------------------------                                                                        
+// OnFirstUIBefore
+//
+// First Install UI Sequence - Before Move Data
+//
+// The OnFirstUIBefore event is called by OnShowUI when the setup is
+// running in first install mode. By default this event displays UI allowing
+// the end user to specify installation parameters.
+//
+// Note: This event will not be called automatically in a
+// program...endprogram style setup.
+//---------------------------------------------------------------------------
+function OnFirstUIBefore()
+    number  nResult;
+    number  nLevel;
+    number  nSize; 
+    number  nSetupType;
+    string  szTitle;
+    string  szMsg;
+    string  szOpt1; 
+    string  szOpt2;
+    string  szLicenseFile;
+    string  szName;
+    string  szCompany;
+    string  szTargetPath;
+    string  szDir;
+    string  szFeatures;
+    string  szTargetdir;
+    BOOL    bLicenseAccepted;	
+begin	
+   
+    nSetupType = COMPLETE;	
+    szDir = "C:\\NPVRSMS";
+    szName = "";
+    szCompany = "";
+    bLicenseAccepted = FALSE;
+
+// Beginning of UI Sequence  
+// added by chen  
+// setup path dialog 
+AskDestPath ( "", "", szDir, 0 );
+TARGETDIR = szDir;
+
+Dlg_Start:
+    nResult = 0;
+
+Dlg_SdWelcome:
+    szTitle = "";
+    szMsg = "";
+    //{{IS_SCRIPT_TAG(Dlg_SdWelcome)
+    nResult = SdWelcome( szTitle, szMsg );
+    //}}IS_SCRIPT_TAG(Dlg_SdWelcome)
+    if (nResult = BACK) goto Dlg_Start;
+
+Dlg_SdLicense2:
+    szTitle = "";
+    szOpt1 = "";
+    szOpt2 = "";
+    //{{IS_SCRIPT_TAG(License_File_Path)
+    szLicenseFile = SUPPORTDIR ^ "License.rtf";
+    //}}IS_SCRIPT_TAG(License_File_Path)
+    //{{IS_SCRIPT_TAG(Dlg_SdLicense2)
+    nResult = SdLicense2Rtf( szTitle, szOpt1, szOpt2, szLicenseFile, bLicenseAccepted );
+    //}}IS_SCRIPT_TAG(Dlg_SdLicense2)
+    if (nResult = BACK) then
+        goto Dlg_SdWelcome;
+    else
+        bLicenseAccepted = TRUE;
+    endif;
+
+Dlg_SdRegisterUser:
+    szMsg = "";
+    szTitle = "";
+    //{{IS_SCRIPT_TAG(Dlg_SdRegisterUser)	
+    nResult = SdRegisterUser( szTitle, szMsg, szName, szCompany );
+    //}}IS_SCRIPT_TAG(Dlg_SdRegisterUser)
+    if (nResult = BACK) goto Dlg_SdLicense2;
+
+Dlg_SetupType2:   
+    szTitle = "";
+    szMsg = "";
+    //{{IS_SCRIPT_TAG(Dlg_SetupType2)	
+    nResult = SetupType2( szTitle, szMsg, "", nSetupType, 0 );
+    //}}IS_SCRIPT_TAG(Dlg_SetupType2)
+    if (nResult = BACK) then
+        goto Dlg_SdRegisterUser;
+    else
+        nSetupType = nResult;
+        if (nSetupType != CUSTOM) then
+            szTargetPath = TARGETDIR;
+            nSize = 0;
+            FeatureCompareSizeRequired( MEDIA, szTargetPath, nSize );
+            if (nSize != 0) then      
+                MessageBox( szSdStr_NotEnoughSpace, WARNING );
+                goto Dlg_SetupType2;
+            endif;
+        endif;   
+    endif;
+
+Dlg_SdAskDestPath2:
+    if ((nResult = BACK) && (nSetupType != CUSTOM)) goto Dlg_SetupType2;
+	szTitle = "";
+    szMsg = "";
+    if (nSetupType = CUSTOM) then
+                //{{IS_SCRIPT_TAG(Dlg_SdAskDestPath2)	
+		nResult = SdAskDestPath2( szTitle, szMsg, szDir );
+                //}}IS_SCRIPT_TAG(Dlg_SdAskDestPath2)
+        TARGETDIR = szDir;
+    endif;
+    if (nResult = BACK) goto Dlg_SetupType2;
+
+Dlg_SdFeatureTree: 
+    if ((nResult = BACK) && (nSetupType != CUSTOM)) goto Dlg_SdAskDestPath2;
+    szTitle = "";
+    szMsg = "";
+    szTargetdir = TARGETDIR;
+    szFeatures = "";
+    nLevel = 2;
+    if (nSetupType = CUSTOM) then
+        //{{IS_SCRIPT_TAG(Dlg_SdFeatureTree)	
+        nResult = SdFeatureTree( szTitle, szMsg, szTargetdir, szFeatures, nLevel );
+        //}}IS_SCRIPT_TAG(Dlg_SdFeatureTree)
+        if (nResult = BACK) goto Dlg_SdAskDestPath2;  
+    endif;
+
+Dlg_SQLServer:
+    nResult = OnSQLServerInitialize( nResult );
+    if( nResult = BACK ) goto Dlg_SdFeatureTree;
+
+Dlg_ObjDialogs:
+    nResult = ShowObjWizardPages( nResult );
+    if (nResult = BACK) goto Dlg_SQLServer;
+    
+Dlg_SdStartCopy2:
+    szTitle = "";
+    szMsg = "";
+    //{{IS_SCRIPT_TAG(Dlg_SdStartCopy2)	
+    nResult = SdStartCopy2( szTitle, szMsg );	
+    //}}IS_SCRIPT_TAG(Dlg_SdStartCopy2)
+    if (nResult = BACK) goto Dlg_ObjDialogs;
+ 
+    return 0;
+end; 
+      
+      
+      
+//////////////////////////////////////
+// function 	RegServiceInformation()          
+//////////////////////////////////////
+prototype RegServiceInformation(STRING);
+function RegServiceInformation(szLocation)
+    STRING	szKey, szName, szValue; 
+	NUMBER 	nSize, nvType; 
+begin
+    nSize = -1;
+    RegDBSetDefaultRoot (HKEY_LOCAL_MACHINE);
+    
+    
+    szKey = "SOFTWARE\\SeaChange\\NPVR\\CurrentVersion\\Services\\NPVRSMS";
+    
+    szName = "LogFileName";
+	szValue = "<TARGETDIR>\\log\\NPVRSMS.log";
+	RegDBSetKeyValueEx (szKey , szName , REGDB_STRING , szValue , nSize);
+	
+	szName = "DBPath";
+    szValue = "<TARGETDIR>\\NPVRSMSDB.mdb";
+    RegDBSetKeyValueEx (szKey , szName , REGDB_STRING , szValue , nSize); 
+    
+    szName = "ConfigFilePath";
+    szValue = "<TARGETDIR>\\config.xml";
+    RegDBSetKeyValueEx (szKey , szName , REGDB_STRING , szValue , nSize);
+     
+    
+    szKey = "SOFTWARE\\SeaChange\\NPVR\\CurrentVersion\\Services\\NPVRSMS_shell";
+    
+    szName = "ImagePath";
+    szValue =  "<TARGETDIR>\\NPVRSMS.exe"; 
+    RegDBSetKeyValueEx (szKey , szName , REGDB_STRING , szValue , nSize);
+    
+    szName = "LogFilePath";
+    szValue = "<TARGETDIR>\\log\\NPVRSMS_shell.log";
+    RegDBSetKeyValueEx (szKey , szName , REGDB_STRING , szValue , nSize);
+    
+    
+    szKey = "system\\CurrentControlSet\\Services\\EventLog\\Application\\NPVRSMS";
+    
+    szName = "EventMessageFile";
+    szValue = "<TARGETDIR>\\ItvMessages.dll";  
+    RegDBSetKeyValueEx (szKey , szName , REGDB_STRING , szValue , nSize);
+    
+    
+    szName = "TypesSupported";
+    szValue = "7";
+    RegDBSetKeyValueEx (szKey , szName , REGDB_NUMBER , szValue , nSize);
+    
+    
+    szKey = "system\\CurrentControlSet\\Services\\EventLog\\Application\\NPVRSMS_shell";
+    
+    szName = "EventMessageFile";
+    szValue = "<TARGETDIR>\\ShellMsgs.dll";  
+    RegDBSetKeyValueEx (szKey , szName , REGDB_STRING , szValue , nSize);
+    
+    
+    szName = "TypesSupported";
+    szValue = "7";
+    RegDBSetKeyValueEx (szKey , szName , REGDB_NUMBER , szValue , nSize);
+    
+    return 0;
+ end;
+                                      
+
+//////////////////////////////////////
+// function 	SetupService()          
+//////////////////////////////////////                                    
+prototype SetupService(STRING, STRING); 
+function SetupService(szLocation, szServiceName)
+     STRING  szApplication, szCommandLine;	   				 
+begin 
+    szApplication = szLocation  ^ "\\instserv.exe"; 
+    
+	szCommandLine = szServiceName + " \"" +
+	                szLocation  ^ "\\srvshell.exe\" " +
+					"local "      +
+					"LocalSystem" + " " +
+					"LocalSystem" + " " +
+					"manual own"; 
+	
+	if (LaunchApp(szApplication, szCommandLine) < 0) then
+        MessageBox ("Unable to launch " + szApplication, SEVERE);
+		abort;
+    endif;   
+end;
+
+
+//////////////////////////////////////
+// function 	UnInstallService()          
+//////////////////////////////////////
+prototype UnInstallService(STRING, STRING);      
+function UnInstallService(szLocation, szServiceName)
+       STRING szApplication, szCommandLine;  
+       number svServiceState;
+begin
+    if(ServiceGetServiceState (szServiceName, svServiceState)< ISERR_SUCCESS ) then 
+	      MessageBox("Unknowm status of service "+ szServiceName,SEVERE);
+	      abort;
+	endif;  
+	if(svServiceState == SERVICE_RUNNING) then
+	
+//		szApplication =  szLocation + "\SMS"^ "\\instserv.exe";
+		szApplication =  "instserv.exe"; 
+		szCommandLine = szServiceName + " stop local";
+	
+		if (LaunchAppAndWait(szApplication, szCommandLine,LAAW_OPTION_HIDDEN|LAAW_OPTION_WAIT) < 0) then
+  	      	MessageBox ("Unable to launch " + szApplication, SEVERE);
+			abort;
+    	endif;    
+	endif;
+	
+//	szApplication =  szLocation + "\SMS"^ "\\instserv.exe"; 
+    szApplication =  "instserv.exe"; 
+	szCommandLine = szServiceName + " remove";
+	
+	if (LaunchAppAndWait(szApplication, szCommandLine,LAAW_OPTION_HIDDEN|LAAW_OPTION_WAIT) < 0) then
+        MessageBox ("Unable to launch " + szApplication, SEVERE);
+		abort;
+    endif;    
+    return 0;
+end;                                  
+
+
+//////////////////////////////////////
+// function 	Main_UnInstall()          
+//////////////////////////////////////
+export prototype Main_UnInstall();
+function Main_UnInstall()
+  STRING szKey, szName, svValue;
+  STRING svPath, svServiceName; 
+  NUMBER nvSize, nType; 
+begin 
+
+	svServiceName =  "NPVRSMS";
+  	UnInstallService(svPath, svServiceName);
+  	    
+	nvSize = -1;
+    
+    RegDBSetDefaultRoot (HKEY_LOCAL_MACHINE);     
+    szKey = "SOFTWARE\\SeaChange\\NPVR\\CurrentVersion\\Services\\NPVRSMS_shell" ;
+	szName = "ImagePath"; 
+	nType = REGDB_STRING_EXPAND;
+
+	if (RegDBGetKeyValueEx(szKey, szName, nType, svValue, 
+						   nvSize) < 0) then
+       MessageBox ("Can not find service NPVRSMS. Skip service uninstall.", SEVERE);
+       //return;
+    else
+    	ParsePath(svPath, svValue, PATH);
+  	endif;         
+end;
+
+
+//////////////////////////////////////
+// function 	Main_Install()          
+//////////////////////////////////////
+export prototype Main_Install();
+function Main_Install()
+begin
+    //TARGETDIR = TARGETDIR + "\SMS";
+    szLocation = TARGETDIR;
+    szServiceName = "NPVRSMS" ;
+    RegServiceInformation(szLocation);
+    SetupService(szLocation,szServiceName);  	
+end; 

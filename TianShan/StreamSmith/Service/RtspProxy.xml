@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+Notice: TianShanDef.xml has been preloaded when this configuration file is being parsed, please refer to
+        TianShanDef.xml for the common properties
+
+Regular procedures of loading configurations:
+  1) When a service starts, read HKEY_LM/Softwares/ZQ Interactive/TianShan/Services/<ServiceName>/configDir, load 
+     the common properties if the TianShanDef.xml is opened, if <ServiceName>.xml is successfully opened, jump to 5)
+  2) tries HKEY_LM/Softwares/ZQ Interactive/TianShan/Services/configDir, load the common properties if the
+     TianShanDef.xml is opened, if <ServiceName>.xml is successfully opened, jump to 5)
+  3) tries the dir ../etc of where the executable is, load the common properties if the TianShanDef.xml is opened,
+     if <ServiceName>.xml is successfully opened, jump to 5)
+  4) puts an error as system event, say no configuration TianShanService.xml can be opened. Quit the program
+  5) reads the <ServiceName>.xml, if there is any XML formatting errors, put an error as system event then quit
+     the program
+  6) reads the LogFolder in the XML, take it if succeed, otherwise use ../logs of where the executable is. Open the
+     main log file, and immediately put a line including
+       a) service name
+       b) service version number
+       c) the full pathname of <ServiceName>.xml
+     as the first log message in the main logfile
+  7) continues to populate other configurations
+  8) initialize the service and start serving
+
+-->
+
+<TianShan>
+	<Definitions src="TianShanDef.xml">
+	</Definitions>
+	<!-- default configurations for the services of this TianShan deployment -->
+	<default>
+		<!-- The EventChannel service where the services of this TianShan deployment will deliver events to.
+		     attributes:
+		       endpoint - the ICE endpoint to the EventChannel service
+		-->
+		<EventChannel endpoint="${PrimeEventChannelEndpoint}" />
+		
+					
+		<!--CrashDump can help devoloper diagnose the program when it crashed
+			if you set enable to "1" you must make sure that the path is accessible
+			path   - crashdump path
+			enabled - 1 to enable crashDump
+		 -->
+		<CrashDump path="${TianShanCrashDumpDir}" enabled="1"/>
+
+		<!-- The Ice trace log setting for all the services of this TianShan deployment.
+		     attributes:
+		       enabled       - 1 if the Ice trace is enabled, default "0"
+		       logfileSuffix - a suffix of the log filename, i.e. the service Weiwoo's main log file will
+		                       be "Weiwoo.log". With a suffix "_ice.log", the ICE trace will be in a
+		                       separate logfile "Weiwoo_ice.log" in the same directory
+		       level         - the log level of the ice trace log
+		       size          - the size that this trace log must roll
+		-->
+		<IceTrace enabled="1" level="7" size="10240000" />
+
+		<!-- The default folder where the services of this TianShan deployment accesses their local
+		     databases if it is not defined by their individual configurations
+		     attributes:
+		       path          - path to the location of database directory, default "../data/"
+		       runtimePath   - path to keep the runtime data, default as the value of path
+		-->
+		<Database path="${TianShanDatabaseDir}" runtimePath="${TianShanDatabaseDir}/runtime" />
+
+	</default>
+
+	<RtspProxy>
+		<!-- Configuration on the priority of this system process
+		     attributes:
+		       priority  - the OS priority of this process
+		-->
+		<PriorityOfProcess priority="1" />
+
+		<!-- Configuration on how the requests are processed
+		     attributes:
+		       threads   - the size of the thread pool
+		       maxPendingRequest - the max pending requests if non-zero. When this is reached, the new request will be rejected by the server
+		-->
+		<RequestProcess threads="200" maxPendingRequest="100" statusCheckInterval = "300000" restarAtBusyHang="600000" />
+
+		<!-- Configuration on the request parsing procedure
+		     attributes:
+		       threads   - the size of the thread pool to parse requests
+		       priority  - the OS priority of this process
+			   dummyPing - if dummyPing = true, newline symbols could take the place of GET_PARAMETER
+		-->
+		<RequestParse threads="24" priority="2" dummyPing="0"/>
+		
+		<!-- Configuration on publishing events
+		     attributes:
+		       timeout   - an event will be discarded if it failed to be sent out within this timeout in millisecond
+		-->
+		<EventPublisher timeout="15000" />
+		
+		<Response>
+			<!-- Configurations on the headers of RTSP responses
+		     	     attributes:
+		               useLocaltime - use local time instead of GMT if this is set to "1"
+			-->			
+			<RtspHeader useLocaltime="0"/>
+		</Response>
+		
+		<!-- Configuration about the socket server-side
+		     attributes:
+		       rtspPort - the RTSP server port to listen
+		       maxConnections - the max TCP connections allowed by the server
+		       threads - coutn of threads which are used to receive rtsp message
+		       threadPriority - the priority of message receiving thread, You should not modify this value except you know what are you doing
+		       debugLevel - debug message level from 0 ~ 5
+		       debugDetail - debug detail level from 0 ~ 4;
+		       idleTimeout - connection idle time in milliseconds
+		       idleScanInterval - scan interval in milliseconds for find out the idle connection
+		       maxSessions - session limit
+		-->
+		<SocketServer rtspPort="554" maxConnections="5000" threads="6" threadPriority="2"
+			      debugLevel="4" debugDetail="3"
+			      idleTimeout="1800000" idleScanInterval="50000" 
+			      maxSessions="10000"
+			      license="${TianShanHomeDir}/etc/${HostNetID}.lic" >
+			      
+			<!-- Configuration about the secure socket layer (SSL)
+		     	     attributes:
+		       	        enabled - "1" to enable SSL
+		       	        publicKeyFile - the filename of the public key
+		       	        privateKeyFile - the filename of the private key
+		       	        privatePassword - the password to read the private key
+		       	        dhParamFile - the filename of DH parameters
+		       	        randFile - the filename of the rand file
+			-->
+			<SSL 	enabled="0"
+				publicKeyFile="server.pem"
+				privateKeyFile="server.pem"
+				privatePassword="xiao"
+				dhParamFile="dhParam.pem"
+				randFile="rand.pem" />
+			
+			<!-- Configuration about the incoming messages that the socket server receives
+		     	     attributes:
+		       	        maxLen - the max length of a incoming message
+		       	        recvBufSize - the size of the buffer to read the sock connection
+		       	        hexDump - set to 1 to enable hex dump for comunications, 0 for disable, default 0
+			-->
+			<IncomingMessage maxLen="32768" recvBufSize="65536" hexDump="0"/>
+		</SocketServer>
+		
+		<!-- Configuration about request handlers
+		     attributes:
+		       defaultHandler - the default RTSP handler
+		-->
+		<RequestHandler defaultHandler="tianshan_s1">
+			<Application path="60020000" handler="tianshan_s1"/>
+			<Application path="60020001" handler="tianshan_s1"/>
+			<Application path="GBstb" handler="GBstb"/>
+			<Application path="GBss" handler="GBss"/>
+			<Application path="NGOD" handler="NGOD2"/>
+			<Application path="OpenVBO" handler="OpenVBO"/>
+			<Application path="LiveChannel" handler="LiveChannel"/>
+			<Application path="mediacluster" handler="tianshan_s1"/>
+			<Application path="PauseTV" handler="tianshan_s1"/>
+			<Application path="basic" handler="MOD"/>
+			<Site name="s1">
+				<Application path="basic" handler="MOD"/>				
+			</Site>
+			<Plugin>
+				<!-- <module file="${TianShanHomeDir}/modules/SSM_Richurl.dll" configuration="${TianShanHomeDir}/etc"/> -->
+				<!-- <module file="${TianShanHomeDir}/modules/SSM_GBss.dll" configuration="${TianShanHomeDir}/etc"/> -->
+				<!-- <module file="${TianShanHomeDir}/modules/SSM_GBstb.dll" configuration="${TianShanHomeDir}/etc"/> -->
+				<!-- <module file="${TianShanHomeDir}/modules/SSM_NGOD2.dll" configuration="${TianShanHomeDir}/etc"/> -->
+				<!-- <module file="${TianShanHomeDir}/modules/SSM_OpenVBO.dll" configuration="${TianShanHomeDir}/etc"/> -->
+				<!-- <module file="${TianShanHomeDir}/modules/SSM_LiveChannel.dll" configuration="${TianShanHomeDir}/etc"/> -->
+				<module file="${TianShanHomeDir}/modules/SSM_TianShan_S1.dll" configuration="${TianShanHomeDir}/etc"/>
+			</Plugin>
+		</RequestHandler>
+		
+	</RtspProxy>
+
+</TianShan>

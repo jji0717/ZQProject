@@ -1,0 +1,206 @@
+/////////////////////////////////////////	Setup		////////////////////////////////////////////// tricks/FRP
+SETUP rtsp://10.15.10.35:554 RTSP/1.0
+Content-Type: application/sdp
+CSeq: 26243
+OnDemandSessionId: c2dcb90100000040800001005e000302
+Require: com.comcast.ngod.r2
+SessionGroup: 70001-0
+StreamControlProto: rtsp
+Transport: MP2T/DVBC/UDP;unicast;client=01005e000001;bandwidth=3750000;destination=127.0.3.2;client_port=2003;sop_name=TEST
+Volume: TEST
+Content-Length: 580
+
+v=0
+o=- c2dcb90100000040800001005e000302 0 IN IP4 10.11.0.22:2931
+s=
+t=0 0
+a=X-playlist-item: schange.com SEAC000000000038E4BC 0-
+a=X-motorola-ecm: schange.com SEAC000000000038E4BC 190 8 3 5 40001100000000f98f30020400f0ffff00000000 5 40001100000000f98f31020400f0ffff00000000 7 41407e0001000000000101f98f30000040a21a80679b034b1d00100b0800000101030a015c2b0ee4cca8bbd300d9c3e72cd2b43b9c00f22f796f4808050400d106feee52954d68001d8396de2be4c3ce001f96979b10a1abfd003ab5288a5341b5ef00227f35928cab629e00c95fbfe577cb963e01945e8f7459884e5900000000
+c=IN IP4 0.0.0.0
+m=video 0 udp MP2T
+
+/////////////////////////////////////////	NormalPlay	//////////////////////////////////////////////
+PLAY * RTSP/1.0
+CSeq: 2
+Session: 001469431810
+User-Agent: ITVLibrary 1.0; amino
+Range: npt=now-
+Scale: 1.000000
+
+////////////////////////////////////	NormalPlay	Response/////////////////////////////////////////////
+RTSP/1.0 200 OK
+CSeq: 2
+Method-Code: PLAY
+Range: npt=now-
+Scale: 1.000000
+Server: TianShan Component RtspProxy Service 1.7; ssm_NGOD2 1.7
+Session: 001469431810
+Date: 22 Aug 2008 08:27:21.343 GMT
+
+/////////////////////////////////////////	Fastward	//////////////////////////////////////////////
+PLAY * RTSP/1.0
+CSeq: 2
+Session: 001469431810
+User-Agent: ITVLibrary 1.0; amino
+Scale: 6.000000
+
+////////////////////////////////////	Fastward	Response/////////////////////////////////////////////
+RTSP/1.0 200 OK
+CSeq: 2
+Method-Code: PLAY
+Scale: 6.000000
+Server: TianShan Component RtspProxy Service 1.7; ssm_NGOD2 1.7
+Session: 001469431810
+Date: 22 Aug 2008 08:27:21.343 GMT
+
+/////////////////////////////////////////	Backward	//////////////////////////////////////////////
+PLAY * RTSP/1.0
+CSeq: 2
+Session: 001469431810
+User-Agent: ITVLibrary 1.0; amino
+Scale: -6.000000
+
+////////////////////////////////////	Backward	Response/////////////////////////////////////////////
+RTSP/1.0 200 OK
+CSeq: 2
+Method-Code: PLAY
+Scale: -6.000000
+Server: TianShan Component RtspProxy Service 1.7; ssm_NGOD2 1.7
+Session: 001469431810
+Date: 22 Aug 2008 08:27:21.343 GMT
+
+/////////////////////////////////////////	Pause		/////////////////////////////////////////////
+PAUSE * RTSP/1.0
+CSeq: 14
+User-Agent: ITVLibrary 1.0; amino
+Session: 001469431810
+x-reason: User Requested Pause
+
+/////////////////////////////////////////	Pause	Response	/////////////////////////////////////////////
+RTSP/1.0 200 OK
+CSeq: 14
+Method-Code: PAUSE
+Server: TianShan Component RtspProxy Service 1.7; ssm_NGOD2 1.7
+Session: 001469431810
+Date: 22 Aug 2008 08:17:31.703 GMT
+
+/////////////////////////////////////////	Heart Beat 1	/////////////////////////////////////////
+GET_PARAMETER * RTSP/1.0
+CSeq: 2
+Session: 001469431810
+User-Agent: ITVLibrary 1.0; amino
+Content-Type: text/parameter 
+Content-Length: 0
+
+////////////////////////////////////	Heart Beat 1	Response	/////////////////////////////////////////////
+RTSP/1.0 200 OK
+CSeq: 2
+Server: TianShan Component RtspProxy Service 1.7; ssm_NGOD2 1.7
+Session: 001469431810
+Date: 22 Aug 2008 08:17:31.703 GMT
+Content-Type: text/parameter 
+Content-Length: 0
+
+/////////////////////////////////////////	Heart Beat 2	//////////////////////////////////////////////
+PING * RTSP/1.0
+CSeq: 2
+Session: 001469431810
+
+////////////////////////////////////	Heart Beat 2	Response	/////////////////////////////////////////////
+RTSP/1.0 200 OK
+CSeq: 2
+Method-Code: PING
+Server: TianShan Component RtspProxy Service 1.7; ssm_NGOD2 1.7
+Session: 001469431810
+Date: 22 Aug 2008 08:17:31.703 GMT
+
+/////////////////////////////////////////	Get Param 1	//////////////////////////////////////////////
+GET_PARAMETER * RTSP/1.0
+CSeq: 2
+Session: 001469431810
+User-Agent: ITVLibrary 1.0; amino
+Content-Type: text/parameter 
+Content-Length: 35
+
+scale position presentation_state
+
+/////////////////////////////////////	Get Param 1	Respons //////////////////////////////////////////////
+RTSP/1.0 200 OK
+CSeq: 2
+Server: TianShan Component RtspProxy Service 1.7; ssm_NGOD2 1.7
+Session: 001469431810
+Date: 22 Aug 2008 08:17:31.703 GMT
+Content-Type: text/parameter 
+Content-Length: 53
+
+scale:1.0000
+position:70.00
+presentation_state:play
+
+/////////////////////////////////////////	Get Param 2	//////////////////////////////////////////////
+GET_PARAMETER * RTSP/1.0
+CSeq: 2
+User-Agent: ITVLibrary 1.0; amino
+SessionGroup: 70001-0
+Content-Type: text/parameter 
+Content-Length: 34
+
+session_list
+connection_timeout
+
+/////////////////////////////////////	Get Param 2	Respons //////////////////////////////////////////////
+RTSP/1.0 200 OK
+CSeq: 2
+Server: TianShan Component RtspProxy Service 1.7; ssm_NGOD2 1.7
+SessionGroup: 70001-0
+Date: 22 Aug 2008 08:17:31.703 GMT
+Content-Type: text/parameter 
+Content-Length: 53
+
+session_list:
+rtsp-session-id:on-demand-session-id
+connection_timeout:60000
+
+/////////////////////////////////////////	Teardown	//////////////////////////////////////////////
+TEARDOWN * RTSP/1.0
+CSeq: 16
+User-Agent: ITVLibrary 1.0; amino
+Session: 001469431810
+x-reason: User Requested Teardown
+OnDemandSessionId: 004eb2e09301a1500000400080000100
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+RTSP/1.0 200 OK
+CSeq: 16
+User-Agent: ITVLibrary 1.0; amino
+Session: 001469431810
+x-reason: User Requested Teardown
+OnDemandSessionId: 004eb2e09301a1500000400080000100
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+RTSP/1.0 454 Session Not Found
+CSeq: 16
+User-Agent: ITVLibrary 1.0; amino
+Session: 001469431810
+x-reason: User Requested Teardown
+OnDemandSessionId: 004eb2e09301a1500000400080000100
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+SET_PARAMETER rtsp://192.168.81.115:554 RTSP/1.0
+Content-Type: text/parameters
+CSeq: 56
+Require: com.comcast.ngod.r2
+Content-Length: 49
+
+session_groups: 70001-0 70001-2 70001-3 70001-4
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+SET_PARAMETER rtsp://192.168.81.115:554 RTSP/1.0
+Content-Type: text/parameters
+CSeq: 56
+Require: com.comcast.ngod.r2
+Content-Length: 59
+
+session_list: 001469431810:c2dcb90100000040800001005e000302

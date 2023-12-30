@@ -1,0 +1,178 @@
+<ConfResponse State="1" Format="2">
+
+   <ListOfNode>
+
+      <DCAPortConfiguration DataTypeWithInitial="17;18" QueueName="queue_DOD">
+
+         <ChannelList>
+
+            <configuration QueueName="queue_STBCF" StreamID="101" StreamType="249" StreamCount="0" DataType="16" DataExchangeType="0" SendMsgDataType="0" MessageCode="1523" SendIndexTable="1" Tag="CFG" Encrypted="0" ChannelType="0" SendMsgExpiredTime="0"/>
+
+            <message QueueName="queue_TICP" StreamID="141" StreamType="248" StreamCount="0" DataType="24;29" DataExchangeType="1" SendMsgDataType="0" MessageCode="1911" SendIndexTable="1" Tag="MSG" Encrypted="1" ChannelType="0" SendMsgExpiredTime="0"/>
+
+            <navigation QueueName="queue_NAV" StreamID="121" StreamType="144" StreamCount="0" DataType="11" DataExchangeType="0" SendMsgDataType="0" MessageCode="1411" SendIndexTable="0" Tag="NAV" Encrypted="0" ChannelType="0" SendMsgExpiredTime="0"/>
+
+            <navigationEX QueueName="queue_NAV" StreamID="191" StreamType="155" StreamCount="0" DataType="19" DataExchangeType="0" SendMsgDataType="0" MessageCode="1411" SendIndexTable="1" Tag="EXN" Encrypted="0" ChannelType="0" SendMsgExpiredTime="0"/>
+
+            <portal QueueName="\\10.50.15.40\DODserver\navigation\portal" StreamID="111" StreamType="176" StreamCount="0" DataType="30" DataExchangeType="2" SendMsgDataType="0" MessageCode="0" SendIndexTable="1" Tag="POR" Encrypted="0" ChannelType="0" SendMsgExpiredTime="0"/>
+
+            <poster QueueName="\\10.50.15.40\DODserver\navigation\poster" StreamID="131" StreamType="160" StreamCount="0" DataType="141" DataExchangeType="2" SendMsgDataType="0" MessageCode="0" SendIndexTable="1" Tag="POS" Encrypted="0" ChannelType="0" SendMsgExpiredTime="0"/>
+
+            <posterEX QueueName="\\10.50.15.40\DODserver\navigation\posex" StreamID="201" StreamType="171" StreamCount="0" DataType="0" DataExchangeType="2" SendMsgDataType="0" MessageCode="0" SendIndexTable="1" Tag="EXP" Encrypted="0" ChannelType="0" SendMsgExpiredTime="0"/>
+
+            <ticketList QueueName="queue_OTE" StreamID="171" StreamType="224" StreamCount="0" DataType="17" DataExchangeType="0" SendMsgDataType="0" MessageCode="1331" SendIndexTable="1" Tag="TKL" Encrypted="0" ChannelType="0" SendMsgExpiredTime="0"/>
+
+            <ticketMessage QueueName="queue_OTE" StreamID="151" StreamType="247" StreamCount="0" DataType="17" DataExchangeType="1" SendMsgDataType="0" MessageCode="1331" SendIndexTable="1" Tag="TMS" Encrypted="1" ChannelType="0" SendMsgExpiredTime="0"/>
+
+            <transactionList QueueName="queue_OTE" StreamID="181" StreamType="230" StreamCount="0" DataType="18" DataExchangeType="0" SendMsgDataType="0" MessageCode="1332" SendIndexTable="1" Tag="TST" Encrypted="0" ChannelType="0" SendMsgExpiredTime="0"/>
+
+         </ChannelList>
+
+         <DODQueue>
+
+            <P1Queue Name="DOD_Queue_HP" Priority="P1"/>
+
+            <P2Queue Name="queue_DOD" Priority="P2"/>
+
+         </DODQueue>
+
+         <Port>
+
+            <TELCOF PMTPID="281" TotalRate="4400000" GroupID="0">
+
+               <Channel>
+
+                  <Configuration RepeatTime="1500" ChannelRate="250000"/>
+
+                  <Portal RepeatTime="1500" ChannelRate="4000000"/>
+
+               </Channel>
+
+               <IPPort>
+
+                  <CASA IPAddress="192.168.104.10" IPPort="1529" SendType="1"/>
+
+               </IPPort>
+
+            </TELCOF>
+
+            <TELMSG PMTPID="285" TotalRate="2200000" GroupID="0">
+
+               <Channel>
+
+                  <Message RepeatTime="1500" ChannelRate="1000000"/>
+
+                  <TicketMessage RepeatTime="1500" ChannelRate="1000000"/>
+
+               </Channel>
+
+               <IPPort>
+
+                  <NSG1 IPAddress="192.168.104.10" IPPort="1532" SendType="1"/>
+
+                  <NSG2 IPAddress="192.168.104.10" IPPort="1788" SendType="1"/>
+
+                  <NSG3 IPAddress="192.168.104.10" IPPort="2044" SendType="1"/>
+
+               </IPPort>
+
+            </TELMSG>
+
+            <TELNAV PMTPID="283" TotalRate="9000000" GroupID="0">
+
+               <Channel>
+
+                  <Navigation RepeatTime="1000" ChannelRate="8000000"/>
+
+               </Channel>
+
+               <IPPort>
+
+                  <CASA IPAddress="192.168.104.10" IPPort="1530" SendType="1"/>
+
+               </IPPort>
+
+            </TELNAV>
+
+            <TELNAVEx PMTPID="287" TotalRate="3700000" GroupID="0">
+
+               <Channel>
+
+                  <NavigationEX RepeatTime="1000" ChannelRate="3500000"/>
+
+               </Channel>
+
+               <IPPort>
+
+                  <CASA1 IPAddress="192.168.104.10" IPPort="1528" SendType="1"/>
+
+                  <CASA2 IPAddress="192.168.104.10" IPPort="1784" SendType="1"/>
+
+                  <CASA3 IPAddress="192.168.104.10" IPPort="2040" SendType="1"/>
+
+               </IPPort>
+
+            </TELNAVEx>
+
+            <TELOTE PMTPID="286" TotalRate="2200000" GroupID="3">
+
+               <Channel>
+
+                  <TicketList RepeatTime="500" ChannelRate="1000000"/>
+
+                  <TransactionList RepeatTime="500" ChannelRate="1000000"/>
+
+               </Channel>
+
+               <IPPort>
+
+                  <CASA IPAddress="192.168.104.10" IPPort="1533" SendType="1"/>
+
+               </IPPort>
+
+            </TELOTE>
+
+            <TELPOS PMTPID="284" TotalRate="2100000" GroupID="0">
+
+               <Channel>
+
+                  <Poster RepeatTime="1000" ChannelRate="2000000"/>
+
+               </Channel>
+
+               <IPPort>
+
+                  <CASA IPAddress="192.168.104.10" IPPort="1531" SendType="1"/>
+
+               </IPPort>
+
+            </TELPOS>
+
+            <TELPOSEx PMTPID="289" TotalRate="300000" GroupID="0">
+
+               <Channel>
+
+                  <PosterEX RepeatTime="500" ChannelRate="200000"/>
+
+               </Channel>
+
+               <IPPort>
+
+                  <CASA1 IPAddress="192.168.104.10" IPPort="1527" SendType="1"/>
+
+                  <CASA2 IPAddress="192.168.104.10" IPPort="1783" SendType="1"/>
+
+                  <CASA3 IPAddress="192.168.104.10" IPPort="2039" SendType="1"/>
+
+               </IPPort>
+
+            </TELPOSEx>
+
+         </Port>
+
+      </DCAPortConfiguration>
+
+   </ListOfNode>
+
+</ConfResponse>
+

@@ -1,0 +1,4 @@
+<ApplicationSites PrefixLength="2">
+	<AppSite Name="AppSite1" ID="01" WSDL="http://ZAP_WFES1:9090/services/MoDSoapInterface?wsdl" /> 
+	<AppSite Name="AppSite2" ID="12" WSDL="http://ZAP_WFES2:9090/services/MoDSoapInterface?wsdl" />
+</ApplicationSites>

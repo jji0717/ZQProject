@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TianShan>
+	<Definitions src="TianShanDef.xml">
+	</Definitions>
+	
+	<!-- Configuration on NPVR provision helper. It captures IP streaming traffic, performs RTF trick genenration and index
+	     pacing then save the results into the NPVR streamming server.
+	     
+		Note: 1 NPVR lead session use 2 threads, 1 virutal session use 1 thread. so in CPE.xml threadpool setting, if we want max to 30 sessions, we'd better to set "threads" to at least 65	     
+		
+	-->
+	<CPH_NPVR>
+		<!-- Configuration on media content r/w buffer
+		     attributes:
+		       bufferSize    - the buffer size in byte per each read/write on the input media content
+		-->
+		<MediaSample bufferSize="65536"/>		
+		
+		<ProvisionMethod>
+		   <!-- the provision methods provided by this plug-in
+			      attributes:
+	          maxSessions - the maximal concurrent sessions that this instance can host
+	          maxBandwidth - the maximal bandwidth in Kbps that this instance can host
+	       -->
+
+		   <Method name="SeaChange.MediaCluster.NPVR"  maxSessions="100" maxBandwidth="375000"/>             
+	    </ProvisionMethod>
+
+
+	    <!-- Configuration on lead session.
+	    	maxSessions	-	the max lead session numbers, this value must be smaller than "RTF maxSessionNum", default 40
+	    	lagAfterIdle	-	the lead session max stay time after all virutal session gone, in milliseconds, default 5000 ms
+	    	monitorInterval	-	the interval of checking the lead session life cycle, in milliseconds,	default 500ms
+	    -->
+    	<LeadSession maxSessions="40" lagAfterIdle="5000" monitorInterval="500"/>
+   
+	    <!-- use Ntfs source instead of multicast stream, only for test. 
+	    	enable	-	set to 1 to enable it for test
+	    	sourceFile	-	the full path name for the test source mpeg2 file
+	    	-->
+    	<NtfsSourceTest enable="0" sourceFile=""/>
+
+		<!-- Configuration on the ingestion session
+		     attributes:
+		       enableMD5	   - enable/disable caculate MD5 checksum for provisioned file(main file), default is 1
+		       enableCacheModeForIndex		-	enable/disable cache mode for index file vstream write(VsOpen), default is 1
+		       enableRAID1ForIndex		-	set RAID_1 flag for index writing on vstream, get better performance, default is 1
+		       			On a single node Vstream6.0, enable cache for index would cause "VsSeek failed with VSTRM_TIMECODE_OUTOF_RANGE" sometime
+		       preLoad			 - the session preload time in milliseconds, initialize the session in advance of the start time, random from "preLoad/2" to "preLoad + preLoad/2"
+		-->
+		<Session enableMD5="0" enableCacheModeForIndex="1" enableRAID1ForIndex="1" preLoad="10000"/>		
+		
+		<!-- Configuration on IP capture
+	     	     attributes:	     	        
+	     	        sessionTimeout - timeout in seconds for the session being captured, session will be stopped if no more data
+	     	               can be captured within this timeout window.  default 30 second
+	     	        winpcapKernelBuffer	-	winpcap kernel buffer size in MB for multicast capture, default 256MB
+	     	        winpcapMinBufferCopy	-	winpcap minimal buffer size in KB to copy, default is 1024KB
+	     	        
+	     	     NetworkInterface, we configure the network adapter ip and bandwidth for the capture, if more than one interface configured here, we would 
+	     	     do some load balance on the usable network interfaces.
+	     	        ip 		- the ip address of the network adapter for the capture
+	     	        bandwidth		-	the bandwidth in bps for capture
+		-->
+ 		<Capture sessionTimeout="30" winpcapKernelBuffer="256" winpcapMinBufferCopy="1024">
+ 			 <NetworkInterface ip="${IngestNetIf}" bandwidth="1000000000"/>
+ 		</Capture>
+ 		
+ 		<!-- dump the captured data for test or analysis when needed
+		     attributes:
+		       enable	-	"1" to enable RTI dump captured data to local NTFS, "0" disable, default "0"
+		       dumpPath	-	the output path for dump files
+		       deleteOnSuccess	-	"1" delete dumped file when ingestion success, "0" for not, defaut is "1"
+		-->
+ 		<CaptureDumper enable="0" dumpPath="c:\temp" deleteOnSuccess="1" />
+
+		<!-- Configuration on the index pacing session
+		     attributes:
+		       cacheDir  - the location where to temporarily save the cached data during index pacing //!!! former pacing::cacheDir
+		       enableTrace - "1" if wish to trace the PacedIndex procedure in the log files //!!! former pacing::enableTrace
+		-->
+		<PacedIndex cacheDir="c:\temp" enableTrace="0"/>
+
+		<!-- Configuration on the TrickGeneration parameters
+		     attributes:
+		       maxSessionNum  - max session number that the TrickGeneration will process. this parameter will affect memory allocation during
+		                        initialization, so only put the number as neccesary
+		       maxInputBufferBytes  - the size of RtfInputBuffer, should be equal or greater than the MediaSample::bufferSize
+		       maxInputBuffersPerSession  - the buffer per session for TrickGeneration, default 128
+		       sessionFailThreshold  - the session failure threshold. The TrickGeneration will be shut down if failed session count more than this value. 0 to disable, default is 0
+		-->
+		<TrickGeneration maxSessionNum="45" maxInputBufferBytes="65536" maxInputBuffersPerSession="128" sessionFailThreshold="0"/>
+
+		<!-- Configuration on the Vstream API
+		     attributes:
+		       BWMgrClientId  - the client Id of Vstream Bandwidth Management. Default 773220, 0 to disable bandwidth management //!!! former Vstrm::vstrmBWClientId
+		       disableBufDrvThrottle  - 1 would increased the vstrm write performance, default 1 //!!! former Vstrm::disableBufDrvThrottle
+		-->
+		<Vstream BWMgrClientId="773220"  disableBufDrvThrottle="1"/>
+
+		<!-- Configuration on the process events
+		-->
+		<Event>
+			<!-- Configuration on the progress events
+			     attributes:
+			       enable  - 1 to enable sending progress events
+			       interval	- the progress sending interval, in milliseconds, default 8000ms, the progress interval will be a random value in [interval/2,interval]
+			-->
+			<Progress enable="1" interval="8000"/>
+			
+			<!-- Configuration on the streamable events
+			     attributes:
+			       enable  - 1 to enable sending streamable events
+			       lagAfterStart  - the time lag in second after the provision starts to notify streamable //!!! former Streamable::requiredSeconds
+			-->
+			<Streamable enable="1" lagAfterStart="5" />
+		</Event>
+		
+		<!-- Configuration on the NTFS output mode, if this mode is enabled, the provision will not output into Vstream file system,
+		     instead, it only save the output locally onto the NTFS storage
+		       enable  - 1 to enable this NTFS output mode, vstream IO will be eliminated //!!! former Test::NTFS::enable
+		       homeDir  - the full path name of the home directory where to outuput the provision contents //!!! former Test::NTFS::outputDir
+		-->
+	    <NtfsOutputMode enable="0" homeDir="c:\Tianshan\" />
+	    
+  </CPH_NPVR>
+</TianShan>

@@ -1,0 +1,10 @@
+
+; CPH_CDN.def : Declares the module parameters for the DLL.
+
+LIBRARY      "CPH_CDN"
+DESCRIPTION  'CPH_CDN" TianShan Content Provision Helper Object - CDN Provisions'
+
+EXPORTS
+    ; Explicit exports can go here
+InitCPH
+UninitCPH

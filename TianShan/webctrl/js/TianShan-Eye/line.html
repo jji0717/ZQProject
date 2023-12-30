@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Line Chart</title>
+	<script src="js/require.js"></script>
+	<!-- <script data-main="app/app.js" src="js/require.js"></script> -->
+	<script>
+		require.config({
+			baseUrl: "./",
+			paths: {				
+				reader: "app/Utils/reader",
+				Chart:  "js/Chart.bundle",
+				draw : "app/Utils/draw",
+				jquery: ["js/jquery.min","http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"]
+			},
+			shim: {
+				'draw': ['Chart'],
+				'reader':   ['jquery']
+			}
+		});
+	</script>
+    <style>
+    canvas{
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+    }
+    </style>
+</head>
+
+<body>
+<script src="app/Real_Time.js"></script>
+    <div style="width:100%;">
+        <canvas id="cpu"></canvas>
+		<br>
+		<canvas id="mem"></canvas>
+		<br>
+		<br>
+    </div>
+	<div style="width:45%; margin: 0 auto;">
+		<canvas id="part"></canvas>
+	</div>
+    <br> <br>
+</body>
+
+</html>

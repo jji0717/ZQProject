@@ -1,0 +1,31 @@
+Steps that were used to build the xmlrpc-c RPM (xmlrpc-c-1.20.00-00.x86_64.rpm)
+
+On guidev:
+## use the tarball had been previously expanded
+## this tar file is also checked into AccuRev in Linux-MGTV1.0/seamonlx/rpms/01.20.00.tar.gz
+# cd /home/mcatalanotti/xmlrpc-c/01.20.00_build_test/01.20.00
+# cd /home/mwoodside/mc_xmlrpc/01.20.00
+## run these following 3 steps to build the package and install the files in the correct place
+# ./configure --enable-libxml2-backend --enable-tools
+# make
+# make install
+
+## after the xmlrpc-c has been built and locally installed on guidev then create an RPM with those built files
+# cd /home/mwoodside/workspace_mount/builds/mw_Linux-MGTV1.0-int/kits
+# ./build-xmlrpc-c-rpm
+## copy the file to HPHA2 to install and test
+# scp /home/mwoodside/workspace_mount/builds/mw_Linux-MGTV1.0-int/kits/RPMS/x86_64/xmlrpc-c-1.20.00-00.x86_64.rpm root@hpha2:/root
+
+On hpha2:
+# cd /root
+# rpm -e xmlrpc-c-1.20.00-00
+# rpm -ivh xmlrpc-c-1.20.00-00.x86_64.rpm
+## build seamonlx against the currently installed xmlrpc-c
+# cd /home/mwoodside/workspace_mount/builds/mw_Linux-MGTV1.0-int/seamonlx
+# make
+# cd /home/mwoodside/workspace_mount/builds/mw_Linux-MGTV1.0-int/seamonlx/src
+# cp seamonlx /usr/local/seamonlx/bin
+## start the seamonlx that was build against the 1.20.00 installed RPM and test
+# ./usr/local/seamonlx/bin/seamonlx -d
+# xmlrpc http://hpha2:59732/RPC2 ServerEnv s/Fans
+

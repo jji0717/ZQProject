@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TianShan>
+	<!--
+		Notice: TianShanDef.xml has been preloaded when this configuration file is being parsed, please refer to
+        	TianShanDef.xml for the common properties
+	-->
+	<Definitions src="TianShanDef.xml">
+	</Definitions>
+	
+	<ssm_richurl>
+		
+		<!-- example: <LogFile name="C:\TianShan\Logs\ssm_richurl.log" size="50000000" level="7" number="10"/> -->
+		<!--	name: must be a filename with absolute path.
+			size: log file's maxinum size.
+			level: config the level of log file, you can use the following values of (0,1,2,3,4,5,6,7). the larger the number is, the log will be more detail, but it'll take more process time.
+			number: config the max number of backup log files. -->
+		<LogFile name="${TianShanHomeDir}\logs\ssm_Richurl.log" size="50000000" level="7" number="10"/>
+		
+		<!--Some client application middleware may not allow to pass the application or transport parameters 
+		as TianShan extended header directly. As a solution, those expected parameter such as smardcard-id, 
+		ticket-id, are allowed to pass as URL parameters. A plugin called ssm_richurl is introduced to the RTSP 
+		server. The plugin fixes up the requests before they are being handled and may fixes up the responses 
+		before they are sent to the client. The plugin will have an XML based configuration to identify which 
+		type of STB that it need to participant to perform the fixup, for example:-->
+		<UserAgent keyword="Enseo" />
+		
+	</ssm_richurl>
+	
+</TianShan>

@@ -1,0 +1,21 @@
+
+// The following ifdef block is the standard way of creating macros which make exporting 
+// from a DLL simpler. All files within this DLL are compiled with the ZQSNMPEXTENSIONAGENT_EXPORTS
+// symbol defined on the command line. this symbol should not be defined on any project
+// that uses this DLL. This way any other project whose source files include this file see 
+// ZQSNMPEXTENSIONAGENT_API functions as being imported from a DLL, wheras this DLL sees symbols
+// defined with this macro as being exported.
+
+
+#ifndef __ZQAGENT_H
+#define __ZQAGENT_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#ifdef __cplusplus
+} // end extern "C"
+#endif
+#endif
+

@@ -1,0 +1,10 @@
+<MessageAgent>
+	<Agent name="ProvisionStateChange" jmstopic="topic/TianShan\Provision\StateChange">
+		<JMSHeaderPropery type="string" key="MESSAGECLASS" value="STATUS"/>
+		<JMSHeaderPropery type="int" key="MESSAGECODE" value="1111"/>
+	</Agent>
+	<Agent name="ProvisionProgress" jmstopic="topic/TianShan\Provision\Progress">
+		<JMSHeaderPropery type="string" key="MESSAGECLASS" value="STATUS"/>
+		<JMSHeaderPropery type="int" key="MESSAGECODE" value="2222"/>
+	</Agent>
+</MessageAgent>

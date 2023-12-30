@@ -1,0 +1,133 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "RpcGeek"=.\RpcGeek.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ZQCommon
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name xmlparse
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name xmlrpc
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name xmltok
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ZQCommon"=..\..\..\Common\dll\ZQCommon.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "test_cli"=..\test\test_cli.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/Common/test", VXAAAAAA
+    ..\test
+    end source code control
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name RpcGeek
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommon
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "test_svr"=..\test\test_svr.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/Common/test", VXAAAAAA
+    ..\test
+    end source code control
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name RpcGeek
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommon
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "xmlparse"="..\..\..\..\..\temp\xmlrpc-c-1.03.07\lib\expat\xmlparse\xmlparse.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "xmlrpc"="..\..\..\..\..\temp\xmlrpc-c-1.03.07\Windows\xmlrpc.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "xmltok"="..\..\..\..\..\temp\xmlrpc-c-1.03.07\lib\expat\xmltok\xmltok.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

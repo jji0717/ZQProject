@@ -1,0 +1,31 @@
+04-12 17:59:54.692 [   DEBUG ] [SsServiceImpl]6niiMMxkYDzChP1YOsECE2 TID[00003496][    createStream]	enter createStream
+04-12 17:59:54.692 [    INFO ] [SsServiceImpl]6niiMMxkYDzChP1YOsECE2 TID[00003496][    createStream]	create stream with ticket[S12947075579294-0005]
+04-12 17:59:54.692 [    INFO ] [SsServiceImpl]6niiMMxkYDzChP1YOsECE2 TID[00003496][    createStream]	create stream with streamer[eth1] coming from ticket resource
+04-12 17:59:54.692 [   DEBUG ] <6niiMMxkYDzChP1YOsECE2><Key>[2] <Key>[NetworkId] :<Variant>:vtStrings:E:[SE13306CHAIXH/eth1] || <Key>[Type] :<Variant>:vtStrings:E:[NetworkId]
+04-12 17:59:54.708 [   DEBUG ] SsServiceImpl      addServantToDB() add id[STREAM/6niiMMxkYDzChP1YOsECE2] from db with time coset[0]
+04-12 17:59:54.708 [    INFO ] SsServiceImpl      session [6niiMMxkYDzChP1YOsECE2] is added into db and refCount[2]
+04-12 17:59:54.708 [    INFO ] 6niiMMxkYDzChP1YOsECE2/00000DA8/SsPlaylist[ConstructSsStreamImpl]	create SsStreamImpl with <Key>[StreamingResource.StreamChannelPort] :<Variant>:vtStrings:E:[] || <Key>[StreamingResource.StreamerDeviceId] :<Variant>:vtStrings:E:[eth1]
+04-12 17:59:54.708 [    INFO ] 6niiMMxkYDzChP1YOsECE2/00000DA8/SsPlaylist[        setTimer]	update timer [500] [1302602395208]
+04-12 17:59:54.708 [    INFO ] 6niiMMxkYDzChP1YOsECE2/00000DA8/SsPlaylist[  setDestination]	set destination [][0]
+04-12 17:59:54.708 [    INFO ] 6niiMMxkYDzChP1YOsECE2/00000DA8/SsPlaylist[      setMuxRate]	set mux rate now[0] max[0] min[0]
+04-12 17:59:54.708 [    INFO ] doRegister         register sess[6niiMMxkYDzChP1YOsECE2] with Ticket[TransferSession/S12947075579294-0005 -t:tcp -h 192.168.81.103 -p 6789 -t 20000]
+04-12 17:59:54.708 [   DEBUG ] scheduleRenewCommand schedule session [6niiMMxkYDzChP1YOsECE2] to renew ticket in [200] ms 
+04-12 17:59:54.708 [   DEBUG ] 6niiMMxkYDzChP1YOsECE2/00001294/SsPlaylist[          insert]	insert item [0] after [-2] with info [NAME[/$/cdntest1234567898199zq.com] InOffset[0] OutOffset[0] spliceIn[0] spliceOut[0]]
+04-12 17:59:54.708 [ WARNING ] 6niiMMxkYDzChP1YOsECE2/00001294/CdnSSCommand[doValidateItem]	No ContentStore is connected , use original content name [cdntest1234567898199zq.com]
+04-12 17:59:54.708 [   DEBUG ] [SsStreamRequest]6niiMMxkYDzChP1YOsECE2 TID[00003616][             run]	enter commit request
+04-12 17:59:54.708 [    INFO ] [SsStreamRequest]6niiMMxkYDzChP1YOsECE2 TID[00003616][SsStreamCommitRequest]	no stream port is found in streaming resource
+04-12 17:59:54.708 [    INFO ] 6niiMMxkYDzChP1YOsECE2/00000E20/CdnSSCommand[doLoad]	initiate transfer with clientTransfer[192.168.81.111] transferAddress[10.15.11.50] ingressCapacity[500000000] allocatedIngressCapacity[500000000] fileName[cdntest1234567898199zq.com] transferRate[3750000] transferTimeout[500] range[0-1000000] delay[0]
+04-12 17:59:54.708 [   DEBUG ] HttpC2Streamer     [6niiMMxkYDzChP1YOsECE2] TransferInit() ClientTransfer(192.168.81.111), TransferAddress(10.15.11.50), IngressCapacity(500000000), FileName(cdntest1234567898199zq.com), TransferRate(3750000), TransferTimeout(500)
+04-12 17:59:54.708 [   DEBUG ] TransferInit [6niiMMxkYDzChP1YOsECE2] <TransferInitiate><ClientTransfer>192.168.81.111</ClientTransfer><TransferAddress>10.15.11.50</TransferAddress><IngressCapacity>500000000</IngressCapacity><Filename>cdntest1234567898199zq.com</Filename><Range>0-1000000</Range><TransferRate>3750000</TransferRate><AllocatedTransferRate>3750000</AllocatedTransferRate><TransferTimeout>500</TransferTimeout></TransferInitiate>
+04-12 17:59:54.723 [    INFO ] HttpC2Streamer     [6niiMMxkYDzChP1YOsECE2] TransferInit() Send request to [10.15.10.50:5150/c2cp/transferinitiate] and get 404. cost(15)
+04-12 17:59:54.723 [   DEBUG ] TransferInitResponse [6niiMMxkYDzChP1YOsECE2] <?xml version="1.0"?>.<TransferInitiateResponse>.  <ErrorText>Filename 'cdntest1234567898199zq.com' not found.</ErrorText>.</TransferInitiateResponse>.
+04-12 17:59:54.723 [    INFO ] HttpC2Streamer     [6niiMMxkYDzChP1YOsECE2] TransferInit() Complete. StatusCode(404)
+04-12 17:59:54.723 [   ERROR ] 6niiMMxkYDzChP1YOsECE2/00000E20/CdnSSCommand[doCommit]	failed to load [cdntest1234567898199zq.com] because[ErrorText:Filename 'cdntest1234567898199zq.com' not found.]
+04-12 17:59:54.723 [   ERROR ] [SsStreamRequest]6niiMMxkYDzChP1YOsECE2 TID[00003616][SsStreamCommitRequest]	failed to commit stream due to [6niiMMxkYDzChP1YOsECE2/00000E20/CdnSSCommand[doCommit]	failed to load [cdntest1234567898199zq.com] because[ErrorText:Filename 'cdntest1234567898199zq.com' not found.]]
+04-12 17:59:54.911 [    INFO ] RenewTicketCenter  ticket [TransferSession/S12947075579294-0005 -t:tcp -h 192.168.81.103 -p 6789 -t 20000] associated with playlist[6niiMMxkYDzChP1YOsECE2] does not exist any more, destroy playlist
+04-12 17:59:54.911 [   DEBUG ] 6niiMMxkYDzChP1YOsECE2/00000E20/SsPlaylist[         destroy]	enter destroy , called by [DestroyPLRequest]
+04-12 17:59:54.911 [    INFO ] 6niiMMxkYDzChP1YOsECE2/00000E20/SsPlaylist[firePlaylistDestroyMsg]	fire message PlaylistDestroy
+04-12 17:59:54.911 [   DEBUG ] SsServiceImpl      removeServantFromDB() remove id[STREAM/6niiMMxkYDzChP1YOsECE2] from db with time coset[0]
+04-12 17:59:54.911 [ WARNING ] SsEventManager     can't send event [EVENT[ICE_EVENT_TYPE_PLAYLISTDESTROY] PlayList[6niiMMxkYDzChP1YOsECE2]] , sleep for a while and re-try
+04-12 17:59:54.911 [    INFO ] SsServiceImpl      sesion[6niiMMxkYDzChP1YOsECE2] is removed and refCount[2]
+04-12 17:59:54.911 [    INFO ] 6niiMMxkYDzChP1YOsECE2/00000E20/SsPlaylist[         destroy]	leave destroy

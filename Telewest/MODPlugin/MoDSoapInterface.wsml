@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<servicemapping name='MoDSoapInterfaceService'>
+  <service name='MoDSoapInterfaceService'>
+    <using PROGID='OTEModSoapUDTMapper.ModSoapModelMap' cachable='0' ID='ModSoapModelMap' />
+    <using PROGID='OTEModSoapUDTMapper.ModSoapResultModelMap' cachable='0' ID='ModSoapResultModelMap' />
+    <types>
+      <type name='MoDSoapModel' targetNamespace='http://model.ote.izq.com' uses='ModSoapModelMap'/>
+      <type name='MoDSoapResultModel' targetNamespace='http://model.ote.izq.com' uses='ModSoapResultModelMap'/>
+    </types>
+  </service>
+</servicemapping>
+ 

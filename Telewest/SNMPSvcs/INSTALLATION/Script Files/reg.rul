@@ -1,0 +1,282 @@
+                            //#include "ifx.h"
+//---------------------------------------------------------------------------------------
+//
+// @param szLocation           the location of the service shell, which in
+//                             most cases is %ITVROOT%\exe
+//
+// @param szServiceName        The name that identifies the service to the Windows NT Service 
+//                             Manager. This name also identifies the service in the Registry. 
+//                             For example, IDS is the service name for the Directory service.
+//
+// @param szServicePort        The port number that the Service Management Utility (ManUtil) 
+//                             uses to communicate with the service. Each service has a 
+//                             unique management port., e.g "1021"  
+//
+// @param szServiceShel`lPort   The port number that the Service Management Utility (ManUtil) 
+//                             uses to communicate with the service shell for the service. The
+//                             service shell for each service has a unique management port.
+//
+// @param szExecutableName	   the executable file that the service shell
+//                             launches to start the service.
+//
+// @param szAccount			   <account> <password> are the optional login account 
+// @param szPassWord           and password for the service. The login account for a VOD 
+//                             service is either "SeaChange" or "LocalSystem". 
+//
+// @param szDisplayName        the name that you want to appear in the Services dialog box.
+//                             The naming convention for SeaChange VOD services is:
+//                             SeaChange <descriptive name>, e.g SeaChange Directory Service.
+//
+// @param szProductName		   ITV ¨C if the service is a Command Center core service,
+//                             ITV Applications ¨C if the service is an application service.
+//
+//---------------------------------------------------------------------------------------
+
+
+prototype SetupService(STRING, STRING, STRING, STRING, STRING, 
+                              STRING, STRING, STRING, STRING);                    
+function SetupService(szLocation,
+	   				  szServiceName,
+					  szServicePort,
+					  szServiceShellPort,
+					  szExecutableName,
+					  szAccount,
+	 				  szPassWord,
+					  szDisplayName,
+					  szProductName
+					  )  
+	STRING  szApplication, szCommandLine;
+	STRING	szKey, szName, szValue; 
+	NUMBER 	nSize;
+begin
+    
+    //
+    // 1.Install and configure the service as a Windows NT service, 
+	// which means that the Windows NT Service Manager can manage 
+	// it
+	//
+	//szApplication = szLocation ^ "\\bin\\instserv.exe"; 
+	szApplication = szLocation ^ "\\instserv.exe"; 
+	
+	szCommandLine = szServiceName + " \"" +
+	                szLocation    ^ "\\srvshell.exe\" " +
+					"local "      +
+					szAccount     + " " +
+					szPassWord    + " " +
+					"manual own"; 
+	
+    if (LaunchAppAndWait(szApplication, szCommandLine, LAAW_OPTION_WAIT) < 0) then
+        MessageBox ("Unable to launch " + szApplication, SEVERE);
+		abort;
+    endif;
+
+
+    //
+    // 2.Configure the display name that appears in the Windows NT 
+	// Services dialog box.
+	// 
+	if(szDisplayName!="") then
+		szCommandLine = szServiceName + " displayname=\"" + szDisplayName + "\"";
+	    if (LaunchAppAndWait(szApplication, szCommandLine, LAAW_OPTION_WAIT) < 0) then
+	        MessageBox ("Unable to launch " + szApplication, SEVERE);
+			abort;
+	    endif;
+	endif;
+
+
+    
+	RegDBSetDefaultRoot (HKEY_LOCAL_MACHINE);
+	
+	//
+	// 3.Configure the product name for the service.
+	//
+    szKey = "SYSTEM\\CurrentControlSet\\Services\\" + szServiceName;
+	nSize = -1;
+	
+	szName = "ProductName";
+	szValue = szProductName;
+ 	RegDBSetKeyValueEx (szKey , szName , REGDB_STRING , szValue , nSize);  
+ 	
+	
+    szName = "Description";
+    LoadStringFromStringTable("Service Desc", szValue); 
+    RegDBSetKeyValueEx (szKey , szName , REGDB_STRING_EXPAND , szValue , nSize);
+ 
+	//
+	// 4.a Configure the Windows NT Event Viewer to log events for the
+	// ervice and its service shell.
+	//
+    szKey = "SYSTEM\\CurrentControlSet\\Services\\EventLog\\" +
+		"Application\\" + szServiceName;
+	szName = "EventMessageFile";
+	//szValue = szLocation ^ "\\bin\\ItvMessages.dll";
+	szValue = szLocation ^ "\\ItvMessages.dll";
+	RegDBSetKeyValueEx (szKey , szName , REGDB_STRING_EXPAND , szValue , nSize);
+
+	szName = "Typessupported";
+	szValue = "7";   // event type
+	RegDBSetKeyValueEx (szKey , szName , REGDB_NUMBER , szValue , nSize);
+    //
+    // 4.b
+    //
+    szKey = szKey + "_shell";
+    szName = "EventMessageFile";
+	//szValue = szLocation ^ "\\bin\\ShellMsgs.dll";
+	szValue = szLocation ^ "\\ShellMsgs.dll";
+	RegDBSetKeyValueEx (szKey , szName , REGDB_STRING_EXPAND , szValue , nSize);
+
+    szName = "Typessupported";
+	szValue = "7";   // event type
+	RegDBSetKeyValueEx (szKey , szName , REGDB_NUMBER , szValue , nSize);
+
+
+	// 
+	// 5.a Configure the management port for the service and its service shell.
+	//
+    szKey = "SOFTWARE\\SeaChange\\Management\\CurrentVersion\\" +
+		"Services\\" + szServiceName;
+	szName = "MgmtPortNumber";
+	szValue = szServicePort;
+	RegDBSetKeyValueEx (szKey , szName , REGDB_NUMBER , szValue , nSize);
+    //
+    // 5.b
+    //
+	szKey = szKey + "_shell";
+	szValue = szServiceShellPort;
+	RegDBSetKeyValueEx (szKey , szName , REGDB_NUMBER , szValue , nSize);
+
+
+	//
+	// 6. Configure the image path, which is the file path of the executable
+	// file that the service shell launches to start the service. Also 
+	// configure the management port for the service shell
+	//
+	szKey = "SOFTWARE\\SeaChange\\" + szProductName + "\\CurrentVersion\\" +
+		"Services\\" + szServiceName + "_shell";
+	szName = "ImagePath";
+	//szValue = szLocation ^ "\\bin\\"^szExecutableName;
+	szValue = szLocation ^ "\\"^szExecutableName;
+	RegDBSetKeyValueEx (szKey , szName , REGDB_STRING_EXPAND , szValue , nSize);
+
+    szName = "MgmtPortNumber";
+	szValue = szServiceShellPort;
+	RegDBSetKeyValueEx (szKey , szName , REGDB_NUMBER , szValue , nSize); 
+
+	// end of the registery operation
+    return 0;
+end;
+
+
+//
+// @param szServiceName     the service name that will be uninstalled
+// 
+prototype UnInstallService(STRING, STRING);      
+
+function UnInstallService(paramLocation, paramServiceName)  
+    STRING szApplication, szCommandLine;
+    number svServiceState;
+begin
+    // no register operation 
+	
+	if(ServiceGetServiceState (paramServiceName, svServiceState)< ISERR_SUCCESS ) then 
+	      MessageBox("Unknowm status of service "+ paramServiceName,SEVERE);
+	      //abort;
+	endif; 
+	if(svServiceState == SERVICE_RUNNING) then
+	
+		szApplication =  paramLocation ^ "\\instserv.exe"; 
+		szCommandLine = paramServiceName + " stop local";
+	
+		if (LaunchAppAndWait(szApplication, szCommandLine,LAAW_OPTION_HIDDEN|LAAW_OPTION_WAIT) < 0) then
+  	      	MessageBox ("Unable to launch " + szApplication, SEVERE);
+			//abort;
+    	endif;    
+	endif;
+	
+	szApplication =  paramLocation ^ "\\instserv.exe"; 
+	szCommandLine = paramServiceName + " remove";
+	
+	if (LaunchAppAndWait(szApplication, szCommandLine,LAAW_OPTION_HIDDEN|LAAW_OPTION_WAIT) < 0) then
+        MessageBox ("Unable to launch " + szApplication, SEVERE);
+		//abort;
+    endif;    
+    return 0;
+end;
+
+
+prototype RegServiceInformation(STRING);
+function RegServiceInformation(szServiceName)  
+	STRING	szKey, szName, szValue; 
+	NUMBER 	nSize, nvType;
+begin     
+ 	nSize = -1;
+	RegDBSetDefaultRoot (HKEY_LOCAL_MACHINE);
+	
+    szKey = "SOFTWARE\\SeaChange\\ITV\\CurrentVersion\\Services\\"^szServiceName;
+
+	szName = "Instance";
+	szValue = "1";      
+	RegDBSetKeyValueEx (szKey , szName , REGDB_NUMBER , szValue , nSize); 
+	
+ 	szName = "Community";
+ 	szValue = "public";
+ 	RegDBSetKeyValueEx (szKey , szName , REGDB_STRING , szValue , nSize);
+	 
+	szName = "KeepAliveIntervals";
+	szValue = "2000";      
+	RegDBSetKeyValueEx (szKey , szName , REGDB_NUMBER , szValue , nSize);   
+	
+	szName = "LogBufferSize";
+	szValue = "4096";      
+	RegDBSetKeyValueEx (szKey , szName , REGDB_NUMBER , szValue , nSize);  
+	
+	szName = "LogFileName";
+	if(RegDBGetKeyValueEx(szKey, szName, nvType, szValue, nSize)<0) then
+		szValue = "C:\\ITV\\log\\SnmpSvcs.log";      
+		RegDBSetKeyValueEx (szKey , szName , REGDB_STRING , szValue , nSize);  
+	endif;
+	
+	szName = "LogFileSize";
+	szValue = "16777216";      
+	RegDBSetKeyValueEx (szKey , szName , REGDB_NUMBER , szValue , nSize);  
+	
+	szName = "LogFileTimeOut";
+	szValue = "2000";      
+	RegDBSetKeyValueEx (szKey , szName , REGDB_NUMBER , szValue , nSize); 
+	
+	szName = "LogLevel";
+	szValue = "7";      
+	RegDBSetKeyValueEx (szKey , szName , REGDB_NUMBER , szValue , nSize); 
+	
+	szName = "ShutdownWaitTime";
+	szValue = "10000";      
+	RegDBSetKeyValueEx (szKey , szName , REGDB_NUMBER , szValue , nSize); 
+	
+    szName = "MgmtPortNumber";
+	szValue = "6946";      
+	RegDBSetKeyValueEx (szKey , szName , REGDB_NUMBER , szValue , nSize); 
+	
+	/////////////////////////////////////////////////////////////////////
+	// entries for SnmpSvcs configuration  
+	/////////////////////////////////////////////////////////////////////
+	szName	= "ConfigFileName";
+	if(RegDBGetKeyValueEx(szKey, szName, nvType, szValue, nSize)<0) then
+		//szValue	= TARGETDIR^"PlaylistSoapInterface.wsdl";
+		szValue = TARGETDIR^"snmp.ini";
+		RegDBSetKeyValueEx (szKey , szName , REGDB_STRING , szValue , nSize); 
+	endif;
+	
+	szName	= "SenderAddress";
+	if(RegDBGetKeyValueEx(szKey, szName, nvType, szValue, nSize)<0) then
+		szValue	= "127.0.0.1";
+		RegDBSetKeyValueEx (szKey , szName , REGDB_STRING , szValue , nSize); 
+	endif;
+	
+	// end of the registery operation
+    return 0;
+end;
+
+
+					  
+
+

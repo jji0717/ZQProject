@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EventHandlingConfiguration component="LinuxSystemEvent" version="1.0" description="" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="monitoring_event_handling_definition.xsd" lastUpdateTime="2001-12-17T09:30:47">
+	<EventHandling>
+		<EventHandlingEntry name="ServiceStop">
+			<Criteria CODE="Linux_System_1001"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>	
+		<EventHandlingEntry name="AssetFlowServiceStop">
+			<Criteria CODE="Linux_System_1001_AssetFlow"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>	
+		<EventHandlingEntry name="JbossServiceStop">
+			<Criteria CODE="Linux_System_1001_Jboss"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>	
+		<EventHandlingEntry name="MySQLServiceStop">
+			<Criteria CODE="Linux_System_1001_MySQL"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>	
+		<EventHandlingEntry name="DRDBStopped">
+			<Criteria CODE="Linux_System_1004"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>			
+   <EventHandlingEntry name="DRDBResource0Error">
+			<Criteria CODE="Linux_System_1005"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>		
+	 <EventHandlingEntry name="DRDBResource1Error">
+			<Criteria CODE="Linux_System_1006"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>	
+
+		<EventHandlingEntry name="HeartBeatDead">
+			<Criteria CODE="Linux_System_1007_(node_name)"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>	
+		<EventHandlingEntry name="HeartBeatStatus">
+			<Criteria CODE="Linux_System_1007"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>	
+		<EventHandlingEntry name="HeartBeatStopped">
+			<Criteria CODE="Linux_System_1008"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>	
+		<EventHandlingEntry name="EthernetDown">
+			<Criteria CODE="Linux_System_1100"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>	
+		
+		
+		<EventHandlingEntry name="CDNCSServiceStop">
+			<Criteria CODE="TSS_1001_cdncs?"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>	
+		<EventHandlingEntry name="EventChannelServiceStop">
+			<Criteria CODE="TSS_1001_eventchannel"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>	
+		<EventHandlingEntry name="EventGatewayServiceStop">
+			<Criteria CODE="TSS_1001_eventgateway"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>	
+		<EventHandlingEntry name="HttpCRGServiceStop">
+			<Criteria CODE="TSS_1001_httpcrg"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>	
+		<EventHandlingEntry name="SentryServiceStop">
+			<Criteria CODE="TSS_1001_sentry"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>	
+		<EventHandlingEntry name="CDNSSServiceStop">
+			<Criteria CODE="TSS_1050_cdnss"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>	
+		<EventHandlingEntry name="CpeSvcServiceStop">
+			<Criteria CODE="TSS_1050_cpesvc"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>	
+
+		<EventHandlingEntry name="bwfsServiceStop">
+			<Criteria CODE="UML_System_1001_bwfs"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>	
+		<EventHandlingEntry name="smbdServiceStop">
+			<Criteria CODE="UML_System_1001_smbd"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>	
+		<EventHandlingEntry name="nmbdServiceStop">
+			<Criteria CODE="UML_System_1001_nmbd"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>	
+		<EventHandlingEntry name="vsftpdServiceStop">
+			<Criteria CODE="UML_System_1001_vsftpd"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>	
+		<EventHandlingEntry name="enfsServiceStop">
+			<Criteria CODE="UML_System_1001_enfs"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>	
+		<EventHandlingEntry name="shasServiceFailed">
+			<Criteria CODE="UML_System_1050_shas"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>	
+		<EventHandlingEntry name="ArrayDegraded">
+			<Criteria CODE="UML_System_1100_array_degraded"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>	
+		<EventHandlingEntry name="ArrayCritical">
+			<Criteria CODE="UML_System_1200_array_critical"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>	
+		<EventHandlingEntry name="ClusterAbnormal">
+			<Criteria CODE="UML_System_1300_Cluster_Abnormal"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>	
+		<EventHandlingEntry name="fsBWFSNotMounted">
+			<Criteria CODE="UML_System_1400_fsBWFS"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>	
+	</EventHandling>	
+</EventHandlingConfiguration>

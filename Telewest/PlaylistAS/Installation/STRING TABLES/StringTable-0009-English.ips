@@ -1,0 +1,5 @@
+[StringTable:Data:0009]
+Service Desc=Music Playlist Application Server (PlaylistAS) service is an extensive service for ITV system, in order to support playlist formatted streaming.
+Component Desc1=All required files for Music Playlist Application Server\n
+Component Stat1=Copying program files
+

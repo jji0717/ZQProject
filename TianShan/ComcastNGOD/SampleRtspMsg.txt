@@ -1,0 +1,302 @@
+SETUP rtsp://10.15.10.35:554 RTSP/1.0
+Content-Type: application/sdp
+CSeq: 26243
+OnDemandSessionId: c2dcb90100000040800001005e000302
+Require: com.comcast.ngod.r2
+SessionGroup: 70001-0
+StreamControlProto: rtsp
+Transport: MP2T/DVBC/UDP;unicast;client=01005e000001;bandwidth=3750000;destination=127.0.3.2;client_port=2003;sop_name=NGODTEST
+Volume: library
+Content-Length: 183
+
+v=0
+o=- c2dcb90100000040800001005e000302 0 IN IP4 10.11.0.22:2931
+s=
+t=0 0
+a=X-playlist-item: MTest 013 0-
+a=X-playlist-item: MTest 013 0-
+c=IN IP4 0.0.0.0
+m=video 0 udp MP2T
+RTSP/1.0 200 OK
+CSeq: 26243
+Content-Type: application/sdp
+Method-Code: SETUP
+OnDemandSessionId: c2dcb90100000040800001005e000302
+Server: ssm_NGOD/1.15
+Session: 1227925512
+Transport: MP2T/DVBC/UDP;unicast;client=01005e000001;bandwidth=3750000;destination=127.0.3.2;client_port=2003;sop_name=NGODTEST;source=192.168.100.10;server_port=454
+Date: 10 Mar 2011 09:09:33.140 GMT
+Content-Length: 133
+
+v=0
+o=- 1227925512 3508736973 IN IP4 172.16.20.60
+s=
+c=IN IP4 172.16.20.60
+t=0 0
+a=control:rtsp://172.16.20.60:1554/1227925512
+
+
+
+PLAY * RTSP/1.0
+CSeq: 2
+Session: 1227925512
+User-Agent: ITVLibrary 1.0; amino
+Require: com.comcast.ngod.c1
+Range: npt=now-
+Scale: 1.000000
+
+RTSP/1.0 200 OK
+CSeq: 2
+Method-Code: PLAY
+Range: npt=0.000-1800.638
+Scale: 1.000000
+Server: ssm_NGOD/1.15
+Session: 1227925512
+Date: 10 Mar 2011 09:10:16.281 GMT
+
+ANNOUNCE 10.15.10.35:554/ RTSP/1.0
+CSeq: 2
+Notice: 8802 "State Changed" event-date=20110310T171016.296Z npt=0 presentation_state=play
+OnDemandSessionId: c2dcb90100000040800001005e000302
+Require: com.comcast.ngod.c1
+Server: ssm_NGOD/1.15
+Session: 1227925512
+Date: 10 Mar 2011 09:10:16.296 GMT
+
+PAUSE * RTSP/1.0
+CSeq: 2
+User-Agent: ITVLibrary 1.0; amino
+Session: 1227925512
+x-reason: User Requested Pause
+Require: com.comcast.ngod.c1
+Scale: 1.000000
+
+RTSP/1.0 200 OK
+CSeq: 2
+Method-Code: PAUSE
+Range: 11.103-1800.638
+Server: ssm_NGOD/1.15
+Session: 1227925512
+Date: 10 Mar 2011 09:10:27.156 GMT
+
+ANNOUNCE 10.15.10.35:554/ RTSP/1.0
+CSeq: 3
+Notice: 8802 "State Changed" event-date=20110310T171027.187Z npt=2bc7 presentation_state=pause
+OnDemandSessionId: c2dcb90100000040800001005e000302
+Require: com.comcast.ngod.c1
+Server: ssm_NGOD/1.15
+Session: 1227925512
+Date: 10 Mar 2011 09:10:27.187 GMT
+
+PLAY * RTSP/1.0
+CSeq: 2
+Session: 1227925512
+User-Agent: ITVLibrary 1.0; amino
+Scale: 7.000000
+
+RTSP/1.0 200 OK
+CSeq: 2
+Method-Code: PLAY
+Range: npt=11.103-1800.638
+Scale: 7.500000
+Server: ssm_NGOD/1.15
+Session: 1227925512
+Date: 10 Mar 2011 09:10:37.593 GMT
+
+ANNOUNCE 10.15.10.35:554/ RTSP/1.0
+CSeq: 4
+Notice: 8802 "State Changed" event-date=20110310T171037.625Z npt=2b5f presentation_state=play
+OnDemandSessionId: c2dcb90100000040800001005e000302
+Require: com.comcast.ngod.c1,com.comcast.ngod.c1.decimal_npts
+Server: ssm_NGOD/1.15
+Session: 1227925512
+Date: 10 Mar 2011 09:10:37.625 GMT
+
+ANNOUNCE 10.15.10.35:554/ RTSP/1.0
+CSeq: 5
+Notice: 8801 "Scale Changed" event-date=20110310T171037.625Z npt=3f7e scale=7.500000
+OnDemandSessionId: c2dcb90100000040800001005e000302
+Require: com.comcast.ngod.c1,com.comcast.ngod.c1.decimal_npts
+Server: ssm_NGOD/1.15
+Session: 1227925512
+Date: 10 Mar 2011 09:10:37.625 GMT
+
+ANNOUNCE 10.15.10.35:554/ RTSP/1.0
+CSeq: 6
+Content-Type: application/sdp
+Notice: 2103 "Transition" event-date=20110310T171437.500Z npt=1b79be
+OnDemandSessionId: c2dcb90100000040800001005e000302
+Require: com.comcast.ngod.c1,com.comcast.ngod.c1.decimal_npts
+Server: ssm_NGOD/1.15
+Session: 1227925512
+Date: 10 Mar 2011 09:14:37.500 GMT
+Content-Length: 152
+
+v=0
+o=-1227925512 3508737277 IN IP4 172.16.20.60
+s=
+c=IN IP4 0.0.0.0
+a=X-previous-playlist-element-index: 0
+a=X-current-playlist-element-index: 1
+PLAY * RTSP/1.0
+CSeq: 2
+Session: 1227925512
+User-Agent: ITVLibrary 1.0; amino
+Scale: -6.000000
+
+RTSP/1.0 200 OK
+CSeq: 2
+Method-Code: PLAY
+Range: npt=2186.178-3601.276
+Scale: -7.500000
+Server: ssm_NGOD/1.15
+Session: 1227925512
+Date: 10 Mar 2011 09:15:28.500 GMT
+
+ANNOUNCE 10.15.10.35:554/ RTSP/1.0
+CSeq: 7
+Notice: 8801 "Scale Changed" event-date=20110310T171528.546Z npt=212e70 scale=-7.500000
+OnDemandSessionId: c2dcb90100000040800001005e000302
+Require: com.comcast.ngod.c1,com.comcast.ngod.c1.decimal_npts
+Server: ssm_NGOD/1.15
+Session: 1227925512
+Date: 10 Mar 2011 09:15:28.546 GMT
+
+
+ANNOUNCE 10.15.10.35:554/ RTSP/1.0
+CSeq: 8
+Content-Type: application/sdp
+Notice: 2103 "Transition" event-date=20110310T171620.578Z npt=1b79be
+OnDemandSessionId: c2dcb90100000040800001005e000302
+Require: com.comcast.ngod.c1,com.comcast.ngod.c1.decimal_npts
+Server: ssm_NGOD/1.15
+Session: 1227925512
+Date: 10 Mar 2011 09:16:20.578 GMT
+Content-Length: 152
+
+v=0
+o=-1227925512 3508737380 IN IP4 172.16.20.60
+s=
+c=IN IP4 0.0.0.0
+a=X-previous-playlist-element-index: 1
+a=X-current-playlist-element-index: 0
+
+
+ANNOUNCE 10.15.10.35:554/ RTSP/1.0
+CSeq: 10
+Notice: 2104 "Start-of-Stream Reached" event-date=20110310T172020.437Z npt=0
+OnDemandSessionId: c2dcb90100000040800001005e000302
+Require: com.comcast.ngod.c1,com.comcast.ngod.c1.decimal_npts
+Server: ssm_NGOD/1.15
+Session: 1227925512
+Date: 10 Mar 2011 09:20:20.437 GMT
+
+ANNOUNCE 10.15.10.35:554/ RTSP/1.0
+CSeq: 11
+Notice: 8802 "State Changed" event-date=20110310T172020.453Z npt=0 presentation_state=ready
+OnDemandSessionId: c2dcb90100000040800001005e000302
+Require: com.comcast.ngod.c1,com.comcast.ngod.c1.decimal_npts
+Server: ssm_NGOD/1.15
+Session: 1227925512
+Date: 10 Mar 2011 09:20:20.453 GMT
+
+PLAY * RTSP/1.0
+CSeq: 2
+Session: 1227925512
+User-Agent: ITVLibrary 1.0; amino
+Scale: 7.000000
+
+RTSP/1.0 200 OK
+CSeq: 2
+Method-Code: PLAY
+Range: npt=0.000-1800.638
+Scale: 7.500000
+Server: ssm_NGOD/1.15
+Session: 1227925512
+Date: 10 Mar 2011 09:21:04.187 GMT
+
+ANNOUNCE 10.15.10.35:554/ RTSP/1.0
+CSeq: 13
+Notice: 8802 "State Changed" event-date=20110310T172104.218Z npt=1b79be presentation_state=play
+OnDemandSessionId: c2dcb90100000040800001005e000302
+Require: com.comcast.ngod.c1,com.comcast.ngod.c1.decimal_npts
+Server: ssm_NGOD/1.15
+Session: 1227925512
+Date: 10 Mar 2011 09:21:04.218 GMT
+
+
+ANNOUNCE 10.15.10.35:554/ RTSP/1.0
+CSeq: 14
+Content-Type: application/sdp
+Notice: 2103 "Transition" event-date=20110310T172504.468Z npt=1b79be
+OnDemandSessionId: c2dcb90100000040800001005e000302
+Require: com.comcast.ngod.c1,com.comcast.ngod.c1.decimal_npts
+Server: ssm_NGOD/1.15
+Session: 1227925512
+Date: 10 Mar 2011 09:25:04.468 GMT
+Content-Length: 152
+
+v=0
+o=-1227925512 3508737904 IN IP4 172.16.20.60
+s=
+c=IN IP4 0.0.0.0
+a=X-previous-playlist-element-index: 0
+a=X-current-playlist-element-index: 1
+
+ANNOUNCE 10.15.10.35:554/ RTSP/1.0
+CSeq: 15
+Notice: 2101 "End-of-Stream Reached" event-date=20110310T172904.609Z npt=36f37c
+OnDemandSessionId: c2dcb90100000040800001005e000302
+Require: com.comcast.ngod.c1,com.comcast.ngod.c1.decimal_npts
+Server: ssm_NGOD/1.15
+Session: 1227925512
+Date: 10 Mar 2011 09:29:04.609 GMT
+
+ANNOUNCE 10.15.10.35:554/ RTSP/1.0
+CSeq: 16
+Notice: 8802 "State Changed" event-date=20110310T172904.609Z npt=0 presentation_state=ready
+OnDemandSessionId: c2dcb90100000040800001005e000302
+Require: com.comcast.ngod.c1,com.comcast.ngod.c1.decimal_npts
+Server: ssm_NGOD/1.15
+Session: 1227925512
+Date: 10 Mar 2011 09:29:04.609 GMT
+
+TEARDOWN * RTSP/1.0
+CSeq: 16
+User-Agent: ITVLibrary 1.0; amino
+Session: 1227925512
+x-reason: User Requested Teardown
+OnDemandSessionId: 004eb2e09301a1500000400080000100
+
+RTSP/1.0 200 OK
+CSeq: 16
+Content-Type: text/xml
+FinalNPT: npt=0-1800638
+Method-Code: TEARDOWN
+OnDemandSessionId: 004eb2e09301a1500000400080000100
+Range: npt=0-1800638
+Server: ssm_NGOD/1.15
+Session: 1227925512
+StopPoint: 1 0
+Date: 10 Mar 2011 09:29:54.156 GMT
+Content-Length: 2142
+
+<ResponseData>
+<ODRMSessionHistory>
+<ODRMSession  componentName="ssm_NGOD/1.15" ODSessionID="c2dcb90100000040800001005e000302" setupDate="2011-03-10T09:09:33.140Z" ODRMIpAddr="172.16.20.60" SMIpAddr="172.16.20.60" resultCode="User Requested Teardown" teardownDate="2011-03-10T09:29:54.156Z" sessionGroup="70001-0" >
+<PlayoutHistory time="2011-03-10T09:29:54.156Z" >
+<StreamResources  ID="1" SOP="NGODTEST" filename="/$/ZQ_C20036_SeaChangeChina" providerID="MTest" assetID="013" segmentNumber="1" range="0-" />
+<StreamResources  ID="2" SOP="NGODTEST" filename="/$/ZQ_C20036_SeaChangeChina" providerID="MTest" assetID="013" segmentNumber="2" range="0-" />
+<EventHistory>
+<StartStreamEvent time="2011-03-10T09:10:16.265Z" NPT="0.000" streamResourcesID="1" newState="PLAY" scale="1.000000" />
+<UserEvent time="2011-03-10T09:10:27.156Z" NPT="11.103" streamResourcesID="1" newState="PAUSE" scale="1.000000" reqState="PAUSE" status="200" />
+<UserEvent time="2011-03-10T09:10:37.593Z" NPT="11.103" streamResourcesID="1" newState="PLAY" scale="7.500000" reqState="PLAY" status="200" reqScale="7.000000" />
+<Transition time="2011-03-10T09:14:37.500Z" NPT="1800.638" streamResourcesID="1" newState="PLAY" scale="7.500000" reason="SERVER" newNPT="0.000" newStreamResourcesID="2" />
+<UserEvent time="2011-03-10T09:15:28.500Z" NPT="385.540" streamResourcesID="2" newState="PLAY" scale="-7.500000" reqState="PLAY" status="200" reqScale="-6.000000" />
+<Transition time="2011-03-10T09:16:20.578Z" NPT="0.000" streamResourcesID="2" newState="PLAY" scale="-7.500000" reason="SERVER" newNPT="1800.638" newStreamResourcesID="1" />
+<UserEvent time="2011-03-10T09:21:04.171Z" NPT="0.000" streamResourcesID="1" newState="PLAY" scale="7.500000" reqState="PLAY" status="200" reqScale="7.000000" />
+<Transition time="2011-03-10T09:25:04.468Z" NPT="1800.638" streamResourcesID="1" newState="PLAY" scale="7.500000" reason="SERVER" newNPT="0.000" newStreamResourcesID="2" />
+<EndEvent time="2011-03-10T09:29:54.156Z" NPT="0.000" streamResourcesID="1" reason="USER" />
+</EventHistory></PlayoutHistory>
+</ODRMSession></ODRMSessionHistory>
+</ResponseData>

@@ -1,0 +1,9 @@
+set providerID=comcast
+set assertID=BAAA0000000000018377
+set captureStart=2012-04-12T16:59:00Z
+set captureEnd=2012-05-03T4:16:00Z
+set transferBitRate=3750000
+set sourceURL=http://192.168.81.116/Content/Content.mpg
+set sourceIP=192.168.81.116
+get
+exec3

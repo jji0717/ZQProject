@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TianShan>
+   <Definitions src="TianShanDef.xml">
+   	
+    </Definitions>
+   <EventSender>
+	<!--
+        logPath 	: the full path of the log file,this log file is used in event sender plugin
+        logFileSize	: log file size in byte
+        logLevel	: log level 0 ~ 7
+        logNumber : log file number
+    -->
+    <Log logPath="${TianShanLogDir}\snmpsender.log" logFileSize="10240000" logLevel="${DefaultLogLevel}" logNumber="2" />
+    <!-- sender message use snmp trap -->
+    <SnmpSender>
+        <!--        
+        ipAddress    : snmp agent process network ip address
+         -->
+        <Agent ipAddress="${ServerNetIf}" />
+        <!--set destinations where messages send to
+        enableed     : set Target item use or not use,vale "0" "1"
+        ipAddress    : destination ip address
+        port         : destination prot
+        community    : snmp community name, value: "public" "private"
+        
+        Filter condition set,if not set the value, the field invalidate in filter
+        category     : event category want to capture 
+        eventName    : event name want to capture
+   
+        -->
+        <Targets>
+          <!--
+            <Target enabled="1" ipAddress="192.168.81.114" port="162" community="public" >
+              <Filters>
+                <Filter category="" eventName="" />
+              </Filters>            	
+            
+            </Target>
+            -->
+        </Targets>
+        
+     </SnmpSender>
+   </EventSender>
+</TianShan>

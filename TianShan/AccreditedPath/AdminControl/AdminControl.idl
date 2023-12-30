@@ -1,0 +1,55 @@
+// AdminControl.idl : IDL source for AdminControl.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (AdminControl.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+#include "olectl.h"
+	
+	[
+		object,
+		uuid(73C3E9F6-0A71-4A37-9093-D9AE64F9CA24),
+		dual,
+		helpstring("IAdminCtrl Interface"),
+		pointer_default(unique)
+	]
+	interface IAdminCtrl : IDispatch
+	{
+		[propput, id(DISPID_CAPTION)] HRESULT Caption([in]BSTR strCaption);
+		[propget, id(DISPID_CAPTION)] HRESULT Caption([out,retval]BSTR* pstrCaption);
+		[id(1), helpstring("method SetPathEndPoint")] HRESULT SetPathEndPoint([in] BSTR bstrIpAddress, [in] BSTR bstrPort);
+		
+	};
+
+[
+	uuid(AEF669AA-DF5E-4FED-A158-C20DF8CCD3AC),
+	version(1.0),
+	helpstring("AdminControl 1.0 Type Library")
+]
+library ADMINCONTROLLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	[
+		uuid(158CE249-683D-4B6E-96AC-B39F0BBB397F),
+		helpstring("_IAdminCtrlEvents Interface")
+	]
+	dispinterface _IAdminCtrlEvents
+	{
+		properties:
+		methods:
+	};
+
+	[
+		uuid(85D19CA6-B302-40B0-AB41-4B6B00D277CB),
+		helpstring("AdminCtrl Class")
+	]
+	coclass AdminCtrl
+	{
+		[default] interface IAdminCtrl;
+		[default, source] dispinterface _IAdminCtrlEvents;
+	};
+};

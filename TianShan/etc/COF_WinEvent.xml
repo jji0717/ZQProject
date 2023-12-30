@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EventHandlingConfiguration component="WinEvent" version="1.0" description="" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="monitoring_event_handling_definition.xsd" lastUpdateTime="2001-12-17T09:30:47">
+	<EventHandling>
+		<EventHandlingEntry name="WinSystemServiceStart">
+			<Criteria CODE="Windows_System_1001"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>		
+		<EventHandlingEntry name="WinSystemServiceStop">
+			<Criteria CODE="Windows_System_1002"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>		
+		<EventHandlingEntry name="WinSystemServiceStartFailed">
+			<Criteria CODE="Windows_System_1003"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>					
+		<EventHandlingEntry name="WinSystemServiceTerminated">
+			<Criteria CODE="Windows_System_1004"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>	
+		<EventHandlingEntry name="WinSystemDiskFull">
+			<Criteria CODE="Windows_System_1005"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>		
+		<EventHandlingEntry name="WinSystemLegatoFailover">
+			<Criteria CODE="Windows_System_1006"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>		
+		<EventHandlingEntry name="WinSystemDriverOffline">
+			<Criteria CODE="Windows_System_1007"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>					
+		<EventHandlingEntry name="WinSystemDriverConnectToNode">
+			<Criteria CODE="Windows_System_1008"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>
+		<EventHandlingEntry name="WinSystemMSSQLServerCrash">
+			<Criteria CODE="Monitor_Alert_1014"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>	
+		<EventHandlingEntry name="WinApplicationServiceCrash">
+			<Criteria CODE="Windows_Application_1001"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>
+		
+	</EventHandling>	
+</EventHandlingConfiguration>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ConfDefRoot AppName="DOD" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="c:\data\beaf\ConfDefine.xsd">
+	<ConfNode Name="DCAPortConfiguration" KeyType="1" EditLevel="0" HasDynamicChild="false" VisibelLevel="3" IsSelectable="false" IsRequired="false" IsNeedRestart="false" NameDisplay="DOD_200001">
+		<ConfItem Name="QueueName" KeyType="2" EditLevel="2" HasDynamicChild="false" VisibelLevel="3" IsSelectable="false" IsRequired="true" IsNeedRestart="false" DataType="4" NameDisplay="DOD_200019"/>
+		<ConfNode Name="DODQueue" KeyType="1" EditLevel="0" HasDynamicChild="true" VisibelLevel="3" IsSelectable="false" IsRequired="false" IsNeedRestart="false" NameDisplay="DOD_200028">
+			<ConfNode Name="*" KeyType="1" EditLevel="2" HasDynamicChild="false" VisibelLevel="3" IsSelectable="false" IsRequired="false" IsNeedRestart="false" NameDisplay="">
+				<ConfItem Name="Priority" KeyType="2" EditLevel="2" DefaultValue="" HasDynamicChild="false" VisibelLevel="3" IsSelectable="false" IsRequired="true" IsNeedRestart="false" DataType="4" NameDisplay="DOD_200029"/>
+				<ConfItem Name="Name" KeyType="2" EditLevel="2" DefaultValue="" HasDynamicChild="false" VisibelLevel="3" IsSelectable="false" IsRequired="true" IsNeedRestart="false" DataType="4" NameDisplay="DOD_200030"/>
+			</ConfNode>
+		</ConfNode>
+		<ConfItem Name="DataTypeWithInitial" KeyType="2" EditLevel="2" HasDynamicChild="false" VisibelLevel="3" IsSelectable="false" IsRequired="true" IsNeedRestart="false" DataType="4" NameDisplay="DOD_200027"/>
+		<ConfNode Name="Port" KeyType="1" EditLevel="0" HasDynamicChild="true" VisibelLevel="3" IsSelectable="false" IsRequired="false" IsNeedRestart="false" NameDisplay="DOD_200002">
+			<ConfNode Name="*" KeyType="1" EditLevel="2" HasDynamicChild="false" VisibelLevel="3" IsSelectable="false" IsRequired="false" IsNeedRestart="false" NameDisplay="">
+				<ConfItem Name="PMTPID" KeyType="2" EditLevel="2" HasDynamicChild="false" VisibelLevel="3" IsSelectable="false" IsRequired="true" IsNeedRestart="false" DataType="1" NameDisplay="DOD_200003"/>
+				<ConfItem Name="TotalRate" KeyType="2" EditLevel="2" HasDynamicChild="false" VisibelLevel="3" IsSelectable="false" IsRequired="true" IsNeedRestart="false" DataType="1" NameDisplay="DOD_200004"/>
+				<ConfItem Name="GroupID" KeyType="2" EditLevel="2" HasDynamicChild="false" VisibelLevel="3" IsSelectable="false" IsRequired="true" IsNeedRestart="false" DataType="1" NameDisplay="DOD_200005"/>
+				<ConfNode Name="IPPort" KeyType="1" EditLevel="0" HasDynamicChild="true" VisibelLevel="3" IsSelectable="false" IsRequired="false" IsNeedRestart="false" NameDisplay="DOD_200006">
+					<ConfNode Name="*" KeyType="1" EditLevel="2" HasDynamicChild="false" VisibelLevel="3" IsSelectable="false" IsRequired="false" IsNeedRestart="false" NameDisplay="">
+						<ConfItem Name="IPAddress" KeyType="2" EditLevel="2" DefaultValue="192.168.80.9" HasDynamicChild="false" VisibelLevel="3" IsSelectable="false" IsRequired="true" IsNeedRestart="false" DataType="4" NameDisplay="DOD_200008"/>
+						<ConfItem Name="IPPort" KeyType="2" EditLevel="2" DefaultValue="2000" HasDynamicChild="false" VisibelLevel="3" IsSelectable="false" IsRequired="true" IsNeedRestart="false" DataType="1" NameDisplay="DOD_200009"/>
+						<ConfItem Name="SendType" KeyType="2" EditLevel="2" DefaultValue="1" HasDynamicChild="false" VisibelLevel="3" IsSelectable="false" IsRequired="true" IsNeedRestart="false" DataType="1" NameDisplay="DOD_200010"/>
+					</ConfNode>
+				</ConfNode>
+				<ConfNode Name="Channel" KeyType="1" EditLevel="0" HasDynamicChild="true" VisibelLevel="3" IsSelectable="false" IsRequired="false" IsNeedRestart="false" NameDisplay="DOD_200007">
+					<ConfNode Name="*" KeyType="1" EditLevel="2" HasDynamicChild="false" VisibelLevel="3" IsSelectable="false" IsRequired="false" IsNeedRestart="false" NameDisplay="">
+						<ConfItem Name="QueueName" KeyType="2" EditLevel="2" DefaultValue="Queue_" HasDynamicChild="false" VisibelLevel="3" IsSelectable="false" IsRequired="true" IsNeedRestart="false" DataType="4" NameDisplay="DOD_200011"/>
+						<ConfItem Name="DataExchangeType" KeyType="2" EditLevel="2" DefaultValue="1" HasDynamicChild="false" VisibelLevel="3" IsSelectable="false" IsRequired="true" IsNeedRestart="false" DataType="1" NameDisplay="DOD_200020"/>
+						<ConfItem Name="ChannelType" KeyType="2" EditLevel="2" DefaultValue="1" HasDynamicChild="false" VisibelLevel="3" IsSelectable="true" IsRequired="true" IsNeedRestart="false" DataType="1" NameDisplay="DOD_200012">
+							<ValueDictionary Value="0" Display="Single Sub Channel"/>
+							<ValueDictionary Value="1" Display="Multi Sub Channel"/>
+						</ConfItem>
+						<ConfItem Name="StreamCount" KeyType="2" EditLevel="2" DefaultValue="2" HasDynamicChild="false" VisibelLevel="3" IsSelectable="false" IsRequired="true" IsNeedRestart="false" DataType="1" NameDisplay="DOD_200021"/>
+						<ConfItem Name="DataType" KeyType="2" EditLevel="2" DefaultValue="13" HasDynamicChild="false" VisibelLevel="3" IsSelectable="false" IsRequired="true" IsNeedRestart="false" DataType="4" NameDisplay="DOD_200013"/>
+						<ConfItem Name="MessageCode" KeyType="2" EditLevel="2" DefaultValue="1899" HasDynamicChild="false" VisibelLevel="3" IsSelectable="false" IsRequired="false" IsNeedRestart="false" DataType="1" NameDisplay="DOD_200023"/>
+						<ConfItem Name="StreamID" KeyType="2" EditLevel="2" DefaultValue="81" HasDynamicChild="false" VisibelLevel="3" IsSelectable="false" IsRequired="true" IsNeedRestart="false" DataType="1" NameDisplay="DOD_200014"/>
+						<ConfItem Name="StreamType" KeyType="2" EditLevel="2" DefaultValue="124" HasDynamicChild="false" VisibelLevel="3" IsSelectable="false" IsRequired="true" IsNeedRestart="false" DataType="1" NameDisplay="DOD_200015"/>
+						<ConfItem Name="ChannelRate" KeyType="2" EditLevel="2" DefaultValue="300" HasDynamicChild="false" VisibelLevel="3" IsSelectable="false" IsRequired="true" IsNeedRestart="false" DataType="1" NameDisplay="DOD_200016"/>
+						<ConfItem Name="Tag" KeyType="2" EditLevel="2" DefaultValue="abc" HasDynamicChild="false" VisibelLevel="3" IsSelectable="false" IsRequired="true" IsNeedRestart="false" DataType="4" NameDisplay="DOD_200017"/>
+						<ConfItem Name="Encrypted" KeyType="2" EditLevel="2" DefaultValue="0" HasDynamicChild="false" VisibelLevel="3" IsSelectable="true" IsRequired="true" IsNeedRestart="false" DataType="4" NameDisplay="DOD_200018">
+							<ValueDictionary Value="0" Display="No Encrypted"/>
+							<ValueDictionary Value="1" Display="Normal Encrypted"/>
+							<ValueDictionary Value="2" Display="Simple Encrypted"/>
+							<ValueDictionary Value="4" Display="Compressed"/>
+							<ValueDictionary Value="5" Display="Normal Encrypted and Compressd"/>
+							<ValueDictionary Value="6" Display="Simple Encrypted and Compressd"/>
+						</ConfItem>
+						<ConfItem Name="RepeatTime" KeyType="2" EditLevel="2" DefaultValue="0" HasDynamicChild="false" VisibelLevel="3" IsSelectable="false" IsRequired="true" IsNeedRestart="false" DataType="1" NameDisplay="DOD_200026"/>
+						<ConfItem Name="SendWithDestination" KeyType="2" EditLevel="2" DefaultValue="0" HasDynamicChild="false" VisibelLevel="3" IsSelectable="true" IsRequired="true" IsNeedRestart="false" DataType="1" NameDisplay="DOD_200022">
+							<ValueDictionary Value="0" Display="Common"/>
+							<ValueDictionary Value="1" Display="With Destination ID"/>
+						</ConfItem>
+						<ConfItem Name="SendMsgDataType" KeyType="2" EditLevel="2" DefaultValue="0" HasDynamicChild="false" VisibelLevel="3" IsSelectable="false" IsRequired="true" IsNeedRestart="false" DataType="4" NameDisplay="DOD_200024"/>
+						<ConfItem Name="SendMsgExpiredTime" KeyType="2" EditLevel="2" DefaultValue="500" HasDynamicChild="false" VisibelLevel="3" IsSelectable="false" IsRequired="true" IsNeedRestart="false" DataType="1" NameDisplay="DOD_200025"/>
+					</ConfNode>
+				</ConfNode>
+			</ConfNode>
+		</ConfNode>
+	</ConfNode>
+</ConfDefRoot>

@@ -1,0 +1,12 @@
+<DSAConfiguration>
+	<LocalMachine IPAddress="192.168.80.1" IPPort="12345"/>
+	<DODDeviceController>
+		<DODCard CardID="0" CardNumber="1" CardDesc="100M" >
+			<DODIPPort IPAddress="192.168.80.81" IPPort="4001"/>
+		</DODCard>
+		<DODPort DefaultPMTID="32" DefaultTotalBitRate="1000000" DefaultTmpPath="D:\temp"/>
+		<DODChannelDefault ChannelNumber="1">
+			<DODChannel ChannelType="1" StreamID="33" RepeatTime="1" Tag="HIE" BitRate="500000" BeDetect="true" BeDetectInterval="5" BeEncrypted="0"/>
+		</DODChannelDefault>
+	</DODDeviceController>
+</DSAConfiguration>

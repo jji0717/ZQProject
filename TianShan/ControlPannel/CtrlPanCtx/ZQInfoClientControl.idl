@@ -1,0 +1,50 @@
+// ZQInfoClientControl.idl : IDL source for ZQInfoClientControl.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (ZQInfoClientControl.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+#include "olectl.h"
+	[
+		object,
+		uuid(8A1FDC95-BD35-4DE9-B981-F6B7E208466A),
+		dual,
+		helpstring("IZQInfoClientCtrl Interface"),
+		pointer_default(unique)
+	]
+	interface IZQInfoClientCtrl : IDispatch
+	{
+	};
+
+[
+	uuid(765804A9-A268-450A-8676-1BC63F3A52F0),
+	version(1.0),
+	helpstring("ZQInfoClientControl 1.0 Type Library")
+]
+library ZQINFOCLIENTCONTROLLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	[
+		uuid(80D68036-F700-43FF-B2F8-127A2925095F),
+		helpstring("_IZQInfoClientCtrlEvents Interface")
+	]
+	dispinterface _IZQInfoClientCtrlEvents
+	{
+		properties:
+		methods:
+	};
+
+	[
+		uuid(D90C9F15-C266-4B36-81C6-29D624991162),
+		helpstring("ZQInfoClientCtrl Class")
+	]
+	coclass ZQInfoClientCtrl
+	{
+		[default] interface IZQInfoClientCtrl;
+		[default, source] dispinterface _IZQInfoClientCtrlEvents;
+	};
+};

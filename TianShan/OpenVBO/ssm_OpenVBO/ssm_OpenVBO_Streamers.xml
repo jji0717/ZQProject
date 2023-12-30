@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Configurations on StreamingResource:
+       attributes:
+         enableWarmup - if this configuration is turned on(set it to 1), 
+                        ssm_OpenVBO will connect to streamer when it startup
+                  		turn it off if you do not want it to connect to streamer when plugin startup
+         retryCount - [0, 100] the max number of the retries if failed to setup streams
+         maxPenaltyValue - [0, 10000] the penalty to apply if failed to setup a stream
+         replicaUpdateTimeout - in msec, to specify how often the StreamService should report the status of replica
+         -->
+<StreamingResource enableWarmup="1" retryCount="0" maxPenaltyValue="2" replicaUpdateTimeout="60" replicaUpdateInterval="60">
+    <!-- Configurations on streamer:
+               attributes:
+                 netId            - the netId of streamer aggregated by the ssm_OpenVBO
+                 serviceEdnpoint  - endpoint to the StreamsService that controls this Streamer
+                 volume           - to indicate the local volume that this 
+                 totalBW          - total bandwidth in Kbps that this Streamer can supply
+                 maxStream        - max stream count that this Streamer can supply
+                 importChannel    - name of importChannel thru that this streamer can cache the contents from a remote storage
+             -->
+    <Streamer source="10.15.10.50" netId="SEACnnnnn-N0/Spigot00" serviceEndpoint="StreamSmith:tcp -h SEACnnnnn-N0 -p 10700" volume="CL2/*" totalBW="700000000" maxStream="10000" importChannel="SEACnnnnn-Ny_PG" adminEnabled ="1" />
+    <Streamer source="10.15.10.50" netId="SEACnnnnn-N0/Spigot01" serviceEndpoint="StreamSmith:tcp -h SEACnnnnn-N0 -p 10700" volume="mjtest/*" totalBW="375000000" maxStream="10000" importChannel="SEACnnnnn-Ny_PG" adminEnabled="1" />
+</StreamingResource>

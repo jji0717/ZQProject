@@ -1,0 +1,66 @@
+; Scorpio automated test template (.itv format)
+
+[version]
+Version_Major=1
+Version_Minor=4
+[uid]
+100080001=1,SeaChange Movies On Demand
+200080001=2,Itv  Media Cluster Explained
+300080001=3,Itv  Media Cluster Explained #1
+[metadata_200080001]
+BillingId=100080001,4,
+BillingName=100080001,4,
+BoxOffice=100080001,1,0
+ContentProvider=100080001,4,
+ContractName=100080001,4,
+Genre=100080001,0,Classic
+Language=100080001,0,English
+Length=100080001,1,15
+LongDescription=100080001,4,Scorpio Long Description
+PosterBoard=100080001,4,
+PreviewPeriod=100080001,1,0
+Rating=100080001,0,G
+RentalTime=100080001,2,4
+RentalType=100080001,1,1
+RoyaltyFlatRate2=100080001,3,0
+RoyaltyMinimum2=100080001,3,0
+RoyaltyPercent=100080001,1,0
+ServiceCode=100080001,0,Free,0.00,0.00
+VCRCommandCharge=100080001,0,Free,0.00,0.00
+VCRCommandsAllowed=100080001,7,Yes
+ViewingTime=100080001,2,0
+ViewingType=100080001,1,3
+YearOfRelease=100080001,1,2001
+ActivateTime=0,5,01/01/90 00:00:00
+AnalogCopy=0,1,2
+DeactivateTime=0,5,07/29/02 00:00:00
+Description=0,4,Scorpio Asset
+PlayBandwidth=0,1,6881600
+Priority=0,1,50
+Provider=0,4,HBO
+PsClusterUseInfo2016=0,1,17
+Scrambled=0,7,No
+UsageClass=0,0,Recent Hits,282828282828282828282828282828282828282828282828282828282828282828282828282828282828282828282828282828282828282828282828282828282828282828282828282828282828282828282828
+[folder_200080001]
+\SeaChange Movies On Demand\Scorpio=
+[component_200080001]
+300080001=1
+[metadata_300080001]
+ActiveDate=0,5,01/30/02 00:00:00
+BitRate=0,1,6881600
+ContentType=0,1,1
+ConversionType=0,1,1
+DeactiveDate=0,5,07/29/02 00:00:00
+DeleteDate=0,5,10/27/02 00:00:00
+Description=0,4,Scorpio Asset Element
+FileName=0,4,MEDIA_CLUSTER.MPG
+FilePath=0,4,\\192.169.2.11\c$\Source\Media_Cluster_Video
+FileSize=0,3,290563588
+PlayTime=0,1,337
+PlayTimeFraction=0,1,1
+PostEncodingQA=0,1,1
+PostLoadingQA=0,1,1
+Priority=0,1,50
+Provider=0,4,HBO
+ReleaseDate=0,5,01/30/02 00:00:00
+UploadDate=0,5,01/30/02 00:00:00

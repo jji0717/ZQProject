@@ -1,0 +1,307 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Chinese (P.R.C.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 4, 2\r\n"
+    "#pragma code_page(936)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\ChPub.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""l.chs\\afxres.rc""          // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\ChPub.ico"
+IDI_ADD                 ICON    DISCARDABLE     "res\\add_32.ico"
+IDI_EDIT                ICON    DISCARDABLE     "res\\edit.ico"
+IDI_INFO                ICON    DISCARDABLE     "res\\info.ico"
+IDI_REFRESH             ICON    DISCARDABLE     "res\\refresh.ico"
+IDI_REMOVE              ICON    DISCARDABLE     "res\\remove.ico"
+IDI_OK                  ICON    DISCARDABLE     "res\\ok.ico"
+IDI_CANCEL              ICON    DISCARDABLE     "res\\cancel.ico"
+IDI_CONNECT             ICON    DISCARDABLE     "res\\connect.ico"
+IDI_DISCONNECT          ICON    DISCARDABLE     "res\\disconnect.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 235, 56
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION
+CAPTION "About..."
+FONT 9, "宋体"
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,21,21
+    LTEXT           "ChPub 1.0 版",IDC_STATIC,40,10,119,8,SS_NOPREFIX
+    LTEXT           "版权所有 (C) 2006",IDC_STATIC,40,25,119,8
+    DEFPUSHBUTTON   "确定",IDOK,178,7,50,14,WS_GROUP
+END
+
+IDD_CHPUB_DIALOG DIALOGEX 0, 0, 296, 205
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "Channel Publisher Test Util"
+FONT 9, "宋体", 0, 0, 0x1
+BEGIN
+    PUSHBUTTON      "",IDC_CONNECT,7,7,31,29,BS_FLAT
+    PUSHBUTTON      "",IDC_REFRESH,7,39,31,29,BS_FLAT
+    PUSHBUTTON      "",IDC_ADD,7,71,31,29,BS_FLAT
+    PUSHBUTTON      "",IDC_EDIT,7,103,31,29,BS_FLAT
+    PUSHBUTTON      "",IDC_REMOVE,7,135,31,29,BS_FLAT
+    PUSHBUTTON      "",IDC_INFO,7,167,31,29,BS_FLAT
+    CONTROL         "Tree1",IDC_TREE,"SysTreeView32",TVS_HASBUTTONS | 
+                    TVS_HASLINES | TVS_LINESATROOT | TVS_SHOWSELALWAYS | 
+                    WS_TABSTOP,45,7,244,192
+END
+
+IDD_CONNECT DIALOG DISCARDABLE  0, 0, 197, 73
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION
+CAPTION "Connect"
+FONT 12, "System"
+BEGIN
+    DEFPUSHBUTTON   "",IDOK,164,11,26,25
+    PUSHBUTTON      "",IDCANCEL,164,40,26,25
+    EDITTEXT        IDC_ENDPOINT,10,34,143,12,ES_AUTOHSCROLL
+    LTEXT           "server endpoint",IDC_STATIC,11,17,143,8
+    GROUPBOX        "",IDC_STATIC,7,7,152,58
+END
+
+IDD_CHANNEL DIALOG DISCARDABLE  0, 0, 187, 79
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION
+CAPTION "Channel"
+FONT 10, "System"
+BEGIN
+    DEFPUSHBUTTON   "",IDOK,152,11,28,25
+    PUSHBUTTON      "",IDCANCEL,152,47,28,25
+    EDITTEXT        IDC_NAME,9,25,136,12,ES_AUTOHSCROLL
+    GROUPBOX        "",IDC_STATIC,7,7,144,65
+    EDITTEXT        IDC_DESC,9,55,136,12,ES_AUTOHSCROLL
+    LTEXT           "channel name",IDC_STATIC1,9,14,105,10
+    LTEXT           "channel description",IDC_STATIC2,9,43,105,10
+END
+
+IDD_ITEM DIALOG DISCARDABLE  0, 0, 218, 166
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION
+CAPTION "Program Item"
+FONT 10, "System"
+BEGIN
+    DEFPUSHBUTTON   "",IDOK,183,11,28,25
+    PUSHBUTTON      "",IDCANCEL,183,42,28,25
+    EDITTEXT        IDC_CONTENT,9,25,155,12,ES_AUTOHSCROLL
+    GROUPBOX        "",IDC_STATIC,7,7,171,152
+    EDITTEXT        IDC_START,9,55,73,12,ES_AUTOHSCROLL
+    LTEXT           "content name",IDC_STATIC1,9,14,105,10
+    LTEXT           "start time (GMT)",IDC_STATIC2,9,43,62,10
+    EDITTEXT        IDC_EXPIRATION,97,55,67,12,ES_AUTOHSCROLL
+    LTEXT           "expiration",IDC_STATIC3,97,43,62,10
+    LTEXT           "inTimeOffset",IDC_STATIC,9,101,62,10
+    LTEXT           "forceNormalSpeed",IDC_STATIC,97,72,62,10
+    LTEXT           "playable",IDC_STATIC,9,72,62,10
+    LTEXT           "outTimeOffset",IDC_STATIC,97,101,62,10
+    LTEXT           "spliceIn",IDC_STATIC,9,130,62,10
+    LTEXT           "spliceOut",IDC_STATIC,97,130,62,10
+    EDITTEXT        IDC_PLAYABLE,9,84,73,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_FORCENORMALSPEED,97,84,67,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_INTIMEOFFSET,9,113,73,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_OUTTIMEOFFSET,97,113,67,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_SPLICEIN,9,142,73,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_SPLICEOUT,97,142,67,12,ES_AUTOHSCROLL
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080404B0"
+        BEGIN
+            VALUE "CompanyName", "\0"
+            VALUE "FileDescription", "ChPub Microsoft 基础类应用程序\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "ChPub\0"
+            VALUE "LegalCopyright", "版权所有 (C) 2006\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "ChPub.EXE\0"
+            VALUE "ProductName", "ChPub 应用程序\0"
+            VALUE "ProductVersion", "1, 0, 0, 1\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x804, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 228
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 49
+    END
+
+    IDD_CHPUB_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 289
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 199
+    END
+
+    IDD_CONNECT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 190
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 66
+    END
+
+    IDD_CHANNEL, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 180
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 72
+    END
+
+    IDD_ITEM, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 211
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 159
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_LIST3               BITMAP  DISCARDABLE     "res\\item.bmp"
+IDB_LIST2               BITMAP  DISCARDABLE     "res\\channel.bmp"
+IDB_LIST1               BITMAP  DISCARDABLE     "res\\home.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ABOUTBOX            "关于 ChPub(&A)..."
+END
+
+#endif    // Chinese (P.R.C.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE 4, 2
+#pragma code_page(936)
+#endif //_WIN32
+#include "res\ChPub.rc2"  // non-Microsoft Visual C++ edited resources
+#include "l.chs\afxres.rc"          // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

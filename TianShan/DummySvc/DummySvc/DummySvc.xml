@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TianShan>
+	<Definitions src="TianShanDef.xml" />
+	
+	<!-- default configurations for the services of this TianShan deployment -->
+	<default>
+		<!--CrashDump can help devoloper diagnose the program when it crashed if you set enable to "1" you must
+		    make sure that the path is accessible
+		     attributes:
+			path   - crashdump path
+			enabled - 1 to enable crashDump   
+		 
+		<CrashDump path="${TianShanCrashDumpDir}" enabled="0"/>
+		-->
+		<!-- The Ice trace log setting for all the services of this TianShan deployment.
+		     attributes:
+		       enabled       - 1 if the Ice trace is enabled, default "0"
+		       logfileSuffix - a suffix of the log filename, i.e. the service Weiwoo's main log file will
+		                       be "Weiwoo.log". With a suffix "_ice.log", the ICE trace will be in a
+		                       separate logfile "Weiwoo_ice.log" in the same directory
+		       level         - the log level of the ice trace log
+		       size          - the size that this trace log must roll
+		       fileCount	  - the max file count of this trace log roll
+		
+		<IceTrace enabled="1" level="7" size="10240000" fileCount="1"/>
+	-->
+		<!-- The default folder where the services of this TianShan deployment accesses their local
+		     databases if it is not defined by their individual configurations
+		     attributes:
+		       path          - path to the location of database directory, default "../data/"
+		       runtimePath   - path to keep the runtime data, default as the value of path
+		-->
+		<Database path="${TianShanDatabaseDir}" runtimePath="${TianShanDatabaseDir}\runtime" />
+		
+		<!-- The IceLog of DummySvc 
+					path					- path to the log directory , default is  "${TianShanLogDir}/DummySvcIce.log"
+		-->
+		<IceLog path="${TianShanLogDir}/DummySvcIce.log" level="6"/>
+	
+	</default>
+  <DummySvc>
+  	<!-- The local bind endpoint that the ContentProvisionEngine service is serving on
+		     attributes:
+		       endpoint      - the bind endpoint of this ContentProvisionEngine service
+		       dispatchSize  - the initial thread pool size to dispatch client requests, values in the range 4-20 are acceptable
+		       dispatchMax   - the max thread pool size to dispatch client requests
+		-->
+    <Bind endpoint="tcp -h ${ServerNetIf} -p  21000" />
+    
+    <RandomTime  pausemax="50" pausemin="10" />
+    
+    <Service replicaSubscriberEndpoint="" eventChannel="" />
+    
+    <NetId nodeId="TianShanDummySvcTest">
+    	<streamer name="STREAMER0" />
+    	<streamer name="STREAMER1" /> 
+    </NetId>
+		
+		<TimerWatch targettime="1000"/>    
+ 
+		<IceProperties>
+				<!--  the following are performance tuning parameters, please don't modify if you are not an expert at them 
+				--> 
+				<prop name="ThreadPool.Size"                    value="80" />
+		  	<prop name="Ice.Trace.Network"                  value="1"/>
+		  	<prop name="Ice.Trace.Protocol"                 value="0"/>
+		  	<prop name="Ice.Trace.Retry"                    value="1"/>
+		  	<prop name="Ice.Trace.Slicing"                  value="0"/>
+		  	<prop name="Ice.Warn.Connections"               value="1"/>
+		  	<prop name="Freeze.Warn.Deadlocks"              value="1"/>
+		  	<prop name="Freeze.Trace.Map"                   value="0"/>
+		  	<prop name="Freeze.Trace.DbEnv"                 value="2"/>
+		  	<prop name="Freeze.Trace.Evictor"               value="0"/>
+		  	<prop name="Ice.ThreadPool.Server.Size"               value="60"/>
+				<!--  <prop name=""                  value=""/>-->
+		</IceProperties>
+	</DummySvc>
+</TianShan>

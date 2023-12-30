@@ -1,0 +1,57 @@
+#! /bin/sh
+#
+# SeaChange Monitor  System Health Monitoring Daemon
+# Copyright (C) 2008 SeaChange International, inc.  All rights reserved.
+#
+# chkconfig: 235 99 01
+# description: SeaChange Server Daemon -- used to monitor
+# processname: seamonlx
+
+SEAMONLX_BIN=/usr/local/seamonlx/bin/seamonlx
+
+# Source function library
+. /etc/rc.d/init.d/functions
+
+    RETVAL=0
+    
+    prog=seamonlx
+    
+    case "$1" in
+	start)
+	    echo -n $"Starting $prog: "
+	    [ -f /var/lock/subsys/${prog} ] && exit 0
+	    daemon $SEAMONLX_BIN 
+	    touch /var/lock/subsys/${prog}
+	    echo
+#
+# check to see if seamonlx daemon started correctly
+# if $a is zero length echo failure
+#
+#
+	    a=`pidof ${prog}`
+	    if [ -z $a ]
+            then
+                echo_failure
+            fi
+	    exit 0
+	    ;;
+	stop)
+	    echo -n $"Shutting down $prog: "
+	    killproc $SEAMONLX_BIN
+	    rm -f /var/lock/subsys/${prog}
+	    echo
+	    ;;
+	restart)
+	    $0 stop
+	    $0 start
+	    ;;
+	status)
+	    status $SEAMONLX_BIN
+	    RETVAL=$?
+	    ;;
+	*)
+	    echo $"Usage: $0 {start|stop|restart|status}"
+	    RETVAL=1
+    esac
+    
+    exit $RETVAL

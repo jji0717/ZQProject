@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TianShan>
+	<Definitions src="TianShanDef.xml">
+	</Definitions>
+	<EventRuleEngine>
+		<!-- Specify crashdump settings -->
+		<CrashDump path="${TianShanCrashDumpDir}" fullDump="1"/>					
+		
+		<!-- ThreadPoolSize, default: 20 -->
+		<ThreadPool size="20"/>
+
+		<!-- 
+		depth: max depth of rule engine,default: 5 
+		actionPath: path of action dlls to load
+		configPath: rule config path
+		-->
+		<Rule depth="5" actionPath="${TianShanHomeDir}\modules" configPath="${TianShanHomeDir}\etc\EventRules.xml"/>
+		
+		<!--
+		EventChannelEndPoint: the EventChannel service's endpoint, format: "tcp -h x.x.x.x -p 11000"
+		listenEndpoint: the local ip and port to receive event from EventChannel, format: "tcp -h x.x.x.x -p 10000"
+		runtimeData: new added-->
+		<TianShanEvents  EventChannelEndPoint="${PrimeEventChannelEndpoint}" 
+				listenEndpoint="tcp -h ${ServerNetIf} -p 10902" 
+				runtimeData="${TianShanDatabaseDir}\runtime"/>
+				
+		<Events>
+			<topic name="TianShan/Event/Streamer/StreamProgress"/>
+			<topic name="TianShan/Event/Streamer/Stream"/>
+			<topic name="TianShan/Event/Streamer/Playlist"/>
+			<topic name="TianShan/Event/SRM/Session"/>
+			<topic name="TianShan/Event/Generic"/>
+		</Events>		
+
+		<!-- Ice properties -->
+		<IceProperties>			
+			<!--  the following are performance tuning parameters, please don't modify if you are not an expert at them 
+			--> 
+			<prop name="Ice.Trace.Network"                    value="0" />
+			<prop name="Ice.Trace.Protocol"                   value="0" />
+			<prop name="Ice.Trace.Retry"                      value="1" />
+			<prop name="Ice.Warn.Connections"                 value="1" />
+			<prop name="Ice.Warn.Endpoints"                   value="1" />
+			<prop name="Ice.Logger.Timestamp"                 value="1" />
+			<prop name="Ice.Override.ConnectTimeout"          value="5000"/>
+			<prop name="Ice.Override.Timeout"                 value="15000"/>
+			<prop name="Ice.ThreadPool.Server.Size"           value="5"/>
+			<prop name="Ice.ThreadPool.Server.SizeMax"        value="20"/>
+			<prop name="Ice.ThreadPool.Client.Size"           value="5"/>
+			<prop name="Ice.ThreadPool.Client.SizeMax"        value="30"/>
+		</IceProperties>	
+	</EventRuleEngine>	
+</TianShan>

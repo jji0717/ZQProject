@@ -1,0 +1,204 @@
+<TianShan>
+
+	<!-- default configurations for the services of this TianShan deployment -->
+	<default>
+	
+		<!-- The IceStorm service where the services of this TianShan deployment will deliver events to.
+		     attributes:
+		       endpoint - the ICE endpoint to the IceStorm service
+		-->
+		<IceStorm endpoint="tcp -h {IceStormIP} -p 10000"/>
+
+		<!-- The Ice trace log setting for all the services of this TianShan deployment.
+		     attributes:
+		       enabled       - 1 if the Ice trace is enabled, default "0"
+		       logfileSuffix - a suffix of the log filename, i.e. the service Weiwoo's main log file will
+		                       be "Weiwoo.log". With a suffix "_ice.log", the ICE trace will be in a
+		                       separate logfile "Weiwoo_ice.log" in the same directory
+		       level         - the log level of the ice trace log
+		       size          - the size that this trace log must roll
+		-->
+		<IceTrace enabled="1" level="7" size="10240000" />
+
+		<!-- Additional Ice properties if there is any, <prop /> is its sub element
+		     attrib of <prop />:
+		        name         == the name of the Ice property
+		        value        == the value of the Ice property
+		-->
+		<IceProperties>
+			<!-- the following are performance tuning parameters, please don't modify if you are not an expert at them 
+			-->
+			<serviceProperty name="Ice.Trace.Network"                value="1" />
+			<serviceProperty name="Ice.Trace.Protocol"               value="0" />
+    		        <serviceProperty name="Ice.Trace.Retry"                  value="1" />
+			<serviceProperty name="Ice.Trace.Slicing"                value="0" />
+			<serviceProperty name="Ice.Warn.Connections"             value="1" />
+			<serviceProperty name="Ice.Warn.Endpoints"               value="1" />
+			<serviceProperty name="Ice.ACM.Client"                   value="0" />
+			<serviceProperty name="Ice.Override.ConnectTimeout"      value="5000" />
+			<serviceProperty name="Ice.Override.Timeout"             value="10000" />
+			<serviceProperty name="Freeze.Warn.Deadlocks"            value="1" />
+			<serviceProperty name="Freeze.Trace.Map"                 value="0" />
+			<serviceProperty name="Freeze.Trace.DbEnv"               value="2" />
+			<serviceProperty name="Freeze.Trace.Evictor"             value="0" />
+			<serviceProperty name="PLInfoStore.ThreadPool.Size"      value="50"/>
+			<serviceProperty name="PLInfoStore.ThreadPool.SizeMax"   value="300"/>
+		</IceProperties>
+		
+		<!-- The default folder where the services of this TianShan deployment accesses their local
+		     databases if it is not defined by their individual configurations
+		     attributes:
+		       path          == path to the location of database directory, default "../data/"
+		-->
+		<DatabaseFolder	path="C:\TianShan\data"/>
+		
+		<!--
+			CrashDump can help devoloper diagnose bug when service terminate abnormally,
+			if you enable crashdump as set enableDump=="1" you must make sure the path is accessible
+		-->
+		<CrashDump path="C:\TianShan\CrashDump" enableDump="1"/>
+	</default>
+	<StreamSmith>
+		<Service>
+			<!--every single streamsmith service msut have a unique id and no space is allowed in the unique id.
+				and serviceEndpoint 
+			-->
+			<StreamSmithService UniqueID="10.15.10.250" ServiceEndPoint="tcp -h 10.15.10.250 -p 10000" adapterThreadPool="10"/>
+			
+			<!--if this value is larger than 0,playlist will be change into normal speed when it is at the sepcified time before end-->
+			<ForceNormalSpeed timeBeforeEnd="15000"/>		
+			
+			<!--
+				StreamSmith accept Ice remote API call,but it need a super plugin's help,the plugin is ssm_tianshan.dll 
+				fullPath ==superplugin's full path
+				enable   ==enable superplugin or not,1 for enable 0 for diable
+				eventSinkTimeout == eventSink timeout in millisecond 
+				enableShowDetail == if this config is 1,eventSink information will appear in log file
+			-->
+			<SuperPlugin FullPath="C:\TianShan\modules\ssm_tianshan.dll" enable="1" 
+							eventSinkTimeout="15000" enableShowDetail="1"/>
+			
+			<!--Service Thread pool's count 10 ~ 30 is acceptable-->
+			<ServiceThread count="10"/>
+			<!--
+			pendingRequestSize:how many pending request is acceptable for server core
+								if this value is 0,pending request is unlimited.
+								or else if current pending request is bigger than the configuration value,
+								client request will be rejected with code 503
+			-->
+			<pendingRequestSize count="2"/>
+			<!--
+				maxWaitTimeToStartFirstItem:This configuration is only used when the first item has a critical start time,
+											When play command comes,streamsmith will pause a while to meet the critical start time
+											but if the difference between current time and critical start time is bigger than the config,
+											play commands will be rejected				
+			-->
+			<maxWaitTimeToStartFirstItem interval="3000"/>
+			<!--
+			ResourceManager is used when StreamSmith is running in Single Node mode
+			-->
+			<ResourceConfig fileName=""/>
+			
+			<!--
+			This config is used to optimize service
+			-->
+			<KillerWaitInterlval interval="150000"/>
+			
+			<!--
+			Playlist will automatic destroy by it's not at PLAY statge when time expired.
+			But if 'timeoutOnPause' is set to '1',playlist will not timeout when it's at PAUSE stage
+			timeoutInterval ==timeout interval in millisecond
+			EOTProtectionTime == if seekt to last item ,the timeoffset will be adjusted accroding to EOTProtectionTime
+			-->
+			<playlist timeoutInterval="100000" timeoutOnPause="1" progressEventInterval="30000" EOTProtectionTime="15000"/>
+			
+			<!--
+			StreamSmith need contentStore'help to check the item's attribute .
+			And there are two optional contentStore,StreamSmith will connect to primary when startup,
+			If streamsmith failed to connect to primary,it will connect to secondary automatically.
+			primary   == contentStore's endpoint just like:ContentStore:tcp -h host -p port
+			secondary == contentStore's endpoint just like:ContentStore:tcp -h host -p port
+			NOTE:the two contentStore MUST be NODECONTENTSTORE
+			-->
+			<contentStore primary=""  secondary=""/>
+			<!--
+			pre-encryption data:
+			cycle1 cycle2 freq1 freq2 should be positive number
+			-->
+			<preencryption cycle1="0" freq1="8" cycle2="15000" freq2="8"/>
+			
+			<!--
+			evictorSize:
+				playlistSize:playlist object size.200 ~ 2000 is acceptable
+				itemSize:   item object size: 400 ~ 2000 is acceptable
+			-->
+			<evictorSize playlistSize="200" itemSize="400"/>
+			
+			<!--
+			-->
+			<LogMonitors>
+            			<lmLog name="C:\TianShan\logs\StreamSmith.log" syntax="C:\TianShan\etc\syntax_streamsmith.xml" /> 
+	        	</LogMonitors>
+
+
+		</Service>
+		
+		<Streamer>
+			<!--
+				If StreamSmith is running at Single Node Mode
+				StreamSmith can allocate vtrsm port based on DefaultSpigotID
+				id == -1 for all spigot in current node						
+			 -->			
+			<DefaultSpigotID id="-1"/>
+		</Streamer>
+		
+		<Plugin>
+		<!--
+		StreamSith plugin 's log attribute
+		-->
+			<log level="7" fileSize="12040000" buffer="10240" flushTimeout="2" />
+		</Plugin>
+		
+		<SessionMonitor>
+		<!--
+		SessionMonitor 's log attribute
+		-->
+			<log level="7" fileSize="12040000" buffer="10240" flushTimeout="2" />
+		</SessionMonitor>
+		<ServiceFrame>
+			<serverPort value = "554" enable="1"/>
+			<!--service socket port -->
+			<maxConnection value = "850"/>
+			<!--connection limit -->
+			<isSecure value = "0"/>
+			<threadCount value = "1"/>
+			<!--how many thread to work for receiving client request -->
+			<publicKeyFile value = "server.pem"/>
+			<privateKeyFile value = "server.pem"/>
+			<privateKeyFilePwd value = "xiao"/>
+			<dhParamFile value = "dhParam.pem"/>
+			<randFile value = "rand.pem"/>
+			<debugLevel value="4"/>
+			<!--5 is a default from 1 to 5-->
+			<debugDetail value="3"/>
+			<!--0 is default from 1 to 3-->
+			<idleTimeout value="300000"/>
+			<maxPollTime value="500"/>
+			<sessionTimeout value="3000000"/>
+			<!--
+			maxLen:max message size in byte,if message size exceed this value,it failed to process the request
+			-->
+			<Request  maxLen="8192"/>			
+		</ServiceFrame>
+		<applicationSite>
+			<Application path="basic" handler="MOD"/>
+			<virtualSite name="10.15.10.251">
+				<Application path="basic" handler="MOD"/>
+			</virtualSite>
+			<plugin>
+				<!--module file="c:\rdebug\modules\ssm_zq_lam.dll" configuration="c:\rdebug\etc\lamconf.ini"/-->
+			</plugin>
+		</applicationSite>
+	</StreamSmith>
+
+</TianShan>

@@ -1,0 +1,35 @@
+HKCR
+{
+	AdminControl.AdminCtrl.1 = s 'AdminCtrl Class'
+	{
+		CLSID = s '{85D19CA6-B302-40B0-AB41-4B6B00D277CB}'
+		'Insertable'
+	}
+	AdminControl.AdminCtrl = s 'AdminCtrl Class'
+	{
+		CLSID = s '{85D19CA6-B302-40B0-AB41-4B6B00D277CB}'
+		CurVer = s 'AdminControl.AdminCtrl.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {85D19CA6-B302-40B0-AB41-4B6B00D277CB} = s 'AdminCtrl Class'
+		{
+			ProgID = s 'AdminControl.AdminCtrl.1'
+			VersionIndependentProgID = s 'AdminControl.AdminCtrl'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			ForceRemove 'Control'
+			ForceRemove 'Insertable'
+			ForceRemove 'ToolboxBitmap32' = s '%MODULE%, 101'
+			'MiscStatus' = s '0'
+			{
+			    '1' = s '131473'
+			}
+			'TypeLib' = s '{AEF669AA-DF5E-4FED-A158-C20DF8CCD3AC}'
+			'Version' = s '1.0'
+		}
+	}
+}

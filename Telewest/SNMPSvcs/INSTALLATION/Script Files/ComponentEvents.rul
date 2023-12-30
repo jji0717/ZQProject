@@ -1,0 +1,32 @@
+#include "reg.rul" 
+//---------------------------------------------------------------------------
+// The Installing event is sent after the component Snmp App
+// is installed.
+//---------------------------------------------------------------------------
+ 
+export prototype SnmpApp_Installed();
+function SnmpApp_Installed()
+begin     
+	SetupService(szLocation,
+	   			 szServiceName,
+				 szServicePort,
+			     szServiceShellPort,
+			     szExecutableName,
+			     szAccount,
+	 		     szPassWord,
+				 szDisplayName,
+				 szProductName
+				 );  
+	RegServiceInformation(szServiceName);
+end;
+//---------------------------------------------------------------------------
+// The UnInstalling event is sent just before the component 
+// Snmp App is uninstalled.
+//---------------------------------------------------------------------------
+ 
+export prototype SnmpApp_UnInstalling();
+function SnmpApp_UnInstalling()
+begin                            
+	RegDBSetDefaultRoot (HKEY_LOCAL_MACHINE);     
+    UnInstallService(szLocation, szServiceName);
+end;

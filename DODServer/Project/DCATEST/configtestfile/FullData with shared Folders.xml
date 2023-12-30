@@ -1,0 +1,6 @@
+<DODMessage>
+<DODMessageHeader Time="2006-07-27 14:29:18" MessageCode="3004"/>
+   <DODMessageBody DataType="11" GroupID="0">
+         <FileOperation Root="\\192.168.80.132\SharedDocs\DLL" UpdateMode="0"/>
+            </DODMessageBody>
+   </DODMessage>

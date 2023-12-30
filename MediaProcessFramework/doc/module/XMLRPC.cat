@@ -1,0 +1,2888 @@
+
+(object Petal
+    version    	47
+    _written   	"Rose 8.0.0303.1400"
+    charSet    	134)
+
+(object Class_Category "XMLRPC"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    attributes 	(list Attribute_Set
+	(object Attribute
+	    tool       	"sc"
+	    name       	"SourceControlSpec"
+	    value      	
+|"$/ZQProjs/MediaProcessFramework/doc/module", CYIAAAAA
+	    ))
+    quid       	"4271B2FA0226"
+    visible_categories 	(list visibility_relationship_list
+	(object Visibility_Relationship
+	    quid       	"42732BFD0379"
+	    supplier   	"Logical View::MPF SDK::WorkNode"
+	    quidu      	"4271A94D0092")
+	(object Visibility_Relationship
+	    quid       	"42732C0D005B"
+	    supplier   	"Logical View::MPF SDK::SRM"
+	    quidu      	"4271CCF301B7"))
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "RpcValue"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AppliedPattern"
+		    value      	"none")
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AfxSupportMacro"
+		    value      	""))
+	    quid       	"4271B2FA0228"
+	    operations 	(list Operations
+		(object Operation "GetInst"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	TRUE))
+		    quid       	"4271B2FA0274"
+		    parameters 	(list Parameters
+			(object Parameter ""
+			    quid       	"4271B2FA0275"
+			    type       	"void"))
+		    result     	"XmlRpc::XmlRpcValue* &"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "GetInst"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	TRUE))
+		    quid       	"4271B2FA027E"
+		    stereotype 	"const"
+		    parameters 	(list Parameters
+			(object Parameter ""
+			    quid       	"4271B2FA0289"
+			    type       	"void"))
+		    result     	"const XmlRpc::XmlRpcValue*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "RpcValue"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA028A"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "RpcValue"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA0292"
+		    parameters 	(list Parameters
+			(object Parameter "value"
+			    quid       	"4271B2FA0293"
+			    type       	"bool"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "RpcValue"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA0294"
+		    parameters 	(list Parameters
+			(object Parameter "value"
+			    quid       	"4271B2FA029C"
+			    type       	"int"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "RpcValue"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA029D"
+		    parameters 	(list Parameters
+			(object Parameter "value"
+			    quid       	"4271B2FA029E"
+			    type       	"double"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "RpcValue"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA029F"
+		    parameters 	(list Parameters
+			(object Parameter "value"
+			    quid       	"4271B2FA02A0"
+			    type       	"const char*"
+			    const      	TRUE))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "RpcValue"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA02A1"
+		    parameters 	(list Parameters
+			(object Parameter "value"
+			    quid       	"4271B2FA02A2"
+			    type       	"const tm*"
+			    const      	TRUE))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "RpcValue"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA02A6"
+		    documentation 	"Binary data"
+		    parameters 	(list Parameters
+			(object Parameter "value"
+			    quid       	"4271B2FA02A7"
+			    type       	"void*")
+			(object Parameter "size"
+			    quid       	"4271B2FA02A8"
+			    type       	"int"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "RpcValue"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA02A9"
+		    documentation 	"get data from xml string"
+		    parameters 	(list Parameters
+			(object Parameter "strXml"
+			    quid       	"4271B2FA02AA"
+			    type       	"const char*"
+			    const      	TRUE)
+			(object Parameter "offset"
+			    quid       	"4271B2FA02AB"
+			    type       	"int*"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "RpcValue"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA02AC"
+		    documentation 	"copy constructor"
+		    parameters 	(list Parameters
+			(object Parameter "value"
+			    quid       	"4271B2FA02B0"
+			    type       	"const RpcValue&"
+			    const      	TRUE))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "~RpcValue"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA02B1"
+		    documentation 	"destructor"
+		    stereotype 	"virtual"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "clear"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA02B3"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "operator="
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA02B4"
+		    documentation 	"operator"
+		    parameters 	(list Parameters
+			(object Parameter "rhs"
+			    quid       	"4271B2FA02B5"
+			    type       	"const RpcValue&"
+			    const      	TRUE))
+		    result     	"RpcValue&"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0
+		    quidu      	"4271B2FA0228")
+		(object Operation "operator="
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA02B6"
+		    parameters 	(list Parameters
+			(object Parameter "rhs"
+			    quid       	"4271B2FA02BA"
+			    type       	"int"))
+		    result     	"RpcValue&"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0
+		    quidu      	"4271B2FA0228")
+		(object Operation "operator="
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA02BB"
+		    parameters 	(list Parameters
+			(object Parameter "rhs"
+			    quid       	"4271B2FA02BC"
+			    type       	"double"))
+		    result     	"RpcValue&"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0
+		    quidu      	"4271B2FA0228")
+		(object Operation "operator="
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA02BD"
+		    parameters 	(list Parameters
+			(object Parameter "rhs"
+			    quid       	"4271B2FA02BE"
+			    type       	"const char*"
+			    const      	TRUE))
+		    result     	"RpcValue&"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0
+		    quidu      	"4271B2FA0228")
+		(object Operation "operator=="
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA02BF"
+		    stereotype 	"const"
+		    parameters 	(list Parameters
+			(object Parameter "other"
+			    quid       	"4271B2FA02C4"
+			    type       	"const RpcValue&"
+			    const      	TRUE))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "operator!="
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA02C5"
+		    stereotype 	"const"
+		    parameters 	(list Parameters
+			(object Parameter "other"
+			    quid       	"4271B2FA02C7"
+			    type       	"const RpcValue&"
+			    const      	TRUE))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "operator bool&"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA02C8"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "operator int&"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA02C9"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "operator double&"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA02CA"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "ToString"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA02CB"
+		    parameters 	(list Parameters
+			(object Parameter "strBuffer"
+			    quid       	"4271B2FA02CE"
+			    type       	"char*")
+			(object Parameter "nBufSize"
+			    quid       	"4271B2FA02CF"
+			    type       	"int"))
+		    result     	"char*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "ToBinaryData"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA02D0"
+		    parameters 	(list Parameters
+			(object Parameter "strBuffer"
+			    quid       	"4271B2FA02D1"
+			    type       	"char*")
+			(object Parameter "nBufSize"
+			    quid       	"4271B2FA02D2"
+			    type       	"int"))
+		    result     	"int"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "operator struct tm&"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA02D3"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "operator[]"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA02D4"
+		    stereotype 	"const"
+		    parameters 	(list Parameters
+			(object Parameter "i"
+			    quid       	"4271B2FA02D8"
+			    type       	"int"))
+		    result     	"RpcValue"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0
+		    quidu      	"4271B2FA0228")
+		(object Operation "SetArray"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA02D9"
+		    parameters 	(list Parameters
+			(object Parameter "i"
+			    quid       	"4271B2FA02DA"
+			    type       	"int")
+			(object Parameter "rpc"
+			    quid       	"4271B2FA02DB"
+			    type       	"const RpcValue&"
+			    const      	TRUE))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "operator[]"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA02DC"
+		    parameters 	(list Parameters
+			(object Parameter "key"
+			    quid       	"4271B2FA02DD"
+			    type       	"const char*"
+			    const      	TRUE))
+		    result     	"RpcValue"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0
+		    quidu      	"4271B2FA0228")
+		(object Operation "SetStruct"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA02DE"
+		    parameters 	(list Parameters
+			(object Parameter "key"
+			    quid       	"4271B2FA02E2"
+			    type       	"const char*"
+			    const      	TRUE)
+			(object Parameter "rpc"
+			    quid       	"4271B2FA02E3"
+			    type       	"const RpcValue&"
+			    const      	TRUE))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "valid"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA02E4"
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "getType"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA02E5"
+		    stereotype 	"const"
+		    result     	"RpcValue::Type"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "size"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA02E7"
+		    stereotype 	"const"
+		    result     	"int"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "setSize"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA02ED"
+		    parameters 	(list Parameters
+			(object Parameter "size"
+			    quid       	"4271B2FA02EE"
+			    type       	"int"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "hasMember"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA02EF"
+		    parameters 	(list Parameters
+			(object Parameter "name"
+			    quid       	"4271B2FA02F0"
+			    type       	"const char*"
+			    const      	TRUE))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "fromXml"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA02F1"
+		    parameters 	(list Parameters
+			(object Parameter "valueXml"
+			    quid       	"4271B2FA02F2"
+			    type       	"const char*"
+			    const      	TRUE)
+			(object Parameter "offset"
+			    quid       	"4271B2FA02F6"
+			    type       	"int*"))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "toXml"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA02F7"
+		    stereotype 	"const"
+		    parameters 	(list Parameters
+			(object Parameter "strBuffer"
+			    quid       	"4271B2FA02F9"
+			    type       	"char*")
+			(object Parameter "nMax"
+			    quid       	"4271B2FA02FA"
+			    type       	"int"))
+		    result     	"char*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "getDoubleFormat"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA02FB"
+		    stereotype 	"static"
+		    parameters 	(list Parameters
+			(object Parameter "strBuffer"
+			    quid       	"4271B2FA02FD"
+			    type       	"char*")
+			(object Parameter "nMax"
+			    quid       	"4271B2FA02FE"
+			    type       	"int"))
+		    result     	"char*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "setDoubleFormat"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA0300"
+		    documentation 	"%f"
+		    stereotype 	"static"
+		    parameters 	(list Parameters
+			(object Parameter "f"
+			    quid       	"4271B2FA0302"
+			    type       	"const char*"
+			    const      	TRUE))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "listStruct"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA0303"
+		    parameters 	(list Parameters
+			(object Parameter "strKey"
+			    quid       	"4271B2FA0304"
+			    type       	"char*")
+			(object Parameter "nBufLen"
+			    quid       	"4271B2FA0305"
+			    type       	"int")
+			(object Parameter "bFirst"
+			    quid       	"4271B2FA0306"
+			    type       	"bool"
+			    initv      	"false"))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    module     	"Component View::XMLRPC"
+	    quidu      	"4271B2EF035F"
+	    language   	"VC++"
+	    nestedClasses 	(list nestedClasses
+		(object Class "Type"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"AppliedPattern"
+			    value      	"none")
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"AfxSupportMacro"
+			    value      	""))
+		    quid       	"4271B2FA030A"
+		    stereotype 	"enum"
+		    class_attributes 	(list class_attribute_list
+			(object ClassAttribute "TypeInvalid"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"VC++"
+				    name       	"Ordinal"
+				    value      	"0"))
+			    quid       	"4271B2FA030C")
+			(object ClassAttribute "TypeBoolean"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"VC++"
+				    name       	"Ordinal"
+				    value      	"1"))
+			    quid       	"4271B2FA0314")
+			(object ClassAttribute "TypeInt"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"VC++"
+				    name       	"Ordinal"
+				    value      	"2"))
+			    quid       	"4271B2FA0315")
+			(object ClassAttribute "TypeDouble"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"VC++"
+				    name       	"Ordinal"
+				    value      	"3"))
+			    quid       	"4271B2FA0316")
+			(object ClassAttribute "TypeString"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"VC++"
+				    name       	"Ordinal"
+				    value      	"4"))
+			    quid       	"4271B2FA031E")
+			(object ClassAttribute "TypeDateTime"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"VC++"
+				    name       	"Ordinal"
+				    value      	"5"))
+			    quid       	"4271B2FA031F")
+			(object ClassAttribute "TypeBase64"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"VC++"
+				    name       	"Ordinal"
+				    value      	"6"))
+			    quid       	"4271B2FA0320")
+			(object ClassAttribute "TypeArray"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"VC++"
+				    name       	"Ordinal"
+				    value      	"7"))
+			    quid       	"4271B2FA0321")
+			(object ClassAttribute "TypeStruct"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"VC++"
+				    name       	"Ordinal"
+				    value      	"8"))
+			    quid       	"4271B2FA0328"))
+		    module     	"Component View::XMLRPC"
+		    quidu      	"4271B2EF035F")))
+	(object Class "ValueStructItem"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AppliedPattern"
+		    value      	"none")
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AfxSupportMacro"
+		    value      	""))
+	    quid       	"4271B2FA0332"
+	    stereotype 	"struct"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "key[MAX_VALUE_STRUCT_KEY_LEN]"
+		    quid       	"4271B2FA0334"
+		    type       	"char"
+		    exportControl 	"Public"))
+	    module     	"Component View::XMLRPC"
+	    quidu      	"4271B2EF035F"
+	    language   	"VC++")
+	(object Class "ValueStruct"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AppliedPattern"
+		    value      	"none")
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AfxSupportMacro"
+		    value      	""))
+	    quid       	"4271B2FA0346"
+	    documentation 	"you need delete it by yourself"
+	    stereotype 	"struct"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "size"
+		    quid       	"4271B2FA035A"
+		    type       	"size_t"
+		    exportControl 	"Public"))
+	    module     	"Component View::XMLRPC"
+	    quidu      	"4271B2EF035F"
+	    language   	"VC++")
+	(object Class "RpcUtil"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AppliedPattern"
+		    value      	"none")
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AfxSupportMacro"
+		    value      	""))
+	    quid       	"4271B2FA0364"
+	    operations 	(list Operations
+		(object Operation "parseTag"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA0365"
+		    stereotype 	"static"
+		    parameters 	(list Parameters
+			(object Parameter "tag"
+			    quid       	"4271B2FA036E"
+			    type       	"const char*"
+			    const      	TRUE)
+			(object Parameter "xml"
+			    quid       	"4271B2FA036F"
+			    type       	"const char*"
+			    const      	TRUE)
+			(object Parameter "offset"
+			    quid       	"4271B2FA0370"
+			    type       	"int*")
+			(object Parameter "strBuffer"
+			    quid       	"4271B2FA0371"
+			    type       	"char*")
+			(object Parameter "nBufferMax"
+			    quid       	"4271B2FA0372"
+			    type       	"int"))
+		    result     	"char*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "findTag"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA0373"
+		    stereotype 	"static"
+		    parameters 	(list Parameters
+			(object Parameter "tag"
+			    quid       	"4271B2FA0375"
+			    type       	"const char*"
+			    const      	TRUE)
+			(object Parameter "xml"
+			    quid       	"4271B2FA0376"
+			    type       	"const char*"
+			    const      	TRUE)
+			(object Parameter "offset"
+			    quid       	"4271B2FA0377"
+			    type       	"int*"))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "getNextTag"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA0378"
+		    stereotype 	"static"
+		    parameters 	(list Parameters
+			(object Parameter "xml"
+			    quid       	"4271B2FA037A"
+			    type       	"const char*"
+			    const      	TRUE)
+			(object Parameter "offset"
+			    quid       	"4271B2FA037B"
+			    type       	"int*")
+			(object Parameter "strBuffer"
+			    quid       	"4271B2FA037C"
+			    type       	"char*")
+			(object Parameter "nBufferMax"
+			    quid       	"4271B2FA037D"
+			    type       	"int"))
+		    result     	"char*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "nextTagIs"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA037E"
+		    stereotype 	"static"
+		    parameters 	(list Parameters
+			(object Parameter "tag"
+			    quid       	"4271B2FA0380"
+			    type       	"const char*"
+			    const      	TRUE)
+			(object Parameter "xml"
+			    quid       	"4271B2FA0381"
+			    type       	"const char*"
+			    const      	TRUE)
+			(object Parameter "offset"
+			    quid       	"4271B2FA0382"
+			    type       	"int*"))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "xmlEncode"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA0383"
+		    stereotype 	"static"
+		    parameters 	(list Parameters
+			(object Parameter "raw"
+			    quid       	"4271B2FA0385"
+			    type       	"const char*"
+			    const      	TRUE)
+			(object Parameter "strBuffer"
+			    quid       	"4271B2FA0386"
+			    type       	"char*")
+			(object Parameter "nBufferMax"
+			    quid       	"4271B2FA0387"
+			    type       	"int"))
+		    result     	"char*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "xmlDecode"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA0388"
+		    stereotype 	"static"
+		    parameters 	(list Parameters
+			(object Parameter "encoded"
+			    quid       	"4271B2FA038A"
+			    type       	"const char*"
+			    const      	TRUE)
+			(object Parameter "strBuffer"
+			    quid       	"4271B2FA038B"
+			    type       	"char*")
+			(object Parameter "nBufferMax"
+			    quid       	"4271B2FA038C"
+			    type       	"int"))
+		    result     	"char*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    module     	"Component View::XMLRPC"
+	    quidu      	"4271B2EF035F"
+	    language   	"VC++")
+	(object Class "RpcServerMethod"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AppliedPattern"
+		    value      	"none")
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AfxSupportMacro"
+		    value      	""))
+	    quid       	"4271B2FA038D"
+	    operations 	(list Operations
+		(object Operation "GetInst"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	TRUE))
+		    quid       	"4271B2FA03A0"
+		    parameters 	(list Parameters
+			(object Parameter ""
+			    quid       	"4271B2FA03A1"
+			    type       	"void"))
+		    result     	"XmlRpc::XmlRpcServerMethod* &"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "GetInst"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	TRUE))
+		    quid       	"4271B2FA03A2"
+		    stereotype 	"const"
+		    parameters 	(list Parameters
+			(object Parameter ""
+			    quid       	"4271B2FA03A4"
+			    type       	"void"))
+		    result     	"const XmlRpc::XmlRpcServerMethod*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "RpcServerMethod"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA03A5"
+		    parameters 	(list Parameters
+			(object Parameter "name"
+			    quid       	"4271B2FA03AA"
+			    type       	"const char*"
+			    const      	TRUE)
+			(object Parameter "server"
+			    quid       	"4271B2FA03AB"
+			    type       	"RpcServer*"
+			    initv      	"0"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "~RpcServerMethod"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA03AC"
+		    stereotype 	"virtual"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "name"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA03AE"
+		    parameters 	(list Parameters
+			(object Parameter "strBuffer"
+			    quid       	"4271B2FA03AF"
+			    type       	"char*")
+			(object Parameter "nMax"
+			    quid       	"4271B2FA03B4"
+			    type       	"int"))
+		    result     	"char*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "execute"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA03B5"
+		    stereotype 	"abstract"
+		    parameters 	(list Parameters
+			(object Parameter "params"
+			    quid       	"4271B2FA03B7"
+			    type       	"RpcValue&"
+			    quidu      	"4271B2FA0228")
+			(object Parameter "result"
+			    quid       	"4271B2FA03B8"
+			    type       	"RpcValue&"
+			    quidu      	"4271B2FA0228"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "help"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA03B9"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter "strBuffer"
+			    quid       	"4271B2FA03BF"
+			    type       	"char*")
+			(object Parameter "nMax"
+			    quid       	"4271B2FA03C0"
+			    type       	"int"))
+		    result     	"char*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "_execute"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA03C1"
+		    parameters 	(list Parameters
+			(object Parameter "params"
+			    quid       	"4271B2FA03C2"
+			    type       	"RpcValue&"
+			    quidu      	"4271B2FA0228")
+			(object Parameter "result"
+			    quid       	"4271B2FA03C8"
+			    type       	"XmlRpc::XmlRpcValue&"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    module     	"Component View::XMLRPC"
+	    quidu      	"4271B2EF035F"
+	    language   	"VC++")
+	(object Class "RpcServer"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AppliedPattern"
+		    value      	"none")
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AfxSupportMacro"
+		    value      	""))
+	    quid       	"4271B2FA03D3"
+	    operations 	(list Operations
+		(object Operation "GetInst"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	TRUE))
+		    quid       	"4271B2FA03DD"
+		    parameters 	(list Parameters
+			(object Parameter ""
+			    quid       	"4271B2FA03DE"
+			    type       	"void"))
+		    result     	"XmlRpc::XmlRpcServer* &"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "GetInst"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	TRUE))
+		    quid       	"4271B2FA03E7"
+		    stereotype 	"const"
+		    parameters 	(list Parameters
+			(object Parameter ""
+			    quid       	"4271B2FA03E9"
+			    type       	"void"))
+		    result     	"const XmlRpc::XmlRpcServer*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "RpcServer"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA03EA"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "~RpcServer"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA03EB"
+		    stereotype 	"virtual"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "enableIntrospection"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA03ED"
+		    parameters 	(list Parameters
+			(object Parameter "enabled"
+			    quid       	"4271B2FA03EE"
+			    type       	"bool"
+			    initv      	"true"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "addMethod"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FA03EF"
+		    parameters 	(list Parameters
+			(object Parameter "method"
+			    quid       	"4271B2FB0009"
+			    type       	"RpcServerMethod*"
+			    quidu      	"4271B2FA038D"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "removeMethod"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FB000A"
+		    parameters 	(list Parameters
+			(object Parameter "method"
+			    quid       	"4271B2FB000B"
+			    type       	"RpcServerMethod*"
+			    quidu      	"4271B2FA038D"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "removeMethod"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FB000C"
+		    parameters 	(list Parameters
+			(object Parameter "methodName"
+			    quid       	"4271B2FB000D"
+			    type       	"const char*"
+			    const      	TRUE))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "findMethod"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FB000E"
+		    stereotype 	"const"
+		    parameters 	(list Parameters
+			(object Parameter "name"
+			    quid       	"4271B2FB0010"
+			    type       	"const char*"
+			    const      	TRUE)
+			(object Parameter "rsm"
+			    quid       	"4271B2FB0011"
+			    type       	"RpcServerMethod*"
+			    quidu      	"4271B2FA038D"))
+		    result     	"RpcServerMethod*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0
+		    quidu      	"4271B2FA038D")
+		(object Operation "bindAndListen"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FB0013"
+		    parameters 	(list Parameters
+			(object Parameter "port"
+			    quid       	"4271B2FB0014"
+			    type       	"int")
+			(object Parameter "strip"
+			    quid       	"4271B2FB0015"
+			    type       	"const char*"
+			    initv      	"0"
+			    const      	TRUE)
+			(object Parameter "backlog"
+			    quid       	"4271B2FB0016"
+			    type       	"int"
+			    initv      	"5"))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "work"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FB0017"
+		    parameters 	(list Parameters
+			(object Parameter "msTime"
+			    quid       	"4271B2FB0018"
+			    type       	"double"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "exit"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FB0019"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "shutdown"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FB001D"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "listMethods"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FB001E"
+		    parameters 	(list Parameters
+			(object Parameter "result"
+			    quid       	"4271B2FB001F"
+			    type       	"RpcValue&"
+			    quidu      	"4271B2FA0228"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    module     	"Component View::XMLRPC"
+	    quidu      	"4271B2EF035F"
+	    language   	"VC++")
+	(object Class "RpcErrorHandler"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AppliedPattern"
+		    value      	"none")
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AfxSupportMacro"
+		    value      	""))
+	    quid       	"4271B2FB0027"
+	    operations 	(list Operations
+		(object Operation "getErrorHandler"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FB0028"
+		    stereotype 	"static"
+		    result     	"RpcErrorHandler*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0
+		    quidu      	"4271B2FB0027")
+		(object Operation "setErrorHandler"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FB002A"
+		    stereotype 	"static"
+		    parameters 	(list Parameters
+			(object Parameter "eh"
+			    quid       	"4271B2FB0031"
+			    type       	"RpcErrorHandler*"
+			    quidu      	"4271B2FB0027"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "error"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FB0032"
+		    stereotype 	"abstract"
+		    parameters 	(list Parameters
+			(object Parameter "msg"
+			    quid       	"4271B2FB0034"
+			    type       	"const char*"
+			    const      	TRUE))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    module     	"Component View::XMLRPC"
+	    quidu      	"4271B2EF035F"
+	    language   	"VC++")
+	(object Class "RpcLogHandler"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AppliedPattern"
+		    value      	"none")
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AfxSupportMacro"
+		    value      	""))
+	    quid       	"4271B2FB0045"
+	    operations 	(list Operations
+		(object Operation "getLogHandler"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FB0046"
+		    stereotype 	"static"
+		    result     	"RpcLogHandler*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0
+		    quidu      	"4271B2FB0045")
+		(object Operation "setLogHandler"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FB0048"
+		    stereotype 	"static"
+		    parameters 	(list Parameters
+			(object Parameter "lh"
+			    quid       	"4271B2FB004A"
+			    type       	"RpcLogHandler*"
+			    quidu      	"4271B2FB0045"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "getVerbosity"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FB004F"
+		    stereotype 	"static"
+		    result     	"int"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "setVerbosity"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FB0051"
+		    stereotype 	"static"
+		    parameters 	(list Parameters
+			(object Parameter "v"
+			    quid       	"4271B2FB0053"
+			    type       	"int"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "log"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FB0054"
+		    stereotype 	"abstract"
+		    parameters 	(list Parameters
+			(object Parameter "level"
+			    quid       	"4271B2FB0056"
+			    type       	"int")
+			(object Parameter "msg"
+			    quid       	"4271B2FB0057"
+			    type       	"const char*"
+			    const      	TRUE))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "_verbosity"
+		    quid       	"4271B2FB005E"
+		    type       	"int"
+		    initv      	"0"
+		    exportControl 	"Protected"
+		    static     	TRUE))
+	    module     	"Component View::XMLRPC"
+	    quidu      	"4271B2EF035F"
+	    language   	"VC++")
+	(object Class "RpcException"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AppliedPattern"
+		    value      	"none")
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AfxSupportMacro"
+		    value      	""))
+	    quid       	"4271B2FB006D"
+	    operations 	(list Operations
+		(object Operation "GetInst"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	TRUE))
+		    quid       	"4271B2FB0077"
+		    parameters 	(list Parameters
+			(object Parameter ""
+			    quid       	"4271B2FB0078"
+			    type       	"void"))
+		    result     	"XmlRpc::XmlRpcException* &"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "GetInst"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	TRUE))
+		    quid       	"4271B2FB0079"
+		    stereotype 	"const"
+		    parameters 	(list Parameters
+			(object Parameter ""
+			    quid       	"4271B2FB007B"
+			    type       	"void"))
+		    result     	"const XmlRpc::XmlRpcException*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "RpcException"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FB007C"
+		    parameters 	(list Parameters
+			(object Parameter "strMessage"
+			    quid       	"4271B2FB007D"
+			    type       	"const char*"
+			    const      	TRUE)
+			(object Parameter "nCode"
+			    quid       	"4271B2FB007E"
+			    type       	"int"
+			    initv      	"-1"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "RpcException"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FB0081"
+		    parameters 	(list Parameters
+			(object Parameter "exp"
+			    quid       	"4271B2FB0082"
+			    type       	"const RpcException&"
+			    const      	TRUE))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "operator="
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FB0083"
+		    parameters 	(list Parameters
+			(object Parameter "exp"
+			    quid       	"4271B2FB0084"
+			    type       	"const RpcException&"
+			    const      	TRUE))
+		    result     	"RpcException&"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0
+		    quidu      	"4271B2FB006D")
+		(object Operation "getMessage"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FB0085"
+		    stereotype 	"const"
+		    result     	"RpcExpString"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "getCode"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FB0087"
+		    stereotype 	"const"
+		    result     	"int"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    module     	"Component View::XMLRPC"
+	    quidu      	"4271B2EF035F"
+	    language   	"VC++")
+	(object Class "RpcClient"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AppliedPattern"
+		    value      	"none")
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AfxSupportMacro"
+		    value      	""))
+	    quid       	"4271B2FB008B"
+	    operations 	(list Operations
+		(object Operation "GetInst"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	TRUE))
+		    quid       	"4271B2FB009A"
+		    parameters 	(list Parameters
+			(object Parameter ""
+			    quid       	"4271B2FB009B"
+			    type       	"void"))
+		    result     	"XmlRpc::XmlRpcClient* &"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "GetInst"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	TRUE))
+		    quid       	"4271B2FB009F"
+		    stereotype 	"const"
+		    parameters 	(list Parameters
+			(object Parameter ""
+			    quid       	"4271B2FB00A1"
+			    type       	"void"))
+		    result     	"const XmlRpc::XmlRpcClient*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "RpcClient"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FB00A2"
+		    parameters 	(list Parameters
+			(object Parameter "host"
+			    quid       	"4271B2FB00A3"
+			    type       	"const char*"
+			    const      	TRUE)
+			(object Parameter "port"
+			    quid       	"4271B2FB00A4"
+			    type       	"int")
+			(object Parameter "uri"
+			    quid       	"4271B2FB00A5"
+			    type       	"const char*"
+			    initv      	"0"
+			    const      	TRUE))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "~RpcClient"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FB00A6"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "setResponseTimeout"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FB00A7"
+		    parameters 	(list Parameters
+			(object Parameter "timeout"
+			    quid       	"4271B2FB00A9"
+			    type       	"int"
+			    initv      	"-1"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "execute"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FB00AA"
+		    parameters 	(list Parameters
+			(object Parameter "method"
+			    quid       	"4271B2FB00AB"
+			    type       	"const char*"
+			    const      	TRUE)
+			(object Parameter "params"
+			    quid       	"4271B2FB00AC"
+			    type       	"const RpcValue&"
+			    const      	TRUE)
+			(object Parameter "result"
+			    quid       	"4271B2FB00AD"
+			    type       	"RpcValue&"
+			    quidu      	"4271B2FA0228"))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "isFault"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FB00AE"
+		    stereotype 	"const"
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "close"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FB00B0"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "handleEvent"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271B2FB00B3"
+		    parameters 	(list Parameters
+			(object Parameter "eventType"
+			    quid       	"4271B2FB00B4"
+			    type       	"unsigned"))
+		    result     	"unsigned"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    module     	"Component View::XMLRPC"
+	    quidu      	"4271B2EF035F"
+	    language   	"VC++")
+	(object Class "GpXmlRpcServerMethod"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AppliedPattern"
+		    value      	"none")
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AfxSupportMacro"
+		    value      	""))
+	    quid       	"4271B2FB00B5"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"4271B2FB00BD"
+		    supplier   	"XmlRpcServerMethod"))
+	    operations 	(list Operations
+		(object Operation "GpXmlRpcServerMethod"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	TRUE))
+		    quid       	"4271B2FB00D1"
+		    parameters 	(list Parameters
+			(object Parameter "name"
+			    quid       	"4271B2FB00D2"
+			    type       	"const std::string&"
+			    const      	TRUE)
+			(object Parameter "server"
+			    quid       	"4271B2FB00D3"
+			    type       	"XmlRpcServer*"
+			    initv      	"0"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "execute"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	TRUE))
+		    quid       	"4271B2FB00D4"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter "params"
+			    quid       	"4271B2FB00D6"
+			    type       	"XmlRpcValue&")
+			(object Parameter "result"
+			    quid       	"4271B2FB00D7"
+			    type       	"XmlRpcValue&"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "SetOutSide"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	TRUE))
+		    quid       	"4271B2FB00D8"
+		    parameters 	(list Parameters
+			(object Parameter "out"
+			    quid       	"4271B2FB00DB"
+			    type       	"ZQ::rpc::RpcServerMethod*"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    module     	"Component View::XMLRPC"
+	    quidu      	"4271B2EF035F"
+	    language   	"VC++")
+	(object Class "DefaultLogHandler"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AppliedPattern"
+		    value      	"none")
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AfxSupportMacro"
+		    value      	""))
+	    quid       	"4271B2FB00DC"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"4271B2FB00DD"
+		    supplier   	"Logical View::MPF SDK::XMLRPC::RpcLogHandler"
+		    quidu      	"4271B2FB0045"))
+	    operations 	(list Operations
+		(object Operation "log"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	TRUE))
+		    quid       	"4271B2FB00DE"
+		    parameters 	(list Parameters
+			(object Parameter "level"
+			    quid       	"4271B2FB00E5"
+			    type       	"int")
+			(object Parameter "msg"
+			    quid       	"4271B2FB00E6"
+			    type       	"const char*"
+			    const      	TRUE))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    module     	"Component View::XMLRPC"
+	    quidu      	"4271B2EF035F"
+	    language   	"VC++")
+	(object Class "DefaultErrorHandler"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AppliedPattern"
+		    value      	"none")
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AfxSupportMacro"
+		    value      	""))
+	    quid       	"4271B2FB00E7"
+	    documentation 	" Default error handler"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"4271B2FB00E8"
+		    supplier   	"Logical View::MPF SDK::XMLRPC::RpcErrorHandler"
+		    quidu      	"4271B2FB0027"))
+	    operations 	(list Operations
+		(object Operation "error"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	TRUE))
+		    quid       	"4271B2FB00EF"
+		    parameters 	(list Parameters
+			(object Parameter "msg"
+			    quid       	"4271B2FB00F0"
+			    type       	"const char*"
+			    const      	TRUE))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    module     	"Component View::XMLRPC"
+	    quidu      	"4271B2EF035F"
+	    language   	"VC++")
+	(object Class "ClearFlagOnExit"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AppliedPattern"
+		    value      	"none")
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AfxSupportMacro"
+		    value      	""))
+	    quid       	"4271B2FB0103"
+	    documentation 	" Clear the referenced flag even if exceptions or errors occur."
+	    stereotype 	"struct"
+	    operations 	(list Operations
+		(object Operation "ClearFlagOnExit"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	TRUE))
+		    quid       	"4271B2FB0105"
+		    parameters 	(list Parameters
+			(object Parameter "flag"
+			    quid       	"4271B2FB0106"
+			    type       	"bool&"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "~ClearFlagOnExit"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	TRUE))
+		    quid       	"4271B2FB0107"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "_flag"
+		    quid       	"4271B2FB010D"
+		    type       	"bool&"
+		    exportControl 	"Public"))
+	    module     	"Component View::XMLRPC"
+	    quidu      	"4271B2EF035F"
+	    language   	"VC++")
+	(object Class "ListMethods"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AppliedPattern"
+		    value      	"none")
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AfxSupportMacro"
+		    value      	""))
+	    quid       	"4271B2FB0117"
+	    documentation 	" List all methods available on a server"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"4271B2FB0118"
+		    supplier   	"XmlRpcServerMethod"))
+	    operations 	(list Operations
+		(object Operation "ListMethods"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	TRUE))
+		    quid       	"4271B2FB0119"
+		    parameters 	(list Parameters
+			(object Parameter "s"
+			    quid       	"4271B2FB011A"
+			    type       	"XmlRpcServer*"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "execute"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	TRUE))
+		    quid       	"4271B2FB0121"
+		    parameters 	(list Parameters
+			(object Parameter "params"
+			    quid       	"4271B2FB0122"
+			    type       	"XmlRpcValue&")
+			(object Parameter "result"
+			    quid       	"4271B2FB0123"
+			    type       	"XmlRpcValue&"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "help"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	TRUE))
+		    quid       	"4271B2FB0124"
+		    result     	"std::string"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    module     	"Component View::XMLRPC"
+	    quidu      	"4271B2EF035F"
+	    language   	"VC++")
+	(object Class "MethodHelp"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AppliedPattern"
+		    value      	"none")
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AfxSupportMacro"
+		    value      	""))
+	    quid       	"4271B2FB012B"
+	    documentation 	" Retrieve the help string for a named method"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"4271B2FB012C"
+		    supplier   	"XmlRpcServerMethod"))
+	    operations 	(list Operations
+		(object Operation "MethodHelp"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	TRUE))
+		    quid       	"4271B2FB0135"
+		    parameters 	(list Parameters
+			(object Parameter "s"
+			    quid       	"4271B2FB0136"
+			    type       	"XmlRpcServer*"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "execute"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	TRUE))
+		    quid       	"4271B2FB0137"
+		    parameters 	(list Parameters
+			(object Parameter "params"
+			    quid       	"4271B2FB0138"
+			    type       	"XmlRpcValue&")
+			(object Parameter "result"
+			    quid       	"4271B2FB0139"
+			    type       	"XmlRpcValue&"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "help"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	TRUE))
+		    quid       	"4271B2FB013A"
+		    result     	"std::string"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    module     	"Component View::XMLRPC"
+	    quidu      	"4271B2EF035F"
+	    language   	"VC++")
+	(object Association "$UNNAMED$0"
+	    quid       	"4271B2FA0260"
+	    roles      	(list role_list
+		(object Role "m_pInst:XmlRpc::XmlRpcValue*"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"InitialValue"
+			    value      	"NULL"))
+		    quid       	"4271B2FA0261"
+		    label      	"m_pInst:XmlRpc::XmlRpcValue*"
+		    supplier   	"XmlRpcValue"
+		    exportControl 	"Private"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$1"
+		    quid       	"4271B2FA0263"
+		    supplier   	"Logical View::MPF SDK::XMLRPC::RpcValue"
+		    quidu      	"4271B2FA0228")))
+	(object Association "$UNNAMED$2"
+	    quid       	"4271B2FA033C"
+	    roles      	(list role_list
+		(object Role "value"
+		    quid       	"4271B2FA033D"
+		    label      	"value"
+		    supplier   	"Logical View::MPF SDK::XMLRPC::RpcValue"
+		    quidu      	"4271B2FA0228"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$3"
+		    quid       	"4271B2FA033F"
+		    supplier   	"Logical View::MPF SDK::XMLRPC::ValueStructItem"
+		    quidu      	"4271B2FA0332"
+		    is_aggregate 	TRUE)))
+	(object Association "$UNNAMED$4"
+	    quid       	"4271B2FA0351"
+	    roles      	(list role_list
+		(object Role "data"
+		    quid       	"4271B2FA0352"
+		    label      	"data"
+		    supplier   	"Logical View::MPF SDK::XMLRPC::ValueStructItem"
+		    quidu      	"4271B2FA0332"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$5"
+		    quid       	"4271B2FA0354"
+		    supplier   	"Logical View::MPF SDK::XMLRPC::ValueStruct"
+		    quidu      	"4271B2FA0346")))
+	(object Association "$UNNAMED$6"
+	    quid       	"4271B2FA0396"
+	    roles      	(list role_list
+		(object Role "m_pInst:XmlRpc::XmlRpcServerMethod*"
+		    quid       	"4271B2FA0397"
+		    label      	"m_pInst:XmlRpc::XmlRpcServerMethod*"
+		    supplier   	"XmlRpcServerMethod"
+		    exportControl 	"Private"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$7"
+		    quid       	"4271B2FA0399"
+		    supplier   	"Logical View::MPF SDK::XMLRPC::RpcServerMethod"
+		    quidu      	"4271B2FA038D")))
+	(object Association "$UNNAMED$8"
+	    quid       	"4271B2FA03D4"
+	    roles      	(list role_list
+		(object Role "m_pInst:XmlRpc::XmlRpcServer*"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"InitialValue"
+			    value      	"NULL"))
+		    quid       	"4271B2FA03D5"
+		    label      	"m_pInst:XmlRpc::XmlRpcServer*"
+		    supplier   	"XmlRpcServer"
+		    exportControl 	"Private"
+		    is_navigable 	TRUE)
+		(object Role "_pServer"
+		    quid       	"4271B2FA03D7"
+		    label      	"_pServer"
+		    supplier   	"Logical View::MPF SDK::XMLRPC::RpcServer"
+		    quidu      	"4271B2FA03D3"
+		    keys       	(list class_attribute_list
+			(object ClassAttribute "name"
+			    quid       	"4271F8020342"))
+		    exportControl 	"Protected")))
+	(object Association "$UNNAMED$9"
+	    quid       	"4271B2FB0035"
+	    roles      	(list role_list
+		(object Role "$UNNAMED$10"
+		    quid       	"4271B2FB0036"
+		    supplier   	"Logical View::MPF SDK::XMLRPC::RpcErrorHandler"
+		    quidu      	"4271B2FB0027")
+		(object Role "_errorHandler"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"InitialValue"
+			    value      	"&defaultErrorHandler"))
+		    quid       	"4271B2FB0038"
+		    label      	"_errorHandler"
+		    supplier   	"Logical View::MPF SDK::XMLRPC::RpcErrorHandler"
+		    quidu      	"4271B2FB0027"
+		    exportControl 	"Protected"
+		    is_navigable 	TRUE
+		    static     	TRUE)))
+	(object Association "$UNNAMED$11"
+	    quid       	"4271B2FB0059"
+	    roles      	(list role_list
+		(object Role "$UNNAMED$12"
+		    quid       	"4271B2FB005A"
+		    supplier   	"Logical View::MPF SDK::XMLRPC::RpcLogHandler"
+		    quidu      	"4271B2FB0045")
+		(object Role "_logHandler"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"InitialValue"
+			    value      	"&defaultLogHandler"))
+		    quid       	"4271B2FB005C"
+		    label      	"_logHandler"
+		    supplier   	"Logical View::MPF SDK::XMLRPC::RpcLogHandler"
+		    quidu      	"4271B2FB0045"
+		    exportControl 	"Protected"
+		    is_navigable 	TRUE
+		    static     	TRUE)))
+	(object Association "$UNNAMED$13"
+	    quid       	"4271B2FB006E"
+	    roles      	(list role_list
+		(object Role "m_pInst:XmlRpc::XmlRpcException*"
+		    quid       	"4271B2FB006F"
+		    label      	"m_pInst:XmlRpc::XmlRpcException*"
+		    supplier   	"XmlRpcException"
+		    exportControl 	"Private"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$14"
+		    quid       	"4271B2FB0071"
+		    supplier   	"Logical View::MPF SDK::XMLRPC::RpcException"
+		    quidu      	"4271B2FB006D")))
+	(object Association "$UNNAMED$15"
+	    quid       	"4271B2FB0095"
+	    roles      	(list role_list
+		(object Role "m_pInst:XmlRpc::XmlRpcClient*"
+		    quid       	"4271B2FB0096"
+		    label      	"m_pInst:XmlRpc::XmlRpcClient*"
+		    supplier   	"XmlRpcClient"
+		    exportControl 	"Private"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$16"
+		    quid       	"4271B2FB0098"
+		    supplier   	"Logical View::MPF SDK::XMLRPC::RpcClient"
+		    quidu      	"4271B2FB008B")))
+	(object Association "$UNNAMED$17"
+	    quid       	"4271B2FB00BE"
+	    roles      	(list role_list
+		(object Role "_out:ZQ::rpc::RpcServerMethod*"
+		    quid       	"4271B2FB00BF"
+		    documentation 	"bad code"
+		    label      	"_out:ZQ::rpc::RpcServerMethod*"
+		    supplier   	"Logical View::MPF SDK::XMLRPC::RpcServerMethod"
+		    quidu      	"4271B2FA038D"
+		    exportControl 	"Private"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$18"
+		    quid       	"4271B2FB00C1"
+		    supplier   	"Logical View::MPF SDK::XMLRPC::GpXmlRpcServerMethod"
+		    quidu      	"4271B2FB00B5")))
+	(object Association "$UNNAMED$19"
+	    quid       	"4271B2FB00C7"
+	    roles      	(list role_list
+		(object Role "coparams:ZQ::rpc::RpcValue"
+		    quid       	"4271B2FB00C8"
+		    label      	"coparams:ZQ::rpc::RpcValue"
+		    supplier   	"Logical View::MPF SDK::XMLRPC::RpcValue"
+		    quidu      	"4271B2FA0228"
+		    exportControl 	"Private"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$20"
+		    quid       	"4271B2FB00CA"
+		    supplier   	"Logical View::MPF SDK::XMLRPC::GpXmlRpcServerMethod"
+		    quidu      	"4271B2FB00B5")))
+	(object Association "$UNNAMED$21"
+	    quid       	"4271F7D20267"
+	    roles      	(list role_list
+		(object Role "$UNNAMED$22"
+		    quid       	"4271F7D30312"
+		    supplier   	"Logical View::MPF SDK::XMLRPC::RpcServer"
+		    quidu      	"4271B2FA03D3"
+		    is_navigable 	TRUE)
+		(object Role "_pServer"
+		    quid       	"4271F7D30330"
+		    label      	"_pServer"
+		    supplier   	"Logical View::MPF SDK::XMLRPC::RpcServerMethod"
+		    quidu      	"4271B2FA038D"))))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "XMLRPC Model Update Overview"
+	    quid       	"4271B2FB013B"
+	    title      	"XMLRPC Model Update Overview"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object Label @1
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    nlines     	3
+		    max_width  	2398
+		    label      	
+|XMLRPC Model Update Overview
+|This diagram was automatically created by Rational Rose Model Update Tool.
+|Friday, April 29, 2005 12:07:23 PM
+		    )
+		(object ClassView "Class" "Logical View::MPF SDK::XMLRPC::RpcValue::Type" @2
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(218, 1018)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(44, 958)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	348
+			justify    	0
+			label      	"Type")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@2
+			location   	(44, 908)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	348
+			justify    	0
+			label      	"<<enum>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271B2FA030A"
+		    width      	366
+		    height     	248
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MPF SDK::XMLRPC::ValueStructItem" @3
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(539, 1018)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@3
+			location   	(316, 986)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	446
+			justify    	0
+			label      	"ValueStructItem")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@3
+			location   	(316, 936)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	446
+			justify    	0
+			label      	"<<struct>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271B2FA0332"
+		    width      	464
+		    height     	192
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MPF SDK::XMLRPC::ValueStruct" @4
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(974, 1018)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@4
+			location   	(807, 986)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	334
+			justify    	0
+			label      	"ValueStruct")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@4
+			location   	(807, 936)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	334
+			justify    	0
+			label      	"<<struct>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271B2FA0346"
+		    width      	352
+		    height     	192
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MPF SDK::XMLRPC::RpcUtil" @5
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(1289, 1018)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@5
+			location   	(1177, 961)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	224
+			justify    	0
+			label      	"RpcUtil")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271B2FA0364"
+		    width      	242
+		    height     	142
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MPF SDK::XMLRPC::RpcErrorHandler" @6
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(2406, 406)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@6
+			location   	(2173, 349)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	466
+			justify    	0
+			label      	"RpcErrorHandler")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271B2FB0027"
+		    width      	484
+		    height     	142
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MPF SDK::XMLRPC::RpcLogHandler" @7
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(2976, 406)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@7
+			location   	(2756, 349)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	440
+			justify    	0
+			label      	"RpcLogHandler")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271B2FB0045"
+		    width      	458
+		    height     	142
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MPF SDK::XMLRPC::RpcException" @8
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(1979, 1018)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@8
+			location   	(1785, 961)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	388
+			justify    	0
+			label      	"RpcException")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271B2FB006D"
+		    width      	406
+		    height     	142
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MPF SDK::XMLRPC::RpcClient" @9
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(2354, 1018)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@9
+			location   	(2207, 961)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	294
+			justify    	0
+			label      	"RpcClient")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271B2FB008B"
+		    width      	312
+		    height     	142
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MPF SDK::XMLRPC::RpcValue" @10
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(3238, 1018)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@10
+			location   	(3086, 961)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	304
+			justify    	0
+			label      	"RpcValue")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271B2FA0228"
+		    width      	322
+		    height     	142
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MPF SDK::XMLRPC::GpXmlRpcServerMethod" @11
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(3778, 1018)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@11
+			location   	(3433, 961)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	690
+			justify    	0
+			label      	"GpXmlRpcServerMethod")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271B2FB00B5"
+		    width      	708
+		    height     	142
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MPF SDK::XMLRPC::DefaultLogHandler" @12
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(2976, 698)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@12
+			location   	(2718, 641)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	516
+			justify    	0
+			label      	"DefaultLogHandler")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271B2FB00DC"
+		    width      	534
+		    height     	142
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "" @13
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4271B2FB00DD"
+		    client     	@12
+		    supplier   	@7
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::MPF SDK::XMLRPC::DefaultErrorHandler" @14
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(2406, 698)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@14
+			location   	(2134, 641)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	544
+			justify    	0
+			label      	"DefaultErrorHandler")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271B2FB00E7"
+		    width      	562
+		    height     	142
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "" @15
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4271B2FB00E8"
+		    client     	@14
+		    supplier   	@6
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::MPF SDK::XMLRPC::ClearFlagOnExit" @16
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(4393, 1018)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@16
+			location   	(4164, 986)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	458
+			justify    	0
+			label      	"ClearFlagOnExit")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@16
+			location   	(4164, 936)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	458
+			justify    	0
+			label      	"<<struct>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271B2FB0103"
+		    width      	476
+		    height     	192
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MPF SDK::XMLRPC::ListMethods" @17
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(4843, 1018)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@17
+			location   	(4668, 961)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	350
+			justify    	0
+			label      	"ListMethods")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271B2FB0117"
+		    width      	368
+		    height     	142
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MPF SDK::XMLRPC::MethodHelp" @18
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(5233, 1018)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@18
+			location   	(5056, 961)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	354
+			justify    	0
+			label      	"MethodHelp")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271B2FB012B"
+		    width      	372
+		    height     	142
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MPF SDK::XMLRPC::RpcServer" @19
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(1589, 1018)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@19
+			location   	(1436, 961)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	306
+			justify    	0
+			label      	"RpcServer")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271B2FA03D3"
+		    width      	324
+		    height     	142
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MPF SDK::XMLRPC::RpcServerMethod" @20
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(1850, 1415)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@20
+			location   	(1593, 1358)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	514
+			justify    	0
+			label      	"RpcServerMethod")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271B2FA038D"
+		    width      	532
+		    height     	142
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object AssociationViewNew "$UNNAMED$21" @21
+		    location   	(1718, 1216)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4271F7D20267"
+		    roleview_list 	(list RoleViews
+			(object RoleView "$UNNAMED$22" @22
+			    Parent_View 	@21
+			    location   	(-1070, 198)
+			    font       	(object Font
+				size       	12
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"4271F7D30312"
+			    client     	@21
+			    supplier   	@19
+			    line_style 	0)
+			(object RoleView "_pServer" @23
+			    Parent_View 	@21
+			    location   	(-1070, 198)
+			    font       	(object Font
+				size       	12
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @24
+				Parent_View 	@23
+				location   	(1751, 1340)
+				font       	(object Font
+				    size       	12
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	227
+				justify    	0
+				label      	"+_pServer"
+				pctDist    	0.800000
+				height     	42
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"4271F7D30330"
+			    client     	@21
+			    supplier   	@20
+			    line_style 	0)))))))

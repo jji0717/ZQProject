@@ -1,0 +1,136 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "buildall"=.\buildall.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/MediaProcessFramework/EntryDB/build_win32", HPGAAAAA
+    .
+    end source code control
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name edbb2
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name edbsh
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name edos
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name edbb4
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name edbmyq
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "edbb2"=.\edbb2.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/MediaProcessFramework/EntryDB/build_win32", HPGAAAAA
+    .
+    end source code control
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name edos
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "edbb4"=.\edbb4.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/MediaProcessFramework/EntryDB/build_win32", HPGAAAAA
+    .
+    end source code control
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name edos
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "edbmyq"=.\edbmyq.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name edos
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "edbsh"=.\edbsh.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/MediaProcessFramework/EntryDB/build_win32", HPGAAAAA
+    .
+    end source code control
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name edos
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "edos"=.\edos.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/MediaProcessFramework/EntryDB/build_win32", HPGAAAAA
+    .
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

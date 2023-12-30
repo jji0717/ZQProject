@@ -1,0 +1,19 @@
+<!-- Ftp ContentStore config like this -->
+<TianShan>
+<LogFile name="c:\tianshan\logs\ftpcs.log" size="100000000" level="7" />
+
+<!--  log in infomation
+	hostname: the ftp server name or ip
+	hostport: the ftp server port
+	username: log in name
+	password: log in password
+	workdir:  the work directory in ftp server,it is default directory if is null 
+	localip:  the program work ip address
+-->
+ 
+
+<LogIn hostname="192.168.81.114" hostport="21" username="anonymous" password="anonymous" workdir="/work" loclaIP="192.168.81.114" />
+
+<!-- Interval: the time interval of get ftp server list -->
+<Interval time="15*60" />
+</TianShan>

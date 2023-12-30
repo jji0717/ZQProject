@@ -1,0 +1,6 @@
+LIBRARY	"NgodSnmpExt"
+
+EXPORTS
+  SnmpExtensionInit
+  SnmpExtensionQuery
+  SnmpExtensionClose

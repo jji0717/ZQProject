@@ -1,0 +1,45 @@
+// ts_wmsplugin.idl : IDL source for ts_wmsplugin.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (ts_wmsplugin.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+	[
+		object,
+		uuid(D1938DAF-85F9-459F-BDCF-93F5006F046F),
+		dual,
+		helpstring("ITsEventHandler Interface"),
+		pointer_default(unique)
+	]
+	interface ITsEventHandler : IDispatch
+	{
+	};
+
+[
+	uuid(AA4EA8B3-6088-41a3-AD52-9E6DC5D4A31D),
+]
+interface ITianshanWMSEventPlugin {
+	void setOption();
+};
+
+[
+	uuid(5D42A84B-2787-4480-9C8F-5D637693A0FA),
+	version(1.0),
+	helpstring("ts_wmsplugin 1.0 Type Library")
+]
+library TS_WMSPLUGINLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	[
+		uuid(ABCE7B3C-B8E5-4829-B70B-9556A42F5B34),
+		helpstring("TsEventHandler Class")
+	]
+	coclass TsEventHandler
+	{
+		[default] interface ITsEventHandler;
+	};
+};

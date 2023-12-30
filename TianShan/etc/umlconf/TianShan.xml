@@ -1,0 +1,150 @@
+<?xml version="1.0"?>
+<TianShan>
+  <!-- SNMP extension agent -->
+  <SNMP loggingMask="1" logPath="/opt/TianShan/logs">
+    <CPESvc oid="700"/>
+    <CDNCS oid="2000"/>
+    <RtspProxy oid="1000"/>
+    <Sentry oid="1100"/>
+    <CDNSS oid="2100"/>
+    <EventChannel oid="1300"/>
+    <EventGateway oid="1200"/>
+    <HttpCRG oid="2200"/>
+    <EventRuleEngine oid="1500"/>
+    <ContentLib oid="1700"/>
+    <Weiwoo oid="200"/>
+    <SiteAdmin oid="300"/>
+    <MODApp oid="900"/>
+    <xmlshd oid="2500"/>
+    <EdgeRM oid="2300"/>
+  </SNMP>
+  <CDNSS>
+    <log path="/opt/TianShan/logs" snmpLoggingMask="1" size="0" count="1" level="0" bufferSize="2048" timeout="10"/>
+    <config path="/opt/TianShan/etc"/>
+  </CDNSS>
+  <CDNSS_Shell>
+    <log loggingMask="1" snmpLoggingMask="1" path="/opt/TianShan/logs" size="0" level="0"/>
+    <service restartInterval="120" restartTries="3" aliveTimeout="900" appAliveWait="25" imagePath="/opt/TianShan/bin/CDNSS"/>
+  </CDNSS_Shell>
+  <Sentry>
+    <log path="/opt/TianShan/logs" snmpLoggingMask="1" size="5000000" count="1" level="0" bufferSize="2048" timeout="10"/>
+    <config path="/opt/TianShan/etc"/>
+    <server AdapterCollectorPort="11999"/>
+  </Sentry>
+  <Sentry_Shell>
+    <log loggingMask="1" snmpLoggingMask="1" path="/opt/TianShan/logs" size="0" level="0"/>
+    <service restartInterval="120" restartTries="3" aliveTimeout="90" appAliveWait="25" imagePath="/opt/TianShan/bin/Sentry"/>
+  </Sentry_Shell>
+  <CPESvc>
+    <log path="/opt/TianShan/logs" snmpLoggingMask="1" size="0" count="1" level="0" bufferSize="2048" timeout="10"/>
+    <config path="/opt/TianShan/etc"/>
+  </CPESvc>
+  <CPESvc_Shell>
+    <log loggingMask="1" snmpLoggingMask="1" path="/opt/TianShan/logs" size="0" level="0"/>
+    <!--
+			restartInterval: max interval allowed for restart retries (SystemShell)
+			restartTries:    how many restarts allowed within restartInterval (SystemShell) 
+			aliveTimeout:    shutdown child when timed out (SystemShell)
+			appAliveWait:    heartbeat interval from ServiceShell (ServiceShell)
+			imagePath:       path to the service executable (SystemShell)
+		-->
+    <service restartInterval="120" restartTries="3" aliveTimeout="90" appAliveWait="25" imagePath="/opt/TianShan/bin/CPESvc"/>
+  </CPESvc_Shell>
+  <RtspProxy>
+    <log path="/opt/TianShan/logs" snmpLoggingMask="1" size="0" count="1" level="0" bufferSize="2048" timeout="10"/>
+    <config path="/opt/TianShan/etc"/>
+  </RtspProxy>
+  <RtspProxy_Shell>
+    <log loggingMask="1" snmpLoggingMask="1" path="/opt/TianShan/logs" size="0" level="0"/>
+    <service restartInterval="100" restartTries="4" aliveTimeout="30" appAliveWait="25" imagePath="/opt/TianShan/bin/RtspProxy"/>
+  </RtspProxy_Shell>
+  <EventGateway>
+    <log path="/opt/TianShan/logs" snmpLoggingMask="1" size="5000000" count="1" level="0"/>
+    <config path="/opt/TianShan/etc"/>
+  </EventGateway>
+  <EventGateway_Shell>
+    <log loggingMask="1" snmpLoggingMask="1" path="/opt/TianShan/logs" size="0" level="0"/>
+    <service restartInterval="120" restartTries="3" aliveTimeout="90" appAliveWait="25" imagePath="/opt/TianShan/bin/EventGateway"/>
+  </EventGateway_Shell>
+  <EventChannel>
+    <log path="/opt/TianShan/logs" snmpLoggingMask="1" size="5000000" count="1" level="0" bufferSize="2048" timeout="10"/>
+    <config path="/opt/TianShan/etc"/>
+  </EventChannel>
+  <EventChannel_Shell>
+    <log loggingMask="1" snmpLoggingMask="1" path="/opt/TianShan/logs" size="0" level="0"/>
+    <service restartInterval="120" restartTries="3" aliveTimeout="90" appAliveWait="25" imagePath="/opt/TianShan/bin/EventChannel"/>
+  </EventChannel_Shell>
+  <HttpCRG>
+    <log path="/opt/TianShan/logs" snmpLoggingMask="1" size="0" count="1" level="0" bufferSize="2048" timeout="10"/>
+    <config path="/opt/TianShan/etc"/>
+    <server AdapterCollectorPort="11999"/>
+  </HttpCRG>
+  <HttpCRG_Shell>
+    <log loggingMask="1" snmpLoggingMask="1" path="/opt/TianShan/logs" size="0" level="0"/>
+    <service restartInterval="120" restartTries="3" aliveTimeout="90" appAliveWait="25" imagePath="/opt/TianShan/bin/HttpCRG"/>
+  </HttpCRG_Shell>
+  <CDNCS>
+    <log path="/opt/TianShan/logs" snmpLoggingMask="1" size="0" count="1" level="0" bufferSize="2048" timeout="10"/>
+    <config path="/opt/TianShan/etc"/>
+  </CDNCS>
+  <CDNCS_Shell>
+    <log loggingMask="1" snmpLoggingMask="1" path="/opt/TianShan/logs" size="0" level="0"/>
+    <service restartInterval="120" restartTries="3" aliveTimeout="900" appAliveWait="25" imagePath="/opt/TianShan/bin/CDNCS"/>
+  </CDNCS_Shell>
+  <EventRuleEngine>
+    <log path="/opt/TianShan/logs" snmpLoggingMask="1" size="0" count="1" level="0" bufferSize="2048" timeout="10"/>
+    <config path="/opt/TianShan/etc"/>
+  </EventRuleEngine>
+  <EventRuleEngine_Shell>
+    <log loggingMask="1" snmpLoggingMask="1" path="/opt/TianShan/logs" size="0" level="0"/>
+    <service restartInterval="120" restartTries="3" aliveTimeout="900" appAliveWait="25" imagePath="/opt/TianShan/bin/EventRuleEngine"/>
+  </EventRuleEngine_Shell>
+  <ContentLib>
+    <log path="/opt/TianShan/logs" snmpLoggingMask="1" size="0" count="1" level="0" bufferSize="2048" timeout="10"/>
+    <config path="/opt/TianShan/etc"/>
+  </ContentLib>
+  <ContentLib_Shell>
+    <log loggingMask="1" snmpLoggingMask="1" path="/opt/TianShan/logs" size="0" level="0"/>
+    <service restartInterval="120" restartTries="3" aliveTimeout="900" appAliveWait="25" imagePath="/opt/TianShan/bin/ContentLib"/>
+  </ContentLib_Shell>
+  <Weiwoo>
+    <log path="/opt/TianShan/logs" snmpLoggingMask="1" size="0" count="1" level="0" bufferSize="2048" timeout="10"/>
+    <config path="/opt/TianShan/etc"/>
+  </Weiwoo>
+  <Weiwoo_Shell>
+    <log loggingMask="1" snmpLoggingMask="1" path="/opt/TianShan/logs" size="0" level="0"/>
+    <service restartInterval="120" restartTries="3" aliveTimeout="900" appAliveWait="25" imagePath="/opt/TianShan/bin/Weiwoo"/>
+  </Weiwoo_Shell>
+  <SiteAdmin>
+    <log bufferSize="2048" count="1" level="0" path="/opt/TianShan/logs" size="0" snmpLoggingMask="1" timeout="10"/>
+    <config path="/opt/TianShan/etc"/>
+  </SiteAdmin>
+  <SiteAdmin_Shell>
+    <log level="0" loggingMask="1" path="/opt/TianShan/logs" size="0" snmpLoggingMask="1"/>
+    <service aliveTimeout="900" appAliveWait="25" imagePath="/opt/TianShan/bin/SiteAdmin" restartInterval="120" restartTries="3"/>
+  </SiteAdmin_Shell>
+  <MODApp>
+    <log bufferSize="2048" count="1" level="0" path="/opt/TianShan/logs" size="0" snmpLoggingMask="1" timeout="10"/>
+    <config path="/opt/TianShan/etc"/>
+  </MODApp>
+  <MODApp_Shell>
+    <log level="0" loggingMask="1" path="/opt/TianShan/logs" size="0" snmpLoggingMask="1"/>
+    <service aliveTimeout="900" appAliveWait="25" imagePath="/opt/TianShan/bin/MODApp" restartInterval="120" restartTries="3"/>
+  </MODApp_Shell>
+  <xmlshd>
+    <log path="/opt/TianShan/logs" snmpLoggingMask="1" size="0" count="1" level="0" bufferSize="2048" timeout="10"/>
+    <config path="/opt/TianShan/etc"/>
+  </xmlshd>
+  <xmlshd_Shell>
+    <log loggingMask="1" snmpLoggingMask="1" path="/opt/TianShan/logs" size="0" level="0"/>
+    <service restartInterval="120" restartTries="3" aliveTimeout="900" appAliveWait="25" imagePath="/opt/TianShan/bin/xmlshd"/>
+  </xmlshd_Shell>
+  <EdgeRM>
+    <log path="/opt/TianShan/logs" snmpLoggingMask="1" size="0" count="1" level="0" bufferSize="2048" timeout="10"/>
+    <config path="/opt/TianShan/etc"/>
+  </EdgeRM>
+  <EdgeRM_Shell>
+    <log loggingMask="1" snmpLoggingMask="1" path="/opt/TianShan/logs" size="0" level="0"/>
+    <service restartInterval="120" restartTries="3" aliveTimeout="900" appAliveWait="25" imagePath="/opt/TianShan/bin/EdgeRM"/>
+  </EdgeRM_Shell>
+</TianShan>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://10.7.0.41:90/services/PlaylistSoapInterface" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://10.7.0.41:90/services/PlaylistSoapInterface" xmlns:intf="http://10.7.0.41:90/services/PlaylistSoapInterface" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns1="http://model.playlist.izq.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><wsdl:types><schema targetNamespace="http://10.7.0.41:90/services/PlaylistSoapInterface" xmlns="http://www.w3.org/2001/XMLSchema"><import namespace="http://schemas.xmlsoap.org/soap/encoding/"/><complexType name="ArrayOf_xsd_string"><complexContent><restriction base="soapenc:Array"><attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]"/></restriction></complexContent></complexType></schema><schema targetNamespace="http://model.playlist.izq.com" xmlns="http://www.w3.org/2001/XMLSchema"><import namespace="http://schemas.xmlsoap.org/soap/encoding/"/><complexType name="SimplePlaylistModel"><sequence><element name="elements" nillable="true" type="impl:ArrayOf_xsd_string"/><element name="playlistID" nillable="true" type="xsd:string"/></sequence></complexType></schema></wsdl:types>
+  <wsdl:message name="getPlaylistDetailInformationResponse">
+    <wsdl:part name="getPlaylistDetailInformationReturn" type="tns1:SimplePlaylistModel"/>
+  </wsdl:message>
+  <wsdl:message name="teardownPlaylistRequest">
+    <wsdl:part name="homeID" type="xsd:string"/>
+    <wsdl:part name="deviceID" type="xsd:string"/>
+    <wsdl:part name="playlistID" type="xsd:string"/>
+    <wsdl:part name="streamID" type="xsd:string"/>
+    <wsdl:part name="errorCode" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="playPlaylistRequest">
+    <wsdl:part name="homeID" type="xsd:string"/>
+    <wsdl:part name="deviceID" type="xsd:string"/>
+    <wsdl:part name="playlistID" type="xsd:string"/>
+    <wsdl:part name="streamID" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="getPlaylistDetailInformationRequest">
+    <wsdl:part name="homeID" type="xsd:string"/>
+    <wsdl:part name="deviceID" type="xsd:string"/>
+    <wsdl:part name="playlistID" type="xsd:string"/>
+    <wsdl:part name="streamID" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="playPlaylistResponse">
+    <wsdl:part name="playPlaylistReturn" type="xsd:int"/>
+  </wsdl:message>
+  <wsdl:message name="teardownPlaylistResponse">
+    <wsdl:part name="teardownPlaylistReturn" type="xsd:int"/>
+  </wsdl:message>
+  <wsdl:portType name="PlaylistSoapInterface">
+    <wsdl:operation name="getPlaylistDetailInformation" parameterOrder="homeID deviceID playlistID streamID">
+      <wsdl:input message="impl:getPlaylistDetailInformationRequest" name="getPlaylistDetailInformationRequest"/>
+      <wsdl:output message="impl:getPlaylistDetailInformationResponse" name="getPlaylistDetailInformationResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="teardownPlaylist" parameterOrder="homeID deviceID playlistID streamID errorCode">
+      <wsdl:input message="impl:teardownPlaylistRequest" name="teardownPlaylistRequest"/>
+      <wsdl:output message="impl:teardownPlaylistResponse" name="teardownPlaylistResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="playPlaylist" parameterOrder="homeID deviceID playlistID streamID">
+      <wsdl:input message="impl:playPlaylistRequest" name="playPlaylistRequest"/>
+      <wsdl:output message="impl:playPlaylistResponse" name="playPlaylistResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PlaylistSoapInterfaceSoapBinding" type="impl:PlaylistSoapInterface">
+    <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getPlaylistDetailInformation">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getPlaylistDetailInformationRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://service.playlist.izq.com" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="getPlaylistDetailInformationResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://10.7.0.41:90/services/PlaylistSoapInterface" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="teardownPlaylist">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="teardownPlaylistRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://service.playlist.izq.com" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="teardownPlaylistResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://10.7.0.41:90/services/PlaylistSoapInterface" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="playPlaylist">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="playPlaylistRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://service.playlist.izq.com" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="playPlaylistResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://10.7.0.41:90/services/PlaylistSoapInterface" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PlaylistSoapInterfaceService">
+    <wsdl:port binding="impl:PlaylistSoapInterfaceSoapBinding" name="PlaylistSoapInterface">
+      <wsdlsoap:address location="http://10.7.0.41:90/services/PlaylistSoapInterface"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

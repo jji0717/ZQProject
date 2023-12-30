@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EventHandlingConfiguration component="VstreamEvent" version="1.0" description="" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="monitoring_event_handling_definition.xsd" lastUpdateTime="2001-12-17T09:30:47">
+	<EventHandling>
+		<EventHandlingEntry name="VstreamVolumeWriteLocked">
+			<Criteria CODE="VST_1001"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>
+		<EventHandlingEntry name="VstreamAdapteFailed">
+			<Criteria CODE="VST_1002"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>
+		<EventHandlingEntry name="VstreamControllerRptError">
+			<Criteria CODE="VST_1003"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>
+		<EventHandlingEntry name="StreamSmithTimeoutOutOfService">
+			<Criteria CODE="VST_1004"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>
+	</EventHandling>	
+</EventHandlingConfiguration>

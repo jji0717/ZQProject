@@ -1,0 +1,136 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "ChODSvc"=..\..\service\ChODSvc.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name JMSCpp
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ChPub"=.\ChPub.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "JMSCpp"=..\..\..\Generic\JMSCppLib\JMSCpp\JMSCpp.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/Generic/JMSCppLib/JMSCpp", XUKAAAAA
+    ..\..\..\generic\jmscpplib\jmscpp
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "TianShanCommon"=..\..\..\TianShan\common\TianShanCommon.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/TianShan/common", XHTAAAAA
+    ..\..\..\tianshan\common
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "TianShanIce"=..\..\..\TianShan\Ice\TianShanIce.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/TianShan/Ice", YRSAAAAA
+    ..\..\..\tianshan\ice
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ZQCommon"=..\..\..\Common\dll\ZQCommon.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/Common/dll", INOAAAAA
+    ..\..\..\common\dll
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ZQCommonStlp"=..\..\..\Common\dll\ZQCommonStlp.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/Common/dll", INOAAAAA
+    ..\..\..\common\dll
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

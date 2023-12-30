@@ -1,0 +1,12 @@
+:ManualSyncAddin.def : Declares the module parameters for the DLL.
+
+LIBRARY		 "ManualSyncAddin"
+DESCRIPTION  'DBAddin Windows Dynamic Link Library'
+
+EXPORTS
+	; Explicit exports can go here
+
+ManualSync_Init
+ManualSync_Run
+ManualSync_Stop
+

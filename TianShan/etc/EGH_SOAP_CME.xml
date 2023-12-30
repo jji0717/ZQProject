@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TianShan>
+	<Definitions src="TianShanDef.xml"/>
+	<EGH_SOAP_CME>
+		<!-- The log setting for the EGH_SOAP_CME plug-in
+			attributes:
+		       level         - the log level
+		       size          - the size that this log must roll
+           count         - the log file count
+		-->
+    	<Log level="${DefaultLogLevel}" size="10240000" count="5"/>
+    	
+		<!-- The event sending options
+			attributes:
+				ignoreLocal - 1 for ignoring the local storage streaming event. 0 for sending.
+		-->
+		<Options ignoreLocal="1"/>
+
+		<SOAPClient>
+			<!-- The CMEService's setting
+				attributes:
+					endpoint		- the url of the CMEService
+			-->
+			<CMEService endpoint="http://127.0.0.1:8080/services/CMEService?wsdl"/>
+
+			<!-- The timeout setting of the SOAP client
+				attributes:
+					connection	- the connection timeout in second
+					send		- the send timeout in second
+					receive		- the receive timeout in second
+			-->
+			<Timeout connection="1" send="1" receive="1"/>
+			
+			<!-- The retry setting of the SOAP client
+				attributes:
+					intevalSec	- the retry inteval in second
+					maxCount	- the max retry count for every request
+			-->
+			<Retry intevalSec="1" maxCount="2"/>
+		</SOAPClient>
+
+	</EGH_SOAP_CME>
+</TianShan>

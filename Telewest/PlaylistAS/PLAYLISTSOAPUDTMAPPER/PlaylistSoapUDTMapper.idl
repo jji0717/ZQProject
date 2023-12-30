@@ -1,0 +1,114 @@
+// ===========================================================================
+// Copyright (c) 2004 by
+// ZQ Interactive, Inc., Shanghai, PRC.,
+// All Rights Reserved.  Unpublished rights reserved under the copyright
+// laws of the United States.
+// 
+// The software contained  on  this media is proprietary to and embodies the
+// confidential technology of ZQ Interactive, Inc. Possession, use,
+// duplication or dissemination of the software and media is authorized only
+// pursuant to a valid written license from ZQ Interactive, Inc.
+// 
+// This software is furnished under a  license  and  may  be used and copied
+// only in accordance with the terms of  such license and with the inclusion
+// of the above copyright notice.  This software or any other copies thereof
+// may not be provided or otherwise made available to  any other person.  No
+// title to and ownership of the software is hereby transferred.
+//
+// The information in this software is subject to change without notice and
+// should not be construed as a commitment by ZQ Interactive, Inc.
+//
+// Name  : PlaylistSoapUDTMapper.idl
+// Author : Bernie Zhao (bernie.zhao@i-zq.com  Tianbin Zhao)
+// Date  : 2005-1-12
+// Desc  : IDL source for PlaylistSoapUDTMapper.dll
+//
+// Revision History:
+// ---------------------------------------------------------------------------
+// $Log: $
+// ===========================================================================
+
+// This file will be processed by the MIDL tool to
+// produce the type library (PlaylistSoapUDTMapper.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+	interface IElementArray;
+	interface IPlaylistModel;
+	interface IPlaylistModelMap;
+
+	[
+		object,
+		uuid(29B6281B-4BD0-4A0D-8BC3-4C38AD71B31B),
+		dual,
+		helpstring("IElementArray Interface"),
+		pointer_default(unique)
+	]
+	interface IElementArray : IDispatch
+	{
+		[propget, id(1), helpstring("property Count")] HRESULT Count([out, retval] long *pVal);
+		[id(2), helpstring("method Add")] HRESULT Add([in] BSTR Element);
+		[id(3), helpstring("method Remove")] HRESULT Remove([in] long Index);
+		[id(4), helpstring("method RemoveAll")] HRESULT RemoveAll();
+		[propget, id(DISPID_VALUE), helpstring("property Item")] HRESULT Item([in] long Index, [out, retval] BSTR *pVal);
+	};
+	[
+		object,
+		uuid(AC37D576-BFA7-4DD6-A05C-FC7597701B34),
+		dual,
+		helpstring("IPlaylistModel Interface"),
+		pointer_default(unique)
+	]
+	interface IPlaylistModel : IDispatch
+	{
+		[propget, id(1), helpstring("property PlaylistID")] HRESULT PlaylistID([out, retval] BSTR *pVal);
+		[propput, id(1), helpstring("property PlaylistID")] HRESULT PlaylistID([in] BSTR newVal);
+		[propget, id(2), helpstring("property Elements")] HRESULT Elements([out, retval] IElementArray* *pVal);
+	};
+	[
+		object,
+		uuid(53E1F1D3-9EB3-47FF-B468-7D77AED48121),
+		dual,
+		helpstring("IPlaylistModelMap Interface"),
+		pointer_default(unique)
+	]
+	interface IPlaylistModelMap : IDispatch
+	{
+	};
+
+[
+	uuid(65D12B3D-915F-4A6C-A34E-B72482BBD792),
+	version(1.0),
+	helpstring("PlaylistSoapUDTMapper 1.0 Type Library")
+]
+library PLAYLISTSOAPUDTMAPPERLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	[
+		uuid(73E08FBF-CE77-4C14-971C-CCB515B505AF),
+		helpstring("ElementArray Class")
+	]
+	coclass ElementArray
+	{
+		[default] interface IElementArray;
+	};
+	[
+		uuid(490193B4-2815-4467-920B-950B818B65E8),
+		helpstring("PlaylistModel Class")
+	]
+	coclass PlaylistModel
+	{
+		[default] interface IPlaylistModel;
+	};
+	[
+		uuid(ABE1FD70-4538-4470-A115-02C2150DC0EF),
+		helpstring("PlaylistModelMap Class")
+	]
+	coclass PlaylistModelMap
+	{
+		[default] interface IPlaylistModelMap;
+	};
+};

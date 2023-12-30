@@ -1,0 +1,8 @@
+
+
+SUBDIRS:=Pho
+
+CURRENTPATH=$PWD
+INCLUDES=
+
+export INCLUDES

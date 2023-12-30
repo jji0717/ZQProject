@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TianShan>
+	<!-- common definitions -->
+	<Definitions src="TianShanDef.xml"/>
+
+	<!-- Configuration on RTFRDS provision helper. It is passivly fed with MPEG source (from FTP push), performs RTF trick genenration and index
+	     pacing then save the results into Vstream file system
+	     attributes:
+	-->
+	<CPH_C2Propagation>
+		<!-- Configuration on media content r/w buffer
+		     attributes:
+		       bufferSize    - the buffer size in byte per each read/write on the input media content
+		-->
+		<MediaSample bufferSize="65536"/>		
+		
+		 <!-- ProvisionMethod propertis configuration
+          attributes:
+              maxSessions - the maximal concurrent sessions that this instance can host
+              maxBandwidth - the maximal bandwidth in Kbps that this instance can host
+     -->
+		<ProvisionMethod>  
+		   <Method name="SeaChange.CDN.HTTPPropagation"  maxSessions="30" maxBandwidth="1152000" enable="1"/>
+    </ProvisionMethod>
+
+
+    <!-- Configuration on the download 
+          attributes:
+            waitTime       - the timeout period that filesize stops growing
+            bandwidthCtrlInterval  - bandwidth ctrl interval
+            enableResume   - enable resume for download, default is 0 which means didn't support
+            deleteOnFail	-	"1" delete file when propagation failed, "0" for not, rename file(filename+"_bak"), defaut is "1" 
+
+     -->
+    <DownLoad waitTime="10000" bandwidthCtrlInterval="10000" enableResume="1"  deleteOnFail="1"/>
+		<!-- Configuration on the ingestion session
+		     attributes:
+		       overSpeedRate  - the percentage of the encoded MPEG to allow over speed if the session is fed faster
+		       enableMD5	   - enable/disable caculate MD5 checksum for provisioned file(main file), default is 1
+		       enableCacheModeForIndex		-	enable/disable cache mode for index file vstream write(VsOpen), default is 1
+		       			On a single node Vstream6.0, enable cache for index would cause "VsSeek failed with VSTRM_TIMECODE_OUTOF_RANGE" sometime
+		       localNetworkInterface	-	the local network interface to bind for ftp transfering, default is empty
+		-->
+		<Session overSpeedRate="110" enableMD5="1" enableCacheModeForIndex="1" localNetworkInterface=""/>		
+
+		<!-- Configuration on the process events
+		-->
+		<Event>
+			<!-- Configuration on the progress events
+			     attributes:
+			       enable  - 1 to enable sending progress events
+			-->
+			<Progress enable="1"/>
+			
+			<!-- Configuration on the streamable events
+			     attributes:
+			       enable  - 1 to enable sending streamable events
+			       lagAfterStart  - the time lag in second after the provision starts to notify streamable
+			-->
+			<Streamable enable="1" lagAfterStart="5" />
+		</Event>
+
+		<!-- Configuration on the NTFS output mode, if this mode is enabled, the provision will not output into Vstream file system,
+		     instead, it only save the output locally onto the NTFS storage
+		       enable  - 1 to enable this NTFS output mode, vstream IO will be eliminated
+		       homeDir  - the full path name of the home directory where to outuput the provision contents
+		-->
+		<NtfsOutputMode enable="0" homeDir="C:\TianShan\c2files"/>
+		
+		<Vstream BWMgrClientId="773220"  disableBufDrvThrottle="1"/>
+		
+		<!-- C2Client
+		     ingressCapacity:  client ingress capacity . default=100000Kbps(100M)
+		     cacheDir:     temporary directory for storage Index files
+		     bind:        the ip which http client bind
+		     transferip:    the file transfer ip
+		     transferdelay:  file transfer delay time
+		     transferPort:  transfer file server port
+		     timeout: http receiver data timeout interval(second),default = 10s
+		-->
+		<C2Client ingressCapacity="1000000" cacheDir="c:\Tianshan\temp" 
+		          bind=""  transferip="" speed="1" transferdelay="0" transferPort="12000" timeout= "20"/>
+		         
+		<NormalizeSparseFile enable="0"/>
+		<!--
+		<testCisco speed="3" transferdelay = "0" timeout= "100000" bandwidth="20000" range="" locatebeginpos="0" locateendpos="-1" /> 
+		-->
+		<!-- <SparseFile sparseFilesize="10000000"/> -->
+		 <!-- SleepTime :    timeInterval  time interval for download the same file -->
+		 <!--     <SleepTime  timeInterval="5000"> -->
+	</CPH_C2Propagation>
+</TianShan>

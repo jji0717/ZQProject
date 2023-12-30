@@ -1,0 +1,93 @@
+<TianShan>
+
+	<!-- default configurations for the services of this TianShan deployment -->
+	<default>		
+		<CrashDump path="c:\crashDump" enableDump="1"/>
+	</default>
+	<RtspProxy>
+		<Service>			
+		<!--
+				eventSinkTimeout:used to sink event,and event will be discarded if expired value reached
+									the value is in millisecond
+			-->
+			<eventSinkTimeout value="15000"/>
+			<!--
+			ServiceThread:the count of thread which is used to serve client request
+			-->			
+			<ServiceThread count="250"/>
+			<!--
+			pendingRequestSize:how many pending request is acceptable for server core
+								if this value is 0,pending request is unlimited.
+								or else if current pending request is bigger than the configuration value,
+								client request will be rejected with code 503
+			-->
+			<pendingRequestSize count="0"/>
+			<RtspParserThreadPoolSize value="24"/>
+			<RtspParserThreadPriority value="2"/>
+			<HighProcessPriority value="1"/>
+			<!--
+			Here are some configuration which can affect response message						
+			-->
+			<response>
+				<!-- enableUseLocaltime : if this config is ON (1), the date header included in response message will carry
+											server local time and give the correct time zone
+										  if this config is OFF (0),the date header carry GMT time
+				-->			
+				<DateHeader enableUseLocaltime="0"/>
+			</response>
+		</Service>				
+		<Plugin>
+			<log level="7" fileSize="12040000" buffer="10240" flushTimeout="2" />
+		</Plugin>		
+		<ServiceFrame>
+			<serverPort value = "554"/>
+			<!--service socket port -->
+			<maxConnection value = "5000"/>
+			<!--connection limit -->
+			<isSecure value = "0"/>
+			<threadCount value = "6"/>
+			<!--thread priority, 0 means normal, could be 0,1,2 -->
+			<threadPriority value="2"/>
+			<!--how many thread to work for receiving client request -->
+			<publicKeyFile value = "server.pem"/>
+			<privateKeyFile value = "server.pem"/>
+			<privateKeyFilePwd value = "xiao"/>
+			<dhParamFile value = "dhParam.pem"/>
+			<randFile value = "rand.pem"/>
+			<debugLevel value="4"/>
+			<!--5 is a default from 1 to 5-->
+			<debugDetail value="3"/>
+			<!--0 is default from 1 to 3-->
+			<idleTimeout value="300000"/>
+			<maxPollTime value="500"/>
+			<sessionTimeout value="3000000"/>
+			<!--
+			maxLen:max message size in byte,if message size exceed this value,it failed to process the request
+			-->
+			<Request  maxLen="32768"/>
+			<!--receive buffer size for rtsp requests, from 2048 to 16384, default 8196 -->
+			<recvBufSize value="8196"/>
+			<!--minimal workingset for this process, default 31457280(30M), means the windows will keep at least this physical memory size for this process -->
+			<minWorkingSet value="31457280"/>
+		</ServiceFrame>
+		<!--
+			applicationSite:in RtspProxy Service defaultHandler is a must.I
+			If no defaultHanlder is set,service will refuse to work
+		-->
+		<applicationSite defaultHandler ="tianshan_s1">
+			<Application path="60020000" handler="tianshan_s1"/>
+			<Application path="60020001" handler="tianshan_s1"/>
+			<Application path="NGOD" handler="NGOD2"/>
+			<Application path="mediacluster" handler="tianshan_s1"/>
+			<Application path="PauseTV" handler="tianshan_s1"/>
+			<Application path="basic" handler="MOD"/>
+			
+			<plugin>
+				<module file="C:\TianShan\modules\ssm_tianshan_s1.dll" 
+							configuration="C:\TianShan\etc"/>
+				<!--module file="C:\TianShan\modules\ssm_ngod2.dll" 
+							configuration="C:\TianShan\etc"/-->
+			</plugin>
+		</applicationSite>
+	</RtspProxy>
+</TianShan>

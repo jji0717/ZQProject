@@ -1,0 +1,310 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "winres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Chinese (P.R.C.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""winres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "1 TYPELIB ""AdminControl.tlb""\r\n"
+    "#include ""ZQVersion.RC ""// non-Microsoft Visual C++ edited version resource\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_ADMINCTRL           BITMAP  DISCARDABLE     "adminctr.bmp"
+IDB_SITE                BITMAP  DISCARDABLE     "Site.bmp"
+IDB_APP                 BITMAP  DISCARDABLE     "App.bmp"
+IDB_STREAMERLINK        BITMAP  DISCARDABLE     "Streamlink.bmp"
+IDB_STORAGE             BITMAP  DISCARDABLE     "Storage.bmp"
+IDB_STORAGELINK         BITMAP  DISCARDABLE     "StorageLink.bmp"
+IDB_SERVGROUP           BITMAP  DISCARDABLE     "Sergroup.bmp"
+IDB_STREAMER            BITMAP  DISCARDABLE     "Streamer.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// REGISTRY
+//
+
+IDR_ADMINCTRL           REGISTRY DISCARDABLE    "AdminCtrl.rgs"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ADDDATA DIALOGEX 0, 0, 322, 244
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+FONT 9, "ËÎÌו"
+BEGIN
+    RTEXT           "Streamer NetID:",IDC_STATIC10,44,45,69,8
+    RTEXT           "ServiceGroup ID:",IDC_STATIC14,46,45,65,8
+    EDITTEXT        IDC_UK_EDIT,66,53,150,12,ES_AUTOHSCROLL
+    RTEXT           "StorageNetId:",IDC_STATIC3,4,54,58,8
+    RTEXT           "ServiceGroup ID:",IDC_STATIC7,26,31,65,8
+    COMBOBOX        IDC_STREAMERLINKCOMBO,126,63,125,87,CBS_DROPDOWNLIST | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "UpdateStreamerLink",IDC_UPSTREAMERLINKBTN,227,96,80,15
+    PUSHBUTTON      "UpdateStorageLink",IDC_UPSTORAGELINKBTN,227,97,80,15
+    RTEXT           "Type:",IDC_STATIC11,88,63,21,13
+    COMBOBOX        IDC_STORAGELINKCOMBO,126,63,125,64,CBS_DROPDOWNLIST | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Connect",IDC_GETSTREAMERDATA,226,20,43,15
+    PUSHBUTTON      "Connect",IDC_GETSTORAGEDATA,226,21,43,15
+    COMBOBOX        IDC_STORAGE_COMBO,66,100,150,50,CBS_DROPDOWNLIST | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    RTEXT           "Storage NetID:",IDC_STATIC9,53,22,68,11
+    EDITTEXT        IDC_EP_EDIT,66,22,150,12,ES_AUTOHSCROLL
+    RTEXT           "Desc:",IDC_STATIC5,40,80,20,8
+    EDITTEXT        IDC_DESC_EDIT,66,78,150,12,ES_AUTOHSCROLL
+    RTEXT           "Type:",IDC_STATIC2,36,99,20,11
+    COMBOBOX        IDC_STREAMER_COMBO,66,101,150,45,CBS_DROPDOWNLIST | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    RTEXT           "Desc:",IDC_STATIC8,68,57,25,8
+    RTEXT           "Streamer NetID:",IDC_STATIC13,50,21,61,12
+    COMBOBOX        IDC_COMBO22,126,41,125,68,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO11,126,21,125,43,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_EDIT,258,35,56,13,ES_AUTOHSCROLL,WS_EX_CLIENTEDGE | 
+                    WS_EX_STATICEDGE
+    RTEXT           "EndPoint:",IDC_STATIC4,22,25,42,8
+    PUSHBUTTON      "link Streamer",IDC_LINKSTREAMERBTN,227,97,80,15
+    PUSHBUTTON      "link Storage",IDC_LINKSTORAGEBTN,227,97,80,15
+    PUSHBUTTON      "Update SerGroup",IDC_UPSGBTN,227,97,80,15
+    PUSHBUTTON      "Update Streamer",IDC_UPSTREAMERBTN,227,114,80,15
+    PUSHBUTTON      "Update Storage",IDC_UPSTORAGEBTN,227,114,80,15
+    EDITTEXT        IDC_SGID_EDIT,105,29,144,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_SGDESC_EDIT,105,54,144,14,ES_AUTOHSCROLL
+    CONTROL         "List2",IDC_LIST,"SysListView32",LVS_REPORT | WS_BORDER | 
+                    WS_TABSTOP,4,132,312,105
+    CONTROL         "Tab1",IDC_TAB,"SysTabControl32",TCS_HOTTRACK,5,1,317,
+                    239
+    EDITTEXT        IDC_PATH_EDIT,126,45,125,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_STREAMERID_COMBO,66,53,150,50,CBS_DROPDOWNLIST | 
+                    CBS_AUTOHSCROLL | WS_VSCROLL | WS_GROUP | WS_TABSTOP
+    LTEXT           "MaxBW:",IDC_STATICBW,70,77,25,8
+    EDITTEXT        IDC_BWEDIT,106,73,40,14,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "MaxSession:",IDC_SESSIONSTATIC,153,79,45,8
+    EDITTEXT        IDC_SESSIONEDIT,209,75,40,14,ES_AUTOHSCROLL | ES_NUMBER
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_ADDDATA, DIALOG
+    BEGIN
+        LEFTMARGIN, 2
+        RIGHTMARGIN, 319
+        TOPMARGIN, 1
+        BOTTOMMARGIN, 241
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_ADDDATA DLGINIT
+BEGIN
+    IDC_STORAGE_COMBO, 0x403, 1, 0
+"\000" 
+    IDC_STREAMERID_COMBO, 0x403, 2, 0
+0x0031, 
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_UPSTORAGE MENU DISCARDABLE 
+BEGIN
+    POPUP "222"
+    BEGIN
+        MENUITEM "Update Storage",              ID_UPSTORAGE
+        MENUITEM "Remove Storage",              ID_REMOVESTORAGE
+    END
+END
+
+IDR_UPSG MENU DISCARDABLE 
+BEGIN
+    POPUP "444"
+    BEGIN
+        MENUITEM "UpDate ServiceGroup",         ID_UPSG
+        MENUITEM "Remove ServiceGroup",         ID_REMOVESERVICEGROUP
+    END
+END
+
+IDR_UPSTREAMER MENU DISCARDABLE 
+BEGIN
+    POPUP "333"
+    BEGIN
+        MENUITEM "Update Stream",               ID_UPSTREAMER
+        MENUITEM "Remove Streamer",             ID_REMOVESTREAMER
+    END
+END
+
+IDR_ADDSTORAGE MENU DISCARDABLE 
+BEGIN
+    POPUP "111111"
+    BEGIN
+        MENUITEM "Add Storage",                 ID_ADDSTORAGE
+    END
+END
+
+IDR_ADDSTREAMER MENU DISCARDABLE 
+BEGIN
+    POPUP "222"
+    BEGIN
+        MENUITEM "Add Streamer",                ID_ADDSTREAMER
+    END
+END
+
+IDR_ADDSG MENU DISCARDABLE 
+BEGIN
+    POPUP "333"
+    BEGIN
+        MENUITEM "Add SerivceGroup",            ID_ADDSG
+    END
+END
+
+IDR_STORAGELINK MENU DISCARDABLE 
+BEGIN
+    POPUP "444"
+    BEGIN
+        MENUITEM "Link Storage",                ID_LINKSTORAGE
+    END
+END
+
+IDR_STREAMERLINK MENU DISCARDABLE 
+BEGIN
+    POPUP "555"
+    BEGIN
+        MENUITEM "Link Streamer",               ID_LINKSTREAMER
+    END
+END
+
+IDR_LINKMENU MENU DISCARDABLE 
+BEGIN
+    POPUP "Link"
+    BEGIN
+        MENUITEM "Update Link",                 ID_UPDATELINK
+        MENUITEM "Delete Link",                 ID_DELLINK
+    END
+END
+
+IDR_ADDSITE MENU DISCARDABLE 
+BEGIN
+    POPUP "SITE"
+    BEGIN
+        MENUITEM "Add Site",                    ID_ADDSITE
+    END
+END
+
+IDR_ADDAPP MENU DISCARDABLE 
+BEGIN
+    POPUP "APP"
+    BEGIN
+        MENUITEM "Add App",                     ID_ADDAPP
+    END
+END
+
+IDR_UPDATESITE MENU DISCARDABLE 
+BEGIN
+    POPUP "UPDATE SITE"
+    BEGIN
+        MENUITEM "Update Site",                 ID_UPDATESITE
+        MENUITEM "Remove Site",                 ID_REMOVESITE
+        MENUITEM "Set SiteProerties",           ID_SETSITEPROPERTIES
+    END
+END
+
+IDR_UPDATEAPP MENU DISCARDABLE 
+BEGIN
+    POPUP "UPDATEAPP"
+    BEGIN
+        MENUITEM "Update App",                  ID_UPDATEAPP
+        MENUITEM "Remove App",                  ID_REMOVEAPP
+        MENUITEM "Mount Application",           ID_MOUNTAPP
+        MENUITEM "UMount Application",          ID_UMOUNTAPP
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_PROJNAME            "AdminControl"
+END
+
+#endif    // Chinese (P.R.C.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+1 TYPELIB "AdminControl.tlb"
+#include "ZQVersion.RC "// non-Microsoft Visual C++ edited version resource
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

@@ -1,0 +1,145 @@
+**TransferInit(successful)
+
+POST /c2cp/transferinitiate HTTP/1.1
+Host: 10.15.10.50:5150
+Date: Thu, 07 Apr 2011 05:53:16 GMT
+Content-Length: 357
+Connection: close
+
+<TransferInitiate><ClientTransfer>192.168.81.111</ClientTransfer><TransferAddress>10.15.11.50</TransferAddress><IngressCapacity>500000000</IngressCapacity><Filename>cdntest002</Filename><Range>0-1000000</Range><TransferRate>3750000</TransferRate><AllocatedTransferRate>3750000</AllocatedTransferRate><TransferTimeout>500</TransferTimeout></TransferInitiate>
+HTTP/1.1 200 OK
+Connection: close
+Server: C2 Transfer Daemon
+Content-type: text/xml;charset=utf-8
+Content-Length: 202
+
+<?xml version="1.0"?>
+<TransferInitiateResponse>
+  <TransferID>session/2040215048</TransferID>
+  <AvailableRange>0-1000000</AvailableRange>
+  <OpenForWrite>no</OpenForWrite>
+</TransferInitiateResponse>
+
+
+**TransferInit(failed)
+
+POST /c2cp/transferinitiate HTTP/1.1
+Host: 10.15.10.50:5150
+Date: Thu, 07 Apr 2011 05:48:09 GMT
+Content-Length: 356
+Connection: close
+
+<TransferInitiate><ClientTransfer>192.168.81.111</ClientTransfer><TransferAddress>10.15.11.50</TransferAddress><IngressCapacity>500000000</IngressCapacity><Filename>hdtestC72</Filename><Range>0-1000000</Range><TransferRate>3750000</TransferRate><AllocatedTransferRate>3750000</AllocatedTransferRate><TransferTimeout>500</TransferTimeout></TransferInitiate>
+HTTP/1.1 404 Not Found
+Connection: close
+Server: C2 Transfer Daemon
+Content-type: text/xml;charset=utf-8
+Content-Length: 134
+
+<?xml version="1.0"?>
+<TransferInitiateResponse>
+  <ErrorText>Filename 'hdtestC72' not found.</ErrorText>
+</TransferInitiateResponse>
+
+
+**TransferTerminate(failed)
+
+POST /c2cp/transferterminate HTTP/1.1
+Host: 10.15.10.50:5150
+Date: Thu, 07 Apr 2011 06:43:49 GMT
+Content-Length: 115
+Connection: close
+
+<TransferTerminate><ClientTransfer></ClientTransfer><TransferID>session/2095006029</TransferID></TransferTerminate>
+HTTP/1.1 404 Not Found
+Connection: close
+Server: C2 Transfer Daemon
+Content-type: text/xml;charset=utf-8
+Content-Length: 160
+
+<?xml version="1.0"?>
+<TransferTerminateResponse>
+  <ErrorText>Session with TransferID 'session/2095006029' not found.</ErrorText>
+</TransferTerminateResponse>
+
+**ResourceStatus
+
+POST /c2cp/resourcestatus HTTP/1.1
+Host: 10.15.10.50:5150
+Date: Thu, 07 Apr 2011 05:32:24 GMT
+Content-Length: 33
+Connection: close
+
+<ResourceStatus></ResourceStatus>
+HTTP/1.1 200 OK
+Connection: close
+Server: C2 Transfer Daemon
+Content-type: text/xml;charset=utf-8
+Content-Length: 696
+
+<?xml version="1.0"?>
+<ResourceStatusResponse>
+  <Port>
+    <Name>eth0</Name>
+    <Address>10.15.10.50</Address>
+    <Address>fe80::215:17ff:fe87:7990</Address>
+    <TCPPortNumber>5150</TCPPortNumber>
+    <Capacity>100000000</Capacity>
+    <State>UP</State>
+    <ActiveTransferCount>0</ActiveTransferCount>
+    <ActiveBandwidth>0</ActiveBandwidth>
+  </Port>
+  <Port>
+    <Name>eth1</Name>
+    <Address>10.15.11.50</Address>
+    <Address>fe80::215:17ff:fe87:7991</Address>
+    <TCPPortNumber>5150</TCPPortNumber>
+    <Capacity>1000000000</Capacity>
+    <State>UP</State>
+    <ActiveTransferCount>0</ActiveTransferCount>
+    <ActiveBandwidth>0</ActiveBandwidth>
+  </Port>
+</ResourceStatusResponse>
+
+
+**Status
+
+POST /c2cp/status HTTP/1.1
+Host: 10.15.10.50:5150
+Date: Thu, 07 Apr 2011 06:09:27 GMT
+Content-Length: 55
+Connection: close
+
+<Status><IncludeAggregate>0</IncludeAggregate></Status>
+HTTP/1.1 200 OK
+Connection: close
+Server: C2 Transfer Daemon
+Content-type: text/xml;charset=utf-8
+Content-Length: 40
+
+<?xml version="1.0"?>
+<StatusResponse/>
+
+**StateUpdate
+
+POST /c2cp/transferstateupdate HTTP/1.1
+Content-Type: text/xml
+Content-Length: 221
+Connection: close
+
+<?xml version="1.0"?>
+<TransferStateUpdate>
+  <Transfer>
+    <ClientTransfer>192.168.81.111</ClientTransfer>
+    <TransferID>session/1188388794</TransferID>
+    <State>DELETED</State>
+  </Transfer>
+</TransferStateUpdate>
+HTTP/1.1 200 OK
+Accept-Ranges: bytes
+Cache-Control: no-cache
+Content-Length: 30
+Date: Thu, 07 Apr 2011 06:09:19 GMT
+Server: ZQHttpE
+
+<TransferStateUpdateResponse/>

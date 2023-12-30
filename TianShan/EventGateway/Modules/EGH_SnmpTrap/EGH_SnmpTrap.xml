@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TianShan>
+   <Definitions src="TianShanDef.xml">
+   	
+    </Definitions>
+   <EventSender>
+	<!--
+	logPath 	: the full path of the log file,this log file is used in event sender plugin
+	logFileSize	: log file size in byte
+	logLevel	: log level 0 ~ 7
+  	logNumber 	: log file number
+	 -->
+    <Log logPath="${TianShanLogDir}\EGH_SnmpTrap.log" logFileSize="10240000" logLevel="7" logNumber="2" />
+    <!-- sender message use snmp trap -->
+    <SnmpSender>
+        <!--        
+        ipAddress    : snmp agent process network ip address
+         -->
+        <Agent ipAddress="${ServerNetIf}" />
+        <!--set destinations where messages send to
+        enableed     : set Target item use or not use,vale "0" "1"
+        ipAddress    : destination ip address
+        port         : destination prot
+        community    : snmp community name, value: "public" "private"
+        
+        Filter condition set,if not set the value, the field invalidate in filter
+        category     : event category want to capture 
+        eventName    : event name want to capture
+   
+        -->
+        <Targets>           
+            <Target enabled="1" ipAddress="192.168.81.114" port="162" community="public" >
+              <Filters>
+            	  <Filter category="test" eventName="started" />
+                <Filter category="test" eventName="stopped" />
+               </Filters>
+            
+            </Target>
+            <Target enabled="0" ipAddress="172.16.200.28" port="162" community="public" >
+              <Filters>
+            	  <Filter category="weiwoo" eventName="" />
+              </Filters>
+            
+            </Target>
+            
+        </Targets>
+        <!--
+            dequeSize : in event sender,there is a deque used for reserve message which hasn't been sent out
+       			if the message count is bigger than the DequeSize,message will be flush into a file
+       			100 ~ 200 is crecommended
+            savePath  : file used to store temp message(Those haven't been sent out)
+            NOTE      : DO NOT USE A SINGLE FILE TO STORE ICE MESSAGE, JMS MESSAGE AND SNMP MESSAGE 
+        -->
+       <Other dequeSize="100" savePath="${TianShanRtRecDir}\EGH_SnmpTrap.data" />
+     </SnmpSender>
+   </EventSender>
+</TianShan>

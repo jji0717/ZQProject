@@ -1,0 +1,7 @@
+
+set volumeName=volume6
+set pid=1001
+set paid=2000
+set responseURL=http://192.168.81.1:8001/
+get
+exec6

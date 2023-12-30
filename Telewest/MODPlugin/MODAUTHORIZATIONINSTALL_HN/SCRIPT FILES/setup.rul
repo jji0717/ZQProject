@@ -1,0 +1,143 @@
+
+////////////////////////////////////////////////////////////////////////////////
+//                                                                            
+//   File Name:   Setup.rul                                                   
+//                                                                            
+//   Description: InstallShield script                                        
+//                                                                            
+//   Comments:    This script was generated based on the selections you made in
+//                the Project Wizard.  Refer to the help topic entitled "Modify      
+//                the script that the Project Wizard generates" for information
+//                on possible next steps.
+//
+////////////////////////////////////////////////////////////////////////////////
+
+
+// Include header files
+    
+#include "ifx.h"
+    
+////////////////////// string defines ////////////////////////////
+
+//////////////////// installation declarations ///////////////////
+
+// ----- DLL function prototypes -----
+
+
+    // your DLL function prototypes
+
+
+// ---- script function prototypes -----
+
+
+    // your script function prototypes
+
+    // your global variables
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//                                                                           
+//  FUNCTION:   OnFirstUIBefore                                            
+//                                                                           
+//  EVENT:      The OnFirstUIBefore event is called by OnShowUI when the setup is
+//              running in first install mode. By default this event displays UI allowing
+//              the end user to specify installation parameters.
+//              
+//              Note: This event will not be called automatically in a
+//              program...endprogram style setup.                                                             
+//
+//////////////////////////////////////////////////////////////////////////////////////////
+function OnFirstUIBefore()
+    number  nResult;
+    number  nLoop;
+    string  szTitle, szMsg;
+    string  szOpt1, szOpt2, szLicenseFile;
+    string  szName, szCompany;
+    string  svDir;
+    string  szTargetDirAppendix;
+    BOOL    bLicenseAccepted;
+
+	STRING szRootParam, szRootValue;
+	NUMBER nRetVal;
+begin	
+/*
+    if ( ALLUSERS ) then   
+        TARGETDIR = PROGRAMFILES ^ IFX_COMPANY_NAME ^ IFX_PRODUCT_NAME;
+    else
+        TARGETDIR = FOLDER_APPDATA ^ IFX_COMPANY_NAME ^ IFX_PRODUCT_NAME; 
+    endif;
+*/
+	// set TARGETDIR according to ITVROOT
+	szRootParam = "ITVROOT";
+	nRetVal = GetEnvVar(szRootParam, szRootValue);
+	if(nRetVal != 0)then            
+		MessageBox("NO ITVROOT environment variable", SEVERE);
+		abort;             
+	endif;
+	
+	TARGETDIR = szRootValue + "\\Exe";    
+
+    // Customize the default TARGETDIR for multi-instance application.
+    // TODO: If you want something different customize the code below.	
+    if( MAINT_OPTION = MAINT_OPTION_MULTI_INSTANCE  && MULTI_INSTANCE_COUNT > 0) then
+        nLoop = 1;
+        svDir = TARGETDIR;
+        while(ExistsDir(TARGETDIR) = EXISTS)			
+            NumToStr(szTargetDirAppendix,nLoop);
+            TARGETDIR = svDir + szTargetDirAppendix;
+            nLoop = nLoop + 1;
+        endwhile;						
+    endif;
+
+    svDir = TARGETDIR;
+    szName = "";
+    szCompany = "";
+    bLicenseAccepted = FALSE;
+
+// Beginning of UI Sequence
+Dlg_Start:
+
+Dlg_SdWelcome:
+    szTitle = "";
+    szMsg = "";
+    nResult = SdWelcome( szTitle, szMsg );
+    if (nResult = BACK) goto Dlg_Start;
+
+Dlg_SdLicense2:
+    szTitle = "";
+    szOpt1 = "";
+    szOpt2 = "";
+    szLicenseFile = SUPPORTDIR ^ "license.txt";
+    nResult = SdLicense2( szTitle, szOpt1, szOpt2, szLicenseFile, bLicenseAccepted );
+    if (nResult = BACK) then
+        goto Dlg_SdWelcome;
+    else
+        bLicenseAccepted = TRUE;
+    endif;
+
+Dlg_SdRegisterUser:
+    szMsg = "";
+    szTitle = "";	
+    nResult = SdRegisterUser( szTitle, szMsg, szName, szCompany );
+    if (nResult = BACK) goto Dlg_SdLicense2;
+
+Dlg_ObjDialogs:
+    nResult = ShowObjWizardPages( nResult );
+    if (nResult = BACK) goto Dlg_SdRegisterUser;
+    
+Dlg_SdStartCopy2:
+    szTitle = "";
+    szMsg = "";
+    nResult = SdStartCopy2( szTitle, szMsg );	
+    if (nResult = BACK) goto Dlg_ObjDialogs;
+
+    return 0;
+end;
+
+
+// --- include script file section ---
+
+
+
+#include "ComponentEvents.rul"

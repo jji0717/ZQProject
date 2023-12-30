@@ -1,0 +1,56 @@
+<project name="AquaClient" default="dist" basedir=".">
+  <description>
+       simple example build file
+  </description>
+
+  <property environment="env"/>
+
+  <!-- set global properties for this build -->
+  <property name="src" location="."/>
+  <property name="build" location="build"/>
+  <property name="dist"  location="./bin"/>
+  <property name="lib"  location="./lib"/>
+
+  <target name="init">
+    <tstamp/>
+    <mkdir dir="${build}"/>
+    <mkdir dir="${build}/bin" />
+  </target>
+
+  <target name="compile" depends="init"  description="compile the source " >
+
+    <!-- Compile the java code from ${src} into ${build} -->
+    <javac source="1.5" srcdir="${src}" destdir="${build}" classpath="${build};${src};${lib}\commons-beanutils.jar;${lib}\commons-collections.jar;${lib}\commons-lang.jar;${lib}\commons-logging.jar;${lib}\ezmorph-1.0.6.jar;${lib}\json-lib-2.4-jdk15.jar" deprecation="on" />
+
+  </target>
+
+  <target name="dist" depends="compile"  description="generate the distribution" >
+    <!-- Create the distribution directory -->
+    <mkdir dir="${dist}"/>
+
+    <manifest file="MANIFEST.MF">
+        <attribute name="AquaClient-Version" value="${env.BuildVerNum}"/> 
+        <attribute name="Company" value="XOR Media"/> 
+	<attribute name="Built-Date" value="${TODAY}"/>
+    </manifest>
+
+    <javadoc destdir="${build}/doc" Locale="en_US" Encoding="UTF-8" windowTitle="AquaClient" >
+      <fileset dir="${src}" defaultexcludes="yes" >
+        <include name="com/xormedia/aqua/sdk/AquaClient.*" />
+        <include name="com/xormedia/aqua/sdk/LongVariable.*" />
+      </fileset>
+    </javadoc>
+
+    <jar jarfile="${dist}/AquaClient.jar"  basedir="${build}" manifest="MANIFEST.MF" />
+    <javah classpath="${dist}/AquaClient.jar" outputFile="../NestedClient.h" class="com.xormedia.aqua.sdk.NestedClient" />
+  </target>
+
+  <target name="clean" description="clean up" >
+
+    <!-- Delete the ${build} and ${dist} directory trees -->
+    <delete dir="${build}"/>
+    <delete dir="${dist}"/>
+
+  </target>
+</project>
+

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TianShan>
+
+<Definitions src="TianShanDef.xml">
+</Definitions>
+
+<ngod2_plugin>		
+	<!--The main logfile of this ngod2_plunin 
+	     attributes:
+		     	 path: full path of the log file
+		       level: the log level of this main log
+		       logNum: the max log file numbers
+		       size: the size that this trace log must roll
+		       flushTimeout: timeout in second that the logfile must flush
+  --> 
+  <log path="${TianShanLogDir}\ngod2_plugin.Log" level="${DefaultLogLevel}" logNum="10" size="25600000" buffer="1024" flushTimeout="1" />
+  
+  <!--The microsoft access database path
+  		attributes:
+          type         : the database type, support "access", "mysql" and "mysql5"
+          templatePath : the mdb template file path
+  				path         : full path of the mdb database file
+          dsn          : the dsn string
+          user         : the dsn user(if need)
+          auth         : the dsn user password(if need)
+  -->
+  <DBPath type="access" templatPath="${TianShanHomeDir}\utils\NGOD2Event_template.mdb" path="${TianShanRtRecDir}\NGOD2Event.mdb" dsn="" user="" auth=""/>
+  
+  <!--The log timeout time(in minute)
+  		attributes:
+  				time: the plugin will delete the record from the database
+  							which is ${time} minutes far from now
+  -->
+  <Timeout time="360"/>
+</ngod2_plugin>
+
+</TianShan>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EventDefinition component="WinEvent" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="monitoring_event_definition.xsd">
+	<EventList>
+		<Event category="Service Control Manager" code="Windows_System_1001" severity="information">
+			<Translation>Service entered the running state.</Translation>
+			<Translation locale="zh">服务启动</Translation>
+		</Event>
+		<Event category="Service Control Manager" code="Windows_System_1002" severity="error">
+			<Translation>Service entered the stopped state.</Translation>
+			<Translation locale="zh">服务停止</Translation>
+		</Event>
+		<Event category="Service Control Manager" code="Windows_System_1003" severity="error">
+			<Translation>Service failed to start.</Translation>
+			<Translation locale="zh">服务启动失败</Translation>
+		</Event>
+		<Event category="Service Control Manager" code="Windows_System_1004" severity="error">
+			<Translation>Service abnormal termination.</Translation>
+			<Translation locale="zh">服务异常终止</Translation>
+		</Event>
+    		<Event category="Service Control Manager" code="Windows_System_1005" severity="error">
+			<Translation>Disk Full</Translation>
+			<Translation locale="zh">Disk Full</Translation>
+		</Event>
+		<Event category="Service Control Manager" code="Windows_System_1006" severity="error">
+			<Translation>Legato Transport Link Connection Fail</Translation>
+			<Translation locale="zh">Legato Transport Link Connection Fail</Translation>
+		</Event>
+		<Event category="Service Control Manager" code="Windows_System_1007" severity="error">
+			<Translation>D Drive is offline</Translation>
+			<Translation locale="zh">D Drive is offline</Translation>
+		</Event>
+		<Event category="Service Control Manager" code="Windows_System_1008" severity="warning">
+			<Translation>Driver is connected to other node</Translation>
+			<Translation locale="zh">Driver is connected to other node</Translation>
+		</Event>
+		<Event category="DB" code="Monitor_Alert_1014" severity="error">
+			<Translation>MSSQL server crash occur</Translation>
+			<Translation locale="zh">MSSQL server crash occur</Translation>
+		</Event>
+		<Event category="Service Control Manager" code="Windows_Application_1001" severity="error">
+			<Translation>Service Crash</Translation>
+			<Translation locale="zh">Service Crash</Translation>
+		</Event>
+	</EventList>
+</EventDefinition>

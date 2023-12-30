@@ -1,0 +1,34 @@
+HKCR
+{
+	AdPathExplorer.AdPathUI.1 = s 'AdPathUI Class'
+	{
+		CLSID = s '{8BDA1D2F-58DE-4737-B935-3E3794D4DAC4}'
+	}
+	AdPathExplorer.AdPathUI = s 'AdPathUI Class'
+	{
+		CLSID = s '{8BDA1D2F-58DE-4737-B935-3E3794D4DAC4}'
+		CurVer = s 'AdPathExplorer.AdPathUI.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {8BDA1D2F-58DE-4737-B935-3E3794D4DAC4} = s 'AdPathUI Class'
+		{
+			ProgID = s 'AdPathExplorer.AdPathUI.1'
+			VersionIndependentProgID = s 'AdPathExplorer.AdPathUI'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			ForceRemove 'Control'
+			ForceRemove 'Insertable'
+			ForceRemove 'ToolboxBitmap32' = s '%MODULE%, 101'
+			'MiscStatus' = s '0'
+			{
+			    '1' = s '131473'
+			}
+			'TypeLib' = s '{4D670F4B-2D2E-4055-95CE-0C5D34D8A2D5}'
+			'Version' = s '1.0'
+		}
+	}
+}

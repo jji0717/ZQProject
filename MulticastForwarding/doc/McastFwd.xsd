@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xs:element name="Config">
+		<xs:annotation>
+			<xs:documentation>the root element of the configuration</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Default" />
+				<xs:element ref="Conversation" minOccurs="1" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Default">
+		<xs:annotation>
+			<xs:documentation>
+				Default values to be used when not explicitly defined
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="TunnelListener" minOccurs="1"  maxOccurs="1" />
+				<xs:element ref="MulticastListener"  minOccurs="0"  maxOccurs="1" />
+				<xs:element ref="MulticastSender"  minOccurs="0"  maxOccurs="1" />
+				<xs:element ref="DenyList" minOccurs="0"  maxOccurs="1" />
+				<xs:element ref="Tunnels" minOccurs="0"  maxOccurs="1" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Conversation">
+		<xs:annotation>
+			<xs:documentation>
+	Conversation #1 
+   		Enable tunneling of multicast messages on address 225.25.25.25, Port 6000
+        
+		Connect to the servers in the default RemoteServer list
+		Listen for multicast messages on the default LocalListenAddresses
+		Send multicast messages on the default LocalSendAddresses
+		Block incoming multicast messages from servers on the DenyList
+
+    Conversation #2 
+        Enable tunneling of multicast messages on address 225.25.25.25, Port 7000
+        
+        Connect to the servers in the default RemoteServer list
+        Send multicast messages on the default LocalSendAddresses
+        Block incoming multicast messages from servers on the DenyList
+
+        Listen for multicast messages in the LocalListenAddresses configured below
+        As the LocalListenAddress contains no Sockets, the conversation will 
+        not be listened to on the local network
+
+    Conversation #3 
+        Enable tunneling of multicast messages on address 225.25.25.25, Port 8000
+
+        Connect to the servers in the default RemoteServer list
+        Listen for multicast messages on the default LocalListenAddresses
+        Block incoming multicast messages from servers on the DenyList
+
+        Send multicast messages on the LocalSendAddresses configured below
+        As the LocalSendAddress contains no Sockets, the conversation should 
+        not be forwarded to the local network
+
+    Conversation #4 
+        Enable tunneling of multicast messages on address that resolves from
+        My_V6_MulticastGroup, Port 7000
+        Connect to the servers in the default RemoteServer list
+        Listen for multicast messages in the LocalListenAddresses configured below
+        Send multicast messages on the LocalSendAddresses configured below
+        Block incoming multicast messages from servers on the DenyList configured below
+        
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="groupAddr" type="xs:string" />
+			<xs:attribute name="groupPort" type="xs:string" />
+			<xs:sequence>
+				<xs:element ref="MulticastListener" minOccurs="0"  maxOccurs="1" />
+				<xs:element ref="MulticastSender" minOccurs="0" maxOccurs="1" />
+				<xs:element ref="DenyList" minOccurs="0"  maxOccurs="1" />
+				<xs:element ref="Tunnels" minOccurs="0"  maxOccurs="1" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="TunnelListener">
+		<xs:complexType>
+			<xs:attribute name="localPort" type="xs:string" />
+			<xs:sequence>
+				<xs:element ref="LocalAddress" minOccurs="1" maxOccurs="2" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MulticastListener">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="LocalAddress" minOccurs="0" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MulticastSender">
+		<xs:complexType>
+			<xs:attribute name="localPort" type="xs:string" />
+			<xs:sequence>
+				<xs:element ref="LocalAddress" minOccurs="0" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DenyList">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Source" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Source">
+		<xs:complexType>
+			<xs:attribute name="address" type="xs:string" />
+			<xs:attribute name="port" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="LocalAddress">
+		<xs:complexType>
+			<xs:attribute name="address" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RemoteAddress">
+		<xs:complexType>
+			<xs:attribute name="address" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Tunnels">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Connection" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Connection">
+		<xs:complexType>
+			<xs:attribute name="remotePort" type="xs:string" />
+			<xs:sequence>
+				<xs:element ref="LocalAddress" minOccurs="1" maxOccurs="2" />
+				<xs:element ref="RemoteAddress" minOccurs="1" maxOccurs="2" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Socket">
+		<xs:complexType>
+			<xs:attribute name="address" type="xs:string" />
+			<xs:attribute name="port" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

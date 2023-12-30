@@ -1,0 +1,12 @@
+
+[SystemSettings]
+Description=Combine the 3 zodiac tests together
+
+[ProjectProfile]
+ProjectIni=C:\autotest\zodiac\ZodiacTest\ZodiacTest.ini
+[ProjectPlan]
+Source=C:\autotest\zodiac\ZodiacTest\ZodiacTest.pln
+[ProjectScript]
+[ProjectFrame]
+[ProjectResults]
+[ProjectData]

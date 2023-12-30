@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TianShan>
+    <Definitions src="TianShanDef.xml"/>
+
+    <Log level="7" size="10240000"/>
+
+    <Rotate count="2" size="5120000" start="0" />
+
+    <OutputFile path="${TianShanLogDir}/ProvisionStarted.csv">
+        <Event category="Content" name="ProvisionStarted" >
+            <Line text="$StampUTC,$SourceNetId,$content" />
+        </Event>
+    </OutputFile>
+    <OutputFile path="${TianShanLogDir}/ProvisionStopped.csv">
+        <Event category="Content" name="ProvisionStopped" >
+            <Line text="$StampUTC,$SourceNetId,$content,$lastError,&quot;$lastErrMsg&quot;" />
+        </Event>
+    </OutputFile>
+    <OutputFile path="${TianShanLogDir}/Created.csv">
+        <Event category="Content" name="Created" >
+            <Line text="$StampUTC,$content" />
+        </Event>
+    </OutputFile>
+    <OutputFile path="${TianShanLogDir}/Destroyed.csv">
+        <Event category="Content" name="Destroyed" >
+            <Line text="$StampUTC,$content" />
+        </Event>
+    </OutputFile>
+    <OutputFile path="${TianShanLogDir}/StateChanged.csv">
+        <Event category="Content" name="StateChanged" >
+            <Line text="$StampUTC,$content,$oldState,$newState" />
+        </Event>
+    </OutputFile>
+    <OutputFile path="${TianShanLogDir}/TotalBwChange.csv">
+        <Event category="ContentLocator" name="TotalBwIncreased">
+            <Line text="$StampUTC,$TotalBw,$Delta" />
+        </Event>
+        <Event category="ContentLocator" name="TotalBwDecreased">
+            <Line text="$StampUTC,$TotalBw,$Delta" />
+        </Event>
+    </OutputFile>
+    <OutputFile path="${TianShanLogDir}/TransferCreated.csv">
+      <Event category="ContentLocator" name="TransferCreated">
+        <Line text="$StampUTC,$ProviderId,$ProviderAssetId,$SubType,$TransferPort,$TransferId,$DemandedBy,$RequestedFrom,$StatusCode,$ReservedBw,$ReservedAt" />
+      </Event>
+    </OutputFile>
+    <OutputFile path="${TianShanLogDir}/RemoteAssetResolved.csv">
+      <Event category="ContentLocator" name="RemoteAssetResolved">
+        <Line text="$StampUTC,$ProviderId,$ProviderAssetId,$SubType,$RemoteLocator,$DemandedBy,$RequestedFrom,$StatusCode" />
+      </Event>
+    </OutputFile>
+    <OutputFile path="${TianShanLogDir}/LocateFailed.csv">
+      <Event category="ContentLocator" name="LocateFailed">
+        <Line text="$StampUTC,$ProviderId,$ProviderAssetId,$SubType,$DemandedBy,$RequestedFrom,$StatusCode,&quot;$Reason&quot;" />
+      </Event>
+    </OutputFile>
+
+    <OutputFile path="${TianShanLogDir}/TransferDestroyed.csv">
+      <Event category="ContentLocator" name="TransferDestroyed">
+        <Line text="$StampUTC,$TransferId,"/>
+      </Event>
+      <Event category="ContentLocator" name="TransferNotExist">
+        <Line text="$StampUTC,$TransferId,"/>
+      </Event>
+      <Event category="ContentLocator" name="TransferDestroyFailed">
+        <Line text="$StampUTC,$TransferId,&quot;$Reason&quot;"/>
+      </Event>
+    </OutputFile>
+
+    <OutputFile path="${TianShanLogDir}/ProvisionBegin.csv">
+      <Event category="CPESvc" name="ProvisionBegin">
+        <Line text="$ProvisionAt,$ContentName,$Owner,$SourceURL,$TransferBitrate"/>
+      </Event>
+    </OutputFile>
+
+    <OutputFile path="${TianShanLogDir}/ProvisionEnd.csv">
+      <Event category="CPESvc" name="ProvisionEnd">
+        <Line text="$StampUTC,$ContentName,$Status,$ErrorCode,&quot;$ErrorDescription&quot;"/>
+      </Event>
+    </OutputFile>
+
+</TianShan>

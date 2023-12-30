@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+Notice: TianShanDef.xml has been preloaded when this configuration file is being parsed, please refer to
+        TianShanDef.xml for the common properties
+
+Regular procedures of loading configurations:
+  1) When a service starts, read HKEY_LM\Softwares\ZQ Interactive\TianShan\Services\<ServiceName>\configDir, load 
+     the common properties if the TianShanDef.xml is opened, if <ServiceName>.xml is successfully opened, jump to 5)
+  2) tries HKEY_LM\Softwares\ZQ Interactive\TianShan\Services\configDir, load the common properties if the
+     TianShanDef.xml is opened, if <ServiceName>.xml is successfully opened, jump to 5)
+  3) tries the dir ..\etc of where the executable is, load the common properties if the TianShanDef.xml is opened,
+     if <ServiceName>.xml is successfully opened, jump to 5)
+  4) puts an error as system event, say no configuration TianShanService.xml can be opened. Quit the program
+  5) reads the <ServiceName>.xml, if there is any XML formatting errors, put an error as system event then quit
+     the program
+  6) reads the LogFolder in the XML, take it if succeed, otherwise use ..\logs of where the executable is. Open the
+     main log file, and immediately put a line including
+       a) service name
+       b) service version number
+       c) the full pathname of <ServiceName>.xml
+     as the first log message in the main logfile
+  7) continues to populate other configurations
+  8) initialize the service and start serving
+
+-->
+<TianShan>
+	<!-- common definitions -->
+	<Definitions src="TianShanDef.xml"/>
+	<!-- default configurations for the services of this TianShan deployment -->
+	<default>
+
+    <!-- The default folder where the services of this TianShan deployment accesses their local
+		     databases if it is not defined by their individual configurations
+		     attributes:
+		       path          - path to the location of database directory, default "../data/"
+           type          - the local data file format 
+           flushInterval - the interval of flushing the data file in seconds
+           syncIOAtStart - sync all content from storage or not
+		-->
+    <Database path="${TianShanDatabaseDir}" type="text" flushInterval="600" syncIOAtStart ="1"/>
+
+    <!--CrashDump can help devoloper diagnose the program when it crashed if you set enable to "1" you must
+		    make sure that the path is accessible
+		     attributes:
+			path   - crashdump path
+			enabled - 1 to enable crashDump   
+		 -->
+		<CrashDump path="${TianShanCrashDumpDir}" enabled="1"/>
+
+	</default>
+  	
+	<!-- Configuration on the ContentProvisionEngineservice
+	     attributes:
+	       netId  - The unique id of ContentProvisionEngine instance, use the hostname of this server or other unique string to identify this CPE.
+	       					This value must be set and be unique if there are more than 1 CME instance in a environment. 
+	-->
+	<CacheManagement netId="${HostNetID}" >
+    
+		<!-- The seperated Cache log which include the import/delete/aging... logs
+		     attributes:
+		       size       - log file size in bytes
+		       level      - log level
+		       maxCount   - the max count of log files
+           bufferSize - log buffer size
+		-->
+    <CacheLogFile size="50000000" level="7" maxCount="10" bufferSize="8192" />
+
+    <!-- The SOAP related endpoints
+		     attributes:
+		       cmeEndpoint      - end point of CME, in format of <IP>:<Port>
+		       lamEndPoint      - end point of LAM, in format of <IP>:<Port>
+		-->
+    <Connection cmeEndpoint="${ServerNetIf}:10086" lamEndPoint="${ServerNetIf}:8080" />
+
+    <!-- CME <-> VSIS related configuration
+		     attributes:
+		       buffSize            - CME socket buffer size to receive VSIS data in bytes
+		       connectionTimeout   - connection timeout of CME connecting to VSIS in seconds
+           sendTimeout         - timeout of CME sending data to VSIS in seconds
+           scanInterval        - interval of CME scaning the connection between CME and VSIS
+           lengthOfPaid        - the fixed PAID length if there is no "paidpidSeparator" in the PIDPAID returned from VSIS
+           paidpidSeparator    - default seperator between PID and PAID to support dynamic paid length
+		-->
+    <VSIS buffSize="65536" connectionTimeout ="5" sendTimeout="5" reportInterval="150" idleTimeout="3600" scanInterval="120" lengthOfPaid="20" />
+
+    <!-- cache control parameters 
+		     attributes:
+		       storageThreshold    - when storage used space is less than storageThreshold%, content will be aways imported in first play. value (0-100)
+		       storageCushion      - the least storage free space(storageCushion%) that CME to need to keep. (0-100)
+           playTrigger         - how many times of play requests will trigger CME to cache the content after reaching storageThreshold% 
+                                 and C2 banwidth usage is less than CacheBandwidth/threshold
+           playTrigger2        - how many times of play requests will trigger CME to cache the content after reaching storageThreshold%
+                                 and C2 banwidth usage is larger than CacheBandwidth/threshold
+           agePeriod           - if the content last play is agePeriod seconds ago, adjust its playcount to its 1/ageDenominator
+           ageDenominator      - aging denominator, the playcount will aging to its 1/ageDenominator if reach agePeriod
+           subFileCount        - how many sub files need to be cached in storage, main file is subfile
+           trimDays            - how many days the content will be kept in CME(data/memory) after being deleted from storage
+		-->
+    <CacheControl storageThreshold="70" storageCushion="5" playTrigger="4" playTrigger2="8" agePeriod="28800" ageDenominator="3" subFileCount="3" trimDays="7"/>
+
+    <!-- cache control parameters 
+		     attributes:
+		       threshold           - the C2 bandwidth threshold for playTrigger & playTrigger2
+		       reserved            - the reserved C2 banwidth for each node (VSIS)
+		-->
+    <CacheBandwidth threshold="75" reserved="20000000" />
+
+    <!-- Statistics for theoretical hitrate as a reference of real hitrate
+		     attributes:
+		       enabled             - if enable the statistics
+		       window              - the statistics window in seconds for the sessions
+           interval            - the statistics interval in seconds, which make the window move all the time
+           delay               - the window will be 'dalay' seconds before, reason is PWE file size is only avaiable after import completed
+           cotentExtraSizePercentage - the percentage of the sub file size. Because CME can only know the main file size, while do the calcuate, it needs to count the trick file size
+                                       Ex: if VSIS is to cache 6x FF & FR, the value is: 2 * (1/6) * 100 = 34 (33.3)
+           printDetails        - if print the content details when CME does the statistics
+		-->
+    <Statistics enabled ="1" window="86400" interval="3600" delay="7200" cotentExtraSizePercentage="0" printDetails="0" />
+
+    <!-- Proactive imports for known popular content
+		     attributes:
+		       enabled             - if enable the proactive import function
+		       monitorPath         - where the proactive xml file will be placed
+           retryInterval       - the retry interval in seconds if proactive import failed
+		-->
+    <Proactive enabled="0" monitorPath="c:\CMEV2\proactive\" retryInterval="60"/>
+               
+	</CacheManagement>
+</TianShan>

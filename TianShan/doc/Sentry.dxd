@@ -1,0 +1,206 @@
+// ===========================================================================
+// Copyright (c) 2006 by
+// ZQ Interactive, Inc., Shanghai, PRC.,
+// All Rights Reserved.  Unpublished rights reserved under the copyright
+// laws of the United States.
+// 
+// The software contained  on  this media is proprietary to and embodies the
+// confidential technology of ZQ Interactive, Inc. Possession, use,
+// duplication or dissemination of the software and media is authorized only
+// pursuant to a valid written license from ZQ Interactive, Inc.
+// 
+// This software is furnished under a  license  and  may  be used and copied
+// only in accordance with the terms of  such license and with the inclusion
+// of the above copyright notice.  This software or any other copies thereof
+// may not be provided or otherwise made available to  any other person.  No
+// title to and ownership of the software is hereby transferred.
+//
+// The information in this software is subject to change without notice and
+// should not be construed as a commitment by ZQ Interactive, Inc.
+//
+// Ident : $Id: RtspSpec.dxd $
+// Branch: $Name:  $
+// Author: Hui Shao
+// Desc  : 
+//
+// Revision History: 
+// ---------------------------------------------------------------------------
+// see section of "Revision History" in manpage
+// ===========================================================================
+/*!
+@page page_tssentry The TianShan Sentry Service
+- @subpage tsenstry_ov "Overview"
+- @subpage tsrtsppage_wlo0 "Web Layout"
+- @subpage tssentryppg_tsclient "TsClient API"
+- @subpage tssentryppg_nbh "Neighborhood"
+- @subpage tssentryppg_ec "Event Channel"
+- @subpage tssentryppg_rc "Remote Control"
+
+*/
+
+////////////////////// PAGE Overview ///////////////////////
+/*!
+
+@page tsenstry_ov  Overview
+@author  Hui Shao
+@date    2007-5-22
+@version 0.1
+
+@section tsenstry_revision Revision History
+$Log: /ZQProjs/TianShan/doc/Sentry.dxd $
+  
+  1     10-11-12 16:05 Admin
+  Created.
+  
+  1     10-11-12 15:39 Admin
+  Created.
+  
+  1     07-08-23 18:19 Hui.shao
+
+@section tsenstry_ovv  Overview
+@image html img_sentry.PNG
+The SentryService is a system service installled on every machine where runs ZQ TianShan module implmentations.
+The SentryService is a per-machine unique instance that monitors ZQ TianShan components. It considers of following
+major fuctions:
+@li Collects and monitors local TianShan components
+@li Represents the current status of the local TianShan components
+@li Detects and delivers events from local TianShan components
+@li Discovers and navigator TianShan services in a neighborhood
+
+@section tsenstry_modules Internal Modules
+The SentryService and its supplemental components can be grouped as the following three subsystem by functions
+
+@subsection tsenstry_modweb  Web Presentation Subsystem
+The embedded web server-side works with external TsLayout.dll and TsClient.dll togather provides presentations on
+local TianShan components status thru html pages
+
+@subsection tsenstry_modnbh  Local Service & Neighborhood Management Subsystem
+This subsystem collects the local TianShan services for querying. It publishes its existence to the neighborhood and
+also subscribes the messages of the neighborhood so that it can enumerate all the reachable TianShan nodes of the
+same group
+
+@subsection tsenstry_modevnt Event Delivery Subsystem
+This subsystem monitors all the log files of the local services with specified syntax definitions. Once the matched
+log message is detected, the subsystem convert the information of the log message into TianShan GenericEvent and post
+it to the EventChannel
+*/
+
+////////////////////// Web Layout ///////////////////////
+/*!
+
+@page tsrtsppage_wlo0 Layout
+- @subpage tsrtsppage_wlo "Web Layout"
+- @subpage tssentryppg_snmp "SNMP form"
+- @subpage tssentryppg_grid "Grid views"
+- @subpage tssentryppg_log "Log files"
+
+@page tsrtsppage_wlo Web Layout
+@section tsenstry_wlo_dll  The tsLayout.dll
+
+@section tsenstry_wlo_schema  Layout Schema
+@subsection tsenstry_wlo_schema_sample  Sample
+@code
+<layout>
+   <sentry >
+       <page name="System" type="System" />
+       <page name="Daemon" type="Daemon" serviceControl="1" adapterList="1" />
+   </sentry >
+   <service name="Weiwoo"      defaultpage="General" showlogfile="1" >
+       <page name="General"    type="SnmpForm" baseOid="123.231.1.2.2" />
+   </service>
+   <service name="PathManager" defaultpage="General" >
+       <page name="General"          type="SnmpForm" baseOid="123.231.1.2.2" />
+       <page name="Storages"         type="Grid"     datasource="C:\TianShan\bin\TsClient.dll" gridEntry="listStorages" />
+       <page name="Streamers"        type="Grid"     datasource="C:\TianShan\bin\TsClient.dll" gridEntry="listStreamers" />
+       <page name="ServiceGroups"    type="Grid"     datasource="C:\TianShan\bin\TsClient.dll" gridEntry="listServiceGroups" />
+   </service>
+</layout>
+@endcode
+
+@section tsenstry_wlo_service Service Layout
+@subsection tsenstry_wlo_service_pgs Appliable Property Pages
+- @ref tssentryppg_snmp "SNMP form"
+- @ref tssentryppg_grid "Grid views"
+- @ref tssentryppg_log "Log files"
+*/
+
+////////////////////// TsClient API ///////////////////////
+/*!
+@page tssentryppg_tsclient TsClient API
+
+*/
+
+////////////////////// SNMP form ///////////////////////
+/*!
+@page tssentryppg_snmp SNMP form
+@image html img_sentry_lo_svcgen.PNG
+
+*/
+
+////////////////////// Grid views ///////////////////////
+/*!
+@page tssentryppg_grid Grid views
+@image html img_sentry_lo_svcgrid.PNG
+
+*/
+
+////////////////////// Log files ///////////////////////
+/*!
+@page tssentryppg_log Log files
+@image html img_sentry_lo_svclog.PNG
+
+*/
+
+////////////////////// Neighborhood ///////////////////////
+/*!
+@page tssentryppg_nbh Neighborhood
+
+*/
+
+////////////////////// Event Channel ///////////////////////
+/*!
+@page tssentryppg_ec Event Channel
+
+- @subpage tssentryppg_ec_ov "Event Delivery Overview"
+- @subpage tssentryppg_ec_syntax "Syntax Definition"
+
+*/
+
+////////////////////// Remote Control ///////////////////////
+/*!
+@page tssentryppg_rc Remote Control
+
+*/
+
+////////////////////// Syntax Definition ///////////////////////
+/*!
+@page tssentryppg_ec_syntax Syntax Definition
+
+@section tsenstry_ec_stx_sample Sample Definition
+@code
+<EventSource type="unixLog">
+    <Event name="CreatePurchase" category="ChannelOnDemand" eventId="9001" enabled="1">
+       <syntax>(.{18}).*Create purchase on channel \[(\w*)\],node_group_id=(\d*),client_session_id=(\w*),home_id=(\w*),smartcard_id=(\w*),mac_address=(\w*).*broadcast_time=(\w*)</syntax>
+       <param name="channelName"        value="$2" />
+       <param name="node_group_id"      value="$3" />
+       <param name="clientSessionId"    value="$4" />
+       <param name="home_id"            value="$5" />
+       <param name="smartcard_id"       value="$6" />
+       <param name="mac_address"        value="$7" />
+       <param name="broadcast_time"     value="$8" />
+    </Event>
+
+    <Event name="PlaylistSeek" category="ChannelOnDemand" eventId="9002" enabled="0">
+       <syntax>(.{18}).*playlistId=([\w|-]*),contentName=(\w*),posResult=(\w*),posRequested=(\w*),requestReceived=([\w|\.]*),client_session_id=(\w*)</syntax>
+       <param name="channelName"        value="$3" />
+       <param name="posRequested"       value="$5" />
+       <param name="posResult"          value="$4" />
+       <param name="requestReceived"    value="$6" />
+       <param name="clientSessionId"    value="$7" />
+    </Event>
+
+</EventSource>
+@endcode
+
+*/
+

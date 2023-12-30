@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TianShan>
+  <!-- Notice: TianShanDef.xml has been preloaded when this configuration file is being parsed, please
+		 refer to TianShanDef.xml for the common properties
+	-->
+  <Definitions src="TianShanDef.xml">
+  </Definitions>
+
+  <!-- default configurations for the services of this TianShan deployment -->
+  <default>
+    <CrashDump path="${TianShanCrashDumpDir}" enabled="1"/>
+    <IceTrace level="${DefaultLogLevel}" size="2000000"  enabled="1" verbose="0" count="5"/>
+    <IceProperties>
+      <!--  the following are performance tuning parameters, please don't modify if you are not an expert at them 
+			-->
+      <prop name="Ice.Trace.Network"                    value="1" />
+      <prop name="Ice.Trace.Protocol"                   value="0" />
+      <prop name="Ice.Trace.Retry"                      value="1" />
+      <prop name="Ice.Warn.Connections"                 value="1" />
+      <prop name="Ice.Warn.Endpoints"                   value="1" />
+      <prop name="Freeze.Warn.Deadlocks"                value="1" />
+      <prop name="Freeze.Trace.Map"                     value="0" />
+      <prop name="Freeze.Trace.DbEnv"                   value="2" />
+      <prop name="Freeze.Trace.Evictor"                 value="0" />
+      <prop name="Ice.Override.Timeout"                 value="10000"/>
+      <prop name="Ice.Override.ConnectTimeout"          value="2000"/>
+      <prop name="Ice.ThreadPool.Server.Size"           value="10"/>
+      <prop name="Ice.ThreadPool.Server.SizeMax"        value="20"/>
+      <prop name="Ice.ThreadPool.Client.Size"           value="20"/>
+      <prop name="Ice.ThreadPool.Client.SizeMax"        value="40"/>
+    </IceProperties>
+  </default>
+  <EventLockProperties>
+    <!--  the following are control the output about event's log	-->
+    <!--
+	  Network:     control the log about the client connect
+	  Subscribed:  control the log about the client Subscribe topic
+	  Unsubscribe: control the log about the client Unsubscribe topic
+	  Databases:   control the log about the EventChannel read the database data
+	  Operation:   control the log about the client event
+	  -->
+    <prop name="Network"                              value="1" />
+    <prop name="Subscribed"                           value="1" />
+    <prop name="Unsubscribe"                          value="0" />
+    <prop name="Databases"                            value="1" />
+    <prop name="Operation"                            value="1" />
+  </EventLockProperties>
+  <!-- The EventChannel configuration
+	-->
+  <EventChannel>
+    <!-- The service's bind info
+      attributes:
+        host    -   the host address
+        port    -   the port
+    -->
+    <Bind host="${ServerNetIf}" port="11000"/>
+
+    <!-- The runtime db's setting
+      attributes:
+        path    -   the db path
+    -->
+    <Database path="${TianShanDatabaseDir}"/>
+
+    <!-- The connection self-check settings
+      attributes:
+        interval(msec)  - the self-check interval.
+        threshold(msec) - the threshold that the program consider the internal
+                          service is not functional and restart it immediately.
+    -->
+    <SelfCheck interval="3000" threshold="30000"/>
+
+    <!-- The pre-configured topics and links -->
+    <PreConf>
+      <!-- Topic(multiple)
+           name - name of the topic
+        -->
+      <Topic name="TianShan/Event/Generic"/>
+      <!--
+      <Topic name="OtherTopicsHere"/>
+      -->
+
+      <!-- Link(multiple): link two topic with an optional cost
+           from - the topic name of the link tail
+           to   - the topic name of the link arrow
+           cost - the cost of the link. 0 by default
+        -->
+      <!--
+      <Link from="TianShan/Event/Generic" to="Test" cost="0"/>
+      <Link from="TianShan/Event/Generic" to="Test2" cost="0"/>
+      <Link from="Test" to="Test2" cost="0"/>
+      -->
+    </PreConf>
+  </EventChannel>
+</TianShan>

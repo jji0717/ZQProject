@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8"> 
+	<title>Line Chart</title>	
+	<script type="text/javascript" src="js/require.js"></script>
+	<script type="text/javascript" src="js/app/TianShanEye.js"></script>
+	<script type="text/javascript" src="index.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/TianShanEye.css">
+<!--</script>
+ require.config({
+ 	baseUrl: 'js',
+	
+ 	paths: {				
+ 		jquery: "jquery-3.2.0",
+ 		reader: "app/Utils/reader",
+ 		http:   "app/Utils/http",
+ 		tabler: "app/Utils/tabler",
+ 		Chart:  "Chart.bundle.min",
+ 		draw :  "app/Utils/draw"
+ 	},
+ 	shim: {
+ 		'draw': ['Chart'],
+ 		'reader':   ['jquery']
+ 	}
+ });
+ </script>-->
+</head>
+
+<body>
+	<div class="container">  
+		<div class="header">  
+			<h1>TianShan Eye</h1>  
+		</div>
+		<div class="sidebar" id="sidectl">
+			<li class="l" id="lr">左右布局</li>
+			<li class="l" id="ud">上下布局</li>
+		</div> 
+		<div class="maincontent">  
+			<div id="tableId"></div><br>
+			<div id="tableId2"></div><br>	
+			<div id="tableId3"></div><br>
+			<div id="wrap"> 
+			   <div id="left"> 
+					<canvas id="canvas1"></canvas>
+			   </div> 
+			   <div id="right"> 
+					<canvas id="canvas2"></canvas>
+			   </div> 
+			</div>
+			<br> <br>
+			<div style="width:45%; margin: 0 auto;">
+				<canvas id="part"></canvas>
+			</div>
+		</div>
+		<div class="footer">  
+            <h1>脚注</h1>  
+        </div>
+	</div>
+</body>
+
+</html>

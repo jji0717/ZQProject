@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2005 rel. 3 U (http://www.altova.com) by  () -->
+<wsdl:definitions xmlns:impl="http://www.i-zq.com/services/LAMServiceForCME" xmlns:intf="http://www.i-zq.com/services/LAMServiceForCME" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://www.i-zq.com/services/LAMServiceForCME">
+	<wsdl:types>
+		<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.i-zq.com/services/LAMServiceForCME">
+			<import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+			<complexType name="AssetList">
+				<sequence>
+					<element name="returnCode" type="xsd:long"/>
+					<element name="assetID" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+				</sequence>
+			</complexType>
+			<complexType name="Asset">
+				<sequence>
+					<element name="returnCode" type="xsd:long"/>
+					<element name="providerID" type="xsd:string"/>
+					<element name="providerAssetID" type="xsd:string"/>
+					<element name="size" type="xsd:long"/>
+					<element name="supportFileSize" type="xsd:long"/>
+					<element name="bitRate" type="xsd:long"/>
+					<element name="durationSecond" type="xsd:long"/>
+				</sequence>
+			</complexType>
+			<complexType name="ProviderList">
+				<sequence>
+					<element name="returnCode" type="xsd:long"/>
+					<element name="ProviderID" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+				</sequence>
+			</complexType>
+			<complexType name="Cluster">
+				<sequence>
+					<element name="clusterID" type="xsd:string"/>
+					<element name="cacheable" type="xsd:int"/>
+          <element name="cacheLevel" type="xsd:int"/>
+				</sequence>
+			</complexType>
+			<complexType name="ClusterList">
+				<sequence>
+					<element name="clusters" type="impl:Cluster" minOccurs="0" maxOccurs="unbounded"/>
+				</sequence>
+			</complexType>
+		</schema>
+	</wsdl:types>
+	<wsdl:message name="addCacheRequest">
+		<!--
+	    Parameters for add cache
+	-->
+		<wsdl:part name="providerID" type="xsd:string"/>
+		<wsdl:part name="providerAssetID" type="xsd:string"/>
+		<wsdl:part name="clusterID" type="xsd:string"/>
+	</wsdl:message>
+	<wsdl:message name="addCacheResponse">
+		<!--
+	    Return code of add cache query
+	        0 - normal
+	        1 - unknown error
+	        3 - specified cluster not found
+	        4 - specified asset already exists
+	  -->
+		<wsdl:part name="addCacheReturn" type="xsd:long"/>
+	</wsdl:message>
+	<wsdl:message name="deleteCacheRequest">
+		<!--
+	    Parameters for delete cache
+	  -->
+		<wsdl:part name="providerID" type="xsd:string"/>
+		<wsdl:part name="providerAssetID" type="xsd:string"/>
+		<wsdl:part name="clusterID" type="xsd:string"/>
+	</wsdl:message>
+	<wsdl:message name="deleteCacheResponse">
+		<!--
+	    Return code of delete cache query
+	        0 - normal
+	        1 - unknown error
+	        2 - specified asset not found
+	        3 - specified cluster not found
+	  -->
+		<wsdl:part name="deleteCacheReturn" type="xsd:long"/>
+	</wsdl:message>
+	<wsdl:message name="getAssetRequest">
+		<!--
+	    Parameters for get asset
+	  -->
+		<wsdl:part name="providerID" type="xsd:string"/>
+		<wsdl:part name="providerAssetID" type="xsd:string"/>
+		<wsdl:part name="clusterID" type="xsd:string"/>
+	</wsdl:message>
+	<wsdl:message name="getAssetResponse">
+		<!--
+	    Return structure for get asset
+		returnCode:
+		0 - normal
+		1 - unknown error
+		2 - specified asset not found
+	  -->
+		<wsdl:part name="getAssetReturn" type="impl:Asset"/>
+	</wsdl:message>
+	<wsdl:message name="listAssetRequest">
+		<!--
+	    Parameters for list asset:
+		providerID: optional
+		providerAssetID: optional
+		clusterID: required
+	  -->
+		<wsdl:part name="providerID" type="xsd:string"/>
+		<wsdl:part name="clusterID" type="xsd:string"/>
+	</wsdl:message>
+	<wsdl:message name="listAssetResponse">
+		<!--
+	    Return structure for list asset
+		returnCode:
+		0 - normal
+		1 - unknown error
+		3 - specified cluster not found
+	  -->
+		<wsdl:part name="listAssetReturn" type="impl:AssetList"/>
+	</wsdl:message>
+	<wsdl:message name="listProviderRequest">
+	</wsdl:message>
+	<wsdl:message name="listProviderResponse">
+		<!--
+	    Return structure for list provider
+		returnCode:
+		0 - normal
+		1 - unknown error
+	  -->
+		<wsdl:part name="listProviderReturn" type="impl:ProviderList"/>
+	</wsdl:message>
+	<wsdl:message name="getClusterConfigRequest">
+		<wsdl:part name="clusterID" type="xsd:string"/>
+	</wsdl:message>
+	<wsdl:message name="getClusterConfigResponse">
+		<!--
+	    Return structure for get capacity
+		state: 0 - normal
+               1 - out of service
+        nodeIPs: IP separated by ";"
+	-->
+		<wsdl:part name="state" type="xsd:long"/>
+		<wsdl:part name="totalSize" type="xsd:long"/>
+		<wsdl:part name="freeSize" type="xsd:long"/>
+		<wsdl:part name="serviceGroup" type="xsd:string"/>
+		<wsdl:part name="nodeIPs" type="xsd:string"/>
+	</wsdl:message>
+	<wsdl:message name="handshakeRequest">
+		<!--
+	    Parameters for cme handshake
+		cmeStatus: 0 - normal
+		           1 - out of service
+	-->
+		<wsdl:part name="cmeVersion" type="xsd:string"/>
+		<wsdl:part name="cmeStatus" type="xsd:long"/>
+		<wsdl:part name="cmeEndPoint" type="xsd:string"/>
+	</wsdl:message>
+	<wsdl:message name="handshakeResponse">
+		<!--
+	    Return structure for cme handshake
+		state: 0 - normal
+               1 - LAM out of service
+	-->
+		<wsdl:part name="handshakeReturn" type="xsd:long"/>
+	</wsdl:message>
+	<wsdl:message name="listClusterRequest"/>
+	<wsdl:message name="listClusterResponse">
+		<wsdl:part name="listClusterReturn" type="impl:ClusterList"/>
+	</wsdl:message>
+	<wsdl:message name="getExportURLRequest">
+		<wsdl:part name="providerID" type="xsd:string"/>
+		<wsdl:part name="providerAssetID" type="xsd:string"/>
+		<wsdl:part name="clusterID" type="xsd:string"/>
+	</wsdl:message>
+	<wsdl:message name="getExportURLResponse">
+		<wsdl:part name="returnCode" type="xsd:long"/>
+		<wsdl:part name="contentType" type="xsd:string"/>
+		<wsdl:part name="contentSubtype" type="xsd:string"/>
+		<wsdl:part name="sourceURL" type="xsd:string"/>
+		<wsdl:part name="userName" type="xsd:string"/>
+		<wsdl:part name="password" type="xsd:string"/>
+		<wsdl:part name="bitrate" type="xsd:long"/>
+		<wsdl:part name="windowStart" type="xsd:string"/>
+		<wsdl:part name="windowEnd" type="xsd:string"/>
+	</wsdl:message>
+	<wsdl:message name="copyFromRequest">
+		<wsdl:part name="providerID" type="xsd:string"/>
+		<wsdl:part name="providerAssetID" type="xsd:string"/>
+		<wsdl:part name="clusterID" type="xsd:string"/>
+		<wsdl:part name="contentType" type="xsd:string"/>
+		<wsdl:part name="contentSubtype" type="xsd:string"/>
+		<wsdl:part name="sourceURL" type="xsd:string"/>
+		<wsdl:part name="userName" type="xsd:string"/>
+		<wsdl:part name="password" type="xsd:string"/>
+		<wsdl:part name="bitrate" type="xsd:long"/>
+		<wsdl:part name="windowStart" type="xsd:string"/>
+		<wsdl:part name="windowEnd" type="xsd:string"/>
+	</wsdl:message>
+	<wsdl:message name="copyFromResponse">
+		<wsdl:part name="copyFromReturn" type="xsd:long"/>
+	</wsdl:message>
+	<wsdl:portType name="LAMFacadeForCME">
+		<wsdl:operation name="addCache" parameterOrder="providerID providerAssetID clusterID">
+			<!--
+		    Add cache.
+		    When LAM receive add cache query, it will check whether the specified
+		    asset exist on specified cluster, and return error if asset exist or 
+		    cluster not found.
+		    If asset not found and cluster exist, it will accept the query and 
+		    return success. After that, it query asset URL on NAS via ALQ and send
+		    provision command to ContentStore to upload asset.
+		  -->
+			<wsdl:input name="addCacheRequest" message="impl:addCacheRequest"/>
+			<wsdl:output name="addCacheResponse" message="impl:addCacheResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="deleteCache" parameterOrder="providerID providerAssetID clusterID">
+			<!--
+		    Delete cache.
+		    When LAM receive delete cache query, it will check whether the specified
+		    asset exist on specified cluster, and return error if asset not found or
+		    cluster not found.
+		    If asset and cluster exist, it will accept the query and return success.
+		    After that, it query to ContentStore to delete asset.
+		  -->
+			<wsdl:input name="deleteCacheRequest" message="impl:deleteCacheRequest"/>
+			<wsdl:output name="deleteCacheResponse" message="impl:deleteCacheResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getAsset" parameterOrder="providerID providerAssetID clusterID">
+			<!--
+		    Get asset.
+		    Return specified asset detail.
+		  -->
+			<wsdl:input name="getAssetRequest" message="impl:getAssetRequest"/>
+			<wsdl:output name="getAssetResponse" message="impl:getAssetResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="listAsset" parameterOrder="providerID clusterID">
+			<!--
+		    List asset.
+		    Return asset list base on specified parameter.
+		  -->
+			<wsdl:input name="listAssetRequest" message="impl:listAssetRequest"/>
+			<wsdl:output name="listAssetResponse" message="impl:listAssetResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="listProvider">
+			<wsdl:input name="listProviderRequest" message="impl:listProviderRequest"/>
+			<wsdl:output name="listProviderResponse" message="impl:listProviderResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getClusterConfig">
+			<!--
+		    Get cluster configuration.
+		  -->
+			<wsdl:input name="getClusterConfigRequest" message="impl:getClusterConfigRequest"/>
+			<wsdl:output name="getClusterConfigResponse" message="impl:getClusterConfigResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="handshake" parameterOrder="cmeVersion cmeStatus cmeEndPoint">
+			<!--
+		    Handshake.
+		  -->
+			<wsdl:input name="handshakeRequest" message="impl:handshakeRequest"/>
+			<wsdl:output name="handshakeResponse" message="impl:handshakeResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="listCluster">
+			<wsdl:input name="listClusterRequest" message="impl:listClusterRequest"/>
+			<wsdl:output name="listClusterResponse" message="impl:listClusterResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getExportURL" parameterOrder="providerID providerAssetID clusterID">
+			<wsdl:input name="getExportURLRequest" message="impl:getExportURLRequest"/>
+			<wsdl:output name="getExportURLResponse" message="impl:getExportURLResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="copyFrom" parameterOrder="providerID providerAssetID clusterID contentType sourceURL userName password bitrate windowStart windowEnd">
+			<wsdl:input name="copyFromRequest" message="impl:copyFromRequest"/>
+			<wsdl:output name="copyFromResponse" message="impl:copyFromResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="LAMServiceForCMESoapBinding" type="impl:LAMFacadeForCME">
+		<wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="addCache">
+			<wsdlsoap:operation/>
+			<wsdl:input>
+				<wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://cme.integration.am.izq.com"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.i-zq.com/services/LAMServiceForCME"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="deleteCache">
+			<wsdlsoap:operation/>
+			<wsdl:input>
+				<wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://cme.integration.am.izq.com"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.i-zq.com/services/LAMServiceForCME"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getAsset">
+			<wsdlsoap:operation/>
+			<wsdl:input>
+				<wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://cme.integration.am.izq.com"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.i-zq.com/services/LAMServiceForCME"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="listAsset">
+			<wsdlsoap:operation/>
+			<wsdl:input>
+				<wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://cme.integration.am.izq.com"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.i-zq.com/services/LAMServiceForCME"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="listProvider">
+			<wsdlsoap:operation/>
+			<wsdl:input>
+				<wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://cme.integration.am.izq.com"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.i-zq.com/services/LAMServiceForCME"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getClusterConfig">
+			<wsdlsoap:operation/>
+			<wsdl:input>
+				<wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://cme.integration.am.izq.com"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.i-zq.com/services/LAMServiceForCME"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="handshake">
+			<wsdlsoap:operation/>
+			<wsdl:input>
+				<wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://cme.integration.am.izq.com"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.i-zq.com/services/LAMServiceForCME"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="listCluster">
+			<wsdlsoap:operation/>
+			<wsdl:input>
+				<wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://cme.integration.am.izq.com"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.i-zq.com/services/LAMServiceForCME"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getExportURL">
+			<wsdlsoap:operation/>
+			<wsdl:input>
+				<wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://cme.integration.am.izq.com"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.i-zq.com/services/LAMServiceForCME"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="copyFrom">
+			<wsdlsoap:operation/>
+			<wsdl:input>
+				<wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://cme.integration.am.izq.com"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.i-zq.com/services/LAMServiceForCME"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="LAMFacadeForCMEService">
+		<wsdl:port name="LAMServiceForCME" binding="impl:LAMServiceForCMESoapBinding">
+			<wsdlsoap:address location="http://www.i-zq.com/services/LAMServiceForCME"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

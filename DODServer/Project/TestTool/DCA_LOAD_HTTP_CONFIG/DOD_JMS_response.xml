@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ConfResponse State="1" Format="2">
+	<ListOfNode>
+		<DCAPortConfiguration QueueName="LocalQueue">
+			<Port>
+				<port1 PMTPID="122" GroupID="0" TotalRate="200">
+					<Channel>
+						<a Encrypted="0" StreamType="196" StreamID="446" Tag="PIC" ChannelRate="130" DataType="0" ChannelType="0" QueueName="queue1"/>
+						<b Encrypted="0" StreamType="197" StreamID="447" Tag="PIC" ChannelRate="100" DataType="0" ChannelType="0" QueueName="queue2"/>
+					</Channel>
+					<IPPort>
+						<p1 SendType="1" IPAddress="10.30.4.100" IPPort="1002"/>
+						<p2 SendType="2" IPAddress="228.7.7.7" IPPort="8001"/>
+					</IPPort>
+				</port1>
+				<port2 PMTPID="123" GroupID="1" TotalRate="250">
+					<Channel>
+						<c Encrypted="0" StreamType="198" StreamID="448" Tag="PIC" ChannelRate="150" DataType="0" ChannelType="0" QueueName="queue3"/>
+						<d Encrypted="0" StreamType="199" StreamID="449" Tag="PIC" ChannelRate="200" DataType="0" ChannelType="0" QueueName="queue4"/>
+					</Channel>
+					<IPPort>
+						<p1 SendType="1" IPAddress="100.30.4.100" IPPort="2002"/>
+						<p2 SendType="1" IPAddress="192.168.80.206" IPPort="1234"/>
+					</IPPort>
+				</port2>
+			</Port>
+		</DCAPortConfiguration>
+	</ListOfNode>
+</ConfResponse>

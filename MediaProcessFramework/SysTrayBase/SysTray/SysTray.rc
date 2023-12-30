@@ -1,0 +1,390 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Chinese (P.R.C.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 4, 2\r\n"
+    "#pragma code_page(936)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\SysTray.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""l.chs\\afxres.rc""          // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\SysTray.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 235, 55
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "关于 SysTray"
+FONT 9, "宋体"
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
+    LTEXT           "SysTray 1.0 版",IDC_STATIC,40,10,119,8,SS_NOPREFIX
+    LTEXT           "版权所有 (C) 2005",IDC_STATIC,40,25,119,8
+    DEFPUSHBUTTON   "确定",IDOK,178,7,50,14,WS_GROUP
+END
+
+IDD_SYSTRAY_DIALOG DIALOGEX 0, 0, 346, 231
+STYLE WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | 
+    WS_THICKFRAME
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "MPF SysTray"
+FONT 9, "宋体", 0, 0, 0x1
+BEGIN
+    CONTROL         "Tab1",IDC_TAB_SELECT,"SysTabControl32",WS_BORDER,2,2,
+                    343,228
+END
+
+IDD_DLG_GENERALINFO DIALOG DISCARDABLE  0, 0, 229, 144
+STYLE WS_CHILD
+FONT 9, "Verdana"
+BEGIN
+    LTEXT           "OS",IDC_STATIC,16,11,11,8
+    LTEXT           "CPU",IDC_STATIC,16,26,15,8
+    LTEXT           "Memory",IDC_STATIC,16,43,28,8
+    LTEXT           "Network",IDC_STATIC,16,59,27,8
+    LTEXT           "Process Name",IDC_STATIC,16,74,49,8
+    LTEXT           "MPF version",IDC_STATIC,16,90,42,8
+    LTEXT           "MPF Interface",IDC_STATIC,16,106,46,8
+    LTEXT           "Node ID",IDC_STATIC,16,122,27,8
+    EDITTEXT        IDC_EDIT_OS,65,11,160,12,ES_AUTOHSCROLL | ES_READONLY | 
+                    NOT WS_BORDER
+    EDITTEXT        IDC_EDIT_CPU,65,26,160,12,ES_AUTOHSCROLL | ES_READONLY | 
+                    NOT WS_BORDER
+    EDITTEXT        IDC_EDIT_MEM,65,42,160,12,ES_AUTOHSCROLL | ES_READONLY | 
+                    NOT WS_BORDER
+    EDITTEXT        IDC_EDIT_NET,65,58,160,12,ES_AUTOHSCROLL | ES_READONLY | 
+                    NOT WS_BORDER
+    EDITTEXT        IDC_EDIT_PNM,65,75,160,12,ES_MULTILINE | ES_AUTOHSCROLL | 
+                    ES_READONLY | NOT WS_BORDER
+    EDITTEXT        IDC_EDIT_VER,65,91,160,12,ES_AUTOHSCROLL | ES_READONLY | 
+                    NOT WS_BORDER
+    EDITTEXT        IDC_EDIT_INT,65,107,160,12,ES_AUTOHSCROLL | ES_READONLY | 
+                    NOT WS_BORDER
+    EDITTEXT        IDC_EDIT_NID,65,122,160,12,ES_AUTOHSCROLL | ES_READONLY | 
+                    NOT WS_BORDER
+END
+
+IDD_DLG_MANAGED_WORKINS DIALOG DISCARDABLE  0, 0, 242, 148
+STYLE WS_CHILD
+FONT 9, "Verdana"
+BEGIN
+    CONTROL         "List1",IDC_LIST_WORKINS,"SysListView32",LVS_REPORT | 
+                    WS_BORDER | WS_TABSTOP,4,3,234,141
+END
+
+IDD_DLG_SESSIONDETAIL DIALOG DISCARDABLE  0, 0, 294, 180
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 9, "Verdana"
+BEGIN
+    CONTROL         "Tree1",IDC_TREE1,"SysTreeView32",TVS_HASBUTTONS | 
+                    TVS_HASLINES | TVS_LINESATROOT | WS_BORDER | WS_TABSTOP,
+                    2,2,135,174
+    CONTROL         "List1",IDC_LIST1,"SysListView32",LVS_REPORT | 
+                    LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,136,2,154,174
+END
+
+IDD_DLG_SESSIONS DIALOG DISCARDABLE  0, 0, 235, 140
+STYLE WS_CHILD
+FONT 9, "Verdana"
+BEGIN
+    CONTROL         "List1",IDC_LIST_SESSIONS,"SysListView32",LVS_REPORT | 
+                    WS_BORDER | WS_TABSTOP,3,2,228,135
+END
+
+IDD_DLG_WORKNODE DIALOG DISCARDABLE  0, 0, 242, 145
+STYLE WS_CHILD
+FONT 9, "Verdana"
+BEGIN
+    CONTROL         "List1",IDC_LIST_WORKNODE,"SysListView32",LVS_REPORT | 
+                    WS_BORDER | WS_TABSTOP,3,2,235,140
+END
+
+IDD_DLG_TASKTYPE DIALOG DISCARDABLE  0, 0, 246, 152
+STYLE WS_CHILD
+FONT 9, "Verdana"
+BEGIN
+    CONTROL         "List1",IDC_LIST_TASKTYPE,"SysListView32",LVS_REPORT | 
+                    LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,4,4,238,144
+END
+
+IDD_DLG_WORKINSTANCE DIALOG DISCARDABLE  0, 0, 244, 156
+STYLE WS_CHILD
+FONT 9, "Verdana"
+BEGIN
+    CONTROL         "List1",IDC_LIST_WORKINSTANCE,"SysListView32",LVS_REPORT | 
+                    WS_BORDER | WS_TABSTOP,3,2,237,150
+END
+
+IDD_POPUP_PERWORKINS DIALOG DISCARDABLE  0, 0, 312, 186
+STYLE DS_MODALFRAME | WS_CAPTION | WS_SYSMENU
+CAPTION "Work Instance Broswer"
+FONT 10, "Verdana"
+BEGIN
+    CONTROL         "Tree1",IDC_TREE_RPCVAL,"SysTreeView32",TVS_HASBUTTONS | 
+                    TVS_HASLINES | TVS_LINESATROOT | TVS_TRACKSELECT | 
+                    TVS_SINGLEEXPAND | WS_BORDER | WS_TABSTOP,2,2,136,181
+    CONTROL         "List1",IDC_LIST_PERWORKINS,"SysListView32",LVS_REPORT | 
+                    WS_BORDER | WS_TABSTOP,138,2,170,181
+END
+
+IDD_DLG_CONFIGURE DIALOG DISCARDABLE  0, 0, 198, 139
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+FONT 9, "Verdana"
+BEGIN
+    LTEXT           "Connect Host IP Address",IDC_STATIC,9,18,82,8
+    EDITTEXT        IDC_EDIT_HOST,102,15,87,14,ES_AUTOHSCROLL
+    LTEXT           "Connect Host Port",IDC_STATIC,10,50,59,8
+    EDITTEXT        IDC_EDIT_PORT,102,48,40,14,ES_AUTOHSCROLL
+    LTEXT           "Auto Refresh Time Interval",IDC_STATIC,11,84,85,8
+    EDITTEXT        IDC_EDIT_TIMEINTERVAL,102,82,40,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "OK",IDOK,31,115,50,14
+    PUSHBUTTON      "Reset",IDC_BUT_RESET,115,114,50,14
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080404B0"
+        BEGIN
+			VALUE "Comment", ZQ_PRODUCT_COMMENT
+            VALUE "CompanyName", "SeaChange\0"
+            VALUE "FileDescription", ZQ_FILE_DESCRIPTION
+            VALUE "FileVersion", ZQ_PRODUCT_VER_STR3
+            VALUE "InternalName", ZQ_FILE_DESCRIPTION
+            VALUE "LegalCopyright", "版权所有 (C) SeaChange 2005\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", ZQ_FILE_NAME
+            VALUE "ProductName", ZQ_FILE_DESCRIPTION
+            VALUE "ProductVersion", ZQ_PRODUCT_VER_STR3
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x804, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 228
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 48
+    END
+
+    IDD_SYSTRAY_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 2
+        TOPMARGIN, 2
+    END
+
+    IDD_DLG_GENERALINFO, DIALOG
+    BEGIN
+        LEFTMARGIN, 3
+        RIGHTMARGIN, 225
+        TOPMARGIN, 2
+        BOTTOMMARGIN, 140
+    END
+
+    IDD_DLG_MANAGED_WORKINS, DIALOG
+    BEGIN
+        LEFTMARGIN, 4
+        RIGHTMARGIN, 238
+        TOPMARGIN, 3
+        BOTTOMMARGIN, 144
+    END
+
+    IDD_DLG_SESSIONDETAIL, DIALOG
+    BEGIN
+        LEFTMARGIN, 2
+        RIGHTMARGIN, 290
+        TOPMARGIN, 2
+        BOTTOMMARGIN, 176
+    END
+
+    IDD_DLG_SESSIONS, DIALOG
+    BEGIN
+        LEFTMARGIN, 3
+        RIGHTMARGIN, 231
+        TOPMARGIN, 2
+        BOTTOMMARGIN, 137
+    END
+
+    IDD_DLG_WORKNODE, DIALOG
+    BEGIN
+        LEFTMARGIN, 3
+        RIGHTMARGIN, 238
+        TOPMARGIN, 2
+        BOTTOMMARGIN, 142
+    END
+
+    IDD_DLG_CONFIGURE, DIALOG
+    BEGIN
+        LEFTMARGIN, 4
+        RIGHTMARGIN, 193
+        TOPMARGIN, 3
+        BOTTOMMARGIN, 135
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_BITMAP1             BITMAP  DISCARDABLE     "res\\bitmap1.bmp"
+IDB_BITMAP2             BITMAP  DISCARDABLE     "res\\bitmap2.bmp"
+IDB_BITMAP3             BITMAP  DISCARDABLE     "res\\bitmap3.bmp"
+IDB_BITMAP4             BITMAP  DISCARDABLE     "res\\bitmap4.bmp"
+IDB_BITMAP5             BITMAP  DISCARDABLE     "res\\bitmap5.bmp"
+IDB_BITMAP6             BITMAP  DISCARDABLE     "res\\bitmap6.bmp"
+IDB_BITMAP7             BITMAP  DISCARDABLE     "res\\bitmap7.bmp"
+IDB_BITMAP8             BITMAP  DISCARDABLE     "res\\bitmap8.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MENU_SYSTRAY MENU DISCARDABLE 
+BEGIN
+    POPUP "Action"
+    BEGIN
+        MENUITEM "Configure",                   ID_MENUITEM_CONFIG
+        MENUITEM "Refresh",                     ID_MENUITEM_REFRESH, GRAYED
+        MENUITEM "Exit",                        ID_MENUITEM_EXIT
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ABOUTBOX            "关于 SysTray(&A)..."
+END
+
+#endif    // Chinese (P.R.C.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE 4, 2
+#pragma code_page(936)
+#endif //_WIN32
+#include "res\SysTray.rc2"  // non-Microsoft Visual C++ edited resources
+#include "l.chs\afxres.rc"          // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

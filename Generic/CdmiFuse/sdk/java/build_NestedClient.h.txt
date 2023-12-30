@@ -1,0 +1,7 @@
+进入NestedClient.java所有的目录， 下载json-lib-2.4-jdk15.jar(http://json-lib.sourceforge.net/)到此目录下：
+用javac进行编译
+D:\ZQProjs\Generic\CdmiFuse\sdk\java\com\xormedia\aqua\sdk>javac -cp json-lib-2.4-jdk15.jar NestedClient.java
+
+然后退出到 D:\ZQProjs\Generic\CdmiFuse\sdk\java目录运行javah命令生成.h文件
+D:\ZQProjs\Generic\CdmiFuse\sdk\java>javah -classpath . -o NestedClient.h  -jni com.xormedia.aqua.sdk.NestedClient
+

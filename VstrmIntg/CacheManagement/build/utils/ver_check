@@ -1,0 +1,113 @@
+#!/bin/bash
+
+#output=$(tty)
+output=/dev/stdout
+check=
+
+usage() {
+    echo "${0} [options] <args>"
+    echo 
+    echo '-help            show this help'
+    echo '-check <file>    check against output file'
+    echo '-out <file>      used with file or directory arguments'
+    echo 'fileName fileName2 ... | directory directory2 ... > [-out file]'
+    echo
+}
+
+getFileVer() {
+    fileType ${1}
+    local res=$?
+    name=$(basename ${1})
+    
+    if [ ${res} -eq 1 ]; then 
+        ver='N/A' 
+    elif [ ${res} -eq 2 ]; then
+        ver=${name#*.}
+    elif [ ${res} -eq 3 -a "${name:0:3}" = "lib" ]; then
+        ver=${name##*.so.}
+        if [ "${ver}" = "${name}" ]; then 
+            local tmp=${name##*-}
+            ver=${tmp%.so}
+        fi
+    fi
+
+    modtime="$(date -r ${1} '+%Y-%m-%d %H:%M:%S')"
+    size=$(stat -c %s ${1})
+
+    printf '%-30s %-20s %-10s %-19s %-10s\n' ${name} ${ver} ${modtime} ${size} 1>>${output}
+}
+
+fileType() {
+    local info=$(file -b -i ${1})
+    if [ $? -ne 0 ]; then
+        return 1
+    fi
+
+    local tmp=${info%%,*}
+    if [ "${tmp#*/}" = "x-executable" ]; then
+        return 2
+    fi
+    
+    if [ "${tmp#*/}" = "x-sharedlib" ]; then
+        return 3
+    fi
+    
+    return 1
+}
+
+header() {
+    echo ${1} 1>>${output}
+    printf '%-30s %-20s %-30s %-10s\n' 'FILE_NAME' 'FILE_VERSION' 'FILE_CHANGE_TIME' 'FILE_SIZE' 1>>${output}
+}
+
+if [ -z "$*" ]; then
+    echo 'invalid argument, please see -help' 
+    exit 1
+fi
+
+declare -a args
+idx=0
+while [ "$1" ]; do 
+    if [ "${1}" = "-out" ]; then
+        if [ -f "${2}" ]; then
+            >${2} || exit 1
+        fi
+            
+        output=${2}
+        shift 2
+        continue
+    elif [ "${1}" = "-check" ]; then 
+        check=${2}
+        # do something
+        break
+    elif [ "${1}" = "-help" ]; then
+        usage
+        break
+    elif [ -d ${1} -o -f ${1} ]; then
+        args[idx]=${1}       
+        ((idx++))
+    else
+        echo "${1} is not a file or directory" 
+    fi
+    shift
+done
+
+for arg in "${args[@]}"; do
+    if [ -d ${arg} ]; then
+        header ${arg}
+        for file in ${arg}/*; do
+            getFileVer ${file}
+        done
+    elif [ -f ${arg} ]; then
+        header ${arg}
+        getFileVer ${arg}
+    else
+        # never reach here        
+        echo "Oops" 
+    fi
+    echo 1>>${output}
+
+    if [ "${output}" != "/dev/stdout" ]; then
+        echo "file information of \"${arg}\" saved to \"${output}\""
+    fi
+done

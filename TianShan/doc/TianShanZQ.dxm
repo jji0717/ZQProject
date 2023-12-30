@@ -1,0 +1,28 @@
+/*!
+
+@mainpage ZQ TianShan Components
+@author  Hui Shao
+@date    created on 2006-8-30
+@section sec_prodcont Contents
+
+
+@mainpage ZQ TianShan Components
+- @subpage page_tswwsvc   "Weiwoo Service"
+- @subpage page_tsss      "StreamSmith"
+- @subpage page_tscstore  "ContentStores"
+- @subpage page_tsrtspgw  "RTSP Proxy"
+- @subpage page_tsrds     "Realtime Distribution Server(RDS)"
+- @subpage page_tsappsvc  "Application Services"
+- @subpage page_tsssm     "StreamSmith & RTSP plugins(SSM)"
+- @subpage page_tsphos    "Path Helper Objects(PHO)"
+- @subpage page_tssentry  "Sentry Service"
+- @subpage page_tsrtsp    "RTSP Specification"
+
+@section sec_sdkrevhist Revision History
+$Log: /ZQProjs/TianShan/doc/TianShanSDK.dxm $
+
+@page page_tsappsvc TianShan Application Service
+- @subpage page_tschod   "ChannelOnDemand"
+- @subpage page_tsmod    "MovieOnDemand"
+
+*/

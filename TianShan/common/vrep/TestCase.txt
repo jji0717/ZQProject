@@ -1,0 +1,11 @@
+UPDATE test case
+
+1. EMPTY
+2. ReachableRoutes + NextHopServer + TotalBw + AvailBw + OutputPort + OutputAddr
+3. Cost
+4. Volumes
+5. ServiceStatus
+6. MaxMPEGFlows
+7. TransferProtocolCapacities
+8. NextHopServerAlternates
+

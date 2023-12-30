@@ -1,0 +1,20 @@
+[root@UML-E83F bin]# ./ContentClient
+ContentClient> connect "ContentStore:tcp -h 172.16.20.40 -p 10400"
+connected with (ContentStore:tcp -h 172.16.20.40 -p 10400 -t 5000)
+SEAC00000> list
+no matching contents found
+SEAC00000> list volume
+/$
+SEAC00000> open volume $
+volume (/$) opened
+SEAC00000:/$> open test1234567890001xor.com true
+content (test1234567890001xor.com) opened
+SEAC00000:/$:test1234567890001xor.com> open test1234567890001xor.com
+content (test1234567890001xor.com) opened
+SEAC00000:/$:test1234567890001xor.com> set bitrate=37500000
+SEAC00000:/$:test1234567890001xor.com> set sourceType=MPEG2TS
+SEAC00000:/$:test1234567890001xor.com> mset user.ProviderId=xor.com
+SEAC00000:/$:test1234567890001xor.com> mset user.ProviderAessetId=test1234567890001
+SEAC00000:/$:test1234567890001xor.com> set startTime=+0
+SEAC00000:/$:test1234567890001xor.com> set endTime=+600
+SEAC00000:/$:test1234567890001xor.com> provision ftp://hl:hl@192.168.81.52/ZIBO_MPEG2_SD.ts

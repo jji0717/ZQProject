@@ -1,0 +1,7 @@
+<?xml version="1.0" ?> 
+<DenyList>
+	<Socket address="www.google.com"/>
+	<Socket address="192.168.0.*" port ="80" />
+	<Socket address="3f::22" port="*"/>
+	<Socket address="MyV6IP.company.com" port="6000" family="???"/>
+</DenyList>

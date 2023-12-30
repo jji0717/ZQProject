@@ -1,0 +1,220 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "DataApp"=.\DataApp.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/DataOnDemand/Phase2/DataApp", FXXAAAAA
+    .
+    end source code control
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name JMSDispatch
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQSNMPManPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQAppshell
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCfgPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQShellMsgs
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanShell
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "JMSCpp"=..\..\..\Generic\JMSCppLib\JMSCpp\JMSCpp.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/Generic/JMSCppLib/JMSCpp", XUKAAAAA
+    ..\..\..\generic\jmscpplib\jmscpp
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "JMSDispatch"=.\JMSDispatch\JMSDispatch.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/DataOnDemand/Phase2/DataApp/JMSDispatch", IXXAAAAA
+    .\jmsdispatch
+    end source code control
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name JMSCpp
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TianShanIce"=..\..\..\tianshan\ice\TianShanIce.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/TianShan/Ice", YRSAAAAA
+    ..\..\..\tianshan\ice
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "TianShanShell"=..\..\..\TianShan\Shell\ZQShell\TianShanShell.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    $/ZQProjs/TianShan/Shell/ZQShell
+    ..\..\..\tianshan\shell\zqshell
+    end source code control
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ZQShellMsgs
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ZQAppshell"=..\..\..\TianShan\Shell\ZQAppShell\zqappshell.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ZQCfgPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQSNMPManPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQShellMsgs
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ZQCfgPkg"=..\..\..\TianShan\Shell\ZQCfgPkg\ZQcfgpkg.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/TianShan/Shell/ZQServiceSample", JGXAAAAA
+    ..\..\..\tianshan\shell\zqservicesample
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ZQCommonStlp"=..\..\..\Common\dll\ZQCommonStlp.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ZQSNMPManPkg"=..\..\..\TianShan\Shell\ZQSNMPManPkg\ZQSNMPManPkg.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/TianShan/Shell/ZQSNMPManPkg", AOXAAAAA
+    ..\..\..\tianshan\shell\zqsnmpmanpkg
+    end source code control
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ZQCfgPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ZQShellMsgs"=..\..\..\TianShan\Shell\ZQShellMsgs\ZQShellMsgs.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+    begin source code control
+    $/ZQProjs/DataOnDemand/Phase2/DataApp
+    .
+    end source code control
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

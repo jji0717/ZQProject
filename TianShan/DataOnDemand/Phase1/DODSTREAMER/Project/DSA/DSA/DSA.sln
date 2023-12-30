@@ -1,0 +1,110 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DataStream", "..\DeviceInfo.vcproj", "{F5E72BE7-7C4F-43D2-A2CF-B58667A84A5C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A4F6AB2C-79D4-4813-8F46-9A5C874D91B4} = {A4F6AB2C-79D4-4813-8F46-9A5C874D91B4}
+		{FE29E838-13AD-43D3-8C57-D0DFABC7F13A} = {FE29E838-13AD-43D3-8C57-D0DFABC7F13A}
+		{B7B44C95-A507-4255-969D-3084F4EC1453} = {B7B44C95-A507-4255-969D-3084F4EC1453}
+		{410026B2-DC96-44D9-AE48-8D5E55D088EC} = {410026B2-DC96-44D9-AE48-8D5E55D088EC}
+		{6A4109EF-D8AC-44B4-A7ED-90732AECFBA7} = {6A4109EF-D8AC-44B4-A7ED-90732AECFBA7}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DODServerController", "..\..\PortControllerdll\DODServerController.vcproj", "{B7B44C95-A507-4255-969D-3084F4EC1453}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DataWatcherSource", "..\..\..\filter\DATAWATCHERSOURCE\Async.vcproj", "{410026B2-DC96-44D9-AE48-8D5E55D088EC}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DataWrapper", "..\..\..\filter\DATAWRAPPERFILTER\DataWrapper.vcproj", "{6A4109EF-D8AC-44B4-A7ED-90732AECFBA7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3CDE116F-5F8F-4979-8F20-D5EA3E9DE28C} = {3CDE116F-5F8F-4979-8F20-D5EA3E9DE28C}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZQBroadcastFilter", "..\..\..\filter\ZQBroadcastFilter\ZQBroadcastFilter.vcproj", "{FE29E838-13AD-43D3-8C57-D0DFABC7F13A}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TianShanIce", "..\..\..\..\..\..\tianshan\ice\TianShanIce.vcproj", "{A4F6AB2C-79D4-4813-8F46-9A5C874D91B4}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Parser", "..\..\..\filter\itv_parse\Parser\ParserLib.vcproj", "{3CDE116F-5F8F-4979-8F20-D5EA3E9DE28C}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 4
+		SccLocalPath0 = .
+		CanCheckoutShared = false
+		SolutionUniqueID = {2CC689AF-3803-4827-8442-AEF0E5F60179}
+		SccProjectUniqueName1 = ..\\DeviceInfo.vcproj
+		SccProjectName1 = \u0022$/ZQProjs/DODServer/Project/DSA\u0022,\u0020VJUAAAAA
+		SccLocalPath1 = ..
+		CanCheckoutShared = false
+		SccProjectUniqueName2 = ..\\..\\PortControllerdll\\DODServerController.vcproj
+		SccProjectName2 = \u0022$/ZQProjs/DODServer/Project/PortControllerdll\u0022,\u0020YJUAAAAA
+		SccLocalPath2 = ..\\..\\PortControllerdll
+		CanCheckoutShared = false
+		SccProjectUniqueName3 = ..\\..\\..\\..\\..\\..\\tianshan\\ice\\TianShanIce.vcproj
+		SccProjectName3 = \u0022$/ZQProjs/TianShan/Ice\u0022,\u0020YRSAAAAA
+		SccLocalPath3 = ..\\..\\..\\..\\..\\..\\tianshan\\ice
+		CanCheckoutShared = false
+	EndGlobalSection
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Java = Java
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectDependencies) = postSolution
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{F5E72BE7-7C4F-43D2-A2CF-B58667A84A5C}.Debug.ActiveCfg = Debug|Win32
+		{F5E72BE7-7C4F-43D2-A2CF-B58667A84A5C}.Debug.Build.0 = Debug|Win32
+		{F5E72BE7-7C4F-43D2-A2CF-B58667A84A5C}.Java.ActiveCfg = Release|Win32
+		{F5E72BE7-7C4F-43D2-A2CF-B58667A84A5C}.Java.Build.0 = Release|Win32
+		{F5E72BE7-7C4F-43D2-A2CF-B58667A84A5C}.Release.ActiveCfg = Release|Win32
+		{F5E72BE7-7C4F-43D2-A2CF-B58667A84A5C}.Release.Build.0 = Release|Win32
+		{B7B44C95-A507-4255-969D-3084F4EC1453}.Debug.ActiveCfg = Debug|Win32
+		{B7B44C95-A507-4255-969D-3084F4EC1453}.Debug.Build.0 = Debug|Win32
+		{B7B44C95-A507-4255-969D-3084F4EC1453}.Java.ActiveCfg = Release|Win32
+		{B7B44C95-A507-4255-969D-3084F4EC1453}.Java.Build.0 = Release|Win32
+		{B7B44C95-A507-4255-969D-3084F4EC1453}.Release.ActiveCfg = Release|Win32
+		{B7B44C95-A507-4255-969D-3084F4EC1453}.Release.Build.0 = Release|Win32
+		{410026B2-DC96-44D9-AE48-8D5E55D088EC}.Debug.ActiveCfg = Debug|Win32
+		{410026B2-DC96-44D9-AE48-8D5E55D088EC}.Debug.Build.0 = Debug|Win32
+		{410026B2-DC96-44D9-AE48-8D5E55D088EC}.Java.ActiveCfg = Release|Win32
+		{410026B2-DC96-44D9-AE48-8D5E55D088EC}.Java.Build.0 = Release|Win32
+		{410026B2-DC96-44D9-AE48-8D5E55D088EC}.Release.ActiveCfg = Release|Win32
+		{410026B2-DC96-44D9-AE48-8D5E55D088EC}.Release.Build.0 = Release|Win32
+		{6A4109EF-D8AC-44B4-A7ED-90732AECFBA7}.Debug.ActiveCfg = Debug|Win32
+		{6A4109EF-D8AC-44B4-A7ED-90732AECFBA7}.Debug.Build.0 = Debug|Win32
+		{6A4109EF-D8AC-44B4-A7ED-90732AECFBA7}.Java.ActiveCfg = Release|Win32
+		{6A4109EF-D8AC-44B4-A7ED-90732AECFBA7}.Java.Build.0 = Release|Win32
+		{6A4109EF-D8AC-44B4-A7ED-90732AECFBA7}.Release.ActiveCfg = Release|Win32
+		{6A4109EF-D8AC-44B4-A7ED-90732AECFBA7}.Release.Build.0 = Release|Win32
+		{FE29E838-13AD-43D3-8C57-D0DFABC7F13A}.Debug.ActiveCfg = Debug|Win32
+		{FE29E838-13AD-43D3-8C57-D0DFABC7F13A}.Debug.Build.0 = Debug|Win32
+		{FE29E838-13AD-43D3-8C57-D0DFABC7F13A}.Java.ActiveCfg = Release|Win32
+		{FE29E838-13AD-43D3-8C57-D0DFABC7F13A}.Java.Build.0 = Release|Win32
+		{FE29E838-13AD-43D3-8C57-D0DFABC7F13A}.Release.ActiveCfg = Release|Win32
+		{FE29E838-13AD-43D3-8C57-D0DFABC7F13A}.Release.Build.0 = Release|Win32
+		{A4F6AB2C-79D4-4813-8F46-9A5C874D91B4}.Debug.ActiveCfg = Debug|Win32
+		{A4F6AB2C-79D4-4813-8F46-9A5C874D91B4}.Debug.Build.0 = Debug|Win32
+		{A4F6AB2C-79D4-4813-8F46-9A5C874D91B4}.Java.ActiveCfg = Java|Win32
+		{A4F6AB2C-79D4-4813-8F46-9A5C874D91B4}.Java.Build.0 = Java|Win32
+		{A4F6AB2C-79D4-4813-8F46-9A5C874D91B4}.Release.ActiveCfg = Release|Win32
+		{A4F6AB2C-79D4-4813-8F46-9A5C874D91B4}.Release.Build.0 = Release|Win32
+		{3CDE116F-5F8F-4979-8F20-D5EA3E9DE28C}.Debug.ActiveCfg = Debug|Win32
+		{3CDE116F-5F8F-4979-8F20-D5EA3E9DE28C}.Debug.Build.0 = Debug|Win32
+		{3CDE116F-5F8F-4979-8F20-D5EA3E9DE28C}.Java.ActiveCfg = Release|Win32
+		{3CDE116F-5F8F-4979-8F20-D5EA3E9DE28C}.Java.Build.0 = Release|Win32
+		{3CDE116F-5F8F-4979-8F20-D5EA3E9DE28C}.Release.ActiveCfg = Release|Win32
+		{3CDE116F-5F8F-4979-8F20-D5EA3E9DE28C}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

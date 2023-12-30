@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TianShan>
+	<Definitions src="TianShanDef.xml">
+	</Definitions>
+	
+	<!-- Configuration on AQuaRec provision helper. 
+	     
+		Note: 1 AQuaRec lead session use 1 threads     
+		
+	-->
+	<CPH_AquaRec>
+	
+		<ProvisionMethod>
+		   <!-- the provision methods provided by this plug-in
+			      attributes:
+	          maxSessions - the maximal concurrent sessions that this instance can host
+	          maxBandwidth - the maximal bandwidth in Kbps that this instance can host
+	       -->
+
+		   <Method name="SeaChange.AQUAREC"  maxSessions="1000" maxBandwidth="1"/>             
+	 </ProvisionMethod>
+
+	    <!-- Configuration on lead session.
+	    	maxSessions	-	the max lead session numbers, this value must be smaller than "RTF maxSessionNum", default 40
+	    	lagAfterIdle	-	the lead session max stay time after all virutal session gone, in milliseconds, default 5000 ms
+	    	monitorInterval	-	the interval of checking the lead session life cycle, in milliseconds,	default 500ms
+	    	interval     -the time interval of read data from aqua sever ,default 300000ms
+	    -->
+  <LeadSession maxSessions="40" lagAfterIdle="5000" monitorInterval="500" interval="300000"/>
+  
+  
+  	<Event>
+			<!-- Configuration on the progress events
+			     attributes:
+			       enable  - 1 to enable sending progress events
+			       interval	- the progress sending interval, in milliseconds, default 8000ms, the progress interval will be a random value in [interval/2,interval]
+			-->
+			<Progress enable="1" interval="8000"/>
+			
+			<!-- Configuration on the streamable events
+			     attributes:
+			       enable  - 1 to enable sending streamable events
+			       lagAfterStart  - the time lag in second after the provision starts to notify streamable //!!! former Streamable::requiredSeconds
+			-->
+			<Streamable enable="1" lagAfterStart="5" />
+		</Event>
+		
+   <!-- Configuration on AquaServer.
+	    	rootUrl	-	Aqua Server URL,include username and password
+	    	container	-	folder Name under the root URL path
+	    	maxThreadPoolSize	-	the interval of checking the lead session life cycle, in milliseconds,	default 500ms
+	    	flags - flag Dump MsgBody ,HexDump ,curlclient send ,info ,recviver log etc
+	 			connectTimeOut - connect to AquaServer TimeOut ,default 5000ms
+	 			requestTimeOut - AquaServer request TimeOut default 10000ms 
+	 -->
+  <AquaServer rootUrl="http://user:password@ip:port/aqua/rest/cdmi" container="" flags ="0" maxThreadPoolSize="5"  connectTimeOut="5000" requestTimeOut="10000"/>
+  
+  <Subscribers  destNameExpression="NPVR_${CreateTime}"/>  
+  
+  </CPH_AquaRec>
+</TianShan>

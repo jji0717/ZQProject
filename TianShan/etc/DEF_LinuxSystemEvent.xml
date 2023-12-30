@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EventDefinition component="LinuxSystemEvent" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="monitoring_event_definition.xsd">
+	<EventList>
+		<Event category="Services Status" code="Linux_System_1001" severity="error">
+			<Translation>service enters stopped state.</Translation>
+			<Translation locale="zh">服务停止</Translation>
+		</Event>
+		<Event category="Services Status" code="Linux_System_1001_AssetFlow" severity="error">
+			<Translation>AssetFlow service enters stopped state.</Translation>
+			<Translation locale="zh">AssetFlow 服务停止</Translation>
+		</Event>
+		<Event category="Services Status" code="Linux_System_1001_Jboss" severity="error">
+			<Translation>Jboss service enters stopped state.</Translation>
+			<Translation locale="zh">Jboss 服务停止</Translation>
+		</Event>
+		<Event category="Services Status" code="Linux_System_1001_MySQL" severity="error">
+			<Translation>MySQL service enters stopped state.</Translation>
+			<Translation locale="zh">MySQL 服务停止</Translation>
+		</Event>
+		<Event category="Services Status" code="Linux_System_1004" severity="error">
+			<Translation>DRBD is stopped.</Translation>
+			<Translation locale="zh">DRBD is stopped.</Translation>
+		</Event>		
+    <Event category="Services Status" code="Linux_System_1005" severity="error">
+			<Translation>DRDB Resource 0 in Error state.</Translation>
+			<Translation locale="zh">DRDB Resource 0 in Error state.</Translation>
+		</Event>
+		<Event category="Services Status" code="Linux_System_1006" severity="error">
+			<Translation>DRDB Resource 1 in Error state.</Translation>
+			<Translation locale="zh">DRDB Resource 1 in Error state.</Translation>
+		</Event> 
+		<Event category="Services Status" code="Linux_System_1007_(node_name)" severity="error">
+			<Translation>HeartBeat node dead.</Translation>
+			<Translation locale="zh">HeartBeat node dead.</Translation>
+		</Event>
+		<Event category="Services Status" code="Linux_System_1007" severity="error">
+			<Translation>HeartBeat is failover, offline, abnormal status.</Translation>
+			<Translation locale="zh">HeartBeat is failover, offline, abnormal status.</Translation>
+		</Event>
+		<Event category="Services Status" code="Linux_System_1008" severity="error">
+			<Translation>HeartBeat is stopped.</Translation>
+			<Translation locale="zh">HeartBeat is stopped.</Translation>
+		</Event>
+		<Event category="Services Status" code="Linux_System_1100" severity="error">
+			<Translation>Ethernet port is down.</Translation>
+			<Translation locale="zh">Ethernet port is down.</Translation>
+		</Event>
+<!-- TSS_Event -->
+		<Event category="Services Status" code="TSS_1001_cdncs?" severity="error">
+			<Translation>cdncs? enters stopped state.</Translation>
+			<Translation locale="zh">cdncs? enters stopped state.</Translation>
+		</Event>
+		<Event category="Services Status" code="TSS_1001_eventchannel" severity="error">
+			<Translation>eventchannel enters stopped state.</Translation>
+			<Translation locale="zh">eventchannel enters stopped state.</Translation>
+		</Event>
+		<Event category="Services Status" code="TSS_1001_eventgateway" severity="error">
+			<Translation>eventgateway enters stopped state.</Translation>
+			<Translation locale="zh">eventgateway enters stopped state.</Translation>
+		</Event>
+		<Event category="Services Status" code="TSS_1001_httpcrg" severity="error">
+			<Translation>httpcrg enters stopped state.</Translation>
+			<Translation locale="zh">httpcrg enters stopped state.</Translation>
+		</Event>
+		<Event category="Services Status" code="TSS_1001_sentry" severity="error">
+			<Translation>sentry enters stopped state.</Translation>
+			<Translation locale="zh">sentry enters stopped state.</Translation>
+		</Event>
+		<Event category="Services Status" code="TSS_1050_cdnss" severity="error">
+			<Translation>cdnss enters stopped state.</Translation>
+			<Translation locale="zh">cdnss enters stopped state.</Translation>
+		</Event>
+		<Event category="Services Status" code="TSS_1050_cpesvc" severity="error">
+			<Translation>cpesvc enters stopped state.</Translation>
+			<Translation locale="zh">cpesvc enters stopped state.</Translation>
+		</Event>
+<!-- UML_Event -->	
+	  <Event category="Services Status" code="UML_System_1001_bwfs" severity="error">
+			<Translation>bwfs enters stopped state.</Translation>
+			<Translation locale="zh">bwfs enters stopped state.</Translation>
+		</Event>
+	  <Event category="Services Status" code="UML_System_1001_smbd" severity="error">
+			<Translation>smbd enters stopped state.</Translation>
+			<Translation locale="zh">smbd enters stopped state.</Translation>
+		</Event>
+			  <Event category="Services Status" code="UML_System_1001_nmbd" severity="error">
+			<Translation>nmbd enters stopped state.</Translation>
+			<Translation locale="zh">nmbd enters stopped state.</Translation>
+		</Event>
+		<Event category="Services Status" code="UML_System_1001_vsftpd" severity="error">
+			<Translation>vsftpd enters stopped state.</Translation>
+			<Translation locale="zh">vsftpd enters stopped state.</Translation>
+		</Event>
+		<Event category="Services Status" code="UML_System_1001_enfs" severity="error">
+			<Translation>enfs enters stopped state.</Translation>
+			<Translation locale="zh">enfs enters stopped state.</Translation>
+		</Event>
+		<Event category="Services Status" code="UML_System_1050_shas" severity="warning">
+			<Translation>shas is failed.</Translation>
+			<Translation locale="zh">shas is failed.</Translation>
+		</Event>
+		<Event category="Services Status" code="UML_System_1100_array_degraded" severity="error">
+			<Translation>Array is degraded.</Translation>
+			<Translation locale="zh">Array is degraded.</Translation>
+		</Event>
+		<Event category="Services Status" code="UML_System_1200_array_critical" severity="error">
+			<Translation>Array is in critical state.</Translation>
+			<Translation locale="zh">Array is in critical state.</Translation>
+		</Event>
+		<Event category="Services Status" code="UML_System_1300_Cluster_Abnormal" severity="error">
+			<Translation>Cluster is at unknown state.</Translation>
+			<Translation locale="zh">Cluster is at unknown state.</Translation>
+		</Event>
+		<Event category="Services Status" code="UML_System_1400_fsBWFS" severity="error">
+			<Translation>BWFS is not mounted.</Translation>
+			<Translation locale="zh">BWFS is not mounted.</Translation>
+		</Event>
+	</EventList>
+</EventDefinition>

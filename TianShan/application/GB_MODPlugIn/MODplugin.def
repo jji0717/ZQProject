@@ -1,0 +1,7 @@
+
+; MODplugin.def : Declares the module parameters for the DLL.
+
+EXPORTS
+    ; Explicit exports can go here
+InitMHO
+UnInitMHO

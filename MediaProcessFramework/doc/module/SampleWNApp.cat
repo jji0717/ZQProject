@@ -1,0 +1,688 @@
+
+(object Petal
+    version    	47
+    _written   	"Rose 8.0.0303.1400"
+    charSet    	134)
+
+(object Class_Category "SampleWNApp"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    attributes 	(list Attribute_Set
+	(object Attribute
+	    tool       	"sc"
+	    name       	"SourceControlSpec"
+	    value      	
+|"$/ZQProjs/MediaProcessFramework/doc/module", CYIAAAAA
+	    ))
+    quid       	"42720A1A01DA"
+    visible_categories 	(list visibility_relationship_list
+	(object Visibility_Relationship
+	    quid       	"42732BA303DE"
+	    supplier   	"Logical View::MPF SDK::WorkNode"
+	    quidu      	"4271A94D0092"))
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "MyWork"
+	    quid       	"42720A29009B"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"42720A540328"
+		    supplier   	"Logical View::MPF SDK::WorkNode::BaseWork"
+		    quidu      	"4271A9950081"))
+	    operations 	(list Operations
+		(object Operation "run"
+		    quid       	"42720A630289"
+		    stereotype 	"virtual"
+		    result     	"int"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Protected"
+		    uid        	0)
+		(object Operation "OnFabrication"
+		    quid       	"42720A6D0374"
+		    documentation 	"give the customerized Work implemetation a chance to construct the work body"
+		    stereotype 	"virtual"
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Protected"
+		    uid        	0)))
+	(object Class "MyFactory"
+	    quid       	"42720ABC0313"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"42720ACA0255"
+		    supplier   	"Logical View::MPF SDK::WorkNode::WorkFactory"
+		    quidu      	"4271AFC402CC"))
+	    operations 	(list Operations
+		(object Operation "count"
+		    quid       	"42720AD9009E"
+		    documentation 	"count of current running work instances"
+		    parameters 	(list Parameters
+			(object Parameter "typename"
+			    quid       	"42720AD9009F"))
+		    result     	"int"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Implementation"
+		    uid        	0)
+		(object Operation "available"
+		    quid       	"42720AD900B2"
+		    parameters 	(list Parameters
+			(object Parameter "typename"
+			    quid       	"42720AD900B3"))
+		    result     	"Integer"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Implementation"
+		    uid        	0)
+		(object Operation "create"
+		    quid       	"42720AD900C6"
+		    parameters 	(list Parameters
+			(object Parameter "typename"
+			    quid       	"42720AD900C7")
+			(object Parameter "sessionUrl"
+			    quid       	"42720AD900C8"))
+		    result     	"BaseWork*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Implementation"
+		    uid        	0
+		    quidu      	"4271A9950081")))
+	(object Association "create"
+	    quid       	"42720AF601D6"
+	    roles      	(list role_list
+		(object Role "$UNNAMED$0"
+		    quid       	"42720AF700F1"
+		    supplier   	"Logical View::MPF SDK::SampleWNApp::MyWork"
+		    quidu      	"42720A29009B"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$1"
+		    quid       	"42720AF700FB"
+		    supplier   	"Logical View::MPF SDK::SampleWNApp::MyFactory"
+		    quidu      	"42720ABC0313"))))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "sample"
+	    quid       	"42720A3503AF"
+	    title      	"sample"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::MPF SDK::WorkNode::BaseWork" @1
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(473, 327)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@1
+			location   	(95, 14)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	756
+			justify    	0
+			label      	"BaseWork")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271A9950081"
+		    compartment 	(object Compartment
+			Parent_View 	@1
+			location   	(95, 135)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	9
+			max_width  	641)
+		    width      	774
+		    height     	654
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MPF SDK::SampleWNApp::MyWork" @2
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(601, 1469)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(223, 1352)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	756
+			justify    	0
+			label      	"MyWork")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"42720A29009B"
+		    compartment 	(object Compartment
+			Parent_View 	@2
+			location   	(223, 1419)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	3
+			max_width  	641)
+		    width      	774
+		    height     	262
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "" @3
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"42720A540328"
+		    client     	@2
+		    supplier   	@1
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::MPF SDK::SampleWNApp::MyFactory" @4
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(1863, 1468)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@4
+			location   	(1699, 1323)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	328
+			justify    	0
+			label      	"MyFactory")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"42720ABC0313"
+		    compartment 	(object Compartment
+			Parent_View 	@4
+			location   	(1699, 1390)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	4
+			max_width  	275)
+		    width      	346
+		    height     	318
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object AssociationViewNew "create" @5
+		    location   	(1338, 1468)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @6
+			Parent_View 	@5
+			location   	(1338, 1409)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"create"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"42720AF601D6"
+		    roleview_list 	(list RoleViews
+			(object RoleView "$UNNAMED$0" @7
+			    Parent_View 	@5
+			    location   	(-209, 512)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"42720AF700F1"
+			    client     	@5
+			    supplier   	@2
+			    line_style 	0)
+			(object RoleView "$UNNAMED$1" @8
+			    Parent_View 	@5
+			    location   	(-209, 512)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"42720AF700FB"
+			    client     	@5
+			    supplier   	@4
+			    line_style 	0)))
+		(object ClassView "Class" "Logical View::MPF SDK::WorkNode::WorkFactory" @9
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(2005, 675)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@9
+			location   	(1695, 390)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	620
+			justify    	0
+			label      	"WorkFactory")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271AFC402CC"
+		    compartment 	(object Compartment
+			Parent_View 	@9
+			location   	(1695, 511)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	8
+			max_width  	525)
+		    width      	638
+		    height     	598
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object AssociationViewNew "" @10
+		    location   	(1272, 507)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4271AFE40278"
+		    roleview_list 	(list RoleViews
+			(object RoleView "" @11
+			    Parent_View 	@10
+			    location   	(799, 204)
+			    font       	(object Font
+				size       	12
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @12
+				Parent_View 	@11
+				location   	(1611, 541)
+				font       	(object Font
+				    size       	12
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				hidden     	TRUE
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	450
+				justify    	0
+				label      	""
+				pctDist    	0.800000
+				height     	42
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"4271AFE50330"
+			    client     	@10
+			    supplier   	@9
+			    line_style 	0
+			    label      	(object SegLabel @13
+				Parent_View 	@11
+				location   	(1632, 643)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.900000
+				height     	54
+				orientation 	1))
+			(object RoleView "" @14
+			    Parent_View 	@10
+			    location   	(799, 204)
+			    font       	(object Font
+				size       	12
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @15
+				Parent_View 	@14
+				location   	(952, 393)
+				font       	(object Font
+				    size       	12
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				hidden     	TRUE
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	450
+				justify    	0
+				label      	""
+				pctDist    	0.800000
+				height     	42
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"4271AFE5032E"
+			    client     	@10
+			    supplier   	@1
+			    line_style 	0
+			    label      	(object SegLabel @16
+				Parent_View 	@14
+				location   	(890, 476)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..n"
+				pctDist    	0.900000
+				height     	54
+				orientation 	0)
+			    label      	(object SegLabel @17
+				Parent_View 	@14
+				location   	(933, 414)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	5
+				anchor_loc 	1
+				nlines     	1
+				max_width  	109
+				justify    	0
+				label      	"taskid"
+				pctDist    	0.900000
+				height     	12
+				orientation 	1))))
+		(object InheritView "" @18
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"42720ACA0255"
+		    client     	@4
+		    supplier   	@9
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::MPF SDK::WorkNode::WorkAcceptor" @19
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(2032, 125)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@19
+			location   	(1775, 14)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	514
+			justify    	0
+			label      	"WorkAcceptor")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271B2A4027A"
+		    compartment 	(object Compartment
+			Parent_View 	@19
+			location   	(1775, 135)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	2
+			max_width  	435)
+		    width      	532
+		    height     	250
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object AssociationViewNew "" @20
+		    location   	(2021, 312)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4271B3740265"
+		    roleview_list 	(list RoleViews
+			(object RoleView "" @21
+			    Parent_View 	@20
+			    location   	(434, -35)
+			    font       	(object Font
+				size       	12
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @22
+				Parent_View 	@21
+				location   	(2066, 265)
+				font       	(object Font
+				    size       	12
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				hidden     	TRUE
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	450
+				justify    	0
+				label      	""
+				pctDist    	0.800000
+				height     	42
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"4271B376021A"
+			    client     	@20
+			    supplier   	@19
+			    line_style 	0
+			    label      	(object SegLabel @23
+				Parent_View 	@21
+				location   	(1972, 255)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.900000
+				height     	54
+				orientation 	0))
+			(object RoleView "" @24
+			    Parent_View 	@20
+			    location   	(434, -35)
+			    font       	(object Font
+				size       	12
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @25
+				Parent_View 	@24
+				location   	(2061, 364)
+				font       	(object Font
+				    size       	12
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				hidden     	TRUE
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	450
+				justify    	0
+				label      	""
+				pctDist    	0.800000
+				height     	42
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"4271B3760218"
+			    client     	@20
+			    supplier   	@9
+			    line_style 	0
+			    label      	(object SegLabel @26
+				Parent_View 	@24
+				location   	(1965, 367)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1..n"
+				pctDist    	0.900000
+				height     	54
+				orientation 	1))))))))

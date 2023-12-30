@@ -1,0 +1,58 @@
+      2536
+08/29 16:09:14 CDODDevKit: setSRMAdd
+08/29 16:09:14 Enter Connect Thread Start.
+08/29 16:09:15 Create Connect Thread.
+08/29 16:09:15 Start ConnectThread.
+08/29 16:09:15 setSRMAdd Connect Start!
+08/29 16:09:17 Call app->Connect().
+08/29 16:09:21 Connect SRM failure. The next connection will star!
+08/29 16:09:22 Call app->Connect().
+08/29 16:09:25 Connect SRM failure. The next connection will star!
+08/29 16:09:27 Call app->Connect().
+08/29 16:09:30 Connect SRM failure. The next connection will star!
+
+08/29 16:09:44 Call app->Connect().
+08/29 16:09:45 Connect SRM failure. The next connection will star!
+08/29 16:09:46 Call app->Connect().
+08/29 16:09:47 Connect SRM failure. The next connection will star!
+08/29 16:09:48 Call app->Connect().
+08/29 16:09:49 Connect SRM failure. The next connection will star!
+08/29 16:09:50 Call app->Connect().
+08/29 16:09:51 Connect SRM failure. The next connection will star!
+08/29 16:09:54 Call app->Connect().
+08/29 16:09:55 Connect SRM failure. The next connection will star!
+08/29 16:09:56 Call app->Connect().
+08/29 16:09:57 Connect SRM failure. The next connection will star!
+08/29 16:09:58 Enter Stop Connect Thread.
+08/29 16:09:58 Connect Thread Exit Normally.
+08/29 16:09:58 Close Socket.
+08/29 16:09:58 Socket Closed.
+08/30 15:46:25 CDODDevKit: setSRMAdd
+08/30 15:46:25 Enter Connect Thread Start.
+08/30 15:46:26 Create Connect Thread.
+08/30 15:46:26 Start ConnectThread.
+08/30 15:46:26 setSRMAdd Connect Start!
+08/30 15:46:27 Call app->Connect().
+08/30 15:46:28 Connect Success.
+08/30 15:46:30 Info - CDSAParse::Parse() - ReceiveHeartBeat.
+
+08/30 15:46:37 Info - CDSAParse::Parse() - ReceiveHeartBeat.
+
+08/30 15:46:44 Info - CDSAParse::Parse() - ReceiveHeartBeat.
+08/30 15:46:45 Info - CDSAParse::Parse() - ReceiveHeartBeat.
+
+08/30 15:47:05 Info - CDSAParse::Parse() - ReceiveHeartBeat.
+08/30 15:47:06 Info - CDSAParse::Parse() - ReceiveHeartBeat.
+08/30 15:47:06 Info - CDSAParse::Parse() - ReceiveHeartBeat.
+08/30 15:47:06 Info - CDSAParse::Parse() - ReceiveHeartBeat.
+08/30 15:47:10 Info - CDSAParse::Parse() - ReceiveHeartBeat.
+08/30 15:50:29 CDODDevKit: setSRMAdd
+08/30 15:50:29 Enter Connect Thread Start.
+08/30 15:50:29 Create Connect Thread.
+08/30 15:50:29 Start ConnectThread.
+08/30 15:50:29 setSRMAdd Connect Start!
+08/30 15:50:30 Call app->Connect().
+08/30 15:50:31 Connect Success.
+08/30 15:50:35 Info - CDSAParse::Parse() - ReceiveHeartBeat.
+
+08/30 15:50:49 Info - CDSAParse::Parse() - ReceiveHeartBeat.

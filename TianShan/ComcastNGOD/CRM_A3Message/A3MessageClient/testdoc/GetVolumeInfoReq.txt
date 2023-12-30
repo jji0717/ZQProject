@@ -1,0 +1,6 @@
+
+set volumeName=volume1A
+
+get
+
+exec1

@@ -1,0 +1,89 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "DBSyncServ"=.\DBSyncServ.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/Generic/DBSync", GFIAAAAA
+    .
+    end source code control
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ManualSyncAddin
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name JMS_DBSyncAddIn
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "JMSCpp"=..\JMSCppLib\JMSCpp\JMSCpp.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/Generic/JMSCppLib/JMSCpp", XUKAAAAA
+    ..\jmscpplib\jmscpp
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "JMS_DBSyncAddIn"=..\DBSADI\IDSSyncEventPlugin\IDSSyncEventPlugin\JMS_DBSyncAddIn.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/Generic/DBSADI/IDSSyncEventPlugin/IDSSyncEventPlugin", CQQAAAAA
+    ..\dbsadi\idssynceventplugin\idssynceventplugin
+    end source code control
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name JMSCpp
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ManualSyncAddin"=..\DBSADI\ManualSyncAddin\ManualSyncAddin\ManualSyncAddin.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name JMSCpp
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

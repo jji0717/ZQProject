@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XML Spy v4.1 U (http://www.xmlspy.com) by andy shao (zq corp) -->
+<!ELEMENT Config (Default, Conversation*)>
+<!-- Default values to be used when not explicitly defined -->
+<!ELEMENT Default (LocalListenAddress, LocalSendAddress, RemoteServer*, DenyList*)>
+<!--
+	Conversation #1 
+   		Enable tunneling of multicast messages on address 225.25.25.25, Port 6000
+        
+		Connect to the servers in the default RemoteServer list
+		Listen for multicast messages on the default LocalListenAddresses
+		Send multicast messages on the default LocalSendAddresses
+		Block incoming multicast messages from servers on the DenyList
+
+    Conversation #2 
+        Enable tunneling of multicast messages on address 225.25.25.25, Port 7000
+        
+        Connect to the servers in the default RemoteServer list
+        Send multicast messages on the default LocalSendAddresses
+        Block incoming multicast messages from servers on the DenyList
+
+        Listen for multicast messages in the LocalListenAddresses configured below
+        As the LocalListenAddress contains no Sockets, the conversation will 
+        not be listened to on the local network
+
+    Conversation #3 
+        Enable tunneling of multicast messages on address 225.25.25.25, Port 8000
+
+        Connect to the servers in the default RemoteServer list
+        Listen for multicast messages on the default LocalListenAddresses
+        Block incoming multicast messages from servers on the DenyList
+
+        Send multicast messages on the LocalSendAddresses configured below
+        As the LocalSendAddress contains no Sockets, the conversation should 
+        not be forwarded to the local network
+
+    Conversation #4 
+        Enable tunneling of multicast messages on address that resolves from
+        My_V6_MulticastGroup, Port 7000
+
+        Connect to the servers in the default RemoteServer list
+
+        Listen for multicast messages in the LocalListenAddresses configured below
+        Send multicast messages on the LocalSendAddresses configured below
+        Block incoming multicast messages from servers on the DenyList configured below
+-->
+<!ELEMENT Conversation (Socket*, LocalListenAddress?, LocalSendAddress?, DenyList?, RemoteServer*)>
+<!ELEMENT LocalListenAddress (Socket*)>
+<!ELEMENT LocalSendAddress (Socket*)>
+<!ELEMENT DenyList (Socket*)>
+<!ELEMENT RemoteServer (Connection*)>
+<!ELEMENT Connection (AddrsLocal, AddrsRemote)>
+<!ELEMENT AddrsLocal (Socket+)>
+<!ELEMENT AddrsRemote (Socket+)>
+<!ELEMENT Socket EMPTY>
+<!ATTLIST Socket
+	address CDATA #IMPLIED
+	port CDATA #IMPLIED
+>

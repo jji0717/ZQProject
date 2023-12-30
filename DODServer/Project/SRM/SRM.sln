@@ -1,0 +1,30 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SRM", "SRM.vcproj", "{2EA0D70C-42EA-4301-BDBB-CF76AE08785E}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 2
+		SccLocalPath0 = .
+		CanCheckoutShared = false
+		SolutionUniqueID = {B3D4A3E2-443A-472A-B07F-344535969B72}
+		SccProjectUniqueName1 = SRM.vcproj
+		SccLocalPath1 = .
+		CanCheckoutShared = false
+	EndGlobalSection
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{2EA0D70C-42EA-4301-BDBB-CF76AE08785E}.Debug.ActiveCfg = Debug|Win32
+		{2EA0D70C-42EA-4301-BDBB-CF76AE08785E}.Debug.Build.0 = Debug|Win32
+		{2EA0D70C-42EA-4301-BDBB-CF76AE08785E}.Release.ActiveCfg = Release|Win32
+		{2EA0D70C-42EA-4301-BDBB-CF76AE08785E}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

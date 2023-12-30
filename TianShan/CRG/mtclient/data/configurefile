@@ -1,0 +1,6 @@
+#command;time(ms);path;protocol;ip:port
+setup;1000;./data/setup.data;tcp;192.168.81.112:9527
+play;6000;./data/lscpPlay.bin;tcp;192.168.81.112:9528
+status;6000;./data/status.data;tcp;192.168.81.112:9528
+pause;6000;./data/lscpPause.bin;tcp;192.168.81.112:9528
+close;6000;./data/rrs.bin;tcp; 192.168.81.112:9527

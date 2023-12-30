@@ -1,0 +1,3977 @@
+
+(object Petal
+    version    	47
+    _written   	"Rose 8.0.0303.1400"
+    charSet    	134)
+
+(object Class_Category "EntryDB"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    attributes 	(list Attribute_Set
+	(object Attribute
+	    tool       	"sc"
+	    name       	"SourceControlSpec"
+	    value      	
+|"$/ZQProjs/MediaProcessFramework/doc/module", CYIAAAAA
+	    ))
+    quid       	"4271CC1C038E"
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "Timestamp"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AppliedPattern"
+		    value      	"none")
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AfxSupportMacro"
+		    value      	""))
+	    quid       	"4271CC1C0390"
+	    operations 	(list Operations
+		(object Operation "Timestamp"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1C0398"
+		    parameters 	(list Parameters
+			(object Parameter "ft"
+			    quid       	"4271CC1C0399"
+			    type       	"const FILETIME*"
+			    initv      	"NULL"
+			    const      	TRUE)
+			(object Parameter "isLocal"
+			    quid       	"4271CC1C039A"
+			    type       	"bool"
+			    initv      	"false"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "Timestamp"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1C03A2"
+		    documentation 	"DOS datetime"
+		    parameters 	(list Parameters
+			(object Parameter "wFatDate"
+			    quid       	"4271CC1C03A3"
+			    type       	"const WORD"
+			    const      	TRUE)
+			(object Parameter "wFatTime"
+			    quid       	"4271CC1C03A4"
+			    type       	"const WORD"
+			    const      	TRUE))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "Timestamp"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1C03AC"
+		    documentation 	"copier"
+		    parameters 	(list Parameters
+			(object Parameter "ts"
+			    quid       	"4271CC1C03AD"
+			    type       	"const Timestamp&"
+			    const      	TRUE))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "Timestamp"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1C03AE"
+		    parameters 	(list Parameters
+			(object Parameter "hex_str"
+			    quid       	"4271CC1C03AF"
+			    type       	"const char*"
+			    const      	TRUE))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "compare"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1C03B6"
+		    parameters 	(list Parameters
+			(object Parameter "ts"
+			    quid       	"4271CC1C03B7"
+			    type       	"const Timestamp&"
+			    const      	TRUE))
+		    result     	"long"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "difference"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1C03C0"
+		    parameters 	(list Parameters
+			(object Parameter "ts"
+			    quid       	"4271CC1C03C1"
+			    type       	"const Timestamp&"
+			    const      	TRUE))
+		    result     	"long"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "addDiff"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1C03C2"
+		    parameters 	(list Parameters
+			(object Parameter "seconds"
+			    quid       	"4271CC1C03CA"
+			    type       	"const float"
+			    const      	TRUE))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "toLocal"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1C03CB"
+		    parameters 	(list Parameters
+			(object Parameter "ts"
+			    quid       	"4271CC1C03CC"
+			    type       	"Timestamp&"
+			    quidu      	"4271CC1C0390"))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "toSystemtime"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1C03D4"
+		    parameters 	(list Parameters
+			(object Parameter "SystemTime"
+			    quid       	"4271CC1C03D5"
+			    type       	"SYSTEMTIME&"))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "toDosDatetime"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1C03D6"
+		    parameters 	(list Parameters
+			(object Parameter "FatDate"
+			    quid       	"4271CC1C03DE"
+			    type       	"WORD&")
+			(object Parameter "FatTime"
+			    quid       	"4271CC1C03DF"
+			    type       	"WORD&"))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "hex_str"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1C03E0"
+		    parameters 	(list Parameters
+			(object Parameter "buf"
+			    quid       	"4271CC1C03E1"
+			    type       	"char*"))
+		    result     	"const char*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "display_str"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1C03E2"
+		    parameters 	(list Parameters
+			(object Parameter "buf"
+			    quid       	"4271CC1C03E3"
+			    type       	"char*")
+			(object Parameter "withnsec"
+			    quid       	"4271CC1D0000"
+			    type       	"bool"
+			    initv      	"false"))
+		    result     	"const char*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "AdjustForTimezone"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0001"
+		    stereotype 	"static"
+		    parameters 	(list Parameters
+			(object Parameter "Orig"
+			    quid       	"4271CC1D0003"
+			    type       	"const FILETIME*"
+			    const      	TRUE)
+			(object Parameter "Direction"
+			    quid       	"4271CC1D0004"
+			    type       	"int"))
+		    result     	"FILETIME"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "UnixTimeToFileTime"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0005"
+		    stereotype 	"static"
+		    parameters 	(list Parameters
+			(object Parameter "sec"
+			    quid       	"4271CC1D0007"
+			    type       	"time_t")
+			(object Parameter "nsec"
+			    quid       	"4271CC1D0008"
+			    type       	"long"))
+		    result     	"FILETIME"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "FileTimeToUnixTime"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0009"
+		    stereotype 	"static"
+		    parameters 	(list Parameters
+			(object Parameter "FileTime"
+			    quid       	"4271CC1D000B"
+			    type       	"FILETIME")
+			(object Parameter "nsec"
+			    quid       	"4271CC1D000C"
+			    type       	"long*"))
+		    result     	"time_t"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    module     	"Component View::MPF SDK::EntryDB"
+	    quidu      	"4271CBD3018A"
+	    language   	"VC++")
+	(object Class "eIDset"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AppliedPattern"
+		    value      	"none")
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AfxSupportMacro"
+		    value      	""))
+	    quid       	"4271CC1D0028"
+	    operations 	(list Operations
+		(object Operation "eIDset"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0029"
+		    parameters 	(list Parameters
+			(object Parameter ""
+			    quid       	"4271CC1D002A"
+			    type       	"void"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "~eIDset"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D002B"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter ""
+			    quid       	"4271CC1D002D"
+			    type       	"void"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "operator()"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D002E"
+		    parameters 	(list Parameters
+			(object Parameter ""
+			    quid       	"4271CC1D0032"
+			    type       	"void"))
+		    result     	"const char*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    module     	"Component View::MPF SDK::EntryDB"
+	    quidu      	"4271CBD3018A"
+	    language   	"VC++")
+	(object Class "PollingTimer"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AppliedPattern"
+		    value      	"none")
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AfxSupportMacro"
+		    value      	""))
+	    quid       	"4271CC1D0050"
+	    operations 	(list Operations
+		(object Operation "PollingTimer"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0051"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "setTimer"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0052"
+		    parameters 	(list Parameters
+			(object Parameter "timeout"
+			    quid       	"4271CC1D0053"
+			    type       	"timeout_t"
+			    initv      	"0"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "incTimer"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0054"
+		    parameters 	(list Parameters
+			(object Parameter "timeout"
+			    quid       	"4271CC1D0055"
+			    type       	"timeout_t"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "endTimer"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D005A"
+		    parameters 	(list Parameters
+			(object Parameter ""
+			    quid       	"4271CC1D005B"
+			    type       	"void"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "getTimer"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D005C"
+		    parameters 	(list Parameters
+			(object Parameter ""
+			    quid       	"4271CC1D005D"
+			    type       	"void"))
+		    result     	"timeout_t"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "getElapsed"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D005E"
+		    parameters 	(list Parameters
+			(object Parameter ""
+			    quid       	"4271CC1D005F"
+			    type       	"void"))
+		    result     	"timeout_t"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "active"
+		    quid       	"4271CC1D0065"
+		    type       	"bool"))
+	    module     	"Component View::MPF SDK::EntryDB"
+	    quidu      	"4271CBD3018A"
+	    language   	"VC++")
+	(object Class "ExpatBase"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AppliedPattern"
+		    value      	"none")
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AfxSupportMacro"
+		    value      	""))
+	    quid       	"4271CC1D00C8"
+	    documentation 	" class ExpatBase"
+	    operations 	(list Operations
+		(object Operation "ExpatBase"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D00D2"
+		    parameters 	(list Parameters
+			(object Parameter "createParser"
+			    quid       	"4271CC1D00D3"
+			    type       	"bool"
+			    initv      	"true"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "~ExpatBase"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D00D4"
+		    stereotype 	"virtual"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "operator XML_Parser"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D00D6"
+		    stereotype 	"const"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "emptyCharData"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D00D8"
+		    documentation 	"utility often used in overridden charData"
+		    parameters 	(list Parameters
+			(object Parameter "s"
+			    quid       	"4271CC1D00D9"
+			    type       	"const XML_Char*"
+			    const      	TRUE)
+			(object Parameter "len"
+			    quid       	"4271CC1D00DA"
+			    type       	"int"))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "startElement"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D00DB"
+		    documentation 	" overrideable callbacks, from IXMLParserCallBack"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter "name"
+			    quid       	"4271CC1D00DD"
+			    type       	"const XML_Char*"
+			    const      	TRUE)
+			(object Parameter "atts"
+			    quid       	"4271CC1D00DE"
+			    type       	"const XML_Char* *"
+			    const      	TRUE))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "endElement"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D00DF"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter ""
+			    quid       	"4271CC1D00E1"
+			    type       	"const XML_Char*"
+			    const      	TRUE))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "charData"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D00E2"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter ""
+			    quid       	"4271CC1D00E4"
+			    type       	"const XML_Char*"
+			    const      	TRUE)
+			(object Parameter "len"
+			    quid       	"4271CC1D00E5"
+			    type       	"int"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "processingInstruction"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D00E6"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter "target"
+			    quid       	"4271CC1D00E8"
+			    type       	"const XML_Char*"
+			    const      	TRUE)
+			(object Parameter "data"
+			    quid       	"4271CC1D00E9"
+			    type       	"const XML_Char*"
+			    const      	TRUE))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "defaultHandler"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D00EA"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter ""
+			    quid       	"4271CC1D00EC"
+			    type       	"const XML_Char*"
+			    const      	TRUE)
+			(object Parameter "len"
+			    quid       	"4271CC1D00ED"
+			    type       	"int"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "notStandaloneHandler"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D00EE"
+		    stereotype 	"virtual"
+		    result     	"int"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "unparsedEntityDecl"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D00F0"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter "entityName"
+			    quid       	"4271CC1D00F2"
+			    type       	"const XML_Char*"
+			    const      	TRUE)
+			(object Parameter "base"
+			    quid       	"4271CC1D00F3"
+			    type       	"const XML_Char*"
+			    const      	TRUE)
+			(object Parameter "systemId"
+			    quid       	"4271CC1D00F4"
+			    type       	"const XML_Char*"
+			    const      	TRUE)
+			(object Parameter "publicId"
+			    quid       	"4271CC1D00F5"
+			    type       	"const XML_Char*"
+			    const      	TRUE)
+			(object Parameter "notationName"
+			    quid       	"4271CC1D00F6"
+			    type       	"const XML_Char*"
+			    const      	TRUE))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "notationDecl"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D00F7"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter "notationName"
+			    quid       	"4271CC1D00F9"
+			    type       	"const XML_Char*"
+			    const      	TRUE)
+			(object Parameter "base"
+			    quid       	"4271CC1D00FA"
+			    type       	"const XML_Char*"
+			    const      	TRUE)
+			(object Parameter "systemId"
+			    quid       	"4271CC1D00FB"
+			    type       	"const XML_Char*"
+			    const      	TRUE)
+			(object Parameter "publicId"
+			    quid       	"4271CC1D00FC"
+			    type       	"const XML_Char*"
+			    const      	TRUE))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "startNamespace"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D00FD"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter "prefix"
+			    quid       	"4271CC1D00FF"
+			    type       	"const XML_Char*"
+			    const      	TRUE)
+			(object Parameter "uri"
+			    quid       	"4271CC1D0100"
+			    type       	"const XML_Char*"
+			    const      	TRUE))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "endNamespace"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0101"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter ""
+			    quid       	"4271CC1D0103"
+			    type       	"const XML_Char*"
+			    const      	TRUE))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "logicalClose"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0104"
+		    stereotype 	"virtual"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "XML_Parse"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0106"
+		    documentation 	" XML interfaces"
+		    parameters 	(list Parameters
+			(object Parameter "s"
+			    quid       	"4271CC1D0107"
+			    type       	"const char*"
+			    const      	TRUE)
+			(object Parameter "len"
+			    quid       	"4271CC1D0108"
+			    type       	"int")
+			(object Parameter "isFinal"
+			    quid       	"4271CC1D0109"
+			    type       	"int"))
+		    result     	"int"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "XML_GetErrorCode"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D010A"
+		    result     	"XML_Error"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "XML_GetCurrentLineNumber"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D010B"
+		    result     	"int"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "XML_GetErrorString"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D010C"
+		    result     	"const XML_Char*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "startElementCallback"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0119"
+		    stereotype 	"static"
+		    parameters 	(list Parameters
+			(object Parameter "userData"
+			    quid       	"4271CC1D011B"
+			    type       	"void*")
+			(object Parameter "name"
+			    quid       	"4271CC1D011C"
+			    type       	"const XML_Char*"
+			    const      	TRUE)
+			(object Parameter "atts"
+			    quid       	"4271CC1D011D"
+			    type       	"const XML_Char* *"
+			    const      	TRUE))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "endElementCallback"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D011E"
+		    stereotype 	"static"
+		    parameters 	(list Parameters
+			(object Parameter "userData"
+			    quid       	"4271CC1D0120"
+			    type       	"void*")
+			(object Parameter "name"
+			    quid       	"4271CC1D0123"
+			    type       	"const XML_Char*"
+			    const      	TRUE))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "startNamespaceCallback"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0124"
+		    stereotype 	"static"
+		    parameters 	(list Parameters
+			(object Parameter "userData"
+			    quid       	"4271CC1D0126"
+			    type       	"void*")
+			(object Parameter "prefix"
+			    quid       	"4271CC1D0127"
+			    type       	"const XML_Char*"
+			    const      	TRUE)
+			(object Parameter "uri"
+			    quid       	"4271CC1D0128"
+			    type       	"const XML_Char*"
+			    const      	TRUE))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "endNamespaceCallback"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0129"
+		    stereotype 	"static"
+		    parameters 	(list Parameters
+			(object Parameter "userData"
+			    quid       	"4271CC1D012B"
+			    type       	"void*")
+			(object Parameter "prefix"
+			    quid       	"4271CC1D012D"
+			    type       	"const XML_Char*"
+			    const      	TRUE))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "charDataCallback"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D012E"
+		    stereotype 	"static"
+		    parameters 	(list Parameters
+			(object Parameter "userData"
+			    quid       	"4271CC1D0130"
+			    type       	"void*")
+			(object Parameter "s"
+			    quid       	"4271CC1D0131"
+			    type       	"const XML_Char*"
+			    const      	TRUE)
+			(object Parameter "len"
+			    quid       	"4271CC1D0132"
+			    type       	"int"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "processingInstructionCallback"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0133"
+		    stereotype 	"static"
+		    parameters 	(list Parameters
+			(object Parameter "userData"
+			    quid       	"4271CC1D0135"
+			    type       	"void*")
+			(object Parameter "target"
+			    quid       	"4271CC1D0137"
+			    type       	"const XML_Char*"
+			    const      	TRUE)
+			(object Parameter "data"
+			    quid       	"4271CC1D0138"
+			    type       	"const XML_Char*"
+			    const      	TRUE))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "defaultHandlerCallback"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0139"
+		    stereotype 	"static"
+		    parameters 	(list Parameters
+			(object Parameter "userData"
+			    quid       	"4271CC1D013B"
+			    type       	"void*")
+			(object Parameter "s"
+			    quid       	"4271CC1D013C"
+			    type       	"const XML_Char*"
+			    const      	TRUE)
+			(object Parameter "len"
+			    quid       	"4271CC1D013D"
+			    type       	"int"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "notStandaloneHandlerCallback"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D013E"
+		    stereotype 	"static"
+		    parameters 	(list Parameters
+			(object Parameter "userData"
+			    quid       	"4271CC1D0141"
+			    type       	"void*"))
+		    result     	"int"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "unParsedEntityDeclCallback"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0142"
+		    stereotype 	"static"
+		    parameters 	(list Parameters
+			(object Parameter "userData"
+			    quid       	"4271CC1D0144"
+			    type       	"void*")
+			(object Parameter "entityName"
+			    quid       	"4271CC1D0145"
+			    type       	"const XML_Char*"
+			    const      	TRUE)
+			(object Parameter "base"
+			    quid       	"4271CC1D0146"
+			    type       	"const XML_Char*"
+			    const      	TRUE)
+			(object Parameter "systemId"
+			    quid       	"4271CC1D0147"
+			    type       	"const XML_Char*"
+			    const      	TRUE)
+			(object Parameter "publicId"
+			    quid       	"4271CC1D0148"
+			    type       	"const XML_Char*"
+			    const      	TRUE)
+			(object Parameter "notationName"
+			    quid       	"4271CC1D0149"
+			    type       	"const XML_Char*"
+			    const      	TRUE))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "notationDeclCallback"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D014B"
+		    stereotype 	"static"
+		    parameters 	(list Parameters
+			(object Parameter "userData"
+			    quid       	"4271CC1D014D"
+			    type       	"void*")
+			(object Parameter "notationName"
+			    quid       	"4271CC1D014E"
+			    type       	"const XML_Char*"
+			    const      	TRUE)
+			(object Parameter "base"
+			    quid       	"4271CC1D014F"
+			    type       	"const XML_Char*"
+			    const      	TRUE)
+			(object Parameter "systemId"
+			    quid       	"4271CC1D0150"
+			    type       	"const XML_Char*"
+			    const      	TRUE)
+			(object Parameter "publicId"
+			    quid       	"4271CC1D0151"
+			    type       	"const XML_Char*"
+			    const      	TRUE))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "skipWhiteSpace"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0152"
+		    documentation 	" utilities"
+		    stereotype 	"static"
+		    parameters 	(list Parameters
+			(object Parameter "startFrom"
+			    quid       	"4271CC1D0155"
+			    type       	"const char*"
+			    const      	TRUE))
+		    result     	"int"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "depth"
+		    quid       	"4271CC1D0114"
+		    documentation 	"for logical close"
+		    type       	"int"
+		    exportControl 	"Protected"))
+	    module     	"Component View::MPF SDK::EntryDB"
+	    quidu      	"4271CBD3018A"
+	    language   	"VC++")
+	(object Class "ExpatDB"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AppliedPattern"
+		    value      	"none")
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AfxSupportMacro"
+		    value      	""))
+	    quid       	"4271CC1D0173"
+	    documentation 	" class ExpatDB"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"4271CC1D017D"
+		    supplier   	"Logical View::MPF SDK::EntryDB::EDB"
+		    quidu      	"4271CC1D02C7"))
+	    operations 	(list Operations
+		(object Operation "ExpatDB"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D017E"
+		    parameters 	(list Parameters
+			(object Parameter "szFilename"
+			    quid       	"4271CC1D017F"
+			    type       	"const char*"
+			    initv      	"NULL"
+			    const      	TRUE)
+			(object Parameter "preInMemory"
+			    quid       	"4271CC1D0180"
+			    type       	"bool"
+			    initv      	"true"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "ExpatDB"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0181"
+		    parameters 	(list Parameters
+			(object Parameter "szBuffer"
+			    quid       	"4271CC1D0182"
+			    type       	"const char*"
+			    const      	TRUE)
+			(object Parameter "nBufferLen"
+			    quid       	"4271CC1D0183"
+			    type       	"const int"
+			    const      	TRUE)
+			(object Parameter "nFinal"
+			    quid       	"4271CC1D0184"
+			    type       	"const int"
+			    initv      	"0"
+			    const      	TRUE))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "~ExpatDB"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0185"
+		    stereotype 	"virtual"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "parseXML"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0187"
+		    parameters 	(list Parameters
+			(object Parameter "szFilename"
+			    quid       	"4271CC1D0188"
+			    type       	"const char*"
+			    const      	TRUE))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "parseXML"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0189"
+		    parameters 	(list Parameters
+			(object Parameter "szBuffer"
+			    quid       	"4271CC1D018A"
+			    type       	"const char*"
+			    const      	TRUE)
+			(object Parameter "nBufferLen"
+			    quid       	"4271CC1D018B"
+			    type       	"const int"
+			    const      	TRUE)
+			(object Parameter "nFinal"
+			    quid       	"4271CC1D018C"
+			    type       	"const int"
+			    initv      	"0"
+			    const      	TRUE))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "getContent"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D018D"
+		    documentation 	" Get/set the content portion of an element"
+		    result     	"const char*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "setContent"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D018E"
+		    parameters 	(list Parameters
+			(object Parameter "szContent"
+			    quid       	"4271CC1D0191"
+			    type       	"const char*"
+			    const      	TRUE))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "getElementName"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0192"
+		    stereotype 	"virtual"
+		    result     	"const char*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "openFirstChild"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0194"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter "name"
+			    quid       	"4271CC1D0196"
+			    type       	"char*"))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "openNextSibling"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0197"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter "sameElementType"
+			    quid       	"4271CC1D0199"
+			    type       	"bool"))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "newChild"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D019A"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter "name"
+			    quid       	"4271CC1D019C"
+			    type       	"char*"))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "lastError"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D019D"
+		    stereotype 	"virtual"
+		    result     	"const char*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "xexp"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D01A0"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter "depth"
+			    quid       	"4271CC1D01A2"
+			    type       	"int")
+			(object Parameter "out"
+			    quid       	"4271CC1D01A3"
+			    type       	"std::ostream&")
+			(object Parameter "elyield"
+			    quid       	"4271CC1D01A4"
+			    type       	"const char*"
+			    initv      	
+|"  "
+			    
+			    const      	TRUE)
+			(object Parameter "atyield"
+			    quid       	"4271CC1D01A5"
+			    type       	"const char*"
+			    initv      	"NULL"
+			    const      	TRUE))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Protected"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "bLogicalClosed"
+		    quid       	"4271CC1D019F"
+		    type       	"bool"
+		    exportControl 	"Public"))
+	    module     	"Component View::MPF SDK::EntryDB"
+	    quidu      	"4271CBD3018A"
+	    language   	"VC++")
+	(object Class "EDBException"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AppliedPattern"
+		    value      	"none")
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AfxSupportMacro"
+		    value      	""))
+	    quid       	"4271CC1D01C3"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"4271CC1D01CD"
+		    supplier   	"exception"))
+	    operations 	(list Operations
+		(object Operation "EDBException"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	TRUE))
+		    quid       	"4271CC1D01D7"
+		    parameters 	(list Parameters
+			(object Parameter "what_arg"
+			    quid       	"4271CC1D01D8"
+			    type       	"const std::string&"
+			    const      	TRUE))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "~EDBException"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	TRUE))
+		    quid       	"4271CC1D01D9"
+		    stereotype 	"virtual"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "getString"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	TRUE))
+		    quid       	"4271CC1D01DB"
+		    stereotype 	"virtual, const"
+		    result     	"const char*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    module     	"Component View::MPF SDK::EntryDB"
+	    quidu      	"4271CBD3018A"
+	    language   	"VC++")
+	(object Class "EDBNil"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AppliedPattern"
+		    value      	"none")
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AfxSupportMacro"
+		    value      	""))
+	    quid       	"4271CC1D021D"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"4271CC1D021E"
+		    supplier   	"EDBImpl"))
+	    operations 	(list Operations
+		(object Operation "EDBNil"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D021F"
+		    parameters 	(list Parameters
+			(object Parameter "dbpath"
+			    quid       	"4271CC1D0220"
+			    type       	"const char*"
+			    const      	TRUE)
+			(object Parameter "errf"
+			    quid       	"4271CC1D0221"
+			    type       	"const char*"
+			    initv      	"NULL"
+			    const      	TRUE))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "EDBNil"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0222"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "~EDBNil"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0223"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "connectDB"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0227"
+		    parameters 	(list Parameters
+			(object Parameter "url"
+			    quid       	"4271CC1D0228"
+			    type       	"const char*"
+			    const      	TRUE))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "isDBConnected"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0229"
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "disconnectDB"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D022A"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "free"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D022B"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "getDBURL"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D022C"
+		    result     	"const char*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "openEntry"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0231"
+		    parameters 	(list Parameters
+			(object Parameter "e"
+			    quid       	"4271CC1D0232"
+			    type       	"const char*"
+			    const      	TRUE)
+			(object Parameter "creatIfNotExist"
+			    quid       	"4271CC1D0233"
+			    type       	"bool"
+			    initv      	"false"))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "setReference"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0234"
+		    parameters 	(list Parameters
+			(object Parameter "e"
+			    quid       	"4271CC1D0235"
+			    type       	"const char*"
+			    const      	TRUE))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "commitChanges"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0236"
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "deleteEntry"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0237"
+		    parameters 	(list Parameters
+			(object Parameter "e"
+			    quid       	"4271CC1D023B"
+			    type       	"const char*"
+			    initv      	"NULL"
+			    const      	TRUE))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "copyEntry"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D023C"
+		    parameters 	(list Parameters
+			(object Parameter "eto"
+			    quid       	"4271CC1D023D"
+			    type       	"const char*"
+			    const      	TRUE)
+			(object Parameter "efrom"
+			    quid       	"4271CC1D023E"
+			    type       	"const char*"
+			    initv      	"NULL"
+			    const      	TRUE)
+			(object Parameter "overwrite"
+			    quid       	"4271CC1D023F"
+			    type       	"bool"
+			    initv      	"false"))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "openRoot"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0240"
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "openParent"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0241"
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "openNextSibling"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0242"
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "openFirstChild"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0245"
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "openFirstGE"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0246"
+		    parameters 	(list Parameters
+			(object Parameter "e"
+			    quid       	"4271CC1D0247"
+			    type       	"const char*"
+			    const      	TRUE))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "openNext"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0248"
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "getCurrentEntry"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0249"
+		    result     	"const char*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "getAttrName"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D024A"
+		    parameters 	(list Parameters
+			(object Parameter "index"
+			    quid       	"4271CC1D024B"
+			    type       	"const int"
+			    const      	TRUE))
+		    result     	"const char*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "getAttribute"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D024C"
+		    parameters 	(list Parameters
+			(object Parameter "attrname"
+			    quid       	"4271CC1D024F"
+			    type       	"const char*"
+			    const      	TRUE))
+		    result     	"const char*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "setAttribute"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0250"
+		    parameters 	(list Parameters
+			(object Parameter "attrname"
+			    quid       	"4271CC1D0251"
+			    type       	"const char*"
+			    const      	TRUE)
+			(object Parameter "value"
+			    quid       	"4271CC1D0252"
+			    type       	"const char*"
+			    const      	TRUE))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "isReference"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0253"
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "associateReference"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0254"
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "createTransaction"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	TRUE))
+		    quid       	"4271CC1D0255"
+		    parameters 	(list Parameters
+			(object Parameter "txn"
+			    quid       	"4271CC1D0256"
+			    type       	"IEDBTxn* &"))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "setTransaction"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	TRUE))
+		    quid       	"4271CC1D0259"
+		    parameters 	(list Parameters
+			(object Parameter "txn"
+			    quid       	"4271CC1D025A"
+			    type       	"IEDBTxn*")
+			(object Parameter "commitLast"
+			    quid       	"4271CC1D025B"
+			    type       	"bool"))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "getTransaction"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	TRUE))
+		    quid       	"4271CC1D025C"
+		    result     	"IEDBTxn*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    module     	"Component View::MPF SDK::EntryDB"
+	    quidu      	"4271CBD3018A"
+	    language   	"VC++"
+	    nestedClasses 	(list nestedClasses
+		(object Class "entry_map_t"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"AppliedPattern"
+			    value      	"none")
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"ImplementationType"
+			    value      	(value Text 
+|	typedef std::map< std::string, attrs_t > entry_map_t;
+			    ))
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"AfxSupportMacro"
+			    value      	""))
+		    quid       	"4271CC1D026D"
+		    documentation 	" Define the element map"
+		    stereotype 	"typedef"
+		    exportControl 	"Private"
+		    module     	"Component View::MPF SDK::EntryDB"
+		    quidu      	"4271CBD3018A")))
+	(object Class "EDB"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AppliedPattern"
+		    value      	"none")
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AfxSupportMacro"
+		    value      	""))
+	    quid       	"4271CC1D02C7"
+	    operations 	(list Operations
+		(object Operation "EDB"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D02D1"
+		    parameters 	(list Parameters
+			(object Parameter "url"
+			    quid       	"4271CC1D02D2"
+			    type       	"const char*"
+			    initv      	"NULL"
+			    const      	TRUE))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "~EDB"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D02D3"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "connect"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D02D4"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter "url"
+			    quid       	"4271CC1D02D6"
+			    type       	"const char*"
+			    const      	TRUE))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "isConnected"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D02DB"
+		    stereotype 	"virtual"
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "disconnect"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D02DD"
+		    stereotype 	"virtual"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "URL"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D02DF"
+		    stereotype 	"virtual"
+		    result     	"const char*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "openEntry"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D02E1"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter "e"
+			    quid       	"4271CC1D02E5"
+			    type       	"const char*"
+			    const      	TRUE)
+			(object Parameter "creatIfNotExist"
+			    quid       	"4271CC1D02E6"
+			    type       	"bool"
+			    initv      	"false"))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "rollbackAttrs"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D02E7"
+		    stereotype 	"virtual"
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "deleteEntry"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D02EF"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter "e"
+			    quid       	"4271CC1D02F1"
+			    type       	"const char*"
+			    initv      	"NULL"
+			    const      	TRUE))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "copyEntry"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D02F2"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter "eto"
+			    quid       	"4271CC1D02F4"
+			    type       	"const char*"
+			    const      	TRUE)
+			(object Parameter "efrom"
+			    quid       	"4271CC1D02F9"
+			    type       	"const char*"
+			    initv      	"NULL"
+			    const      	TRUE)
+			(object Parameter "overwrite"
+			    quid       	"4271CC1D02FA"
+			    type       	"bool"
+			    initv      	"false"))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "openRoot"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D02FB"
+		    stereotype 	"virtual"
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "openParent"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D02FD"
+		    stereotype 	"virtual"
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "openNextSibling"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D02FF"
+		    stereotype 	"virtual"
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "openFirstChild"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0301"
+		    stereotype 	"virtual"
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "getCurrentEntry"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0304"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter "basename"
+			    quid       	"4271CC1D0306"
+			    type       	"bool"
+			    initv      	"false"))
+		    result     	"const char*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "getAttrName"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0307"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter "index"
+			    quid       	"4271CC1D0309"
+			    type       	"const int"
+			    const      	TRUE))
+		    result     	"const char*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "getAttribute"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D030A"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter "attrname"
+			    quid       	"4271CC1D030C"
+			    type       	"const char*"
+			    const      	TRUE))
+		    result     	"const char*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "setAttribute"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D030D"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter "attrname"
+			    quid       	"4271CC1D030F"
+			    type       	"const char*"
+			    const      	TRUE)
+			(object Parameter "value"
+			    quid       	"4271CC1D0310"
+			    type       	"const char*"
+			    const      	TRUE))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "import"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0311"
+		    documentation 	" own methods"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter "edb"
+			    quid       	"4271CC1D0317"
+			    type       	"EDB&"
+			    quidu      	"4271CC1D02C7")
+			(object Parameter "at"
+			    quid       	"4271CC1D0318"
+			    type       	"const char*"
+			    initv      	"NULL"
+			    const      	TRUE))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "export"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0319"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter "edb"
+			    quid       	"4271CC1D031B"
+			    type       	"EDB&"
+			    quidu      	"4271CC1D02C7")
+			(object Parameter "at"
+			    quid       	"4271CC1D031C"
+			    type       	"const char*"
+			    initv      	"NULL"
+			    const      	TRUE))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "xexport"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D031D"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter "out"
+			    quid       	"4271CC1D031F"
+			    type       	"std::ostream&")
+			(object Parameter "at"
+			    quid       	"4271CC1D0320"
+			    type       	"const char*"
+			    initv      	"NULL"
+			    const      	TRUE))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "xexport"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0321"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter "filename"
+			    quid       	"4271CC1D0323"
+			    type       	"const char*"
+			    initv      	"NULL"
+			    const      	TRUE)
+			(object Parameter "at"
+			    quid       	"4271CC1D0324"
+			    type       	"const char*"
+			    initv      	"NULL"
+			    const      	TRUE))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "createTransaction"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0325"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter "txn"
+			    quid       	"4271CC1D0327"
+			    type       	"IEDBTxn* &"))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "setTransaction"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0328"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter "txn"
+			    quid       	"4271CC1D032A"
+			    type       	"IEDBTxn*")
+			(object Parameter "commitLast"
+			    quid       	"4271CC1D032B"
+			    type       	"bool"))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "getTransaction"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D032C"
+		    stereotype 	"virtual"
+		    result     	"IEDBTxn*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "xexp"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0335"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter "depth"
+			    quid       	"4271CC1D0337"
+			    type       	"int")
+			(object Parameter "out"
+			    quid       	"4271CC1D033F"
+			    type       	"std::ostream&")
+			(object Parameter "elyield"
+			    quid       	"4271CC1D0340"
+			    type       	"const char*"
+			    initv      	
+|"  "
+			    
+			    const      	TRUE)
+			(object Parameter "atyield"
+			    quid       	"4271CC1D0341"
+			    type       	"const char*"
+			    initv      	"NULL"
+			    const      	TRUE))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Protected"
+		    uid        	0)
+		(object Operation "copybranch"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D0342"
+		    stereotype 	"static"
+		    parameters 	(list Parameters
+			(object Parameter "from"
+			    quid       	"4271CC1D0344"
+			    type       	"EDB&"
+			    quidu      	"4271CC1D02C7")
+			(object Parameter "to"
+			    quid       	"4271CC1D0349"
+			    type       	"EDB&"
+			    quidu      	"4271CC1D02C7"))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Protected"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "bDirty"
+		    quid       	"4271CC1D0353"
+		    type       	"bool"
+		    exportControl 	"Protected"))
+	    module     	"Component View::MPF SDK::EntryDB"
+	    quidu      	"4271CBD3018A"
+	    language   	"VC++")
+	(object Class "EDBAddin"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AppliedPattern"
+		    value      	"none")
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AfxSupportMacro"
+		    value      	""))
+	    quid       	"4271CC1D035D"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"4271CC1D035E"
+		    supplier   	"Logical View::MPF SDK::EntryDB::DSOInterface"
+		    quidu      	"4271CC1E002A"))
+	    operations 	(list Operations
+		(object Operation "instanceCount"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D035F"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter ""
+			    quid       	"4271CC1D0368"
+			    type       	"void"))
+		    result     	"int64"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "isValid"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	TRUE))
+		    quid       	"4271CC1D036A"
+		    stereotype 	"virtual"
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "isInternal"
+		    quid       	"4271CC1D0369"
+		    type       	"bool"
+		    exportControl 	"Public"))
+	    module     	"Component View::MPF SDK::EntryDB"
+	    quidu      	"4271CBD3018A"
+	    language   	"VC++")
+	(object Class "EDBFactory"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AppliedPattern"
+		    value      	"none")
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AfxSupportMacro"
+		    value      	""))
+	    quid       	"4271CC1D0385"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"4271CC1D03AE"
+		    supplier   	"Logical View::MPF SDK::EntryDB::FactoryModule<EDBAddin>"
+		    quidu      	"4271CC1D038F"))
+	    operations 	(list Operations
+		(object Operation "EDBFactory"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D03AF"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "EDBFactory"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D03B0"
+		    parameters 	(list Parameters
+			(object Parameter "admg"
+			    quid       	"4271CC1D03B1"
+			    type       	"AddinManager&"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "~EDBFactory"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D03B8"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "Connect"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D03B9"
+		    parameters 	(list Parameters
+			(object Parameter "url"
+			    quid       	"4271CC1D03BA"
+			    type       	"const char*"
+			    const      	TRUE))
+		    result     	"IEDB*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "ModuleFile"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D03BB"
+		    parameters 	(list Parameters
+			(object Parameter "i"
+			    quid       	"4271CC1D03BC"
+			    type       	"int"))
+		    result     	"const char*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "ModuleURLHelp"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D03BD"
+		    parameters 	(list Parameters
+			(object Parameter "i"
+			    quid       	"4271CC1D03BE"
+			    type       	"int"))
+		    result     	"const char*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "ModuleDBDesc"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D03C2"
+		    parameters 	(list Parameters
+			(object Parameter "i"
+			    quid       	"4271CC1D03C3"
+			    type       	"int"))
+		    result     	"const char*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "isModuleInternal"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D03C4"
+		    parameters 	(list Parameters
+			(object Parameter "i"
+			    quid       	"4271CC1D03C5"
+			    type       	"int"))
+		    result     	"const bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "ModuleInstance"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D03C6"
+		    parameters 	(list Parameters
+			(object Parameter "i"
+			    quid       	"4271CC1D03C7"
+			    type       	"int"))
+		    result     	"const int64"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "init"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D03C8"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0))
+	    module     	"Component View::MPF SDK::EntryDB"
+	    quidu      	"4271CBD3018A"
+	    language   	"VC++")
+	(object Instantiated_Class "FactoryModule<EDBAddin>"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AppliedPattern"
+		    value      	"none")
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"Generate"
+		    value      	FALSE))
+	    quid       	"4271CC1D038F"
+	    used_nodes 	(list uses_relationship_list
+		(object Uses_Relationship
+		    quid       	"4271CC1D0390"
+		    supplier   	"Logical View::MPF SDK::EntryDB::FactoryModule"
+		    quidu      	"4271CC1E00B6"))
+	    module     	"Component View::MPF SDK::EntryDB"
+	    quidu      	"4271CBD3018A"
+	    language   	"VC++")
+	(object Class "DSO"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AppliedPattern"
+		    value      	"none")
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AfxSupportMacro"
+		    value      	""))
+	    quid       	"4271CC1D03D6"
+	    operations 	(list Operations
+		(object Operation "DSO"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D03E0"
+		    parameters 	(list Parameters
+			(object Parameter "filename"
+			    quid       	"4271CC1D03E1"
+			    type       	"const char*"
+			    initv      	"NULL"
+			    const      	TRUE))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "~DSO"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D03E2"
+		    stereotype 	"virtual"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "Load"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D03E4"
+		    parameters 	(list Parameters
+			(object Parameter "filename"
+			    quid       	"4271CC1D03E5"
+			    type       	"const char*"
+			    const      	TRUE))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "Free"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1D03E6"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "IsLoaded"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1E0002"
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "getImageName"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1E0003"
+		    stereotype 	"const"
+		    result     	"const char*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "getMappedInterfaceCount"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	TRUE))
+		    quid       	"4271CC1E0005"
+		    stereotype 	"const"
+		    result     	"int32"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "mapExternFunc"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	TRUE))
+		    quid       	"4271CC1E000C"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter "loading"
+			    quid       	"4271CC1E000E"
+			    type       	"bool"))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Protected"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "library"
+		    quid       	"4271CC1E0007"
+		    type       	"HINSTANCE"
+		    exportControl 	"Protected")
+		(object ClassAttribute "mFilename[256]"
+		    quid       	"4271CC1E0008"
+		    type       	"char"
+		    exportControl 	"Protected"))
+	    module     	"Component View::MPF SDK::EntryDB"
+	    quidu      	"4271CBD3018A"
+	    language   	"VC++")
+	(object Class "DSOInterface"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AppliedPattern"
+		    value      	"none")
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AfxSupportMacro"
+		    value      	""))
+	    quid       	"4271CC1E002A"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"4271CC1E0034"
+		    supplier   	"MOBJ"))
+	    operations 	(list Operations
+		(object Operation "DSOInterface"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1E0035"
+		    parameters 	(list Parameters
+			(object Parameter "pdso"
+			    quid       	"4271CC1E0036"
+			    type       	"DSO*"
+			    quidu      	"4271CC1D03D6"
+			    initv      	"NULL"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "~DSOInterface"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1E0037"
+		    stereotype 	"virtual"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "MapFunc"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1E0039"
+		    parameters 	(list Parameters
+			(object Parameter "pdso"
+			    quid       	"4271CC1E003A"
+			    type       	"DSO*"
+			    quidu      	"4271CC1D03D6"))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "instanceCount"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1E003B"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter ""
+			    quid       	"4271CC1E003F"
+			    type       	"void"))
+		    result     	"int64"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "getImageName"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1E0040"
+		    result     	"const char*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "getLib"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	TRUE))
+		    quid       	"4271CC1E0041"
+		    stereotype 	"const"
+		    result     	"HINSTANCE"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "isValid"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1E0043"
+		    stereotype 	"virtual"
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "mapExternFunc"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	TRUE))
+		    quid       	"4271CC1E0052"
+		    stereotype 	"virtual"
+		    parameters 	(list Parameters
+			(object Parameter "loading"
+			    quid       	"4271CC1E0054"
+			    type       	"bool"))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Protected"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "bMapped"
+		    quid       	"4271CC1E004A"
+		    type       	"bool"
+		    exportControl 	"Protected"))
+	    module     	"Component View::MPF SDK::EntryDB"
+	    quidu      	"4271CBD3018A"
+	    language   	"VC++")
+	(object Class "AddinImage"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AppliedPattern"
+		    value      	"none")
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AfxSupportMacro"
+		    value      	""))
+	    quid       	"4271CC1E005C"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"4271CC1E0066"
+		    supplier   	"Logical View::MPF SDK::EntryDB::DSO"
+		    quidu      	"4271CC1D03D6"))
+	    module     	"Component View::MPF SDK::EntryDB"
+	    quidu      	"4271CBD3018A"
+	    language   	"VC++")
+	(object Class "AddinManager"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AppliedPattern"
+		    value      	"none")
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AfxSupportMacro"
+		    value      	""))
+	    quid       	"4271CC1E007A"
+	    operations 	(list Operations
+		(object Operation "AddinManager"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1E007B"
+		    parameters 	(list Parameters
+			(object Parameter "path"
+			    quid       	"4271CC1E007C"
+			    type       	"const char*"
+			    initv      	"NULL"
+			    const      	TRUE)
+			(object Parameter "ext"
+			    quid       	"4271CC1E007D"
+			    type       	"const char*"
+			    initv      	"ADDIN_MOD_EXT"
+			    const      	TRUE))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "~AddinManager"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1E007E"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "populate"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1E007F"
+		    parameters 	(list Parameters
+			(object Parameter "path"
+			    quid       	"4271CC1E0080"
+			    type       	"const char*"
+			    initv      	"NULL"
+			    const      	TRUE)
+			(object Parameter "ext"
+			    quid       	"4271CC1E0084"
+			    type       	"const char*"
+			    initv      	"ADDIN_MOD_EXT"
+			    const      	TRUE))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "unpopulate"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1E0085"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "operator[]"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1E0086"
+		    parameters 	(list Parameters
+			(object Parameter "index"
+			    quid       	"4271CC1E0087"
+			    type       	"int"))
+		    result     	"AddinImage*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0
+		    quidu      	"4271CC1E005C")
+		(object Operation "size"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1E0088"
+		    stereotype 	"const"
+		    result     	"const int"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "bDestructor"
+		    quid       	"4271CC1E0098"
+		    type       	"bool"))
+	    module     	"Component View::MPF SDK::EntryDB"
+	    quidu      	"4271CBD3018A"
+	    language   	"VC++"
+	    nestedClasses 	(list nestedClasses
+		(object Class "vaddin_t"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"AppliedPattern"
+			    value      	"none")
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"ImplementationType"
+			    value      	(value Text 
+|	typedef std::vector<AddinImage*> vaddin_t;
+			    ))
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"AfxSupportMacro"
+			    value      	""))
+		    quid       	"4271CC1E00A2"
+		    stereotype 	"typedef"
+		    module     	"Component View::MPF SDK::EntryDB"
+		    quidu      	"4271CBD3018A")))
+	(object Parameterized_Class "FactoryModule"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AppliedPattern"
+		    value      	"none")
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"AfxSupportMacro"
+		    value      	""))
+	    quid       	"4271CC1E00B6"
+	    operations 	(list Operations
+		(object Operation "FactoryModule"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1E00B8"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "FactoryModule"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1E00C0"
+		    parameters 	(list Parameters
+			(object Parameter "admg"
+			    quid       	"4271CC1E00C1"
+			    type       	"AddinManager&"
+			    quidu      	"4271CC1E007A"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "~FactoryModule"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	FALSE))
+		    quid       	"4271CC1E00C2"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "size"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	TRUE))
+		    quid       	"4271CC1E00C3"
+		    result     	"int"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "operator[]"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"Inline"
+			    value      	TRUE))
+		    quid       	"4271CC1E00C4"
+		    parameters 	(list Parameters
+			(object Parameter "index"
+			    quid       	"4271CC1E00C5"
+			    type       	"int"))
+		    result     	"_AddinInterface*"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    module     	"Component View::MPF SDK::EntryDB"
+	    quidu      	"4271CBD3018A"
+	    language   	"VC++"
+	    parameters 	(list Parameters
+		(object Parameter "_AddinInterface"
+		    quid       	"4271CC1E00B7"
+		    type       	"class"))
+	    nestedClasses 	(list nestedClasses
+		(object Class "vmods_t"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"AppliedPattern"
+			    value      	"none")
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"ImplementationType"
+			    value      	(value Text 
+|	typedef std::vector<_AddinInterface*> vmods_t;
+			    ))
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"AfxSupportMacro"
+			    value      	""))
+		    quid       	"4271CC1E00E8"
+		    stereotype 	"typedef"
+		    exportControl 	"Protected"
+		    module     	"Component View::MPF SDK::EntryDB"
+		    quidu      	"4271CBD3018A")))
+	(object Association "$UNNAMED$0"
+	    quid       	"4271CC1D0014"
+	    roles      	(list role_list
+		(object Role "mFT"
+		    quid       	"4271CC1D0015"
+		    label      	"mFT"
+		    supplier   	"FILETIME"
+		    exportControl 	"Private"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$1"
+		    quid       	"4271CC1D0017"
+		    supplier   	"Logical View::MPF SDK::EntryDB::Timestamp"
+		    quidu      	"4271CC1C0390"
+		    is_aggregate 	TRUE)))
+	(object Association "$UNNAMED$2"
+	    quid       	"4271CC1D0033"
+	    roles      	(list role_list
+		(object Role "mhid"
+		    quid       	"4271CC1D0034"
+		    label      	"mhid"
+		    supplier   	"uint32"
+		    exportControl 	"Private"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$3"
+		    quid       	"4271CC1D0036"
+		    supplier   	"Logical View::MPF SDK::EntryDB::eIDset"
+		    quidu      	"4271CC1D0028"
+		    is_aggregate 	TRUE)))
+	(object Association "$UNNAMED$4"
+	    quid       	"4271CC1D003C"
+	    roles      	(list role_list
+		(object Role "mlid"
+		    quid       	"4271CC1D003D"
+		    label      	"mlid"
+		    supplier   	"uint32"
+		    exportControl 	"Private"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$5"
+		    quid       	"4271CC1D003F"
+		    supplier   	"Logical View::MPF SDK::EntryDB::eIDset"
+		    quidu      	"4271CC1D0028"
+		    is_aggregate 	TRUE)))
+	(object Association "$UNNAMED$6"
+	    quid       	"4271CC1D0060"
+	    roles      	(list role_list
+		(object Role "timer:struct timeval"
+		    quid       	"4271CC1D0061"
+		    label      	"timer:struct timeval"
+		    supplier   	"timeval"
+		    exportControl 	"Private"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$7"
+		    quid       	"4271CC1D0063"
+		    supplier   	"Logical View::MPF SDK::EntryDB::PollingTimer"
+		    quidu      	"4271CC1D0050")))
+	(object Association "$UNNAMED$8"
+	    quid       	"4271CC1D010F"
+	    roles      	(list role_list
+		(object Role "mParser"
+		    quid       	"4271CC1D0110"
+		    label      	"mParser"
+		    supplier   	"XML_Parser"
+		    exportControl 	"Protected"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$9"
+		    quid       	"4271CC1D0112"
+		    supplier   	"Logical View::MPF SDK::EntryDB::ExpatBase"
+		    quidu      	"4271CC1D00C8"
+		    is_aggregate 	TRUE)))
+	(object Association "$UNNAMED$10"
+	    quid       	"4271CC1D01A6"
+	    roles      	(list role_list
+		(object Role "crnt_element_type:std::string"
+		    quid       	"4271CC1D01A7"
+		    label      	"crnt_element_type:std::string"
+		    supplier   	"string"
+		    exportControl 	"Protected"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$11"
+		    quid       	"4271CC1D01A9"
+		    supplier   	"Logical View::MPF SDK::EntryDB::ExpatDB"
+		    quidu      	"4271CC1D0173")))
+	(object Association "$UNNAMED$12"
+	    quid       	"4271CC1D01AF"
+	    roles      	(list role_list
+		(object Role "error:std::string"
+		    quid       	"4271CC1D01B0"
+		    label      	"error:std::string"
+		    supplier   	"string"
+		    exportControl 	"Protected"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$13"
+		    quid       	"4271CC1D01B2"
+		    supplier   	"Logical View::MPF SDK::EntryDB::ExpatDB"
+		    quidu      	"4271CC1D0173")))
+	(object Association "$UNNAMED$14"
+	    quid       	"4271CC1D01B9"
+	    roles      	(list role_list
+		(object Role "pEMN"
+		    quid       	"4271CC1D01BA"
+		    label      	"pEMN"
+		    supplier   	"ExpatDBNesting"
+		    exportControl 	"Protected"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$15"
+		    quid       	"4271CC1D01BC"
+		    supplier   	"Logical View::MPF SDK::EntryDB::ExpatDB"
+		    quidu      	"4271CC1D0173")))
+	(object Association "$UNNAMED$16"
+	    quid       	"4271CC1D01CE"
+	    roles      	(list role_list
+		(object Role "_what:std::string"
+		    quid       	"4271CC1D01CF"
+		    label      	"_what:std::string"
+		    supplier   	"string"
+		    exportControl 	"Private"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$17"
+		    quid       	"4271CC1D01D1"
+		    supplier   	"Logical View::MPF SDK::EntryDB::EDBException"
+		    quidu      	"4271CC1D01C3")))
+	(object Association "$UNNAMED$18"
+	    quid       	"4271CC1D025D"
+	    roles      	(list role_list
+		(object Role "cInstance:int64"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"InitialValue"
+			    value      	"0"))
+		    quid       	"4271CC1D025E"
+		    label      	"cInstance:int64"
+		    supplier   	"int64"
+		    is_navigable 	TRUE
+		    static     	TRUE)
+		(object Role "$UNNAMED$19"
+		    quid       	"4271CC1D0260"
+		    supplier   	"Logical View::MPF SDK::EntryDB::EDBNil"
+		    quidu      	"4271CC1D021D"
+		    is_aggregate 	TRUE)))
+	(object Association "$UNNAMED$20"
+	    quid       	"4271CC1D0263"
+	    roles      	(list role_list
+		(object Role "mEDB:entry_map_t"
+		    quid       	"4271CC1D0264"
+		    label      	"mEDB:entry_map_t"
+		    supplier   	"Logical View::MPF SDK::EntryDB::EDBNil::entry_map_t"
+		    quidu      	"4271CC1D026D"
+		    exportControl 	"Private"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$21"
+		    quid       	"4271CC1D0266"
+		    supplier   	"Logical View::MPF SDK::EntryDB::EDBNil"
+		    quidu      	"4271CC1D021D"
+		    is_aggregate 	TRUE)))
+	(object Association "$UNNAMED$22"
+	    quid       	"4271CC1D032E"
+	    roles      	(list role_list
+		(object Role "pFactory"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"InitialValue"
+			    value      	"&defEDBFactory"))
+		    quid       	"4271CC1D032F"
+		    label      	"pFactory"
+		    supplier   	"Logical View::MPF SDK::EntryDB::EDBFactory"
+		    quidu      	"4271CC1D0385"
+		    is_navigable 	TRUE
+		    static     	TRUE)
+		(object Role "$UNNAMED$23"
+		    quid       	"4271CC1D0331"
+		    supplier   	"Logical View::MPF SDK::EntryDB::EDB"
+		    quidu      	"4271CC1D02C7")))
+	(object Association "$UNNAMED$24"
+	    quid       	"4271CC1D034A"
+	    roles      	(list role_list
+		(object Role "pIEDBImpl"
+		    quid       	"4271CC1D034B"
+		    label      	"pIEDBImpl"
+		    supplier   	"IEDB"
+		    exportControl 	"Protected"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$25"
+		    quid       	"4271CC1D034D"
+		    supplier   	"Logical View::MPF SDK::EntryDB::EDB"
+		    quidu      	"4271CC1D02C7")))
+	(object Association "$UNNAMED$26"
+	    quid       	"4271CC1E000F"
+	    roles      	(list role_list
+		(object Role "mItCount"
+		    quid       	"4271CC1E0010"
+		    label      	"mItCount"
+		    supplier   	"int32"
+		    exportControl 	"Protected"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$27"
+		    quid       	"4271CC1E0012"
+		    supplier   	"Logical View::MPF SDK::EntryDB::DSO"
+		    quidu      	"4271CC1D03D6"
+		    is_aggregate 	TRUE)))
+	(object Association "$UNNAMED$28"
+	    quid       	"4271CC1E0045"
+	    roles      	(list role_list
+		(object Role "pDso"
+		    quid       	"4271CC1E0046"
+		    label      	"pDso"
+		    supplier   	"Logical View::MPF SDK::EntryDB::DSO"
+		    quidu      	"4271CC1D03D6"
+		    exportControl 	"Protected"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$29"
+		    quid       	"4271CC1E0048"
+		    supplier   	"Logical View::MPF SDK::EntryDB::DSOInterface"
+		    quidu      	"4271CC1E002A")))
+	(object Association "$UNNAMED$30"
+	    quid       	"4271CC1E0055"
+	    roles      	(list role_list
+		(object Role "cInstance"
+		    quid       	"4271CC1E0056"
+		    label      	"cInstance"
+		    supplier   	"int64"
+		    exportControl 	"Protected"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$31"
+		    quid       	"4271CC1E0058"
+		    supplier   	"Logical View::MPF SDK::EntryDB::DSOInterface"
+		    quidu      	"4271CC1E002A"
+		    is_aggregate 	TRUE)))
+	(object Association "$UNNAMED$32"
+	    quid       	"4271CC1E008E"
+	    roles      	(list role_list
+		(object Role "vaddins:vaddin_t"
+		    quid       	"4271CC1E008F"
+		    label      	"vaddins:vaddin_t"
+		    supplier   	"Logical View::MPF SDK::EntryDB::AddinManager::vaddin_t"
+		    quidu      	"4271CC1E00A2"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$33"
+		    quid       	"4271CC1E0091"
+		    supplier   	"Logical View::MPF SDK::EntryDB::AddinManager"
+		    quidu      	"4271CC1E007A"
+		    is_aggregate 	TRUE)))
+	(object Association "$UNNAMED$34"
+	    quid       	"4271CC1E0093"
+	    roles      	(list role_list
+		(object Role "vaddins_lock:Mutex"
+		    quid       	"4271CC1E0094"
+		    label      	"vaddins_lock:Mutex"
+		    supplier   	"Mutex"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$35"
+		    quid       	"4271CC1E0096"
+		    supplier   	"Logical View::MPF SDK::EntryDB::AddinManager"
+		    quidu      	"4271CC1E007A"
+		    is_aggregate 	TRUE)))
+	(object Association "$UNNAMED$36"
+	    quid       	"4271CC1E00C6"
+	    roles      	(list role_list
+		(object Role "vmods:vmods_t"
+		    quid       	"4271CC1E00C7"
+		    label      	"vmods:vmods_t"
+		    supplier   	"Logical View::MPF SDK::EntryDB::FactoryModule::vmods_t"
+		    quidu      	"4271CC1E00E8"
+		    exportControl 	"Protected"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$37"
+		    quid       	"4271CC1E00C9"
+		    supplier   	"Logical View::MPF SDK::EntryDB::FactoryModule"
+		    quidu      	"4271CC1E00B6"
+		    is_aggregate 	TRUE)))
+	(object Association "$UNNAMED$38"
+	    quid       	"4271CC1E00CB"
+	    roles      	(list role_list
+		(object Role "vmods_lock:Mutex"
+		    quid       	"4271CC1E00CC"
+		    label      	"vmods_lock:Mutex"
+		    supplier   	"Mutex"
+		    exportControl 	"Protected"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$39"
+		    quid       	"4271CC1E00CE"
+		    supplier   	"Logical View::MPF SDK::EntryDB::FactoryModule"
+		    quidu      	"4271CC1E00B6"
+		    is_aggregate 	TRUE)))
+	(object Association "$UNNAMED$40"
+	    quid       	"4271CC1E00D4"
+	    roles      	(list role_list
+		(object Role "pAddinManager:AddinManager*"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"VC++"
+			    name       	"InitialValue"
+			    value      	"NULL"))
+		    quid       	"4271CC1E00D5"
+		    label      	"pAddinManager:AddinManager*"
+		    supplier   	"Logical View::MPF SDK::EntryDB::AddinManager"
+		    quidu      	"4271CC1E007A"
+		    exportControl 	"Protected"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$41"
+		    quid       	"4271CC1E00D7"
+		    supplier   	"Logical View::MPF SDK::EntryDB::FactoryModule"
+		    quidu      	"4271CC1E00B6"))))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "edos Model Update Overview"
+	    quid       	"4271CC1E00EA"
+	    title      	"edos Model Update Overview"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object Label @1
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    nlines     	3
+		    max_width  	2398
+		    label      	
+|edos Model Update Overview
+|This diagram was automatically created by Rational Rose Model Update Tool.
+|Friday, April 29, 2005 1:54:38 PM
+		    )
+		(object ClassView "Class" "Logical View::MPF SDK::EntryDB::Timestamp" @2
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(180, 1392)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(14, 1335)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	332
+			justify    	0
+			label      	"Timestamp")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271CC1C0390"
+		    width      	350
+		    height     	142
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MPF SDK::EntryDB::eIDset" @3
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(495, 1392)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@3
+			location   	(390, 1335)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	210
+			justify    	0
+			label      	"eIDset")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271CC1D0028"
+		    width      	228
+		    height     	142
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MPF SDK::EntryDB::PollingTimer" @4
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(825, 1392)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@4
+			location   	(642, 1335)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	366
+			justify    	0
+			label      	"PollingTimer")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271CC1D0050"
+		    width      	384
+		    height     	142
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MPF SDK::EntryDB::ExpatBase" @5
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(1200, 1392)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@5
+			location   	(1038, 1335)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	324
+			justify    	0
+			label      	"ExpatBase")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271CC1D00C8"
+		    width      	342
+		    height     	142
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MPF SDK::EntryDB::ExpatDB" @6
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(2190, 1084)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@6
+			location   	(2056, 1027)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	268
+			justify    	0
+			label      	"ExpatDB")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271CC1D0173"
+		    width      	286
+		    height     	142
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MPF SDK::EntryDB::EDBException" @7
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(1605, 1392)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@7
+			location   	(1394, 1335)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	422
+			justify    	0
+			label      	"EDBException")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271CC1D01C3"
+		    width      	440
+		    height     	142
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MPF SDK::EntryDB::EDBNil::entry_map_t" @8
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(2040, 1392)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@8
+			location   	(1859, 1362)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	362
+			justify    	0
+			label      	"entry_map_t")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@8
+			location   	(1859, 1312)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	362
+			justify    	0
+			label      	"<<typedef>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271CC1D026D"
+		    width      	380
+		    height     	188
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MPF SDK::EntryDB::EDBNil" @9
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(2370, 1392)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@9
+			location   	(2254, 1335)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	232
+			justify    	0
+			label      	"EDBNil")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271CC1D021D"
+		    width      	250
+		    height     	142
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MPF SDK::EntryDB::EDBAddin" @10
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(2925, 1084)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@10
+			location   	(2767, 1027)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	316
+			justify    	0
+			label      	"EDBAddin")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271CC1D035D"
+		    width      	334
+		    height     	142
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "InstantiatedClass" "Logical View::MPF SDK::EntryDB::FactoryModule<EDBAddin>" @11
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(1748, 792)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@11
+			location   	(1363, 735)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	770
+			justify    	0
+			label      	"FactoryModule<EDBAddin>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271CC1D038F"
+		    width      	788
+		    height     	142
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MPF SDK::EntryDB::EDBFactory" @12
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(1815, 1084)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@12
+			location   	(1634, 1027)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	362
+			justify    	0
+			label      	"EDBFactory")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271CC1D0385"
+		    width      	380
+		    height     	142
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MPF SDK::EntryDB::EDB" @13
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(2257, 792)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@13
+			location   	(2161, 735)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	192
+			justify    	0
+			label      	"EDB")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271CC1D02C7"
+		    width      	210
+		    height     	142
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "" @14
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4271CC1D017D"
+		    client     	@6
+		    supplier   	@13
+		    line_style 	0)
+		(object InheritView "" @15
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4271CC1D03AE"
+		    client     	@12
+		    supplier   	@11
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::MPF SDK::EntryDB::DSO" @16
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(2550, 792)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@16
+			location   	(2454, 735)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	192
+			justify    	0
+			label      	"DSO")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271CC1D03D6"
+		    width      	210
+		    height     	142
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MPF SDK::EntryDB::DSOInterface" @17
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(2925, 792)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@17
+			location   	(2729, 735)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	392
+			justify    	0
+			label      	"DSOInterface")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271CC1E002A"
+		    width      	410
+		    height     	142
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "" @18
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4271CC1D035E"
+		    client     	@10
+		    supplier   	@17
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::MPF SDK::EntryDB::AddinImage" @19
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(2550, 1084)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@19
+			location   	(2370, 1027)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	360
+			justify    	0
+			label      	"AddinImage")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271CC1E005C"
+		    width      	378
+		    height     	142
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "" @20
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4271CC1E0066"
+		    client     	@19
+		    supplier   	@16
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::MPF SDK::EntryDB::AddinManager::vaddin_t" @21
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(2670, 1392)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@21
+			location   	(2412, 1362)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	516
+			justify    	0
+			label      	"vaddin_t")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@21
+			location   	(2412, 1312)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	516
+			justify    	0
+			label      	"<<typedef>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271CC1E00A2"
+		    width      	534
+		    height     	188
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MPF SDK::EntryDB::AddinManager" @22
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(3060, 1392)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@22
+			location   	(2850, 1335)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	420
+			justify    	0
+			label      	"AddinManager")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271CC1E007A"
+		    width      	438
+		    height     	142
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MPF SDK::EntryDB::FactoryModule::vmods_t" @23
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(3450, 1392)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@23
+			location   	(3176, 1334)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	548
+			justify    	0
+			label      	"vmods_t")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@23
+			location   	(3176, 1284)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	548
+			justify    	0
+			label      	"<<typedef>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271CC1E00E8"
+		    width      	566
+		    height     	244
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "ParameterizedClass" "Logical View::MPF SDK::EntryDB::FactoryModule" @24
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(1726, 481)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@24
+			location   	(1513, 447)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	426
+			justify    	0
+			label      	"FactoryModule")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271CC1E00B6"
+		    width      	444
+		    height     	180
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object UsesView "" @25
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4271CC1D0390"
+		    client     	@11
+		    supplier   	@24
+		    line_style 	0)))))

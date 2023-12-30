@@ -1,0 +1,1 @@
+${SYS_INTERP} --library-path ${ICE_ROOT}/lib ${ICE_ROOT}/bin/slice2cpp  ${ZQProjsPath}/TianShan/ComcastNGOD/ngod2view/ngod.ice  -I .  -I ${ZQProjsPath}/TianShan/Ice -I ${ICE_ROOT}/slice   --output-dir ${ZQProjsPath}/TianShan/ComcastNGOD/ngod2view/

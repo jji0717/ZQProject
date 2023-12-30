@@ -1,0 +1,331 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "winres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Chinese (P.R.C.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""winres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "1 TYPELIB ""AdPathExplorer.tlb""\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "Comments", "\0"
+            VALUE "CompanyName", "\0"
+            VALUE "FileDescription", "AdPathExplorer Module\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "AdPathExplorer\0"
+            VALUE "LegalCopyright", "Copyright 2006\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OLESelfRegister", "\0"
+            VALUE "OriginalFilename", "AdPathExplorer.DLL\0"
+            VALUE "PrivateBuild", "\0"
+            VALUE "ProductName", "AdPathExplorer Module\0"
+            VALUE "ProductVersion", "1, 0, 0, 1\0"
+            VALUE "SpecialBuild", "\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_ADPATHUI            BITMAP  DISCARDABLE     "adpathui.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// REGISTRY
+//
+
+IDR_ADPATHUI            REGISTRY DISCARDABLE    "AdPathUI.rgs"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ADPATHUI DIALOGEX 0, 0, 627, 371
+STYLE WS_CHILD | WS_BORDER
+EXSTYLE WS_EX_CONTROLPARENT | WS_EX_STATICEDGE
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    CONTROL         "Tree1",IDC_TREE,"SysTreeView32",WS_BORDER | WS_TABSTOP,
+                    0,17,143,350
+    CONTROL         "List1",IDC_LIST,"SysListView32",LVS_REPORT | WS_BORDER | 
+                    WS_TABSTOP,143,18,475,95,WS_EX_LEFTSCROLLBAR
+    CONTROL         "List1",IDC_LIST1,"SysListView32",LVS_REPORT | WS_BORDER | 
+                    WS_TABSTOP,143,113,476,254
+    PUSHBUTTON      "connecting",IDC_CONNECTBTN,383,2,70,14
+    LTEXT           "EndPoint:",IDC_STATIC,39,5,34,8
+    EDITTEXT        IDC_EDIT,93,2,274,14,ES_AUTOHSCROLL
+    CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,624,0,1,367
+END
+
+IDD_ADDDATA DIALOG DISCARDABLE  0, 0, 322, 227
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Update"
+MENU IDR_MENU
+FONT 9, "ËÎÌו"
+BEGIN
+    LTEXT           "StreamerNetId:",IDC_STATIC15,9,55,57,8
+    LTEXT           "Streamer NetID:",IDC_STATIC10,48,45,65,8
+    LTEXT           "ServiceGroup ID:",IDC_STATIC14,46,45,65,8
+    EDITTEXT        IDC_UK_EDIT,67,53,78,12,ES_AUTOHSCROLL
+    LTEXT           "StorageNetId:",IDC_STATIC3,10,54,55,8
+    LTEXT           "ServiceGroup ID:",IDC_STATIC7,28,31,65,8
+    COMBOBOX        IDC_STREAMERLINKCOMBO,126,63,97,87,CBS_DROPDOWNLIST | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "UpdateStreamerLink",IDC_UPSTREAMERLINKBTN,233,76,77,14
+    PUSHBUTTON      "UpdateStorageLink",IDC_UPSTORAGELINKBTN,234,78,76,14
+    LTEXT           "Type:",IDC_STATIC11,88,63,21,13
+    COMBOBOX        IDC_STORAGELINKCOMBO,126,63,100,64,CBS_DROPDOWNLIST | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Button2",IDC_GETSTREAMERDATA,215,21,35,15
+    PUSHBUTTON      "Button1",IDC_GETSTORAGEDATA,215,21,35,15
+    COMBOBOX        IDC_STORAGE_COMBO,197,53,87,50,CBS_DROPDOWNLIST | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Storage NetID:",IDC_STATIC9,53,22,68,11
+    EDITTEXT        IDC_EP_EDIT,66,23,137,12,ES_AUTOHSCROLL
+    LTEXT           "Desc:",IDC_STATIC5,40,80,20,8
+    EDITTEXT        IDC_DESC_EDIT,66,78,150,12,ES_AUTOHSCROLL
+    LTEXT           "Type:",IDC_STATIC2,169,54,20,11
+    COMBOBOX        IDC_STREAMER_COMBO,209,53,88,45,CBS_DROPDOWNLIST | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Desc:",IDC_STATIC8,68,57,25,8
+    LTEXT           "Streamer NetID:",IDC_STATIC13,50,21,61,12
+    COMBOBOX        IDC_COMBO22,126,41,82,68,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO11,125,21,83,43,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_EDIT,270,35,40,14,ES_AUTOHSCROLL
+    LTEXT           "EndPoint:",IDC_STATIC4,22,25,42,8
+    PUSHBUTTON      "link Streamer",IDC_LINKSTREAMERBTN,240,75,64,15
+    PUSHBUTTON      "link Storage",IDC_LINKSTORAGEBTN,241,76,63,14
+    PUSHBUTTON      "Update SerGroup",IDC_UPSGBTN,240,75,65,15
+    PUSHBUTTON      "Update Streamer",IDC_UPSTREAMERBTN,240,77,64,14
+    PUSHBUTTON      "Update Storage",IDC_UPSTORAGEBTN,241,77,64,14
+    EDITTEXT        IDC_SGID_EDIT,105,29,76,14,ES_AUTOHSCROLL | ES_NUMBER
+    EDITTEXT        IDC_SGDESC_EDIT,105,54,144,14,ES_AUTOHSCROLL
+    CONTROL         "List2",IDC_LIST,"SysListView32",LVS_REPORT | WS_BORDER | 
+                    WS_TABSTOP,9,99,297,117
+    CONTROL         "Tab1",IDC_TAB,"SysTabControl32",TCS_HOTTRACK,2,1,317,
+                    223
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_ADPATHUI, DIALOG
+    BEGIN
+        RIGHTMARGIN, 625
+        BOTTOMMARGIN, 367
+    END
+
+    IDD_ADDDATA, DIALOG
+    BEGIN
+        LEFTMARGIN, 2
+        RIGHTMARGIN, 319
+        TOPMARGIN, 1
+        BOTTOMMARGIN, 224
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_ADDDATA DLGINIT
+BEGIN
+    IDC_STORAGE_COMBO, 0x403, 1, 0
+"\000" 
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MENU MENU DISCARDABLE 
+BEGIN
+    POPUP "File( &F)"
+    BEGIN
+        MENUITEM "Exit",                        IDM_APP_EXIT
+    END
+END
+
+IDR_UPSTORAGE MENU DISCARDABLE 
+BEGIN
+    POPUP "222"
+    BEGIN
+        MENUITEM "Update Storage",              ID_UPSTORAGE
+    END
+END
+
+IDR_UPSG MENU DISCARDABLE 
+BEGIN
+    POPUP "444"
+    BEGIN
+        MENUITEM "UpDate ServiceGroup",         ID_UPSG
+    END
+END
+
+IDR_UPSTREAMER MENU DISCARDABLE 
+BEGIN
+    POPUP "333"
+    BEGIN
+        MENUITEM "Update Stream",               ID_UPSTREAMER
+    END
+END
+
+IDR_ADDSTORAGE MENU DISCARDABLE 
+BEGIN
+    POPUP "111111"
+    BEGIN
+        MENUITEM "Add Storage",                 ID_ADDSTORAGE
+    END
+END
+
+IDR_ADDSTREAMER MENU DISCARDABLE 
+BEGIN
+    POPUP "222"
+    BEGIN
+        MENUITEM "Add Streamer",                ID_ADDSTREAMER
+    END
+END
+
+IDR_ADDSG MENU DISCARDABLE 
+BEGIN
+    POPUP "333"
+    BEGIN
+        MENUITEM "Add SerivceGroup",            ID_ADDSG
+    END
+END
+
+IDR_STORAGELINK MENU DISCARDABLE 
+BEGIN
+    POPUP "444"
+    BEGIN
+        MENUITEM "Link Storage",                ID_LINKSTORAGE
+    END
+END
+
+IDR_STREAMERLINK MENU DISCARDABLE 
+BEGIN
+    POPUP "555"
+    BEGIN
+        MENUITEM "Link Streamer",               ID_LINKSTREAMER
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_PROJNAME            "AdPathExplorer"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDM_APP_EXIT            "exit \n exit"
+    ID_ADDSTORAGE           "Add Storage\n Add Storage"
+END
+
+#endif    // Chinese (P.R.C.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+1 TYPELIB "AdPathExplorer.tlb"
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

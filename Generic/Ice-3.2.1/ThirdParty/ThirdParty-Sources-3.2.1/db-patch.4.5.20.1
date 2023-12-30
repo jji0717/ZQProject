@@ -1,0 +1,31 @@
+--- sequence/sequence.c.4.5.20.1	2006-08-24 16:56:16.000000000 +0200
++++ sequence/sequence.c	2006-12-04 09:17:29.000000000 +0100
+@@ -227,6 +227,9 @@
+ 
+ 	seq->seq_data.ulen = seq->seq_data.size = sizeof(seq->seq_record);
+ 	seq->seq_rp = &seq->seq_record;
++	
++	if ((ret = __dbt_usercopy(dbenv, keyp)) != 0)
++		goto err;
+ 
+ 	memset(&seq->seq_key, 0, sizeof(DBT));
+ 	if ((ret = __os_malloc(dbenv, keyp->size, &seq->seq_key.data)) != 0)
+@@ -365,6 +368,7 @@
+ 		ret = t_ret;
+ 
+ 	ENV_LEAVE(dbenv, ip);
++	__dbt_userfree(dbenv, keyp, NULL, NULL);
+ 	return (ret);
+ }
+ 
+@@ -765,6 +769,10 @@
+ {
+ 	SEQ_ILLEGAL_BEFORE_OPEN(seq, "DB_SEQUENCE->get_key");
+ 
++	if (F_ISSET(key, DB_DBT_USERCOPY))
++		return (__db_retcopy(seq->seq_dbp->dbenv, key,
++			seq->seq_key.data, seq->seq_key.size, NULL, 0));
++
+ 	key->data = seq->seq_key.data;
+ 	key->size = key->ulen = seq->seq_key.size;
+ 	key->flags = seq->seq_key.flags;

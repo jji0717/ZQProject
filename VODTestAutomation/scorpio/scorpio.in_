@@ -1,0 +1,51 @@
+[ProjectState]
+ProjectWndInfo=252,0,1,1
+CurrentProject=C:\autotest\zodiac\scorpio\scorpio.vtp
+
+[Classmap]
+AOL Toolbar=Ignore
+_AOL_Toolbar=Ignore
+
+[State]
+NewFile=4
+CurrentDirectory=C:\autotest\zodiac\ctl\scorpio
+LastOptionSet9=
+LastFile9=Open C:\autotest\zodiac\inc\global\zodiacdefs.inc
+LastOptionSet8=
+LastFile8=Open C:\autotest\zodiac\script\scorpio\cleanup.t
+LastOptionSet7=
+LastFile7=Open C:\autotest\zodiac\script\scorpio\setup.t
+LastOptionSet6=
+LastFile6=Open C:\jefftest.txt
+LastOptionSet5=
+LastFile5=Open c:\autotest\oinktest.t
+LastOptionSet4=
+LastFile4=Open C:\autotest\zodiac\script\scorpio\scorpio.t
+LastOptionSet3=
+LastFile3=Open c:\autotest\zodiac\scorpio\scorpio.ini
+LastOptionSet2=
+LastFile2=Open C:\autotest\zodiac\inc\global\zodiacfunc.inc
+LastOptionSet1=
+LastFile1=Open C:\autotest\zodiac\inc\scorpio\scorpiofunc.inc
+Placement=154,154,768,537,3
+OptionsSet=
+
+[Runtime]
+UseFiles=
+TraceAgentTags=FALSE
+TraceAgentCalls=FALSE
+UsePath=c:\autotest\zodiac\inc\global; c:\autotest\zodiac\inc\scorpio
+NetworkProtocol=TCP/IP
+
+[FileList]
+C:\autotest\zodiac\inc\global\zodiacdefs.inc,154,154,697,570,-1,-1,-1,-1,1
+C:\autotest\zodiac\inc\scorpio\scorpiofunc.inc,132,132,725,548,-1,-1,-1,-1,1
+C:\autotest\zodiac\inc\global\zodiacmsgs.inc,88,88,631,504,-1,-1,-1,-1,1
+C:\autotest\zodiac\script\scorpio\scorpio.t,110,110,728,526,-1,-1,-1,-1,1
+C:\autotest\zodiac\inc\global\zodiacfunc.inc,132,132,675,548,-1,-1,-1,-1,3
+
+[General]
+TabStops=2
+
+[ITVQA]
+DataDrive = D:

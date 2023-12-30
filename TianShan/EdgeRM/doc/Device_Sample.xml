@@ -1,0 +1,65 @@
+<EdgeDevices>
+<!-- Settings of a QAM device
+     @attr name  - name the name of device, must be unique in the zone
+     @attr vendor - the vendor name
+     @attr model  - the product model of the device
+     @attr tftp   - the tftp URL to flash settings if allowed
+     @attr adminUrl - the URL to the administration interface of the device
+     @attr desc   - the optional description of the device
+-->
+<!-- change node tftp to endpoint 
+-->
+<EdgeDevice name="xor.QAM01.RFGW-1" zone="xor.QAM01"
+            vendor="NSG.9000-6G" model="2700"
+            endpoint="NGODR6://172.21.224.250:554/xor.QAM01.RFGW-1"
+            adminUrl="172.21.224.250:9090"
+            desc="qam on rack 11-3" >
+      <!-- Settings of this device-->
+	<DeviceIP>
+		<!-- Settings of an IP address
+		@attr value  - the IP address-->
+		<Address value="10.73.31.34"/>
+		<MacAddress value="38:c8:5c:28:d4:fc"/>
+	</DeviceIP> 
+        <!-- Settings of an RF port
+             @attr id  - the sequence port id in the device
+             @attr powerLevel - the power level, in dBmV, of the RF port -->
+	<EdgePort id="1" powerLevel="50">
+									
+
+            <!-- Settings of ATSC modulation
+                 @attr modulationFormat  - the id maps to the modultion format, i.e. 8 = QAM64
+                 @attr interleaverMode   - The interleaving depth of the interleaver, i.e. 1 = FEC-I-128-J-1
+                 @attr interleaverLevel  - Interleaver level for FEC encoding
+            -->
+	    <AtscModulationMode modulationFormat="8" interleaverMode="1" interleaverLevel="1" />
+
+            <!-- Settings of a RF channel or frequency
+                 @attr id   - the unique sequence channel id in the port
+                 @attr freq - the frequency, in KHz, of the channel
+                 @attr symbolRate - the symbol rate of the channel -->
+	    <EdgeChannel id="1" freq="291000" symbolRate="6875"  tsId="1" nitpid="1">
+	    		<!-- add provision node
+	    		-->
+          <Provision enabled="1" inbandMarker="type=4;pidType=A;pidValue=01EE;dataType=T;insertDuration=10000;data=4002003030" reportTrafficMismatch="1" jitterBuffer="200"/>
+								<!-- TODO: SETUP(ProvisionPort=1, ReportTrafficMismatch=0) => SETUP(StartChecking:=1, ReportTrafficMismatch=3)
+								-->
+                <!-- Settings about the input UDP inteface
+                     @attr startPort - the start UDP port of this channel
+                     @attr step - the step size of UDP port per program number, default 1
+                     @attr startPN - the start program number
+                     @attr maxSession - the maximal allowed session number in the channel
+                -->
+	        <UDP startPort="257" step="1" startPN="1" maxSession="1" />
+                <!-- Settings about the threshold of channel utilization
+                     @attr low - the lowest threshold, in Kbps, to utilize the channel
+                     @attr high - the highest threshold, in Kbps, to utilize the channel -->
+	        <UtilizationThreshold low="200" high="60000" />
+                <!-- Settings about MPEG TS encoding
+                     @attr intervalPAT - the interval, in msec, to insert the PAT
+                     @attr intervalPMT - the interval, in msec, to insert the PMT-->
+	        <MPTS intervalPAT="10" intervalPMT="10" />
+	    </EdgeChannel>
+	</EdgePort>
+</EdgeDevice>
+</EdgeDevices>

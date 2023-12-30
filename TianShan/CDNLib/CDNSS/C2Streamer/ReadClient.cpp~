@@ -1,0 +1,141 @@
+#include "ReadClient.h"
+
+namespace ZQ{
+    namespace StreamService{
+        ReadClient::ReadClient(C2Streamer::IReaderCallback* readerCB, ZQ::common::Log& log, const C2ClientConf& c2Conf)
+            :_log(log), _c2Conf(c2Conf), _readerCB(readerCB)
+        {
+            _log(ZQ::common::Log::L_DEBUG, CLOGFMT(ReadClient, "ReadClient() constructor entry [%p]"), this);
+
+        }
+
+        ReadClient::~ReadClient()
+        {
+            _log(ZQ::common::Log::L_DEBUG, CLOGFMT(ReadClient, "ReadClient() destructor entry [%p]"), this);
+        }
+
+        bool ReadClient::read( const std::vector<C2Streamer::Buffer*>& bufs )
+        {
+            _log(ZQ::common::Log::L_DEBUG, CLOGFMT(ReadClient, "read() entry, buffer number[%ld]"), bufs.size());
+
+            if (0 == bufs.size())
+            {
+                _log(ZQ::common::Log::L_ERROR, CLOGFMT(ReadClient, "read() fail to read, because there is no buffer for use"));
+                return false;
+            }
+
+            // check offset
+            for (std::vector<C2Streamer::Buffer*>::const_iterator it = bufs.begin(); it != bufs.end(); ++it)
+            {
+                std::string filename = (*it)->filename();
+                std::ostringstream oss;
+                oss<<filename<<":"<<(*it)->offsetInFile();
+                std::string key = oss.str();
+
+                std::ostringstream ossNew;
+                ossNew<<filename<<":"<<(*it)->offsetInFile() + (*it)->bufSize();
+                std::string newKey = ossNew.str();
+
+                std::vector<C2Streamer::Buffer*> readBufs;
+                readBufs.push_back(*it);
+
+                if (_c2clientMaps.find(key) == _c2clientMaps.end())
+                {
+                    _log(ZQ::common::Log::L_INFO, CLOGFMT(ReadClient, "read() [%p] couldn't found matched C2Client instance, create a new one, buffer offset[%ld], key[%s]"), this, (*it)->offsetInFile(), key.c_str());
+                    C2ClientAsyncPtr c2clientPtr = new C2ClientAsync(this, _log, _c2Conf);
+
+                    {
+                        ZQ::common::MutexGuard gd(_mutex);
+                        _c2clientMaps[newKey] = c2clientPtr;
+                    }
+
+                    if (!c2clientPtr->read(readBufs))
+                    {
+                        _log(ZQ::common::Log::L_ERROR, CLOGFMT(ReadClient, "read() failed [%p] file[%s]"), this, newKey.c_str());
+                        _log(ZQ::common::Log::L_DEBUG, CLOGFMT(ReadClient, "call onRead(), buffer number[%d], file[%s], first buffer offset[%ld], read client[%p]"), readBufs.size(), newKey.c_str(), (*readBufs.begin())->offsetInFile(), this);
+
+                        (*it)->setLastError(c2clientPtr->getLastError(), c2clientPtr->getErrorCategory());
+                        onRead(readBufs, true);
+                    }
+                }else{
+		            C2ClientAsyncPtr c2clientPtr;
+                    {
+                        ZQ::common::MutexGuard gd(_mutex);
+                     	c2clientPtr=_c2clientMaps[key];
+			            _c2clientMaps[newKey] = c2clientPtr;
+                        _c2clientMaps.erase(key);
+
+                    }
+                    if (!c2clientPtr->read(readBufs))
+                    {
+                        _log(ZQ::common::Log::L_ERROR, CLOGFMT(ReadClient, "read()failed [%p]"), this);
+                        _log(ZQ::common::Log::L_DEBUG, CLOGFMT(ReadClient, "call onRead(), buffer number[%d], [%s] first buffer offset[%ld], read client[%p]"), readBufs.size(), newKey.c_str(), (*readBufs.begin())->offsetInFile(), this);
+
+                        (*it)->setLastError(c2clientPtr->getLastError(), c2clientPtr->getErrorCategory());
+                        onRead(readBufs, true);
+                    }
+                }
+            }
+	    _log(ZQ::common::Log::L_DEBUG, CLOGFMT(ReadClient, "read()successful."));
+            return true;
+        }
+
+        // TODO: add interface for query index file attributes
+        bool ReadClient::queryIndexInfo( const std::string& filename, C2Streamer::AssetAttribute::Ptr attr )
+        {
+            C2ClientAsyncPtr c2clientPtr = new C2ClientAsync(this, _log, _c2Conf);
+
+            return c2clientPtr->queryIndexInfo(filename, attr);
+        }
+
+        void ReadClient::onIndexInfo( C2Streamer::AssetAttribute::Ptr attr )
+        {
+            _readerCB->onIndexInfo(attr);
+        }
+
+        void ReadClient::onRead( const std::vector<C2Streamer::Buffer*>& bufs , bool bFinished)
+        {
+            _log(ZQ::common::Log::L_DEBUG, CLOGFMT(ReadClient, "onRead() entry"));
+            if (bFinished && !bufs.empty())
+            {
+                ZQ::common::MutexGuard gd(_mutex);
+                std::ostringstream oss;
+                oss<<bufs[bufs.size()-1]->filename()<<":"<<bufs[bufs.size()-1]->offsetInFile()+bufs[bufs.size()-1]->bufSize();
+                std::string key = oss.str();
+                _log(ZQ::common::Log::L_DEBUG, CLOGFMT(ReadClient, "find c2client instance by key[%s]"), key.c_str());
+                if (_c2clientMaps.find(key) != _c2clientMaps.end())
+                {
+					std::map<std::string, C2ClientAsyncPtr>::iterator it = _c2clientMaps.find(key);
+					C2ClientAsyncPtr c2clientPtr = it->second;
+                    _log(ZQ::common::Log::L_DEBUG, CLOGFMT(ReadClient, "found it [%p]"), c2clientPtr._ptr);
+					int refCount =  c2clientPtr->__getRef();
+					_log(ZQ::common::Log::L_DEBUG, CLOGFMT(ReadClient, "onRead() read failed [%p], file[%s], ref[%d] "), c2clientPtr._ptr, key.c_str(), refCount);
+	            	c2clientPtr = NULL;
+                    _c2clientMaps.erase(key);
+                }
+            }
+            _readerCB->onRead(bufs);
+        }
+
+        void ReadClient::onLatency(std::string& fileName, int64 offset, int64 time)
+        {
+            _readerCB->onLatency(fileName, offset, time);
+        }
+
+        void ReadClient::onError( const std::string key,  int err )
+        {
+            if (_c2clientMaps.find(key) != _c2clientMaps.end())
+            {
+                if (_c2clientMaps.find(key) != _c2clientMaps.end())
+                {
+                    {
+                        ZQ::common::MutexGuard gd(_mutex);
+                        _c2clientMaps.erase(key);
+                    }
+                }
+            }
+            _readerCB->onError(err);
+        }
+
+    }//namespace ZQ
+} //namespace StreamService

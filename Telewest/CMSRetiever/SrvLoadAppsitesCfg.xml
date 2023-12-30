@@ -1,0 +1,4 @@
+<ApplicationSites>
+	<AppSite Name="AppSite1" DSN="Multiverse1" Database="multiverse" UserName="multiverse" Password="multiverse"/> 
+	<AppSite Name="AppSite2" DSN="Multiverse2" Database="multiverse" UserName="multiverse" Password="multiverse"/> 
+</ApplicationSites>

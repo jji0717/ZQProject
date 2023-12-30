@@ -1,0 +1,43 @@
+ Volume in drive C is TianShanVM
+ Volume Serial Number is 0C19-8EBE
+
+ Directory of C:\TsVm_tools
+
+12/05/2008  06:53 PM    <DIR>          .
+12/05/2008  06:53 PM    <DIR>          ..
+10/25/2007  03:21 PM            24,576 blat.exe
+11/11/2006  07:42 AM            81,408 bzcat.exe
+11/11/2006  07:42 AM            81,408 bzip2.exe
+10/30/2008  05:11 PM               428 configurations.pl
+10/26/2008  04:00 AM               423 configurations.pl.bak
+10/25/2007  03:21 PM             6,656 cygcrypt-0.dll
+10/25/2007  03:21 PM           969,728 cygiconv-2.dll
+10/25/2007  03:21 PM            37,888 cygintl-2.dll
+10/25/2007  03:21 PM            31,744 cygintl-3.dll
+10/25/2007  03:21 PM            31,744 cygintl-8.dll
+10/25/2007  03:21 PM         1,278,464 cygperl5_8.dll
+10/25/2007  03:21 PM         1,805,448 cygwin1.dll
+10/25/2007  03:21 PM           105,472 diff.exe
+10/25/2007  03:21 PM            91,198 emx.dll
+10/25/2007  03:21 PM            52,015 emx.exe
+12/05/2008  06:53 PM                 0 filelist.txt
+10/25/2008  09:13 PM                45 hosts.bat
+10/25/2007  03:21 PM            49,152 md5sum.exe
+02/19/2007  06:30 PM            86,016 patch.exe
+10/25/2007  03:21 PM           552,964 rar32.exe
+11/13/2008  03:20 PM             2,555 RenewTianShan.bat
+11/13/2008  03:19 PM             2,555 RenewTianShan.bat.bak
+10/25/2007  03:21 PM           111,900 rsx.exe
+10/25/2007  03:21 PM            97,280 sed.exe
+10/25/2007  03:21 PM            39,936 tail.exe
+12/05/2008  04:48 PM               174 TianShanSvc.bat
+11/12/2008  09:03 PM               201 TianShanSvc.bat.bak
+10/25/2007  03:21 PM            72,704 TimeRef.exe
+10/09/2008  12:27 AM           145,408 unzip.exe
+12/05/2008  06:29 PM             5,599 UpdateSvrProf.bat
+12/05/2008  06:28 PM             5,589 UpdateSvrProf.bat.bak
+10/28/2008  10:38 PM           233,535 VerCheck.exe
+10/25/2008  06:25 PM                60 WinRunJobs.bat
+10/25/2007  03:21 PM           112,128 zip.exe
+              34 File(s)      6,116,401 bytes
+               2 Dir(s)   1,562,275,840 bytes free

@@ -1,0 +1,7 @@
+<DODMessage>
+	<DODMessageHeader Time="13:20:00-05:00" MessageCode="3005"/>
+	<DODMessageBody DataType="21" GroupID="0">
+		<Message Datatype="21" Destination="111111" DestinationType="home" ExpiredTime="5000" TimeStamp="2001-09-11T09:30:47-05:00">
+    </Message>
+	</DODMessageBody>
+</DODMessage>

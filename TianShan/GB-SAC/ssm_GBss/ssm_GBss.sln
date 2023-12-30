@@ -1,0 +1,83 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ssm_GBss", "ssm_GBss.vcproj", "{F75DB16A-A635-4C58-ABA4-0706F632188A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9F8ECD24-A06B-4F6D-BF2C-B51334E14C0F} = {9F8ECD24-A06B-4F6D-BF2C-B51334E14C0F}
+		{AF4C8F39-3AB3-43C5-A36E-0628D5C334CD} = {AF4C8F39-3AB3-43C5-A36E-0628D5C334CD}
+		{A94D8EEC-4B58-4811-961F-3AA78BAA6C87} = {A94D8EEC-4B58-4811-961F-3AA78BAA6C87}
+		{C0DEE18A-189A-444C-99E2-BCF2FE865792} = {C0DEE18A-189A-444C-99E2-BCF2FE865792}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZQCommonStlp", "..\..\..\Common\dll\ZQCommonStlp.vcproj", "{C0DEE18A-189A-444C-99E2-BCF2FE865792}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TianShanIce", "..\..\Ice\TianShanIce.vcproj", "{9F8ECD24-A06B-4F6D-BF2C-B51334E14C0F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TianShanCommon", "..\..\common\TianShanCommon.vcproj", "{AF4C8F39-3AB3-43C5-A36E-0628D5C334CD}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZQSNMPManPkg", "..\..\Shell\ZQSNMPManPkg\ZQSNMPManPkg.vcproj", "{A94D8EEC-4B58-4811-961F-3AA78BAA6C87}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Java|Win32 = Java|Win32
+		Release|Win32 = Release|Win32
+		Unicode Debug|Win32 = Unicode Debug|Win32
+		Unicode Release|Win32 = Unicode Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F75DB16A-A635-4C58-ABA4-0706F632188A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F75DB16A-A635-4C58-ABA4-0706F632188A}.Debug|Win32.Build.0 = Debug|Win32
+		{F75DB16A-A635-4C58-ABA4-0706F632188A}.Java|Win32.ActiveCfg = Release|Win32
+		{F75DB16A-A635-4C58-ABA4-0706F632188A}.Java|Win32.Build.0 = Release|Win32
+		{F75DB16A-A635-4C58-ABA4-0706F632188A}.Release|Win32.ActiveCfg = Release|Win32
+		{F75DB16A-A635-4C58-ABA4-0706F632188A}.Release|Win32.Build.0 = Release|Win32
+		{F75DB16A-A635-4C58-ABA4-0706F632188A}.Unicode Debug|Win32.ActiveCfg = Debug|Win32
+		{F75DB16A-A635-4C58-ABA4-0706F632188A}.Unicode Debug|Win32.Build.0 = Debug|Win32
+		{F75DB16A-A635-4C58-ABA4-0706F632188A}.Unicode Release|Win32.ActiveCfg = Release|Win32
+		{F75DB16A-A635-4C58-ABA4-0706F632188A}.Unicode Release|Win32.Build.0 = Release|Win32
+		{C0DEE18A-189A-444C-99E2-BCF2FE865792}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C0DEE18A-189A-444C-99E2-BCF2FE865792}.Debug|Win32.Build.0 = Debug|Win32
+		{C0DEE18A-189A-444C-99E2-BCF2FE865792}.Java|Win32.ActiveCfg = Debug|Win32
+		{C0DEE18A-189A-444C-99E2-BCF2FE865792}.Java|Win32.Build.0 = Debug|Win32
+		{C0DEE18A-189A-444C-99E2-BCF2FE865792}.Release|Win32.ActiveCfg = Release|Win32
+		{C0DEE18A-189A-444C-99E2-BCF2FE865792}.Release|Win32.Build.0 = Release|Win32
+		{C0DEE18A-189A-444C-99E2-BCF2FE865792}.Unicode Debug|Win32.ActiveCfg = Debug|Win32
+		{C0DEE18A-189A-444C-99E2-BCF2FE865792}.Unicode Debug|Win32.Build.0 = Debug|Win32
+		{C0DEE18A-189A-444C-99E2-BCF2FE865792}.Unicode Release|Win32.ActiveCfg = Release|Win32
+		{C0DEE18A-189A-444C-99E2-BCF2FE865792}.Unicode Release|Win32.Build.0 = Release|Win32
+		{9F8ECD24-A06B-4F6D-BF2C-B51334E14C0F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9F8ECD24-A06B-4F6D-BF2C-B51334E14C0F}.Debug|Win32.Build.0 = Debug|Win32
+		{9F8ECD24-A06B-4F6D-BF2C-B51334E14C0F}.Java|Win32.ActiveCfg = Java|Win32
+		{9F8ECD24-A06B-4F6D-BF2C-B51334E14C0F}.Java|Win32.Build.0 = Java|Win32
+		{9F8ECD24-A06B-4F6D-BF2C-B51334E14C0F}.Release|Win32.ActiveCfg = Release|Win32
+		{9F8ECD24-A06B-4F6D-BF2C-B51334E14C0F}.Release|Win32.Build.0 = Release|Win32
+		{9F8ECD24-A06B-4F6D-BF2C-B51334E14C0F}.Unicode Debug|Win32.ActiveCfg = Debug|Win32
+		{9F8ECD24-A06B-4F6D-BF2C-B51334E14C0F}.Unicode Debug|Win32.Build.0 = Debug|Win32
+		{9F8ECD24-A06B-4F6D-BF2C-B51334E14C0F}.Unicode Release|Win32.ActiveCfg = Release|Win32
+		{9F8ECD24-A06B-4F6D-BF2C-B51334E14C0F}.Unicode Release|Win32.Build.0 = Release|Win32
+		{AF4C8F39-3AB3-43C5-A36E-0628D5C334CD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{AF4C8F39-3AB3-43C5-A36E-0628D5C334CD}.Debug|Win32.Build.0 = Debug|Win32
+		{AF4C8F39-3AB3-43C5-A36E-0628D5C334CD}.Java|Win32.ActiveCfg = Release|Win32
+		{AF4C8F39-3AB3-43C5-A36E-0628D5C334CD}.Java|Win32.Build.0 = Release|Win32
+		{AF4C8F39-3AB3-43C5-A36E-0628D5C334CD}.Release|Win32.ActiveCfg = Release|Win32
+		{AF4C8F39-3AB3-43C5-A36E-0628D5C334CD}.Release|Win32.Build.0 = Release|Win32
+		{AF4C8F39-3AB3-43C5-A36E-0628D5C334CD}.Unicode Debug|Win32.ActiveCfg = Debug|Win32
+		{AF4C8F39-3AB3-43C5-A36E-0628D5C334CD}.Unicode Debug|Win32.Build.0 = Debug|Win32
+		{AF4C8F39-3AB3-43C5-A36E-0628D5C334CD}.Unicode Release|Win32.ActiveCfg = Release|Win32
+		{AF4C8F39-3AB3-43C5-A36E-0628D5C334CD}.Unicode Release|Win32.Build.0 = Release|Win32
+		{A94D8EEC-4B58-4811-961F-3AA78BAA6C87}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A94D8EEC-4B58-4811-961F-3AA78BAA6C87}.Debug|Win32.Build.0 = Debug|Win32
+		{A94D8EEC-4B58-4811-961F-3AA78BAA6C87}.Java|Win32.ActiveCfg = Unicode Debug|Win32
+		{A94D8EEC-4B58-4811-961F-3AA78BAA6C87}.Java|Win32.Build.0 = Unicode Debug|Win32
+		{A94D8EEC-4B58-4811-961F-3AA78BAA6C87}.Release|Win32.ActiveCfg = Release|Win32
+		{A94D8EEC-4B58-4811-961F-3AA78BAA6C87}.Release|Win32.Build.0 = Release|Win32
+		{A94D8EEC-4B58-4811-961F-3AA78BAA6C87}.Unicode Debug|Win32.ActiveCfg = Unicode Debug|Win32
+		{A94D8EEC-4B58-4811-961F-3AA78BAA6C87}.Unicode Debug|Win32.Build.0 = Unicode Debug|Win32
+		{A94D8EEC-4B58-4811-961F-3AA78BAA6C87}.Unicode Release|Win32.ActiveCfg = Unicode Release|Win32
+		{A94D8EEC-4B58-4811-961F-3AA78BAA6C87}.Unicode Release|Win32.Build.0 = Unicode Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

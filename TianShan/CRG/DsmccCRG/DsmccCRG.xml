@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+Notice: TianShanDef.xml has been preloaded when this configuration file is being parsed, please refer to
+        TianShanDef.xml for the common properties
+
+Regular procedures of loading configurations:
+  1) When a service starts, read HKEY_LM/Softwares/ZQ Interactive/TianShan/Services/<ServiceName>/configDir, load 
+     the common properties if the TianShanDef.xml is opened, if <ServiceName>.xml is successfully opened, jump to 5)
+  2) tries HKEY_LM/Softwares/ZQ Interactive/TianShan/Services/configDir, load the common properties if the
+     TianShanDef.xml is opened, if <ServiceName>.xml is successfully opened, jump to 5)
+  3) tries the dir ../etc of where the executable is, load the common properties if the TianShanDef.xml is opened,
+     if <ServiceName>.xml is successfully opened, jump to 5)
+  4) puts an error as system event, say no configuration TianShanService.xml can be opened. Quit the program
+  5) reads the <ServiceName>.xml, if there is any XML formatting errors, put an error as system event then quit
+     the program
+  6) reads the LogFolder in the XML, take it if succeed, otherwise use ../logs of where the executable is. Open the
+     main log file, and immediately put a line including
+       a) service name
+       b) service version number
+       c) the full pathname of <ServiceName>.xml
+     as the first log message in the main logfile
+  7) continues to populate other configurations
+  8) initialize the service and start serving
+
+-->
+
+<TianShan>
+	<Definitions src="TianShanDef.xml">
+	</Definitions>
+	<!-- default configurations for the services of this TianShan deployment -->
+	<default>
+		<!-- The EventChannel service where the services of this TianShan deployment will deliver events to.
+		     attributes:
+		       endpoint - the ICE endpoint to the EventChannel service
+		-->
+		<EventChannel endpoint="${PrimeEventChannelEndpoint}" />
+		
+					
+		<!--CrashDump can help devoloper diagnose the program when it crashed
+			if you set enable to "1" you must make sure that the path is accessible
+			path   - crashdump path
+			enabled - 1 to enable crashDump
+		 -->
+		<CrashDump path="${TianShanCrashDumpDir}" enabled="1"/>
+
+		<!-- The Ice trace log setting for all the services of this TianShan deployment.
+		     attributes:
+		       enabled       - 1 if the Ice trace is enabled, default "0"
+		       logfileSuffix - a suffix of the log filename, i.e. the service Weiwoo's main log file will
+		                       be "Weiwoo.log". With a suffix "_ice.log", the ICE trace will be in a
+		                       separate logfile "Weiwoo_ice.log" in the same directory
+		       level         - the log level of the ice trace log
+		       size          - the size that this trace log must roll
+		-->
+		<IceTrace enabled="1" level="7" size="10240000" />
+		
+		<IceProperties>
+			<!-- the following are performance tuning parameters, please don't modify if you are not an expert at them 
+			-->
+			<serviceProperty name="Ice.Trace.Network"                value="1" />
+			<serviceProperty name="Ice.Trace.Protocol"               value="0" />
+    		<serviceProperty name="Ice.Trace.Retry"                  value="1" />
+			<serviceProperty name="Ice.Warn.Connections"             value="1" />
+			<serviceProperty name="Ice.Warn.Endpoints"               value="1" />
+			<serviceProperty name="Ice.ACM.Client"                   value="0" />
+			<serviceProperty name="Ice.Override.ConnectTimeout"      value="2000" />
+			<serviceProperty name="Ice.Override.Timeout"             value="20000" />
+			<serviceProperty name="Freeze.Warn.Deadlocks"            value="1" />
+			<serviceProperty name="Freeze.Trace.Map"                 value="0" />
+			<serviceProperty name="Freeze.Trace.DbEnv"               value="2" />
+			<serviceProperty name="Freeze.Trace.Evictor"             value="0" />
+			<serviceProperty name="Freeze.Evictor.UseNonmutating" 	 value="1"/>			
+		</IceProperties>
+
+		<!-- The default folder where the services of this TianShan deployment accesses their local
+		     databases if it is not defined by their individual configurations
+		     attributes:
+		       path          - path to the location of database directory, default "../data/"
+		       runtimePath   - path to keep the runtime data, default as the value of path
+		-->
+		<Database path="${TianShanDatabaseDir}" runtimePath="${TianShanDatabaseDir}/runtime" />
+
+	</default>
+<!-- SocketServer: Configuration about the socket server
+		protocolType   -0 the protoocol type is MOTO
+		               -1 the protoocol type is Tangberg
+
+-->
+	<Dsmcc>
+		<SocketServer thread="8" maxMessageLen="32768" recvBufSize="4096" hexDump="0" connectionIdleTimeout="300000" maxConnection="10000" protocolType="0">
+			<!--
+			listen: config the bind address protocol and type, if server is behind some proxy thing, please
+					config export as the proxy ip:port, if export is empty, bind ip and port is used.
+			-->
+			<listen protocol="dsmcc" type="tcp" ip="0.0.0.0" port="9527" />
+			<listen protocol="dsmcc" type="udp" ip="0.0.0.0" port="9527" />
+			<listen protocol="lscp"  type="tcp" ip="0.0.0.0" port="9528" export="ip:port"/>
+			<listen protocol="lscp"  type="udp" ip="0.0.0.0" port="9528" export="ip:port"/>
+		</SocketServer>
+		
+		<PeformanceTune>
+			<!-- CheckpointPeriod :	Every Berkeley DB environment created by Freeze has an associated thread that
+									checkpoints this environment every num seconds. If num is less than 0, no checkpoint
+									is performed. The default is 120 seconds.
+				 DbRecoverFatal	:	If num is set to a value larger than zero, fatal recovery is performed when the environment
+									is opened. The default value is 0.
+			-->
+			<IceFreezeEnviroment 	CheckpointPeriod="240" DbRecoverFatal="1" />
+			
+			<!-- SavePeriod 	:	Freeze uses a background thread to save updates to the database. After num milliseconds
+									without saving, if any facet is created, modified, or destroyed, this background
+									thread wakes up to save these facets. When num is 0, there is no periodic
+									saving. The default is 60000.
+			SaveSizeTrigger		:	Freeze uses a background thread to save updates to the database. When num is 0
+									or positive, as soon as num or more facets have been created, modified, or
+									destroyed, this background thread wakes up to save them. When num is negative,
+									there is no size trigger. The default is 10.
+			cacheSize 		:	the size of session records to cache, 200 ~ 2000 is acceptable
+			-->
+			<Session 				CacheSize ="2000" SavePeriod="60000" SaveSizeTrigger="500" />
+		</PeformanceTune>
+		<!-- Configuration on how the requests are processed
+		     attributes:
+		       threads   - the size of the thread pool
+		       maxPendingRequest - the max pending requests if non-zero. When this is reached, the new request will be rejected by the server
+           tailCSPI - this is designed for those STBs in ChangZhou mentioned in ticket#14898
+		-->
+		<RequestProcess bind="tcp -h 127.0.0.1 -p 10501" threads="50" maxPendingRequest="0" tailCSPI="0" />
+		
+		<!-- Configuration about request handlers
+		     attributes:
+		       defaultHandler - the default RTSP handler
+		-->
+		<RequestHandler defaultHandler="DSMCC">			
+			<Application path="basic" handler="DSMCC"/>			
+			<Plugin>                
+				<module file="${TianShanHomeDir}/modules/crm_dsmcc.dll" configuration="${TianShanHomeDir}/etc"/>				
+			</Plugin>
+		</RequestHandler>		
+	</Dsmcc>
+
+</TianShan>

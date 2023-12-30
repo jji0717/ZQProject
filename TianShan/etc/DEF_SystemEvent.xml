@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EventDefinition component="System" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="monitoring_event_definition.xsd">
+	<EventList>
+		<Event category="Storage" code="System_Event_1020" severity="warning">
+			<Translation>Low Disk Space,System local harddisk free space</Translation>
+			<Translation locale="zh">磁盘空间低</Translation>
+		</Event>
+		<Event category="System" code="UML_System_1500_FS_RW_Error" severity="error">
+			<Translation>UMLHead had IO ERROR</Translation>
+			<Translation locale="zh">IO 错误</Translation>
+		</Event>
+		<Event category="System" code="UML_System_1600_Fail_Login" severity="warning">
+			<Translation>UMLHead had failed login</Translation>
+			<Translation locale="zh">UMLHead登录失败</Translation>
+		</Event>
+		<Event category="System" code="UML_System_1700_FS_ReadOnly" severity="error">
+			<Translation>UMLHead had file system readonly error</Translation>
+			<Translation locale="zh">UML file system只读</Translation>
+		</Event>
+		<Event category="Hardware" code="UML_HW_2010_Slow_Disk_Read" severity="warning">
+			<Translation>Slow Disk on Read</Translation>
+			<Translation locale="zh">Slow Disk on Read</Translation>
+		</Event>
+		<Event category="Hardware" code="UML_HW_2020_Slow_Disk_Write" severity="warning">
+			<Translation>Slow Disk on Write</Translation>
+			<Translation locale="zh">Slow Disk on Write</Translation>
+		</Event>
+		<Event category="Hardware" code="UML_HW_2011_Read_Improved" severity="warning">
+			<Translation>Read performance is improved</Translation>
+			<Translation locale="zh">Read performance is improved</Translation>
+		</Event>
+		<Event category="Hardware" code="UML_HW_2021_Write_Improved" severity="warning">
+			<Translation>Write performance is improved</Translation>
+			<Translation locale="zh">Write performance is improved</Translation>
+		</Event>
+	</EventList>
+</EventDefinition>

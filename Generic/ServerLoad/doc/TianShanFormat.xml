@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<SrvrList>
+	<Header>
+		<Version>1.7</Version>
+		<DateTime>2008-10-11T12:22:55</DateTime>
+		<Interval>120</Interval>
+	</Header>
+	<CMGroup CMGroupID="10001" ServerType="2">
+		<AppType>60010001</AppType>
+		<AppType>60010002</AppType>
+		<PGLevel>5</PGLevel>
+		<NodeGroup>101</NodeGroup>
+		<NodeGroup>102</NodeGroup>
+		<NodeGroup>103</NodeGroup>
+		<Instance SessionProtocolType="RTSP"> 
+			<IPAddress>192.168.129.148</IPAddress>
+			<HostName>CAV-SJ1-CM01P</HostName>
+			<Port>13192</Port>
+			<Load>50</Load>
+			<LifeTime>300</LifeTime>
+		</Instance>
+		<Instance SessionProtocolType="DSMCC">
+			<IPAddress>192.168.129.147</IPAddress>
+			<Port>13193</Port>
+			<Load>30</Load>
+			<LifeTime>300</LifeTime>
+		</Instance>
+	</CMGroup>
+	<CMGroup CMGroupID="10002" ServerType="2">
+		<AppType>60020001</AppType>
+		<AppType>60020002</AppType>
+		<PGLevel>4</PGLevel>
+		<NodeGroup>201</NodeGroup>
+		<NodeGroup>202</NodeGroup>
+		<NodeGroup>203</NodeGroup>
+		<Instance SessionProtocolType="RTSP">
+			<IPAddress>192.168.128.148</IPAddress>
+			<HostName>CAV-SJ1-CM02P</HostName>
+			<Port>13816</Port>
+			<Load>10</Load>
+			<LifeTime>300</LifeTime>
+		</Instance>
+		<Instance SessionProtocolType="DSMCC">
+			<IPAddress>192.168.128.147</IPAddress>
+			<Port>13817</Port>
+			<Load>20</Load>
+			<LifeTime>300</LifeTime>
+		</Instance>
+	</CMGroup>
+</SrvrList>

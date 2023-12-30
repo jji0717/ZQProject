@@ -1,0 +1,2201 @@
+#include "C2Client.h"
+#include <Text.h>
+#include "TimeUtil.h"
+#include "InetAddr.h"
+#include "strHelper.h"
+#include <sstream>
+
+namespace ZQ{
+namespace StreamService{
+static long StringToLong(const std::string& s)
+{
+#ifdef ZQ_OS_MSWIN
+	return ::_strtoi64(s.c_str(), NULL, 10);
+#elif defined(__x86_64)
+	return strtol(s.c_str(), NULL, 10);
+#else
+	return strtoll(s.c_str(), NULL, 10);
+#endif
+}
+
+void AsyncReadInitialize::onAsyncWork()
+{
+    // eventloop里，出现OnTimer()之后还有可能再调用 OnAsyncWork，因此如果出现 OnTimer(), 直接返回
+    if (ZQ::StreamService::Timeout == mC2Client->_status ||
+        ZQ::StreamService::Failure == mC2Client->_status ||
+        ZQ::StreamService::Completed == mC2Client->_status)
+    {
+        std::vector<C2Streamer::Buffer*>::iterator it = mReaderBufs.begin();
+        for (; it != mReaderBufs.end(); it++)
+        {
+            (*it)->setLastError(mC2Client->getLastError(), mC2Client->getErrorCategory());
+        }
+        mC2Client->_readerCB->onRead(mReaderBufs, true);
+        mC2Client->_readerCB->onError(mC2Client->_key, 0);
+        return;
+    }
+
+    mC2Client->addBuffer(mReaderBufs);
+    mC2Client->checkTmpBuffer();
+    if (ZQ::StreamService::Initialize == mC2Client->_status)
+    {
+        mC2Client->_status = ZQ::StreamService::NotConnected;
+        mC2Client->startRead();
+    }
+}
+
+C2ClientAsync::C2ClientAsync(ZQ::common::Log& log, const C2ClientConf& conf)
+:LibAsync::HttpClient(), LibAsync::Timer(getLoop()),
+_log(log),
+_conf(conf),
+_timeout(0),
+_reqBody(""),
+_respBody(""),
+_status(ZQ::StreamService::Initialize),
+_bBodySend(false),
+_bIndex(false),
+_bRead(false),
+_bQueryIndex(false),
+_bTransferDelete(false),
+_receivedDataSize(0),
+_key(""),
+_clientStart(0),
+_clientTotalSize(0),
+_currentRetryCount(0)
+{
+    _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] C2ClientAsync() constructor entry"), this);
+    
+    setTimeout(_conf.indexTimeout);
+
+    for (int i=0; i<8; i++)
+    {
+        LibAsync::AsyncBuffer buf;
+        buf.len = 8* 1024;
+        buf.base = (char*)malloc(sizeof(char)* buf.len);
+        _recvBufs.push_back(buf);
+    }
+
+    if (_conf.clientTransfer.empty())
+    {
+        _conf.clientTransfer = ZQ::common::InetHostAddress::getLocalAddress().getHostAddress();
+        _log(ZQ::common::Log::L_WARNING, CLOGFMT(C2ClientAsync, "[%p] client transfer is empty, set it randomly[%s]"), this, _conf.clientTransfer.c_str());
+    }
+
+    if (_conf.upstreamIP.empty())
+    {
+        _conf.upstreamIP = ZQ::common::InetHostAddress::getLocalAddress().getHostAddress();
+        _log(ZQ::common::Log::L_WARNING, CLOGFMT(C2ClientAsync, "[%p] up stream ip is empty, set it randomly[%s]"), this, _conf.upstreamIP.c_str());
+    }
+}
+
+C2ClientAsync::C2ClientAsync(IReadClientCB* readerCB, ZQ::common::Log& log, const C2ClientConf& conf)
+:LibAsync::HttpClient(), LibAsync::Timer(getLoop()),
+_readerCB(readerCB),
+_log(log),  
+_conf(conf),
+_timeout(0),
+_startCalcLatency(0),
+_reqBody(""),
+_respBody(""),
+_status(ZQ::StreamService::Initialize),
+_bBodySend(false),
+_bIndex(false),
+_currBufIndex(0),
+_currBufLeftSize(0),
+_bRead(false),
+_bQueryIndex(false),
+_bReadContinue(false),
+_bLocateRequest(true),
+_bTransferDelete(false),
+_receivedDataSize(0),
+_key(""),
+_clientStart(0),
+_clientTotalSize(0),
+_currentRetryCount(0),
+_lastError(0),
+_errCategory(C2Streamer::Buffer::ECATE_FILEIO)
+{
+    _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] C2ClientAsync() constructor entry"), this);
+
+    for (int i=0; i<8; i++)
+    {
+        LibAsync::AsyncBuffer buf;
+        buf.len = 8* 1024;
+        buf.base = (char*)malloc(sizeof(char)* buf.len);
+        _recvBufs.push_back(buf);
+    }
+
+    if (_conf.clientTransfer.empty())
+    {
+        _conf.clientTransfer = ZQ::common::InetHostAddress::getLocalAddress().getHostAddress();
+        _log(ZQ::common::Log::L_WARNING, CLOGFMT(C2ClientAsync, "[%p] client transfer is empty, set it randomly[%s]"), this, _conf.clientTransfer.c_str());
+    }
+
+    if (_conf.upstreamIP.empty())
+    {
+        _conf.upstreamIP = ZQ::common::InetHostAddress::getLocalAddress().getHostAddress();
+        _log(ZQ::common::Log::L_WARNING, CLOGFMT(C2ClientAsync, "[%p] up stream ip is empty, set it randomly[%s]"), this, _conf.upstreamIP.c_str());
+    }
+}
+
+C2ClientAsync::~C2ClientAsync()
+{
+	_log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p]~C2ClientAsync()content[%s] destructor entry"), this, _contentName.c_str() );
+    LibAsync::AsyncBufferS::iterator it = _recvBufs.begin();
+    for (; it != _recvBufs.end(); it++)
+    {
+        delete it->base;
+    }
+}
+
+void C2ClientAsync::addBuffer(const std::vector<C2Streamer::Buffer*>& bufs)
+{
+    //update key
+    std::ostringstream oss;
+    oss<<bufs[bufs.size()-1]->filename()<<":"<<bufs[bufs.size()-1]->offsetInFile()+bufs[bufs.size()-1]->bufSize();
+    _key = oss.str();
+
+    _readerBufs.insert(_readerBufs.end(), bufs.begin(), bufs.end());
+}
+
+std::string C2ClientAsync::getFilename()
+{
+    return _contentName + _subType;
+}
+
+void C2ClientAsync::updateErrorCategory(C2Streamer::Buffer::ErrorCategory errCategory)
+{
+    _errCategory = errCategory;
+}
+
+C2Streamer::Buffer::ErrorCategory C2ClientAsync::getErrorCategory()
+{
+    return _errCategory;
+}
+
+void C2ClientAsync::updateLastError(int err)
+{
+    _lastError = err;
+}
+
+int C2ClientAsync::getLastError()
+{
+    return _lastError;
+}
+
+bool C2ClientAsync::queryIndexInfo( const std::string& filename, C2Streamer::AssetAttribute::Ptr attr )
+{
+    _bQueryIndex = true;
+    _assetAttributePtr = attr;
+
+    std::size_t dotPos = filename.find_last_of('.');
+    std::string subtype = filename.substr(dotPos + 1);
+    std::string strPaidPid = filename.substr(0, dotPos);
+    if ("index" != subtype)
+    {
+        _log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientAsync, "[%p] queryIndexInfo() failed, not a index file"), this);
+        return false;
+    }
+
+    setTimeout(_conf.indexTimeout);
+    _startTime = ZQ::common::TimeUtil::now();
+    AttrMap reqMap;
+    reqMap[C2CLIENT_Range] = "0-4095";
+    if (!sendLocateRequest(_conf.url, strPaidPid, subtype, reqMap))
+    {
+        _log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientAsync, "[%p] queryIndexInfo() failed, send locate failed"), this);
+        return false;
+    }
+    return true;
+}
+
+bool C2ClientAsync::read( const std::vector<C2Streamer::Buffer*>& bufs )
+{
+	for(int i = 0; i < bufs.size(); i++ )
+	{
+		_fileName = bufs[i]->filename();
+		int64 offset = bufs[i]->offsetInFile();
+		_log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] read() try to read file[%s],offset[%lld]."), this, _fileName.c_str(), offset); 
+	}
+    _bRead = true;
+    if( _clientStart == 0 )
+	_clientStart = ZQ::common::TimeUtil::now();
+    if ((_status == ZQ::StreamService::Completed ||
+         _status == ZQ::StreamService::Failure   ||
+         _status == ZQ::StreamService::Timeout) 
+         && _tmpBuf.empty())
+    {
+        _log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientAsync, "[%p] read request is finished already, shouldn't read again"), this);
+        return false;
+    }
+
+    //if (!bufs.empty())
+    //{
+    //    std::string filename = (*bufs.begin())->filename();
+    //    if( filename.find(".index") != std::string::npos ) {
+    //        _conf.timeout = 200; //200ms
+    //    }
+    //}
+
+    (new AsyncReadInitialize(getLoop(), this, bufs))->initializeAsyncRead();
+    return true;
+}
+
+bool C2ClientAsync::startRead()
+{
+    _log(ZQ::common::Log::L_INFO, CLOGFMT(C2ClientAsync, "[%p] read() file at %d-th try"), this, _currentRetryCount);
+
+    // reset last error and category
+    updateLastError(0);
+    updateErrorCategory(C2Streamer::Buffer::ECATE_FILEIO);
+
+    if (0 == _readerBufs.size())
+    {
+        update(_conf.waitBufferTime);
+        _log(ZQ::common::Log::L_INFO, CLOGFMT(C2ClientAsync, "[%p] there is no buffer to use, waiting for new buffer... timeout[%ld]"), this, _conf.waitBufferTime);
+        return false;
+    }
+
+    _startTime = ZQ::common::TimeUtil::now();
+
+    std::vector<C2Streamer::Buffer*>::iterator it = _readerBufs.begin();
+    int startOffset = (*it)->offsetInFile() + (*it)->getDataSize();
+
+    std::ostringstream rangeOss;
+    rangeOss << startOffset << "-" ;
+    AttrMap reqProp;
+    reqProp[C2CLIENT_Range] = rangeOss.str();
+
+    std::string strFullName = (*it)->filename();
+    size_t dotPos = strFullName.find_last_of('.');
+
+    _contentName = strFullName.substr(0, dotPos);
+    _subType     = strFullName.substr(dotPos + 1);
+
+    if ("index" == _subType)
+    {
+        setTimeout(_conf.indexTimeout);
+    }else{
+        setTimeout(_conf.mainfileTimeout);
+    }
+
+    if(!sendLocateRequest(_conf.url, _contentName, _subType, reqProp))
+    {
+        // TODO: return error code
+        _log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientAsync, "[%p] send locate request failed"), this);
+        _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] call onRead(), buffer number[%d], first buffer offset[%ld], data size[%ld]"), this, _readerBufs.size(), (*_readerBufs.begin())->offsetInFile(), (*_readerBufs.begin())->getDataSize());
+        if (!_readerBufs.empty())
+        {
+            _readerCB->onRead(_readerBufs, true);
+            _readerCB->onError(_key, 0);
+            _readerBufs.clear();
+        }
+        return false;
+    }
+    return true;
+}
+
+bool C2ClientAsync::retry()
+{
+    int maxRetryTimes = _bIndex ? _conf.indexRetryTimes : _conf.mainfileRetryTimes;
+    if (_currentRetryCount < maxRetryTimes)
+    {
+        _currentRetryCount++;
+        startRead();
+        return true;
+    }
+    _log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientAsync, "[%p] failed by [%d] retries"), this, _currentRetryCount);
+    return false;
+}
+
+void C2ClientAsync::checkTmpBuffer()
+{
+    if (!_tmpBuf.empty())
+    {
+        _log(ZQ::common::Log::L_INFO, CLOGFMT(C2ClientAsync, "[%p] checkTmpBuffer() there are some data[%ld] at temp buffer, move them to read buffer firstly"), this, _tmpBuf.size());
+
+        std::vector<C2Streamer::Buffer*>::iterator it = _readerBufs.begin();
+        for (; it != _readerBufs.end(); )
+        {
+            char *startWritePoint = (*it)->buffer() + (*it)->getDataSize();
+
+            size_t bufLeftSize = (*it)->bufSize() - (*it)->getDataSize();
+            size_t copySize = 0;
+            if (bufLeftSize > _tmpBuf.size())
+            {
+                copySize = _tmpBuf.size();
+                memcpy(startWritePoint, _tmpBuf.c_str(), copySize);
+                (*it)->setDataSize((*it)->getDataSize() + copySize);
+
+                _tmpBuf = _tmpBuf.substr(copySize);
+                break;
+            }else{
+                copySize = bufLeftSize;
+                memcpy(startWritePoint, _tmpBuf.c_str(), copySize);
+                (*it)->setDataSize((*it)->getDataSize() + copySize);
+
+                std::vector<C2Streamer::Buffer*> bufsVec;
+                bufsVec.push_back(*it);
+
+                _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] call onRead(), buffer number[%d], first buffer offset[%ld], data size[%ld]"), this, bufsVec.size(), (*bufsVec.begin())->offsetInFile(), (*bufsVec.begin())->getDataSize());
+                _readerCB->onRead(bufsVec, false);
+
+                it = _readerBufs.erase(it);
+                _tmpBuf = _tmpBuf.substr(copySize);
+            }
+
+        }
+    }
+
+    if (_tmpBuf.size() > 0)
+    {
+        // still have data at temp buffer
+        _log(ZQ::common::Log::L_INFO, CLOGFMT(C2ClientAsync, "[%p] checkTmpBuffer(), there are data[%ld] at temp buffer, but no read buffer left"), this, _tmpBuf.size());
+        update(_conf.waitBufferTime);
+
+    }else if (!_readerBufs.empty())
+    {
+        // send receive request continued
+        if (_status == ZQ::StreamService::WaitNewBuffer)
+        {
+            _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] checkTmpBuffer() receive continued"), this);
+            recvRespBody(_recvBufs);
+            _status = ZQ::StreamService::Receiving;
+        }else{
+            if (_status == ZQ::StreamService::Completed ||
+                _status == ZQ::StreamService::Failure   ||
+                _status == ZQ::StreamService::Timeout)
+            {
+                // return left read buffer
+                _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] call onRead(), buffer number[%d], first buffer offset[%ld], data size[%ld]"), this, _readerBufs.size(), (*_readerBufs.begin())->offsetInFile(), (*_readerBufs.begin())->getDataSize());
+                _readerCB->onRead(_readerBufs, true);
+                _readerBufs.clear();
+            }
+        }
+    }
+}
+
+std::string C2ClientAsync::generateLocateBody(AttrMap& reqProp)
+{
+	std::ostringstream sendBodyMsg;
+
+	_conf.transferRate = _conf.transferRate.empty() ? "3750000" : _conf.transferRate;
+
+	std::string  ingressCapacity = reqProp[C2CLIENT_IngressCapacity].empty()	\
+		? "16512000000" : reqProp[C2CLIENT_IngressCapacity];
+
+    std::string clientTransfer = _conf.clientTransfer;
+
+	std::string exclusionList = reqProp[C2CLIENT_ExclusionList];
+	std::string range = reqProp[C2CLIENT_Range];
+
+	std::string transferDelay = reqProp[C2CLIENT_TransferDelay].empty()			\
+		? "-2000" : reqProp[C2CLIENT_TransferDelay];
+
+	sendBodyMsg << "<LocateRequest>" << "\r\n";
+	sendBodyMsg << "<Object>" << "\r\n";
+	sendBodyMsg << "<Name>" << "\r\n";
+
+	if (_paid.empty()) return 0;
+	sendBodyMsg << "<AssetID>" << _paid << "</AssetID>" << "\r\n";
+
+	if (_pid.empty()) return 0;
+	sendBodyMsg << "<ProviderID>" << _pid << "</ProviderID>" << "\r\n";
+
+	sendBodyMsg << "</Name>" << "\r\n";
+
+	if (_subType.empty()) return 0;
+	sendBodyMsg << "<SubType>" << _subType << "</SubType>" << "\r\n";
+
+	sendBodyMsg << "</Object>" << "\r\n";
+
+	if (_conf.transferRate.empty()) return 0;
+	sendBodyMsg << "<TransferRate>" << _conf.transferRate << "</TransferRate>" << "\r\n";
+
+	if (ingressCapacity.empty()) return 0;
+	sendBodyMsg << "<IngressCapacity>" << ingressCapacity << "</IngressCapacity>" << "\r\n";
+
+	if (clientTransfer.empty()) return 0;
+	sendBodyMsg << "<ClientTransfer>" << clientTransfer << "</ClientTransfer>" << "\r\n";
+
+	sendBodyMsg << "<ExclusionList>" << exclusionList << "</ExclusionList>" << "\r\n";
+
+	sendBodyMsg << "<Range>" << range << "</Range>" << "\r\n";
+
+	sendBodyMsg << "<TransferDelay>" << transferDelay << "</TransferDelay>" << "\r\n";
+
+	sendBodyMsg << "</LocateRequest>";
+
+	return sendBodyMsg.str();
+}
+
+std::string C2ClientAsync::generateTransferDeleteBody(const std::string& transferID)
+{
+    std::ostringstream sendTransferDeleteBody;
+
+    sendTransferDeleteBody << "<LocateRequest>" << "\r\n";
+
+    if (_conf.clientTransfer.empty()) return 0;
+    sendTransferDeleteBody << "<ClientTransfer>" << _conf.clientTransfer << "</ClientTransfer>" << "\r\n";
+
+    if (transferID.empty()) return 0;
+    sendTransferDeleteBody << "<TransferIDDelete>" << transferID << "</TransferIDDelete>" << "\r\n";
+
+    sendTransferDeleteBody << "</LocateRequest>";
+
+    return sendTransferDeleteBody.str();
+}
+
+int64 C2ClientAsync::setTimeout(int64 timeout)
+{
+	_timeout = timeout;
+	return _timeout;
+}
+
+bool C2ClientAsync::sendLocateRequest(const std::string& url, const std::string& contentName, const std::string& subType, AttrMap& reqProp)
+{
+    _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] sendLocateRequest() entry"), this);
+
+    if (alive())
+    {
+        close();
+    }
+
+    _status = ZQ::StreamService::NotConnected;
+
+    _reqBody  = "";
+    _respBody = "";
+    _contentName = contentName;
+
+    if (url.empty())
+    {
+        _status = ZQ::StreamService::Failure;
+        _log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientAsync, "[%p] sendLocateRequest() url is empty"), this);
+        _cb = NULL;
+        return false;
+    }
+
+    if (subType.empty())
+    {
+        _status = ZQ::StreamService::Failure;
+        _log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientAsync, "[%p] sendLocateRequest() subtype is empty"), this);
+        _cb = NULL;
+        return false;
+    }
+    if ("index" == subType)
+    {
+        _bIndex = true;
+    }
+
+    _bLocateRequest = true;
+    _conf.url	 = url;
+    _subType = subType;
+    _sendMap = reqProp;
+
+    //get paid and pid from content name
+    if (contentName.size() <= 20)
+    {
+        _status = ZQ::StreamService::Failure;
+        _log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientAsync, "[%p] sendLocateRequest() Couldn't recognize content name [%s], wrong format"), this, contentName.c_str());
+        return false;
+    }
+    size_t startAssetID;
+    size_t startProvideID;
+    size_t lastSlashPos = contentName.find_last_of('/');
+    if (std::string::npos == lastSlashPos)
+    {//no slash
+        startAssetID = 0;
+    }
+    else{
+        startAssetID = lastSlashPos + 1;
+    }
+    _paid = contentName.substr(startAssetID, 20);
+
+    if ('_' == contentName.at(startAssetID + 20))
+    {
+        startProvideID = startAssetID + 20 + 1;
+    }else{
+        startProvideID = startAssetID + 20;
+    }
+    _pid = contentName.substr(startProvideID);
+
+    std::string host		= reqProp[C2CLIENT_HOST].empty() ? "None" : reqProp[C2CLIENT_HOST];
+    std::string userAgent	= reqProp[C2CLIENT_UserAgent].empty() ? "ToInfinityAndBeyond" : reqProp[C2CLIENT_UserAgent];
+    std::string contentType = reqProp[C2CLIENT_ContentType].empty() ? "text/xml-external-parsed-entity" : reqProp[C2CLIENT_ContentType];
+
+    LibAsync::HttpMessagePtr locateMsgPtr = new LibAsync::HttpMessage(HTTP_REQUEST);
+    locateMsgPtr->method(HTTP_POST);
+    locateMsgPtr->url(url);
+
+    //add header
+    locateMsgPtr->header(C2CLIENT_HOST, host);
+    locateMsgPtr->header(C2CLIENT_UserAgent, userAgent);
+    locateMsgPtr->header(C2CLIENT_ContentType, contentType);
+
+    //generate body
+    _reqBody = generateLocateBody(reqProp);
+    locateMsgPtr->contentLength(_reqBody.size());
+
+    //check if timeout
+    if(!checkTimeout())
+    {
+        return false;
+    }
+
+    _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] begin send locate request endpoint[%s:%d]"), this,  _conf.locateIP.c_str(), _conf.locatePort);
+
+    //bind up stream ip
+    if (!bind(_conf.upstreamIP, 0))
+    {
+        _status = ZQ::StreamService::Failure;
+        _log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientAsync, "[%p] bind up stream ip[%s] failed"), this, _conf.upstreamIP.c_str());
+        return false;
+    }
+    
+    _bBodySend = false;
+    if (!beginRequest(locateMsgPtr, _conf.locateIP, _conf.locatePort))
+    {
+        _status = ZQ::StreamService::Failure;
+        _log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientAsync, "[%p] failed to send locate request to [%s:%d]"), this, _conf.locateIP.c_str(), _conf.locatePort);
+        return false;
+    }
+    return true;
+}
+
+bool C2ClientAsync::sendTransferDeleteRequest(const std::string& transferID)
+{
+    if (alive())
+    {
+        close();
+    }
+    _status = ZQ::StreamService::NotConnected;
+
+    _bTransferDelete = true;
+
+    std::string host		= "None";
+    std::string userAgent	= "ToInfinityAndBeyond";
+    std::string contentType = "text/xml-external-parsed-entity";
+
+    LibAsync::HttpMessagePtr transferDeleteMsgPtr = new LibAsync::HttpMessage(HTTP_REQUEST);
+    transferDeleteMsgPtr->method(HTTP_POST);
+    transferDeleteMsgPtr->url("*");
+
+    //add header
+    transferDeleteMsgPtr->header(C2CLIENT_HOST, host);
+    transferDeleteMsgPtr->header(C2CLIENT_UserAgent, userAgent);
+    transferDeleteMsgPtr->header(C2CLIENT_ContentType, contentType);
+
+    _reqBody = generateTransferDeleteBody(transferID);
+    transferDeleteMsgPtr->contentLength(_reqBody.size());
+
+    //check if timeout
+    if(!checkTimeout())
+    {
+        return false;
+    }
+
+    //bind up stream ip
+    if (!bind(_conf.upstreamIP, 0))
+    {
+        _status = ZQ::StreamService::Failure;
+        _log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientAsync, "[%p] bind up stream ip[%s] failed"), this, _conf.upstreamIP.c_str());
+        return false;
+    }
+
+    _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] begin send transfer delete request for[%s] to [%s:%d]"), this, transferID.c_str(), _conf.locateIP.c_str(), _conf.locatePort);
+
+    _bBodySend = false;
+    if (!beginRequest(transferDeleteMsgPtr, _conf.locateIP, _conf.locatePort))
+    {
+        _status = ZQ::StreamService::Failure;
+        _log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientAsync, "[%p] failed to send transfer delete request to [%s:%d]"), this, _conf.locateIP.c_str(), _conf.locatePort);
+        return false;
+    }
+    return true;
+}
+
+bool C2ClientAsync::sendLocateRequest(C2ClientBindPtr cb, const std::string& url, const std::string& contentName, const std::string& subType, AttrMap& reqProp)
+{
+    if (NULL == cb)
+    {
+        _status = ZQ::StreamService::Failure;
+        _log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientAsync, "[%p] callback is NULL, return directly"), this);
+        return false;
+    }else{
+        _cb = cb;
+    }
+
+    if ("index" != subType)
+    {
+        _status = ZQ::StreamService::Failure;
+        _log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientAsync, "[%p] subtype is not index"), this);
+        return false;
+    }
+    
+    if (!reqProp[C2CLIENT_TransferRate].empty())
+    {
+        _conf.transferRate = reqProp[C2CLIENT_TransferRate];
+    }
+    _startTime = ZQ::common::TimeUtil::now();
+    if(!sendLocateRequest(url, contentName, subType, reqProp))
+    {
+        _cb = NULL;
+        return false;
+    }
+	return true;
+}
+
+bool C2ClientAsync::sendGetRequest(const std::string& url, const std::string& contentName, AttrMap& prop, std::string addr, unsigned int port)
+{
+    _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] sendGetRequest() entry, TransferID[%s] Content Name[%s] Transfer endpoint[%s:%d]"), this, url.c_str(), contentName.c_str(), addr.c_str(), port);
+
+    if (alive())
+    {
+        close();
+    }
+
+    _status = ZQ::StreamService::NotConnected;
+
+    _bLocateRequest = false;
+    _reqBody  = "";
+    _respBody = "";
+
+    if (url.empty())
+    {
+        _log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientAsync, "[%p] sendGetRequest() url is empty"), this);
+        _cb = NULL;
+        _status = ZQ::StreamService::Failure;
+        return false;
+    }
+
+    _contentName = contentName;
+
+    //get paid and pid from content name
+    if (contentName.size() <= 20)
+    {
+        _log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientAsync, "[%p] sendGetRequest() Couldn't recognize content name [%s], wrong format"), this, contentName.c_str());
+        return false;
+    }
+    size_t startAssetID;
+    size_t startProvideID;
+    size_t lastSlashPos = contentName.find_last_of('/');
+    if (std::string::npos == lastSlashPos)
+    {//no slash
+        startAssetID = 0;
+    }
+    else{
+        startAssetID = lastSlashPos + 1;
+    }
+    _paid = contentName.substr(startAssetID, 20);
+
+    if ('_' == contentName.at(startAssetID + 20))
+    {
+        startProvideID = startAssetID + 20 + 1;
+    }else{
+        startProvideID = startAssetID + 20;
+    }
+    _pid = contentName.substr(startProvideID);
+
+    LibAsync::HttpMessagePtr getMsgPtr = new LibAsync::HttpMessage(HTTP_REQUEST);
+    getMsgPtr->method(HTTP_GET);
+
+    std::string strUrl = url;
+    if (strUrl.at(0) != '/')
+    {
+        strUrl = "/" + strUrl;
+    }
+    getMsgPtr->url(strUrl);
+
+    getMsgPtr->header(C2CLIENT_Range, _sendMap[C2CLIENT_Range]);
+    getMsgPtr->header(C2CLIENT_UserAgent, _sendMap[C2CLIENT_UserAgent]);
+    getMsgPtr->header(C2CLIENT_HOST, _sendMap[C2CLIENT_HOST]);
+    getMsgPtr->header("Transfer-Delay", _sendMap[C2CLIENT_TransferDelay]);
+    getMsgPtr->header("Ingress-Capacity", _sendMap[C2CLIENT_IngressCapacity]);
+
+    //check if timeout
+    if(!checkTimeout())
+    {
+        return false;
+    }
+
+    _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] begin send get request endpoint[%s:%d]"), this, addr.c_str(), port);
+
+    //bind up stream ip
+    if (!bind(_conf.upstreamIP, 0))
+    {
+        _status = ZQ::StreamService::Failure;
+        _log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientAsync, "[%p] bind up stream ip[%s] failed"), this, _conf.upstreamIP.c_str());
+        return false;
+    }
+
+    _bBodySend = false;
+    if (!beginRequest(getMsgPtr, addr, port))
+    {
+        _status = ZQ::StreamService::Failure;
+        _log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientAsync, "[%p] failed to send get request to [%s:%d]"), this, addr.c_str(), port);
+        return false;
+    }
+
+    return true;
+}
+
+bool C2ClientAsync::sendGetRequest( C2ClientBindPtr cb, const std::string& url, const std::string& contentName, AttrMap& prop)
+{
+    if (NULL == cb)
+    {
+        _status = ZQ::StreamService::Failure;
+        _log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientAsync, "[%p] callback is NULL, return directly"), this);
+        return false;
+    }else{
+        _cb = cb;
+    }
+
+    _bIndex = true;
+    _startTime = ZQ::common::TimeUtil::now();
+    if(!sendGetRequest(url, contentName, prop, _conf.getIP, _conf.getPort))
+    {
+        _cb = NULL;
+        return false;
+    }
+
+	return true;
+}
+
+bool C2ClientAsync::checkTimeout()
+{
+    int64 now = ZQ::common::TimeUtil::now();
+    int64 remainTime = _timeout - (now - _startTime);
+
+    if (remainTime > 0)
+    {
+        _startTime = ZQ::common::TimeUtil::now();
+        update(_timeout);
+        return true;
+    }
+    else{
+        onTimer();
+        return false;
+    }
+}
+
+bool C2ClientAsync::parseIndex(std::string& contentName, const char* indexData, size_t dataSize, ZQ::IdxParser::IndexData& idxData)
+{
+	ZQ::IdxParser::IdxParserEnv			idxParserEnv;
+	idxParserEnv.AttchLogger(&_log);
+	ZQ::IdxParser::IndexFileParser		idxParser(idxParserEnv);
+
+	if(!idxParser.ParseIndexFromMemory( contentName, idxData, indexData, dataSize ) ) 
+	{
+        _status = ZQ::StreamService::Failure;
+        _log(ZQ::common::Log::L_ERROR,CLOGFMT(C2ClientAsync,"[%p] parseIndex() failed to parse index data for[%s], data size[%u]"), this, contentName.c_str(), (uint32)dataSize);
+		return false;
+	}
+	return true;
+}
+
+void C2ClientAsync::onReqMsgSent( size_t size)
+{
+	_log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] entry onReqMsgSent(), send size[%ld]"), this,  size);
+	
+	_status = ZQ::StreamService::HeaderSendCompleted;
+
+    cancel();
+
+    if (!_bBodySend && _reqBody.empty())
+    {
+        _bBodySend = true;
+        if(!checkTimeout())
+        {
+            return;
+        }
+        endRequest();
+        _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] end send header"), this);
+    }
+	else if(!_bBodySend && !_reqBody.empty()) {
+		LibAsync::AsyncBuffer buf;
+		buf.base = (char*)_reqBody.c_str();
+		buf.len = _reqBody.length();
+		_bBodySend = true;
+       
+        //check if timeout
+        if(!checkTimeout())
+        {
+            return;
+        }
+        
+		sendReqBody(buf);
+        _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] start send body"), this);
+	} else if(_bBodySend && !_reqBody.empty()) {
+		_reqBody.clear();
+		//mRequest = NULL;
+        //check if timeout
+        if(!checkTimeout())
+        {
+            return;
+        }
+		endRequest();
+        _startCalcLatency = ZQ::common::TimeUtil::now();
+        _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] end send body"), this);
+	} else {
+		_status = ZQ::StreamService::BodySendCompleted;
+        //check if timeout
+        if(!checkTimeout())
+        {
+            return;
+        }
+		getResponse();
+        _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] get response"), this);
+	}
+}
+
+void C2ClientAsync::onHttpDataReceived( size_t size )
+{
+	if(_bRead){
+		std::string ip="";
+		unsigned short port=0;
+		getLocalAddress(ip, port);
+		int latency = (int)(ZQ::common::TimeUtil::now() - _clientStart);
+		if( latency <= 0 )
+			latency = -1;
+		int bitrates = ( (_clientTotalSize + size) * 8000) / latency;
+		_log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "onHttpDataReceived()[%p] client[%s:%d] file[%s] received [%ld +%d], using [%d]ms @[%d]bps"), this, ip.c_str(), port, _fileName.c_str(), _clientTotalSize, size, latency, bitrates);
+		 _clientTotalSize += size;
+	}
+    cancel();
+
+	if (ZQ::StreamService::Completed != _status)
+	{
+        if (_bRead && _status == ZQ::StreamService::WaitNewBuffer)
+        {
+            update(_conf.waitBufferTime);
+            _log(ZQ::common::Log::L_WARNING, CLOGFMT(C2ClientAsync, "[%p] onHttpDataReceived(), there is no buffer left, waiting for new buffer received, timeout[%ld]"), this, _conf.waitBufferTime);
+            return;
+        }
+
+        //check if timeout
+        if(!checkTimeout())
+        {
+            return;
+        }
+
+		recvRespBody(_recvBufs);
+	    _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p]onHttpDataReceived() continue to recv data buffer."), this);
+        _status = ZQ::StreamService::Receiving;
+	}
+    else{
+        //received successful
+        if (!_bLocateRequest && !_bTransferDelete)
+        {
+            _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] received all data[%ld]"), this, _receivedDataSize);
+        }
+
+        int statusCode = _headerMsg->code();	
+
+        if (2 != statusCode/100)
+        {
+            _status = ZQ::StreamService::Failure;
+            std::string phaseName = _bLocateRequest ? "locate" : ( _bTransferDelete ? "transfer delete" : "get");
+            _log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientAsync, "[%p] send %s request failure, error[%d:%s]"), this, phaseName.c_str(), statusCode, _headerMsg->status().c_str());		
+
+            _status = ZQ::StreamService::Failure;
+            if (_bRead)
+            {
+                updateLastError(statusCode);
+                updateErrorCategory(C2Streamer::Buffer::ECATE_HTTP);
+                if (_bTransferDelete) return;
+
+                if (_readerBufs.empty())
+                {
+                    _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] call onRead(), buffer number 0"));
+                }else{
+                    _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] call onRead(), buffer number[%d], first buffer offset[%ld], data size[%ld]"), this, _readerBufs.size(),(*_readerBufs.begin())->offsetInFile(), (*_readerBufs.begin())->getDataSize());
+                }
+                std::vector<C2Streamer::Buffer*>::iterator it = _readerBufs.begin();
+                for (; it != _readerBufs.end(); it++)
+                {
+                    (*it)->setLastError(getLastError(), getErrorCategory());
+                }
+                _readerCB->onRead(_readerBufs, true);
+                _readerCB->onError(_key, 0);
+                _readerBufs.clear();
+            }else if (_bQueryIndex)
+            {
+                _assetAttributePtr->lastError(C2Streamer::AssetAttribute::ASSET_HTTP);
+                _readerCB->onIndexInfo(_assetAttributePtr);
+                _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] query index finished"), this);
+            }
+            else{
+                _cb->OnError(statusCode, _headerMsg->status());
+                _cb = NULL;
+            }
+            return;
+        }
+        
+        if (_bTransferDelete)
+        {
+            _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] transfer delete complete"), this);
+            return;
+        }
+
+        if (_bLocateRequest) //locate request successfully
+        {
+            _log(ZQ::common::Log::L_INFO, CLOGFMT(C2ClientAsync, "[%p] locate request latency[%ld]"), this, ZQ::common::TimeUtil::now()-_startCalcLatency);
+
+            LocateResponseData respData;
+            SimpleXMLParser parser;
+            try
+            {
+                parser.parse(_respBody.data(), _respBody.size(), 1);
+            }
+            catch (const ZQ::common::ExpatException& e)
+            {
+                _status = ZQ::StreamService::Failure;
+                _log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientAsync, "[%p] parse response body catch exception, ExpatException: [%s] during parsing http response body"), this, e.getString());
+
+                if (_bRead) 
+                {
+                    updateLastError(4);
+                    updateErrorCategory(C2Streamer::Buffer::ECATE_HTTP);
+                    _status = ZQ::StreamService::Failure;
+                    if (_readerBufs.empty())
+                    {
+                        _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] call onRead(), buffer number 0"));
+                    }else{
+                        _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] call onRead(), buffer number[%d], first buffer offset[%ld], data size[%ld]"), this, _readerBufs.size(),(*_readerBufs.begin())->offsetInFile(), (*_readerBufs.begin())->getDataSize());
+                    }
+                    std::vector<C2Streamer::Buffer*>::iterator it = _readerBufs.begin();
+                    for (; it != _readerBufs.end(); it++)
+                    {
+                        (*it)->setLastError(getLastError(), getErrorCategory());
+                    }
+                    _readerCB->onRead(_readerBufs, true);
+                    _readerCB->onError(_key, 0);
+                    _readerBufs.clear();
+                }else if (_bQueryIndex)
+                {
+                    _assetAttributePtr->lastError(C2Streamer::AssetAttribute::ASSET_DATAERR);
+                    _readerCB->onIndexInfo(_assetAttributePtr);
+                    _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] query index finished"), this);
+                }
+                else{
+                    _cb->OnError(C2_ERROR_BAD_RESPONSE_CODE, C2_ERROR_BAD_RESPONSE_STRING);
+                    _cb = NULL;
+                }
+                return;
+            }
+
+
+            std::string error;
+            error.reserve(2048);
+            if(!parseResponse(&parser.document(), respData, error))
+            {//error
+                _status = ZQ::StreamService::Failure;
+                _log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientSync, "[%p] parse response body failure, %s"), this, error.c_str());
+                if (_bRead)
+                {
+                    updateLastError(2);
+                    updateErrorCategory(C2Streamer::Buffer::ECATE_HTTP);
+                    _status = ZQ::StreamService::Failure;
+                    if (_readerBufs.empty())
+                    {
+                        _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] call onRead(), buffer number 0"));
+                    }else{
+                        _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] call onRead(), buffer number[%d], first buffer offset[%ld], data size[%ld]"), this, _readerBufs.size(),(*_readerBufs.begin())->offsetInFile(), (*_readerBufs.begin())->getDataSize());
+                    }
+                    std::vector<C2Streamer::Buffer*>::iterator it = _readerBufs.begin();
+                    for (; it != _readerBufs.end(); it++)
+                    {
+                        (*it)->setLastError(getLastError(), getErrorCategory());
+                    }
+                    _readerCB->onRead(_readerBufs, true);
+                    _readerCB->onError(_key, 0);
+                    _readerBufs.clear();
+                }else if (_bQueryIndex)
+                {
+                    _assetAttributePtr->lastError(C2Streamer::AssetAttribute::ASSET_DATAERR);
+                    _readerCB->onIndexInfo(_assetAttributePtr);
+                    _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] query index finished"), this);
+                }
+                else{
+                    _cb->OnError(C2_ERROR_BAD_RESPONSE_CODE, C2_ERROR_BAD_RESPONSE_STRING);
+                    _cb = NULL;
+                }
+                return;
+            }
+
+            if (_bRead || _bQueryIndex)
+            {
+                if (_bQueryIndex)
+                {
+                    setRevcMap(respData);
+                }
+                //for read, send get request
+                _sessionID = respData.transferId;
+                _conf.getIP  = respData.transferPort;
+                unsigned int getPort;
+                
+                if (respData.portNum.empty())
+                {
+                    _log(ZQ::common::Log::L_INFO, CLOGFMT(C2ClientAsync, "[%p] can't find 'PortNum' from locate response, try to use default port[%d]"), this, _conf.defaultGetPort);
+                    _conf.getPort = _conf.defaultGetPort;
+                }else{
+                    _conf.getPort = atoi(respData.portNum.c_str());
+                }
+
+                AttrMap prop;
+                if (!sendGetRequest(_sessionID, _contentName, prop, _conf.getIP, _conf.getPort))
+                { 
+                     if (_bRead)
+                     {
+                         updateLastError(3);
+                         updateErrorCategory(C2Streamer::Buffer::ECATE_HTTP);
+                         _status = ZQ::StreamService::Failure;
+                         if (_readerBufs.empty())
+                         {
+                             _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] call onRead(), buffer number 0"));
+                         }else{
+                             _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] call onRead(), buffer number[%d], first buffer offset[%ld], data size[%ld]"), this, _readerBufs.size(),(*_readerBufs.begin())->offsetInFile(), (*_readerBufs.begin())->getDataSize());
+                         }
+                         std::vector<C2Streamer::Buffer*>::iterator it = _readerBufs.begin();
+                         for (; it != _readerBufs.end(); it++)
+                         {
+                             (*it)->setLastError(getLastError(), getErrorCategory());
+                         }
+                         _readerCB->onRead(_readerBufs, true);
+                         _readerCB->onError(_key, 0);
+                         _readerBufs.clear();
+                     }else{
+                         //query index info failed
+                         _assetAttributePtr->lastError(C2Streamer::AssetAttribute::ASSET_SOCKET);
+                         _readerCB->onIndexInfo(_assetAttributePtr);
+                         _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] query index finished"), this);
+                     }
+                }
+            }
+            else{
+                setRevcMap(respData);
+
+                //set response map
+                _recvMap[C2CLIENT_AssetID]		= _paid;
+                _recvMap[C2CLIENT_ProviderID]   = _pid;
+                _recvMap[C2CLIENT_SubType]		= _subType;
+                _recvMap[C2CLIENT_TransferRate]	= _conf.transferRate;
+
+                _cb->OnC2LocateResponse(_contentName, _recvMap);
+                _cb = NULL;
+            }
+        }
+        else //get request successfully
+        {
+            _log(ZQ::common::Log::L_INFO, CLOGFMT(C2ClientAsync, "[%p] get request latency[%ld]"), this, ZQ::common::TimeUtil::now()-_startCalcLatency);
+
+            if (_bRead)
+            {
+                _status = ZQ::StreamService::Completed;
+                if (!_readerBufs.empty())
+                {
+                     _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] call onRead(), buffer number[%d], first buffer offset[%ld], data size[%ld]"), this, _readerBufs.size(), (*_readerBufs.begin())->offsetInFile(), (*_readerBufs.begin())->getDataSize());
+                    _readerCB->onRead(_readerBufs, true);
+                    _readerBufs.clear();
+                }
+
+                // send transfer delelte request
+                if (!sendTransferDeleteRequest(_sessionID))
+                {
+                    _log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientAsync, "[%p] send transfer delete request failed"), this);
+                }
+                
+            }else{
+                if (_bIndex)
+                {
+                    _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] begin parse index file"), this);
+                    ZQ::IdxParser::IndexData idxData;
+                    bool result = parseIndex(_contentName, _respBody.c_str(), _respBody.size(), idxData);
+                    if (result)
+                    {
+                        _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] parse index success"), this);
+
+                        //set response map
+                        _recvMap[C2CLIENT_AssetID]		= _paid;
+                        _recvMap[C2CLIENT_ProviderID]	= _pid;
+
+                        std::ostringstream playTimeOSS;
+                        playTimeOSS<<idxData.getPlayTime();
+                        if (!playTimeOSS.str().empty())
+                        {
+                            _recvMap[C2CLIENT_PlayTime]			=	playTimeOSS.str();
+                        }
+
+                        std::ostringstream muxBitRateOSS;
+                        muxBitRateOSS<<idxData.getMuxBitrate();
+                        if (!muxBitRateOSS.str().empty())
+                        {
+                            _recvMap[C2CLIENT_MuxBitrate]		=	muxBitRateOSS.str();
+                        }
+
+                        std::string extName = idxData.getSubFileName(0);
+                        if (!extName.empty())
+                        {
+                            size_t dotPos = extName.find_first_of('.');
+                            if (dotPos == extName.npos)
+                            {
+                                _recvMap[C2CLIENT_ExtName]			=	extName;
+                            }
+                            else{
+                                _recvMap[C2CLIENT_ExtName]			=	extName.substr(dotPos + 1);
+                            }
+                        }
+
+                        ZQ::IdxParser::IndexData::SubFileInformation info;
+                        if (idxData.getSubFileInfo(0, info))
+                        {
+                            std::ostringstream startOffsetOSS;
+                            uint64 startOffset =info.startingByte;
+                            startOffsetOSS<<startOffset;
+                            if (!startOffsetOSS.str().empty())
+                            {
+                                _recvMap[C2CLIENT_StartOffset]		=	startOffsetOSS.str();
+                            }
+
+                            std::ostringstream endOffsetOSS;
+                            uint64 endOffset   = info.endingByte;
+                            endOffsetOSS<<endOffset;
+                            if (!endOffsetOSS.str().empty())
+                            {
+                                _recvMap[C2CLIENT_EndOffset]		=	endOffsetOSS.str();
+                            }
+                        }
+
+                        if (_bQueryIndex)
+                        {
+                            if ("yes" == _recvMap[C2CLIENT_OpenForWrite])
+                            {
+                                _assetAttributePtr->pwe(true);
+                            }else{
+                                _assetAttributePtr->pwe(false);
+                            }
+
+                            
+                            _assetAttributePtr->range(atol(_recvMap[C2CLIENT_StartOffset].c_str()), atol(_recvMap[C2CLIENT_EndOffset].c_str()));
+
+                            _assetAttributePtr->assetBaseInfo(idxData.baseInfoToXML());
+                            _assetAttributePtr->assetMemberInfo(idxData.memberFileToXML());
+                            _readerCB->onIndexInfo(_assetAttributePtr);
+                            _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] query index finished"), this);
+                        }else{
+                            _cb->OnC2GetResponse(_contentName, _recvMap);
+                            _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] get request finished"), this);
+                            _cb = NULL;
+                        }                    
+                    }
+                    else
+                    {
+                        _status = ZQ::StreamService::Failure;
+                        _log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientAsync, "[%p] parse index failure"), this);
+
+                        if (_bQueryIndex)
+                        {
+                            _assetAttributePtr->lastError(C2Streamer::AssetAttribute::ASSET_DATAERR);
+                            _readerCB->onIndexInfo(_assetAttributePtr);
+                            _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] query index finished"), this);
+                        }
+
+                        if (!_bRead && !_bQueryIndex)
+                        {
+                            _cb->OnError(C2_ERROR_BAD_RESPONSE_CODE, C2_ERROR_BAD_RESPONSE_STRING);
+                            _cb = NULL;
+                        }
+                        return;
+                    }
+                }else{
+                    // get main file
+                }
+                
+            }		
+        }
+    }
+}
+
+bool C2ClientAsync::onHttpMessage( const LibAsync::HttpMessagePtr msg)
+{
+	_log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] onHttpMessage(), received http header"), this);
+	_headerMsg = msg;
+
+    if (!_readerBufs.empty())
+    {
+        std::string name = _readerBufs[0]->filename();
+        _readerCB->onLatency(name, _readerBufs[0]->offsetInFile(), ZQ::common::TimeUtil::now());
+    }
+
+	return true;
+}
+
+bool C2ClientAsync::onHttpBody( const char* data, size_t size)
+{
+	//_log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "entry onHttpBody(), received data size[%d]"), size);
+
+    if (_bRead)
+    {
+        if (_bLocateRequest)
+        {
+            _respBody.append(data, size);
+            return true;
+        }
+
+        //TODO: copy data to first buffer
+        if (_readerBufs.empty())
+        {
+            _status = ZQ::StreamService::WaitNewBuffer;
+            _tmpBuf.append(data, size);
+            _log(ZQ::common::Log::L_INFO, CLOGFMT(C2ClientAsync, "[%p] no read buffer left, copy received data[%ld] to temp buffer"), this, size);
+            _receivedDataSize += size;
+            return true;
+        }
+
+        std::vector<C2Streamer::Buffer*>::iterator it = _readerBufs.begin();
+        size_t currBufLeftSize = (*it)->bufSize() - (*it)->getDataSize();
+
+        if (currBufLeftSize > size)
+        {
+            char *startWritePoint = (*it)->buffer() + (*it)->getDataSize();
+            memcpy(startWritePoint, data, size);
+
+            (*it)->setDataSize((*it)->getDataSize() + size);
+        }else{
+            //the free space less than received data size
+            size_t leftDataSize = size;
+            size_t allCopySize = 0;
+            while (leftDataSize > 0)
+            {
+                char *startDstPoint = (*it)->buffer() + (*it)->getDataSize();
+                char *startSrcPoint =  (char*)data + allCopySize;
+
+                int copySize;
+                if (leftDataSize > currBufLeftSize)
+                {
+                    copySize = currBufLeftSize;
+                    currBufLeftSize = 0;
+                }else{
+                    copySize = leftDataSize;
+                    currBufLeftSize = currBufLeftSize - copySize;
+                }
+
+                memcpy(startDstPoint, startSrcPoint, copySize);
+                (*it)->setDataSize((*it)->bufSize() - currBufLeftSize);
+
+                leftDataSize = leftDataSize - copySize;
+                allCopySize += copySize;
+
+                if (currBufLeftSize == 0)
+                {
+                    // return this buffer and fill next buffer
+                    std::vector<C2Streamer::Buffer*> bufs;
+                    bufs.push_back(*it);
+                     _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] call onRead(), buffer number[%d], first buffer offset[%ld], data size[%ld]"), this, bufs.size(), (*bufs.begin())->offsetInFile(), (*bufs.begin())->getDataSize());
+                    _readerCB->onRead(bufs, false);
+                    it = _readerBufs.erase(it);
+
+                    if (leftDataSize > 0)
+                    {
+                        if (it != _readerBufs.end())
+                        {
+                            currBufLeftSize = (*it)->bufSize();
+                        }else{
+                            // wait a period for accept new buffer
+                            _status = ZQ::StreamService::WaitNewBuffer;
+
+                            // put left data to temp buffer
+                            //_tmpBuf.clear();
+                            _tmpBuf.append(data + allCopySize, leftDataSize);
+                            leftDataSize = 0;
+                        } 
+                    }
+                                 
+                }
+            }
+        }
+    }else{
+        _respBody.append(data, size);
+    }
+
+    if (!_bLocateRequest)
+    {
+        _receivedDataSize += size;
+    }
+
+	return true;
+}
+void C2ClientAsync::onHttpComplete()
+{
+    _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] onHttpComplete() entry"), this);
+	_status = ZQ::StreamService::Completed;
+}
+
+void C2ClientAsync::onHttpError( int error )
+{
+	_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientAsync, "[%p] onHttpError() error[%d]"), this, error);
+	cancel();
+
+    updateLastError(error);
+    updateErrorCategory(C2Streamer::Buffer::ECATE_SOCKET);
+    _status = ZQ::StreamService::Failure;
+    if (_bRead)
+    {
+        // TODO: return error code
+        if (_readerBufs.empty())
+        {
+            _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] call onRead(), buffer number 0"));
+        }else{
+            _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] call onRead(), file[%s] buffer number[%d], first buffer offset[%ld], data size[%ld]"), this, (*_readerBufs.begin())->filename(), _readerBufs.size(),(*_readerBufs.begin())->offsetInFile(), (*_readerBufs.begin())->getDataSize());
+        }
+
+        std::vector<C2Streamer::Buffer*>::iterator it = _readerBufs.begin();
+        for (; it != _readerBufs.end(); it++)
+        {
+            (*it)->setLastError(getLastError(), getErrorCategory());
+        }
+        _readerCB->onRead(_readerBufs, true);
+        _readerCB->onError(_key, 0);
+        _readerBufs.clear();
+    }
+    else if (_bQueryIndex)
+    {
+        _assetAttributePtr->lastError(C2Streamer::AssetAttribute::ASSET_SOCKET);
+        _readerCB->onIndexInfo(_assetAttributePtr);
+        _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] query index finished"), this);
+    }else{
+        std::string errorMsg = "";
+        _cb->OnError(error, errorMsg);
+    }
+}
+
+void C2ClientAsync::onTimer()
+{
+    cancel();
+    std::string err = _bLocateRequest ? "locate" : ( _bTransferDelete ? "transfer delete" : "get");
+    std::string status = ZQ::StreamService::getStatusStr(_status);
+	_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientAsync, "[%p] timeout when %s, status[%s],timeout[%d], waitbufftimeout[%lld]"), this, err.c_str(), status.c_str(), _timeout, _conf.waitBufferTime);
+
+    TransferStatus preStatus = _status;
+    _status = ZQ::StreamService::Timeout;
+
+    if (_bTransferDelete) return;
+
+    if (_bRead)
+    {
+        if (!retry())
+        {
+            if (_readerBufs.empty())
+            {
+                _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] call onRead(), buffer number 0"));
+            }else{
+                _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] call onRead(), file[%s] buffer number[%d], first buffer offset[%ld], data size[%ld]"), this, (*_readerBufs.begin())->filename(), _readerBufs.size(),(*_readerBufs.begin())->offsetInFile(), (*_readerBufs.begin())->getDataSize());
+            }
+
+            // call callback
+            std::vector<C2Streamer::Buffer*>::iterator it = _readerBufs.begin();
+            for (; it != _readerBufs.end(); it++)
+            {
+                updateLastError(-4);
+                if (ZQ::StreamService::WaitNewBuffer == preStatus)
+                {
+                    updateErrorCategory(C2Streamer::Buffer::ECATE_CLIENTTIMEOUT);
+                }else{
+                    updateErrorCategory(C2Streamer::Buffer::ECATE_TIMEOUT);
+                }
+                (*it)->setLastError(getLastError(), getErrorCategory());
+            }
+            _readerCB->onRead(_readerBufs, true);
+            _readerCB->onError(_key, 0);
+            _readerBufs.clear();
+        }
+    } 
+    else if (_bQueryIndex)
+    {
+       // _assetAttributePtr->lastError(C2Streamer::AssetAttribute::ASSET_TIMEOUT);
+        _readerCB->onIndexInfo(_assetAttributePtr);
+        _log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] query index finished"), this);
+    }else
+    {
+        _cb->OnError(C2_ERROR_TIMEOUT_CODE, C2_ERROR_TIMEOUT_STRING);
+        _cb = NULL;
+    }
+}
+
+bool C2ClientAsync::parseResponse(const SimpleXMLParser::Node* root, LocateResponseData& respData, std::string& error)
+{
+	_log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] parseResponse() entry"), this);
+
+	typedef SimpleXMLParser::Node Node;
+	// step 1: check the content and extract the response data
+	const Node* locNode = findNode(root, "LocateResponse");
+	if(NULL == locNode)
+	{ // bad xml content
+		_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientAsync, "[%p] parseResponse() XML element missed: <LocateResponse>"), this);
+		return false;
+	}
+
+	const Node* transferPortNode = findNode(locNode, "TransferPort");
+	if(!transferPortNode)
+	{ // parameter missed
+		_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientAsync, "[%p] parseResponse() XML element missed: <TransferPort>"), this);
+		return false;
+	}
+	respData.transferPort = transferPortNode->content;
+
+	const Node* transferIDNode = findNode(locNode, "TransferID");
+	if (!transferIDNode)
+	{
+		_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientAsync, "[%p] parseResponse() XML element missed: <TransferID>"), this);
+		return false;
+	}
+	respData.transferId = transferIDNode->content;
+
+	const Node* transferTimeoutNode = findNode(locNode, "TransferTimeout");
+	if (!transferTimeoutNode)
+	{
+		_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientAsync, "[%p] parseResponse() XML element missed: <TransferTimeout>"), this);
+		return false;
+	}
+	respData.transferTimeout = StringToLong(transferTimeoutNode->content);
+
+	const Node* availableRangeNode = findNode(locNode, "AvailableRange");
+	if (!availableRangeNode)
+	{
+		_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientAsync, "[%p] parseResponse() XML element missed: <AvailableRange>"), this);
+		return false;
+	}
+	respData.availableRange = availableRangeNode->content;
+
+	const Node* openForWriteNode = findNode(locNode, "OpenForWrite");
+	if (!openForWriteNode)
+	{
+		_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientAsync, "[%p] parseResponse() XML element missed: <OpenForWrite>"), this);
+		return false;
+	}
+	respData.openForWrite = openForWriteNode->content;
+
+	const Node* portNumNode = findNode(locNode, "PortNum");
+	if (portNumNode)
+	{
+        respData.portNum = portNumNode->content;
+	}
+
+	if (_bIndex) //if call read(), with no need for these properties
+	{
+        const Node* residentialNode = findNode(locNode, "ClipInfo/Residential");
+        if (!residentialNode)
+        {
+            _log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientAsync, "[%p] parseResponse() XML element missed: <Residential>"), this);
+        }else{
+            std::map<std::string, std::string> residentialNodeAttrs = residentialNode->attrs;
+            respData.recording = residentialNodeAttrs["recording"];
+        }
+
+        const Node* encodingInfoNode = findNode(locNode, "ClipInfo/EncodingInfo");
+        if (!encodingInfoNode)
+        {
+            _log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientAsync, "[%p] parseResponse() XML element missed: <EncodingInfo>"), this);
+        }else{
+            std::map<std::string, std::string> encodingInfoNodeAttrs = encodingInfoNode->attrs;
+            respData.playTime = encodingInfoNodeAttrs["playTime"];
+            respData.muxBitrate = encodingInfoNodeAttrs["muxBitrate"];
+        }
+
+        const Node* membersNode = findNode(locNode, "ClipInfo/Members");
+        if (!membersNode)
+        {
+            _log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientAsync, "[%p] parseResponse() XML element missed: <MembersNode>"), this);
+        }else{
+            std::list<Node>::const_iterator it = membersNode->children.begin();
+            if (it == membersNode->children.end())
+            {
+                _log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientAsync, "[%p] parseResponse() ClipInfo/Members is empty "), this);
+            }
+
+            std::map<std::string, std::string> subFileAttrs = it->attrs;
+            std::string ext = subFileAttrs["extName"];
+
+            respData.extName = ext;
+            respData.startOffset = subFileAttrs["startOffset"];
+            respData.endOffset = subFileAttrs["endOffset"];
+        }    
+	}
+
+	_log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] parseResponse() parse response success"), this);
+	return true;
+}
+
+bool C2ClientAsync::setRevcMap(LocateResponseData& respData)
+{
+	_log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientAsync, "[%p] setRevcMap() entry"), this);
+
+	if (!&respData)
+	{
+		return false;
+	}
+
+	_recvMap[C2CLIENT_TransferPort]		=	respData.transferPort;
+	_recvMap[C2CLIENT_TransferID]		=	respData.transferId;
+	_recvMap[C2CLIENT_PortNum]			=	respData.portNum.empty() ? "12000" : respData.portNum;
+
+	char timeout[8];
+	itoa(respData.transferTimeout, timeout, 10);
+	std::string strTimeout = timeout;
+	_recvMap[C2CLIENT_TransferTimeout]	=	timeout;
+
+	_recvMap[C2CLIENT_AvailableRange]	=	respData.availableRange;
+	_recvMap[C2CLIENT_OpenForWrite]		=	respData.openForWrite;
+
+	_recvMap[C2CLIENT_Recording]		=	respData.recording;
+	_recvMap[C2CLIENT_PlayTime]			=	respData.playTime;
+	_recvMap[C2CLIENT_MuxBitrate]		=	respData.muxBitrate;
+	_recvMap[C2CLIENT_ExtName]			=	respData.extName;
+	_recvMap[C2CLIENT_StartOffset]		=	respData.startOffset;
+	_recvMap[C2CLIENT_EndOffset]		=	respData.endOffset;
+
+	return true;
+}
+
+//sync c2client
+C2ClientSync::C2ClientSync(ZQ::common::Log& log, const std::string& addr, const unsigned int port, const int timeout)
+:_log(log), _addr(addr), _port(port), _timeout(timeout)
+{
+	init();
+	//setTimeout();
+}
+C2ClientSync::~C2ClientSync()
+{
+	uninit();
+}
+
+bool C2ClientSync::sendLocateRequest(const std::string& url, const std::string& contentName, const std::string& subType, AttrMap& reqProp, AttrMap& respProp)
+{
+	_log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientSync, "sendLocateRequest() entry"));
+
+	int64 startTime = ZQ::common::TimeUtil::now();
+	setConnectTimeout(-_timeout*1000); // -10*1000*1000us
+
+	//content name: 1. assetid(20)provideid
+	//				2. /.*/assetid(20)_provideid
+	size_t startAssetID;
+	size_t startProvideID;
+	size_t lastSlashPos = contentName.find_last_of('/');
+	if (std::string::npos == lastSlashPos)
+	{//no slash
+		startAssetID = 0;
+	}
+	else{
+		startAssetID = lastSlashPos + 1;
+	}
+	std::string assetId = contentName.substr(startAssetID, 20);
+
+	if ('_' == contentName.at(startAssetID + 20))
+	{
+		startProvideID = startAssetID + 20 + 1;
+	}else{
+		startProvideID = startAssetID + 20;
+	}
+	std::string providerId = contentName.substr(startProvideID);
+
+	std::ostringstream oss;
+	oss<<"http://" << _addr << ":" << _port << url;
+	_sendMap[C2CLIENT_URI] = oss.str();
+	_sendMap[C2CLIENT_AssetID] = assetId;
+	_sendMap[C2CLIENT_ProviderID] = providerId;
+	_sendMap[C2CLIENT_SubType] = subType;
+
+	_sendMap[C2CLIENT_HOST] = reqProp[C2CLIENT_HOST].empty() ? "None" : reqProp[C2CLIENT_HOST];
+
+	_sendMap[C2CLIENT_UserAgent] = reqProp[C2CLIENT_UserAgent].empty() \
+		? "ToInfinityAndBeyond" : reqProp[C2CLIENT_UserAgent];
+
+	_sendMap[C2CLIENT_ContentType] = reqProp[C2CLIENT_ContentType].empty() \
+		? "text/xml-external-parsed-entity" : reqProp[C2CLIENT_ContentType];
+
+	_sendMap[C2CLIENT_TransferRate] = reqProp[C2CLIENT_TransferRate].empty() \
+		? "20000000" : reqProp[C2CLIENT_TransferRate];
+
+	_sendMap[C2CLIENT_IngressCapacity] = reqProp[C2CLIENT_IngressCapacity].empty() \
+		? "16512000000" : reqProp[C2CLIENT_IngressCapacity];
+
+	std::string strClientTransfer = ZQ::common::InetHostAddress::getLocalAddress().getHostAddress();
+
+	_sendMap[C2CLIENT_ClientTransfer] = reqProp[C2CLIENT_ClientTransfer].empty() \
+		? strClientTransfer : reqProp[C2CLIENT_ClientTransfer];
+
+	_sendMap[C2CLIENT_ExclusionList] = reqProp[C2CLIENT_ExclusionList];
+
+	_sendMap[C2CLIENT_Range] = reqProp[C2CLIENT_Range];
+
+	_sendMap[C2CLIENT_TransferDelay] = reqProp[C2CLIENT_TransferDelay].empty() \
+		? "-2000" : reqProp[C2CLIENT_TransferDelay];
+
+	//set header
+	//setHeader(C2CLIENT_HOST, (char*)_sendMap[C2CLIENT_HOST].c_str());
+	setHeader(C2CLIENT_UserAgent, (char*)_sendMap[C2CLIENT_UserAgent].c_str());
+	setHeader(C2CLIENT_ContentType, (char*)_sendMap[C2CLIENT_ContentType].c_str());
+
+	//connect
+	int ret = httpConnect(_sendMap[C2CLIENT_URI].c_str(),  HTTP_POST);
+	int64 connectEndTime = ZQ::common::TimeUtil::now();
+	int64 connTime  = connectEndTime - startTime;
+	if (_timeout < connTime)
+	{
+		_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientSync, "timeout when connect via uri[%s]"), _sendMap[C2CLIENT_URI].c_str());
+		return false;
+	}
+	else if (ret)
+	{
+		_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientSync, "failed to connect via uri[%s]"), _sendMap[C2CLIENT_URI].c_str());
+		return false;
+	}
+	setSendTimeout(-(_timeout - connTime)*1000);
+	
+	//set body
+	ret = setLocateRequestBody();
+	int64 sendContentTime = ZQ::common::TimeUtil::now();
+	int64 sendTime  = sendContentTime - startTime;
+	if (_timeout < sendTime)
+	{
+		_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientSync, "timeout when send body data to server"));
+		return false;
+	}
+	else if (ret)
+	{
+		_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientSync, "failed to send body data to server"));
+		return false;
+	}
+
+	ret = httpEndSend();
+	int64 endSendTime = ZQ::common::TimeUtil::now();
+	sendTime = endSendTime - startTime;
+	if (_timeout < sendTime)
+	{
+		_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientSync, "timeout when complete sending body data to server"));
+		return false;
+	}else if (ret)
+	{
+		_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientSync, "failed to complete sending body data to server"));
+		return false;
+	}
+	setRecvTimeout(-(_timeout - sendTime)*1000);
+
+	//receive
+	ret = httpBeginRecv();
+	int64 recvContentTime = ZQ::common::TimeUtil::now();
+	int recvTime = recvContentTime - startTime;
+	if (_timeout < recvTime)
+	{
+		_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientSync, "timeout when recv data from server"));
+		return false;
+	}else if (ret)
+	{
+		_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientSync, "failed to recv data from server"));
+		return false;
+	}
+
+	while(!isEOF())
+	{
+		ret = httpContinueRecv();
+		int64 endRecvTime = ZQ::common::TimeUtil::now();
+		recvTime = endRecvTime - startTime;
+		if (_timeout < recvTime)
+		{
+			_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientSync, "timeout when recv data from server"));
+			return false;
+		}else if (ret)
+		{
+			_log(ZQ::common::Log::L_ERROR,CLOGFMT(C2ClientSync,"failed to received data from server with errorCode[%d]"),
+				getErrorcode());
+		}
+		break;
+	}
+
+	int64 endRecvTime = ZQ::common::TimeUtil::now();
+	recvTime = endRecvTime - startTime;
+	if (_timeout < recvTime)
+	{
+		_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientSync, "timeout when receive data"));
+		return false;
+	}
+
+	int statusCode = getStatusCode();
+
+	if (201 != statusCode && 206 != statusCode)
+	{
+		_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientSync, "status code is not 201 or 206, but %d, %s"), statusCode, getMsg());		
+		return false;
+	}
+
+	std::string responseMsg;
+	getContent(responseMsg);
+	if (responseMsg.empty())
+	{
+		_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientSync, "content is empty"));		
+		return false;
+	}
+
+	if (201 == statusCode)
+	{
+		//TODO: parse xml
+		LocateResponseData respData;
+		SimpleXMLParser parser;
+		try
+		{
+			parser.parse(responseMsg.data(), responseMsg.size(), 1);
+		}
+		catch (const ZQ::common::ExpatException& e)
+		{
+			_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientSync, "parse response body catch exception, ExpatException: [%s] during parsing http response body"), e.getString());
+			return false;
+		}
+
+
+		std::string error;
+		error.reserve(2048);
+		if(!parseResponse(&parser.document(), respData, error))
+		{//error
+			_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientSync, "parse response body failure"));			
+			return false;
+		}
+
+		setRevcMap(respData);
+
+		//set response map
+		respProp = _recvMap;
+		respProp[C2CLIENT_AssetID]		= _sendMap[C2CLIENT_AssetID];
+		respProp[C2CLIENT_ProviderID]   = _sendMap[C2CLIENT_ProviderID];
+		respProp[C2CLIENT_SubType]		= _sendMap[C2CLIENT_SubType];
+		respProp[C2CLIENT_TransferRate]	= _sendMap[C2CLIENT_TransferRate];		
+	}
+
+	if (206 == statusCode)
+	{
+		_log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientSync, "statusCode[%d]"), statusCode);
+	}
+
+	uninit();
+	return true;
+}
+
+bool C2ClientSync::sendGetRequest(const std::string& url, const std::string& contentName, AttrMap& reqProp, AttrMap& respProp)
+{
+	_log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientSync, "sendGetRequest() entry"));
+
+	int64 startTime = ZQ::common::TimeUtil::now();
+	setConnectTimeout(-_timeout*1000); // -10*1000*1000us
+
+	std::ostringstream oss;
+	oss<<"http://" << _addr << ":" << _port <<"/"<< url;
+	_sendMap[C2CLIENT_URI] = oss.str();
+
+	_sendMap[C2CLIENT_HOST] = reqProp[C2CLIENT_HOST].empty() ? "None" : reqProp[C2CLIENT_HOST];
+
+	_sendMap[C2CLIENT_UserAgent] = reqProp[C2CLIENT_UserAgent].empty() \
+		? "ToInfinityAndBeyond" : reqProp[C2CLIENT_UserAgent];
+
+	_sendMap[C2CLIENT_Range] = reqProp[C2CLIENT_Range];
+
+	_sendMap[C2CLIENT_GET_REQUEST_Transfer_Delay] = reqProp[C2CLIENT_GET_REQUEST_Transfer_Delay].empty() \
+		? "-2000" : reqProp[C2CLIENT_GET_REQUEST_Transfer_Delay];
+
+	_sendMap[C2CLIENT_GET_REQUEST_Ingress_Capacity] = reqProp[C2CLIENT_GET_REQUEST_Ingress_Capacity].empty() \
+		? "16512000000" : reqProp[C2CLIENT_GET_REQUEST_Ingress_Capacity];
+
+	//set header
+	//setHeader(C2CLIENT_HOST, (char*)_sendMap[C2CLIENT_HOST].c_str());
+	setHeader(C2CLIENT_Range, (char*)_sendMap[C2CLIENT_Range].c_str());
+	setHeader(C2CLIENT_UserAgent, (char*)_sendMap[C2CLIENT_UserAgent].c_str());
+	setHeader(C2CLIENT_HOST, (char*)_sendMap[C2CLIENT_HOST].c_str());
+	setHeader(C2CLIENT_GET_REQUEST_Transfer_Delay, (char*)_sendMap[C2CLIENT_GET_REQUEST_Transfer_Delay].c_str());
+	setHeader(C2CLIENT_GET_REQUEST_Ingress_Capacity, (char*)_sendMap[C2CLIENT_GET_REQUEST_Ingress_Capacity].c_str());
+
+	//connect
+	int ret = httpConnect(_sendMap[C2CLIENT_URI].c_str(),  HTTP_GET);
+	int64 connectEndTime = ZQ::common::TimeUtil::now();
+	int64 connTime  = connectEndTime - startTime;
+	if (_timeout < connTime)
+	{
+		_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientSync, "timeout when connect via uri[%s]"), _sendMap[C2CLIENT_URI].c_str());
+		return false;
+	}
+	else if (ret)
+	{
+		_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientSync, "failed to connect via uri[%s]"), _sendMap[C2CLIENT_URI].c_str());
+		return false;
+	}
+	setSendTimeout(-(_timeout - connTime)*1000);
+
+	ret = httpEndSend();
+	int64 endSendTime = ZQ::common::TimeUtil::now();
+	int64 sendTime = endSendTime - startTime;
+	if (_timeout < sendTime)
+	{
+		_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientSync, "timeout when complete sending body data to server"));
+		return false;
+	}else if (ret)
+	{
+		_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientSync, "failed to complete sending body data to server"));
+		return false;
+	}
+	setRecvTimeout(-(_timeout - sendTime)*1000);
+
+	//receive
+	ret = httpBeginRecv();
+	int64 recvContentTime = ZQ::common::TimeUtil::now();
+	int recvTime = recvContentTime - startTime;
+	if (_timeout < recvTime)
+	{
+		_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientSync, "timeout when recv data from server"));
+		return false;
+	}else if (ret)
+	{
+		_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientSync, "failed to recv data from server"));
+		return false;
+	}
+
+	while(!isEOF())
+	{
+		ret = httpContinueRecv();
+		int64 endRecvTime = ZQ::common::TimeUtil::now();
+		recvTime = endRecvTime - startTime;
+		if (_timeout < recvTime)
+		{
+			_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientSync, "timeout when recv data from server"));
+			return false;
+		}else if (ret)
+		{
+			_log(ZQ::common::Log::L_ERROR,CLOGFMT(C2ClientSync,"failed to received data from server with errorCode[%d]"),
+				getErrorcode());
+		}
+		break;
+	}
+
+	int64 endRecvTime = ZQ::common::TimeUtil::now();
+	recvTime = endRecvTime - startTime;
+	if (_timeout < recvTime)
+	{
+		_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientSync, "timeout when receive data"));
+		return false;
+	}
+
+	int statusCode = getStatusCode();
+
+	if (200 != statusCode)
+	{
+		_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientSync, "status code is not 201 or 206, but %d, %s"), statusCode, getMsg());		
+		return false;
+	}
+
+	std::string responseMsg;
+	getContent(responseMsg);
+	//int msgLen = responseMsg.size();
+	if (responseMsg.empty())
+	{
+		_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientSync, "content is empty"));		
+		return false;
+	}
+
+	ZQ::IdxParser::IndexData idxData;
+	bool result = parseIndex(contentName, responseMsg.c_str(), responseMsg.size(), idxData);
+	if (result)
+	{
+		_log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientSync, "parse index success"));
+		
+		//set response map
+		respProp[C2CLIENT_AssetID] = contentName.substr(0, 20);
+		respProp[C2CLIENT_ProviderID] = contentName.substr(20);
+
+		std::ostringstream playTimeOSS;
+		playTimeOSS<<idxData.getPlayTime();
+		if (!playTimeOSS.str().empty())
+		{
+			respProp[C2CLIENT_PlayTime]			=	playTimeOSS.str();
+		}
+
+		std::ostringstream muxBitRateOSS;
+		muxBitRateOSS<<idxData.getMuxBitrate();
+		if (!muxBitRateOSS.str().empty())
+		{
+			respProp[C2CLIENT_MuxBitrate]		=	muxBitRateOSS.str();
+		}
+
+		std::string extName = idxData.getSubFileName(0);
+		if (!extName.empty())
+		{
+			size_t dotPos = extName.find_first_of('.');
+			if (dotPos == extName.npos)
+			{
+				respProp[C2CLIENT_ExtName]			=	extName;
+			}
+			else{
+				respProp[C2CLIENT_ExtName]			=	extName.substr(dotPos + 1);
+			}
+		}
+		
+		ZQ::IdxParser::IndexData::SubFileInformation info;
+		if (idxData.getSubFileInfo(0, info))
+		{
+			std::ostringstream startOffsetOSS;
+			uint64 startOffset =info.startingByte;
+			startOffsetOSS<<startOffset;
+			if (!startOffsetOSS.str().empty())
+			{
+				respProp[C2CLIENT_StartOffset]		=	startOffsetOSS.str();
+			}
+
+			std::ostringstream endOffsetOSS;
+			uint64 endOffset   = info.endingByte;
+			endOffsetOSS<<endOffset;
+			if (!endOffsetOSS.str().empty())
+			{
+				respProp[C2CLIENT_EndOffset]		=	endOffsetOSS.str();
+			}
+		}
+	}
+	else
+	{
+		_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientSync, "parse index failure"));
+		return false;
+	}
+
+	uninit();
+	return true;
+}
+
+int  C2ClientSync::setLocateRequestBody()
+{
+	std::ostringstream sendBodyMsg;
+
+	sendBodyMsg << "<LocateRequest>" << "\r\n";
+	sendBodyMsg << "<Object>" << "\r\n";
+	sendBodyMsg << "<Name>" << "\r\n";
+
+	if (_sendMap[C2CLIENT_AssetID].empty()) return 0;
+	sendBodyMsg << "<AssetID>" << _sendMap[C2CLIENT_AssetID] << "</AssetID>" << "\r\n";
+
+	if (_sendMap[C2CLIENT_ProviderID].empty()) return 0;
+	sendBodyMsg << "<ProviderID>" << _sendMap[C2CLIENT_ProviderID] << "</ProviderID>" << "\r\n";
+
+	sendBodyMsg << "</Name>" << "\r\n";
+
+	if (_sendMap[C2CLIENT_SubType].empty()) return 0;
+	sendBodyMsg << "<SubType>" << _sendMap[C2CLIENT_SubType] << "</SubType>" << "\r\n";
+
+	sendBodyMsg << "</Object>" << "\r\n";
+
+	if (_sendMap[C2CLIENT_TransferRate].empty()) return 0;
+	sendBodyMsg << "<TransferRate>" << _sendMap[C2CLIENT_TransferRate] << "</TransferRate>" << "\r\n";
+
+	if (_sendMap[C2CLIENT_IngressCapacity].empty()) return 0;
+	sendBodyMsg << "<IngressCapacity>" << _sendMap[C2CLIENT_IngressCapacity] << "</IngressCapacity>" << "\r\n";
+
+	if (_sendMap[C2CLIENT_ClientTransfer].empty()) return 0;
+	sendBodyMsg << "<ClientTransfer>" << _sendMap[C2CLIENT_ClientTransfer] << "</ClientTransfer>" << "\r\n";
+
+	//if (_sendMap[C2CLIENT_LOCATE_REQUEST_ExclusionList].empty()) return 0;
+	sendBodyMsg << "<ExclusionList>" << _sendMap[C2CLIENT_ExclusionList] << "</ExclusionList>" << "\r\n";
+
+	//if (_sendMap[C2CLIENT_LOCATE_REQUEST_Range].empty()) return 0;
+	sendBodyMsg << "<Range>" << _sendMap[C2CLIENT_Range] << "</Range>" << "\r\n";
+
+	//if (_sendMap[C2CLIENT_LOCATE_REQUEST_TransferDelay].empty()) return 0;
+	sendBodyMsg << "<TransferDelay>" << _sendMap[C2CLIENT_TransferDelay] << "</TransferDelay>" << "\r\n";
+
+	sendBodyMsg << "</LocateRequest>";
+
+	/*char len[8];
+	itoa(sendBodyMsg.str().size(), len, 10);
+	std::string strLength = len;*/
+
+	return httpSendContent(sendBodyMsg.str().c_str(), sendBodyMsg.str().size());
+}
+
+int  C2ClientSync::setGetRequestBody()
+{
+	return 0;
+}
+
+int64 C2ClientSync::setTimeout(int64 timeout)
+{
+	_timeout = timeout;
+	return _timeout;
+}
+
+bool C2ClientSync::parseResponse(const SimpleXMLParser::Node* root, LocateResponseData& respData, std::string& error)
+{
+	_log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientSync, "parseResponse() entry"));
+
+	typedef SimpleXMLParser::Node Node;
+	// step 1: check the content and extract the response data
+	const Node* locNode = findNode(root, "LocateResponse");
+	if(NULL == locNode)
+	{ // bad xml content
+		_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientSync, "parseResponse() XML element missed: <LocateResponse>"));
+		return false;
+	}
+
+	const Node* transferPortNode = findNode(locNode, "TransferPort");
+	if(!transferPortNode)
+	{ // parameter missed
+		_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientSync, "parseResponse() XML element missed: <TransferPort>"));
+		return false;
+	}
+	respData.transferPort = transferPortNode->content;
+
+	const Node* transferIDNode = findNode(locNode, "TransferID");
+	if (!transferIDNode)
+	{
+		_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientSync, "parseResponse() XML element missed: <TransferID>"));
+		return false;
+	}
+	respData.transferId = transferIDNode->content;
+
+	const Node* transferTimeoutNode = findNode(locNode, "TransferTimeout");
+	if (!transferTimeoutNode)
+	{
+		_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientSync, "parseResponse() XML element missed: <TransferTimeout>"));
+		return false;
+	}
+	respData.transferTimeout = StringToLong(transferTimeoutNode->content);
+
+	const Node* availableRangeNode = findNode(locNode, "AvailableRange");
+	if (!availableRangeNode)
+	{
+		_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientSync, "parseResponse() XML element missed: <AvailableRange>"));
+		return false;
+	}
+	respData.availableRange = availableRangeNode->content;
+
+	const Node* openForWriteNode = findNode(locNode, "OpenForWrite");
+	if (!openForWriteNode)
+	{
+		_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientSync, "parseResponse() XML element missed: <OpenForWrite>"));
+		return false;
+	}
+	respData.openForWrite = openForWriteNode->content;
+
+	const Node* portNumNode = findNode(locNode, "PortNum");
+	if (portNumNode)
+	{
+		//_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientSync, "parseResponse() XML element missed: <PortNum>"));
+		//return false;
+		respData.portNum = portNumNode->content;
+	}
+	
+	const Node* residentialNode = findNode(locNode, "ClipInfo/Residential");
+	if (residentialNode)
+	{
+		//_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientSync, "parseResponse() XML element missed: <Residential>"));
+		//return false;
+		std::map<std::string, std::string> residentialNodeAttrs = residentialNode->attrs;
+		respData.recording = residentialNodeAttrs["recording"];
+	}
+	
+	const Node* encodingInfoNode = findNode(locNode, "ClipInfo/EncodingInfo");
+	if (encodingInfoNode)
+	{
+		/*_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientSync, "parseResponse() XML element missed: <EncodingInfo>"));
+		return false;*/
+
+		std::map<std::string, std::string> encodingInfoNodeAttrs = encodingInfoNode->attrs;
+		respData.playTime = encodingInfoNodeAttrs["playTime"];
+		respData.muxBitrate = encodingInfoNodeAttrs["muxBitrate"];
+	}
+	
+	const Node* membersNode = findNode(locNode, "ClipInfo/Members");
+	if (membersNode)
+	{
+		//_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientSync, "parseResponse() XML element missed: <MembersNode>"));
+		//return false;
+
+		std::list<Node>::const_iterator it = membersNode->children.begin();
+		if (it == membersNode->children.end())
+		{
+			_log(ZQ::common::Log::L_ERROR, CLOGFMT(C2ClientSync, "parseResponse() ClipInfo/Members is empty "));
+			return false;
+		}
+
+		std::map<std::string, std::string> subFileAttrs = it->attrs;
+		std::string ext = subFileAttrs["extName"];
+
+		respData.extName = ext;
+		respData.startOffset = subFileAttrs["startOffset"];
+		respData.endOffset = subFileAttrs["endOffset"];
+	}
+	
+	_log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientSync, "parseResponse() parse response success"));
+	return true;
+}
+
+bool C2ClientSync::setRevcMap(LocateResponseData& respData)
+{
+	_log(ZQ::common::Log::L_DEBUG, CLOGFMT(C2ClientSync, "setRevcMap() entry"));
+
+	if (!&respData)
+	{
+		return false;
+	}
+
+	_recvMap[C2CLIENT_TransferPort]		=	respData.transferPort;
+	_recvMap[C2CLIENT_TransferID]		=	respData.transferId;
+	_recvMap[C2CLIENT_PortNum]			=	respData.portNum;
+
+	char timeout[8];
+	itoa(respData.transferTimeout, timeout, 10);
+	std::string strTimeout = timeout;
+	_recvMap[C2CLIENT_TransferTimeout]	=	timeout;
+
+	_recvMap[C2CLIENT_AvailableRange]	=	respData.availableRange;
+	_recvMap[C2CLIENT_OpenForWrite]		=	respData.openForWrite;
+
+	if (!respData.recording.empty())
+	{
+		_recvMap[C2CLIENT_Recording]		=	respData.recording;
+	}
+	
+	if (!respData.playTime.empty())
+	{
+		_recvMap[C2CLIENT_PlayTime]			=	respData.playTime;
+	}
+
+	if (!respData.muxBitrate.empty())
+	{
+		_recvMap[C2CLIENT_MuxBitrate]		=	respData.muxBitrate;
+	}
+
+	if (!respData.extName.empty())
+	{
+		_recvMap[C2CLIENT_ExtName]			=	respData.extName;
+	}
+
+	if (!respData.startOffset.empty())
+	{
+		_recvMap[C2CLIENT_StartOffset]		=	respData.startOffset;
+	}
+
+	if (!respData.endOffset.empty())
+	{
+		_recvMap[C2CLIENT_EndOffset]		=	respData.endOffset;
+	}
+
+	return true;
+}
+
+bool C2ClientSync::parseIndex(std::string contentName, const char* indexData, size_t dataSize, ZQ::IdxParser::IndexData& idxData)
+{
+	ZQ::IdxParser::IdxParserEnv			idxParserEnv;
+	idxParserEnv.AttchLogger(&_log);
+	ZQ::IdxParser::IndexFileParser		idxParser(idxParserEnv);
+
+	if(!idxParser.ParseIndexFromMemory( contentName, idxData, indexData, dataSize ) ) 
+	{
+		_log(ZQ::common::Log::L_ERROR,CLOGFMT(C2ClientSync,"parseIndex() failed to parse index data for[%s], data size[%u]"),
+			contentName.c_str(), (uint32)dataSize);
+		return false;
+	}
+	return true;
+}
+} // namespace StreamService
+} // namespace ZQ

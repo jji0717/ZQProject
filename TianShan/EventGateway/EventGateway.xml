@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TianShan>
+	<Definitions src="TianShanDef.xml">
+	</Definitions>
+	<default>	
+		<!-- The EventChannel service where the services of this TianShan deployment will deliver events to.
+		     attributes:
+		       endpoint - the ICE endpoint to the EventChannel service
+		-->
+		<EventChannel endpoint="${PrimeEventChannelEndpoint}" />
+		
+					
+		<!--CrashDump can help devoloper diagnose the program when it crashed
+			if you set enable to "1" you must make sure that the path is accessible
+			path   - crashdump path
+			enabled - 1 to enable crashDump
+		 -->
+		<CrashDump path="${TianShanCrashDumpDir}" enabled="1" fullMemoryDumpEnabled="1"/>
+
+		<!-- The Ice trace log setting for all the services of this TianShan deployment.
+		     attributes:
+		       enabled       - 1 if the Ice trace is enabled, default "0"
+		       logfileSuffix - a suffix of the log filename, i.e. the service Weiwoo's main log file will
+		                       be "Weiwoo.log". With a suffix "_ice.log", the ICE trace will be in a
+		                       separate logfile "Weiwoo_ice.log" in the same directory
+		       level         - the log level of the ice trace log
+		       size          - the size that this trace log must roll
+           count         - the log file count
+		-->
+		
+		<IceTrace enabled="1" level="${DefaultLogLevel}" size="10240000" count="5"/>
+
+		<!-- Additional Ice properties if there is any, <prop /> is its sub element
+		     attrib of <prop />:
+		        name         - the name of the Ice property
+		        value        - the value of the Ice property
+		-->
+		<IceProperties>
+			<!--  the following are performance tuning parameters, please don't modify if you are not an expert at them 
+			--> 
+			<prop name="Ice.Trace.Network"                    value="1" />
+			<prop name="Ice.Trace.Protocol"                   value="0" />
+			<prop name="Ice.Trace.Retry"                      value="1" />
+			<prop name="Ice.Warn.Connections"                 value="1" />
+			<prop name="Ice.Warn.Endpoints"                   value="1" />
+			<prop name="Ice.Logger.Timestamp"                 value="1" />
+			<prop name="Freeze.Warn.Deadlocks"                value="1" />
+			<prop name="Freeze.Trace.Map"                     value="0" />
+			<prop name="Freeze.Trace.DbEnv"                   value="2" />
+			<prop name="Freeze.Trace.Evictor"                 value="0" />
+			<prop name="Ice.Override.Timeout"                 value="15000"/>
+			<prop name="Ice.Override.ConnectTimeout"          value="2000"/>
+			<prop name="Ice.ThreadPool.Server.Size"           value="30"/>
+			<prop name="Ice.ThreadPool.Server.SizeMax"        value="60"/>
+			<prop name="Ice.ThreadPool.Client.Size"           value="10"/>
+			<prop name="Ice.ThreadPool.Client.SizeMax"        value="30"/>
+		</IceProperties>
+	</default>
+	<EventGateway>
+		<!-- properties for maintaining the connection with EventChannel
+			attributes:
+				checkIntevalMSec - the interval to check the connection in millisecond
+		-->
+		<ConnectionMaintenance checkIntervalMSec="1000"/>
+		
+		<!-- Plugins consume EventChannel event and send messages to other destination.
+			attributes:
+				populatePath	- The path of plug-in module with wildcard.
+				configDir		- The config file's directory path for plug-ins.
+				logDir			- The log file's directory path for plug-ins.
+		-->
+		<Plugins populatePath="${TianShanHomeDir}\modules\EGH_*.dll" configDir="${TianShanHomeDir}\etc" logDir="${TianShanLogDir}">
+		
+			<!-- Addition plug-ins
+				attribute:
+					image		- The full path of the plug-in module.
+			-->
+			<!-- <Module image="${TianShanHomeDir}\bin\EGH_Dummy.dll" /> -->
+		...
+		</Plugins>
+	</EventGateway>
+</TianShan>
+

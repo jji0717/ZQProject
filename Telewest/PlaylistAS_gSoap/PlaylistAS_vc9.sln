@@ -1,0 +1,27 @@
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PlaylistAS_vc9", "PlaylistAS_vc9.vcproj", "{D1D21F98-A9C3-49AB-9B71-46DEE60692B6}"
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 1
+		SccProjectUniqueName0 = PlaylistAS_vc9.vcproj
+		SccProjectName0 = \u0022$/ZQProjs/Telewest/PlaylistAS\u0022,\u0020QRFAAAAA
+		SccLocalPath0 = ..
+		SccProvider0 = MSSCCI:SourceOffSite
+		SccProjectFilePathRelativizedFromConnection0 = PlaylistAS_gSoap\\
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D1D21F98-A9C3-49AB-9B71-46DEE60692B6}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D1D21F98-A9C3-49AB-9B71-46DEE60692B6}.Debug|Win32.Build.0 = Debug|Win32
+		{D1D21F98-A9C3-49AB-9B71-46DEE60692B6}.Release|Win32.ActiveCfg = Release|Win32
+		{D1D21F98-A9C3-49AB-9B71-46DEE60692B6}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

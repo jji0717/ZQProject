@@ -1,0 +1,10 @@
+
+; SSM_Dummy.def : Declares the module parameters for the DLL.
+
+LIBRARY      "PHO_SeaChange"
+DESCRIPTION  'PHO_SeaChange TianShan PathHelper Object for SeaChange Topologic'
+
+EXPORTS
+    ; Explicit exports can go here
+InitPHO
+UninitPHO

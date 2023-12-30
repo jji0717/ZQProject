@@ -1,0 +1,10 @@
+
+; CPH_CopyDemo.def : Declares the module parameters for the DLL.
+
+LIBRARY      "CPH_CopyDemo"
+DESCRIPTION  'CPH_CopyDemo" TianShan Content Provision Helper Object - copying file demo'
+
+EXPORTS
+    ; Explicit exports can go here
+InitCPH
+UninitCPH

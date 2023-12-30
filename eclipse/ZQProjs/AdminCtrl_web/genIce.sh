@@ -1,0 +1,2 @@
+${SYS_INTERP} --library-path ${ICE_ROOT}/lib ${ICE_ROOT}/bin/slice2cpp  ${ZQProjsPath}/TianShan/SiteAdminSvc/SiteAdminSvc.ICE  -I .  -I ${ZQProjsPath}/TianShan/SiteAdminSvc  -I ${ZQProjsPath}/TianShan/Ice -I ${ICE_ROOT}/slice   --output-dir ${ZQProjsPath}/TianShan/Sentry/AdminCtrl_web
+${SYS_INTERP} --library-path ${ICE_ROOT}/lib ${ICE_ROOT}/bin/slice2cpp  ${ZQProjsPath}/TianShan/AccreditedPath/TsPathAdmin.ICE  -I .  -I ${ZQProjsPath}/TianShan/AccreditedPath  -I ${ZQProjsPath}/TianShan/Ice -I ${ICE_ROOT}/slice   --output-dir ${ZQProjsPath}/TianShan/Sentry/AdminCtrl_web

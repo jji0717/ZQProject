@@ -1,0 +1,10 @@
+#ifndef __VODSDKVERSION_H__
+#define __VODSDKVERSION_H__
+
+#define VOD_VERSION_MAJOR	3
+#define VOD_VERSION_MINOR	2
+#define VOD_VERSION_PATCH	0
+
+#define VOD_VERSION_DESC	"VOD 3.2.0"
+
+#endif  //__VODSDKVERSION_H__

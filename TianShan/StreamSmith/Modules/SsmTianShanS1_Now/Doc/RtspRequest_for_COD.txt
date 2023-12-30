@@ -1,0 +1,151 @@
+// ------------------------------------------------------------------------------
+// 下面是面向COD应用的rtsp请求
+// ------------------------------------------------------------------------------
+
+
+// ------------------------------------------------------------------------------
+// TianShan format
+// QAM mode
+// ------------------------------------------------------------------------------
+SETUP rtsp://CatvOfChangNing/60020001?channelId=cctv1 RTSP/1.0
+CSeq: 1
+Transport: MP2T/DVBC/QAM;unicast
+User-Agent: ITVLibrary 1.0; amino
+TianShan-Version: 1
+TianShan-ServiceGroup: 0
+TianShan-AppData: smartcard-id=0000000001;device-id=000000000000;home-id=1234567890
+
+
+// ------------------------------------------------------------------------------
+// TianShan format
+// IP mode
+// ------------------------------------------------------------------------------
+SETUP rtsp://CatvOfChangNing/60020001?channelId=cctv1 RTSP/1.0
+CSeq: 1
+Transport: MP2T/AVP/UDP;unicast;destination=127.0.0.1;client_port=1234
+User-Agent: ITVLibrary 1.0; amino
+TianShan-Version: 1
+TianShan-ServiceGroup: 1
+TianShan-AppData: smartcard-id=0000000001;device-id=000000000000;home-id=1234567890
+
+
+// ------------------------------------------------------------------------------
+// SeaChange format
+// DVBC mode
+// ------------------------------------------------------------------------------
+SETUP rtsp://CatvOfChangNing/60020001?channelId=cctv1 RTSP/1.0
+CSeq: 1
+Transport: MP2T/DVBC/QAM;unicast
+User-Agent: ITVLibrary 1.0; amino
+SeaChange-Version: 1
+SeaChange-MayNotify: 
+SeaChange-Server-Data: node-group-id=0;smartcard-id=0000000001;device-id=000000000000;home-id=1234567890
+
+
+// ------------------------------------------------------------------------------
+// SeaChange format
+// IP mode
+// ------------------------------------------------------------------------------
+SETUP rtsp://CatvOfChangNing/60020001?channelId=cctv1 RTSP/1.0
+CSeq: 1
+Transport: MP2T/AVP/UDP;unicast;destination=127.0.0.1;client_port=1234
+User-Agent: ITVLibrary 1.0; amino
+SeaChange-Version: 1
+SeaChange-MayNotify: 
+SeaChange-Server-Data: node-group-id=1;smartcard-id=0000000001;device-id=000000000000;home-id=1234567890
+
+
+// ------------------------------------------------------------------------------
+// play seek with now
+// ------------------------------------------------------------------------------
+PLAY * RTSP/1.0
+CSeq: 2
+Session: 002618802176
+User-Agent: ITVLibrary 1.0; amino
+Range: now
+Scale: 1.000000
+
+
+// ------------------------------------------------------------------------------
+// play seek with <utc-time>
+// ------------------------------------------------------------------------------
+PLAY * RTSP/1.0
+CSeq: 2
+Session: 002618802176
+User-Agent: ITVLibrary 1.0; amino
+Range: clock=20080101T120000Z-
+Scale: 1.000000
+
+
+// ------------------------------------------------------------------------------
+// normal play
+// ------------------------------------------------------------------------------
+PLAY * RTSP/1.0
+CSeq: 2
+Session: 002618802176
+User-Agent: ITVLibrary 1.0; amino
+Scale: 1.000000
+
+
+// ------------------------------------------------------------------------------
+// fast forward
+// ------------------------------------------------------------------------------
+PLAY * RTSP/1.0
+CSeq: 2
+Session: 002618802176
+User-Agent: ITVLibrary 1.0; amino
+Scale: 6.000000
+
+
+// ------------------------------------------------------------------------------
+// fast rewind
+// ------------------------------------------------------------------------------
+PLAY * RTSP/1.0
+CSeq: 2
+Session: 002618802176
+User-Agent: ITVLibrary 1.0; amino
+Scale: -6.000000
+
+
+// ------------------------------------------------------------------------------
+// pause
+// ------------------------------------------------------------------------------
+PAUSE * RTSP/1.0
+CSeq: 14
+User-Agent: ITVLibrary 1.0; amino
+Session: 002618802176
+x-reason: User Requested Pause
+
+
+// ------------------------------------------------------------------------------
+// heartbeat
+// ------------------------------------------------------------------------------
+GET_PARAMETER * RTSP/1.0
+CSeq: 2
+Session: 002618802176
+User-Agent: ITVLibrary 1.0; amino
+Content-Type: text/parameter 
+Content-Length: 0
+
+
+// ------------------------------------------------------------------------------
+// get broadcast time and speed
+// ------------------------------------------------------------------------------
+GET_PARAMETER * RTSP/1.0
+CSeq: 2
+Session: 002618802176
+User-Agent: ITVLibrary 1.0; amino
+Content-Type: text/parameter 
+Content-Length: 16
+
+BcastPos Scale
+
+// ------------------------------------------------------------------------------
+// teardown
+// ------------------------------------------------------------------------------
+TEARDOWN * RTSP/1.0
+CSeq: 16
+User-Agent: ITVLibrary 1.0; amino
+Session: 002618802176
+x-reason: User Requested Teardown
+

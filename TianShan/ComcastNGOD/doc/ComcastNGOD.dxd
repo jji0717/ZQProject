@@ -1,0 +1,622 @@
+// ===========================================================================
+// Copyright (c) 2006 by
+// ZQ Interactive, Inc., Shanghai, PRC.,
+// All Rights Reserved.  Unpublished rights reserved under the copyright
+// laws of the United States.
+// 
+// The software contained  on  this media is proprietary to and embodies the
+// confidential technology of ZQ Interactive, Inc. Possession, use,
+// duplication or dissemination of the software and media is authorized only
+// pursuant to a valid written license from ZQ Interactive, Inc.
+// 
+// This software is furnished under a  license  and  may  be used and copied
+// only in accordance with the terms of  such license and with the inclusion
+// of the above copyright notice.  This software or any other copies thereof
+// may not be provided or otherwise made available to  any other person.  No
+// title to and ownership of the software is hereby transferred.
+//
+// The information in this software is subject to change without notice and
+// should not be construed as a commitment by ZQ Interactive, Inc.
+//
+// Ident : $Id: ChannelOnDemand.dxd $
+// Branch: $Name:  $
+// Author: Hui Shao
+// Desc  : 
+//
+// Revision History: 
+// ---------------------------------------------------------------------------
+// see section of "Revision History" in manpage
+// ===========================================================================
+/*!
+
+@mainpage Channel-On-Demand Application Service
+@author  Hui Shao
+@date    2006-8-30
+@version 0.1
+@section sec_cont Contents
+@li @ref page_chodoverview "Channel-On-Demand Overview"
+- @ref sec_intro "Introduction"
+- @ref sec_arch "Architectual Overview"
+- @ref sec_bizapp "Business Application" \n
+@li @ref page_pausetv "Channel-On-Demand for PauseTV"
+- @ref spage_ptv_sn "Single MeidaCluster Node Deployment"
+- @ref spage_ptv_mn "MeidaCluster and Multi-Cluster Deployment"
+- @ref spage_ptv_events "Runtime Events and Notifications"
+- @ref spage_ptv_rtsp "RTSP Specifications for PauseTV"
+
+@section sec_revision Revision History
+$Log: /ZQProjs/TianShan/ComcastNGOD/doc/ComcastNGOD.dxd $
+  
+  1     10-11-12 16:03 Admin
+  Created.
+  
+  1     10-11-12 15:36 Admin
+  Created.
+  
+  1     07-04-06 15:09 Hui.shao
+  
+  7     06-12-27 12:34 Hui.shao
+  added channelondemand events to jms
+  
+  6     11/22/06 11:31a Hui.shao
+  2     06-09-14 12:16 Hui.shao
+  enabled revision history automation; added RTSP 404, home-id
+  
+  0.1 / 2006-8-20 / Hui Shao / Initial draft
+
+@page page_chodoverview Channel-On-Demand Overview
+@section sec_intro Introduction
+
+ChannelOnDemand implements an application under the TianShan architecture.
+
+The application is designed to allow people publish a channel avaible for on-demand ordering, and can accept
+real-time channel control operation.
+
+@section sec_arch Architectual Overview
+
+The ChannelOnDemand application service includes two major interfaces:
+@li ChannelOnDemand::ChannelPublisher is the front-end to external integration components or management user interface.
+@li ChannelOnDemand::ChannelOnDemandApp is the back-end interface, which implements TianShan application service to interact with other components in the TianShan architecture
+
+@subsection ssec_ChannelPublisher Channel Publishing and Control
+
+The interface ChannelOnDemand::ChannelPublisher allows people to publish a new channel available for on-demand
+ordering.
+
+When a channel has been successfully published, a instance of ChannelOnDemand::ChannelPublishPoint will be
+created. With the access to the ChannelOnDemand::ChannelPublishPoint instance, people will be able to control
+the channel contents by
+@li appending a new content at the end of the channel;
+@li replacing an existing content in the channel;
+@li expiring an content and its foregoing items in the channel
+
+The Channel-On-Demand service maintains the channels and their items information in its local database. The
+database is also used as a safe-store. In other words, after a service restart, the pre-published channels
+can be immediately be used for new On-Demand ordering.
+
+@subsection ssec_ChannelOnDemandApp Application Service under TianShan Architecture
+
+When an On-Demand order is received to playback such a published channel, the invocation of
+TianShanIce::Application::AppService::createPurchase() will be passed by some other components in the TianShan
+architecture, which could normally be the TianShan session manager or a client edget directly.
+
+Once the Channel-On-Demand service receive such an invocation, a purchase instance will be created. The
+Channel-On-Demand application service keeps every on-demand order as a purchase. A per-order server-side
+playlist should be built on the stream service based on this channel publish point, all the items of the
+channel in the certain order. The Channel-On-Demand application service perform this procedure when a purchase
+is asked to be rendered onto a stream instance.
+
+Once the server-side playlist has been created on the stream service, the on-demand client will be able to
+control it for playing, fastforwarding, rewinding and so on. \n
+
+As metioned above, a published channel can also be adjusted. Once this happens, those on-demand purchase will
+be marked as "dirty". Once the needed synchronization between the channel publish point and the on-demand
+server-side playlist instance does't damage the current playing item. A synchronization procedure will be
+performed. This avoid the end-user to see the interruption on the screen.
+
+@section sec_bizapp Business Application
+
+The features offered by Channel-On-Demand can be used in various on-demand stream business services. This
+document also provide a solution on how to use the Channel-On-Demand application service to provide a PauseTV
+service, please refer to @ref page_pausetv "Channel-On-Demand for PauseTV" for more details
+
+
+*/
+
+////////////////////////////////////////////////////////////////////////////////////////////
+/*!
+
+@page page_pausetv Channel-On-Demand for PauseTV
+
+@section sec_intro_ptv Introduction
+
+The PauseTV service allows the end user to be able to pause a live broadcast channel at anytime. The backgroud
+system immediately tune his/her view to an on-demand streaming of the same channel. Once the end user is watching
+an on-demand streaming session, he/she will be able to make any stream control operations such as pause, fastforward
+rewind and so on.
+
+At the other hand, a real-time ingestion from live broast channel is perfromed by the system for every
+PauseTV-availabe channel.
+
+This chapter shows how to use Channel-On-Demand application service to provide the PauseTV service.
+Minimally, the PauseTV service can be provided with a single node SeaChange MediaCluster node. Such a deployment
+reduces system complexity a lot for small cap application. For those systems that requires high concurrent
+streaming capability or high reliablity streaming, Clustered or multi-cluster-ed deployments are necessary.
+
+This chapter covers the following topics:
+- @subpage spage_ptv_sn "Single MeidaCluster Node Deployment"
+- @subpage spage_ptv_mn "MeidaCluster and Multi-Cluster Deployment"
+- @subpage spage_ptv_events "Runtime Events and Notifications"
+- @subpage spage_ptv_rtsp "RTSP Specifications for PauseTV"
+
+*/
+
+////////////////////////////////////////////////////////////////////////////////////////////
+/*!
+
+@page spage_ptv_sn Single MeidaCluster Node Deployment
+@image html pauseTV-s1.GIF
+
+@section sec_ptv_sn_comp Components
+
+The single MediaCluster node deployment skips TianShan session and resource management to reduce system
+complexity. In such a reduced deployment, the RTSP server plugin @ref sec_ptv_sn_comp_ssm "ssm_PauseTV_s1"
+drives the initial workflow, which should be performed by session manager in a full TianShan deployment.
+Some other components may also be introduced:
+
+@subsection ssec_ptv_sn_comp_chod Channel-On-Demand Application Service
+The Channel-On-Demand application service provides a channel publisher interface as its front-end and a TianShan
+application service interface as it backend. It is designed to work alone, or in an intergration evironment to
+provide business application such as PauseTV, see @ref page page_chodoverview "Channel-On-Demand Overview" for more
+details about this application service
+
+@subsection ssec_ptv_sn_comp_rtsp RTSP Server (or StreamSmith itself)
+RTSP server processes client request, it provides a plugin framework for various usages
+
+@subsection ssec_ptv_sn_comp_ssm RTSP plugin ssm_PauseTV_s1
+In this single node deployment, ssm_PauseTV_s1, as a plugin of RTSP server, provides a shortcut to config-ed
+application service (the Channel-On-Demand AS) and the single stream service (StreamSmith). It partially takes
+some job of session manager to lead the procedures
+
+@subsection ssec_ptv_sn_comp_ssmts StreamSmith Module ssm_TianShan
+StreamSmith exports TianShan API support thru this standard module
+
+@subsection ssec_ptv_sn_comp_sncs Single Node ContentStore
+The Single Node ContentStore implementation in TianShan provides a unified content storage access, which allows
+filesystem-like content access. The ContentStore itself is a central management of various content provision
+processes and content distribution including real-time distribution systems.
+
+@subsection ssec_ptv_sn_comp_snrds RDS for Single Node ContentStore
+The new RDS server stripped its ISA-oriented features, instead, now it will become a new implementation for
+TianShan ContentStores.
+
+@subsection ssec_ptv_sn_comp_snec EventChannel
+In the TianShan architecture, there is an EventChannel which collects all the notifications and events from
+various TianShan components. For this PauseTV integration, an additional component is designed to forward
+TianShan events and notification to the JBOSS server of the integration environment
+
+@section sec_ptv_sn_chmgm Channel Management
+
+@subsection ssec_ptv_sn_chmgm_new New Channel Available in PauseTV
+
+@li Based on the inputed EPG, the IA component determine to publish a channel to be available in the PauseTV service, it
+@li calls ChannelOnDemand::ChannelPublisher::publish() to publish a new channel with given channel id, then
+@li fill-in the items by calling ChannelOnDemand::ChannelPublishPoint::appendItem().
+@li The Channel information and content sequence will be cached in the Channel-On-Demand application service's database,
+    and those channels becomes available to on-demand ordering
+
+@subsection ssec_ptv_sn_chmgm_modify Modify Existing Channel
+
+@li The IA component open the access to the ChannelPublishPoint instance by invoking ChannelOnDemand::ChannelPublisher::open()
+    by channel id. It 
+@li calls ChannelOnDemand::ChannelPublishPoint::appendItem() if a new content needs to be appended, or
+@li calls ChannelOnDemand::ChannelPublishPoint::replaceItem() if a content was retryed to ingest, or
+@li calls ChannelOnDemand::ChannelPublishPoint::expireItem() if a should be flush out from the channel since it is too old.
+@li Also, a channel can be completely destroyed by calling ChannelOnDemand::ChannelPublishPoint::destroy()
+
+@subsection ssec_ptv_sn_chmgm_ingest Real-time Content Ingestion
+
+@li Based on the EPG, IA component(s) create a new asset in LAM, and ask the single-node ContentStore to create a new content
+    by calling TianShanIce::Storage::ContentStore::openContent(createIfNotExist=true)
+@li The newly created content is asked to be provisioned at passive mode: TianShanIce::Storage::Content::provisionPassive()
+	ContentStore prepares a ingestion ticket for this
+@li Once the ingestion schedule is met, IPSC start pushing content onto the RDS box. RDS prepares the trick mode files and
+    MCP publish them onto the MediaCluster node
+@li When the node ContentStore detects that the available content playtime exceeds a configurable threshold, ContentStore fires
+    an notification to the event channel.
+@li As a subscriber of the notification, once such a notification is received, one IA component ask to append the new content
+    into the channel publish point by calling ChannelOnDemand::ChannelPublishPoint::appendItem(),
+	see section @ref ssec_ptv_sn_chmgm_modify "Modify Existing Channel"
+
+@section sec_ptv_sn_strmorder On-Demand Stream Ordering
+
+@subsection ssec_ptv_sn_strmorder Tuned from Live Channel
+
+@li Once the end-user hit the button to enter the PauseTV mode, the STB should send RTSP request to the server,
+    see @ref sec_ptv_rtsp_setup "RTSP SETUP" for more details
+@li The @ref ssec_ptv_sn_comp_ssm "RTSP plugin ssm_PauseTV_s1" hooks the RTSP processing and handles the request.
+@li After verify the request parameters, it calls ChannelOnDemand::ChannelOnDemandApp::createPurchaseByCR() to
+    create a purchase on the Channel-On-Demand application service, then
+@li creates a stream instance by calling TianShanIce::Streamer::StreamService::createStream()
+@li ssm_PauseTV_s1 asks Channel-On-Demand application service to render the purchase onto the stream instance by calling
+    ChannelOnDemand::Purchase::render()
+@li The Channel-On-Demand application service refers to its cached channel information and lines up a content
+	sequence onto the StreamService server-side playlist instance
+@li ssm_PauseTV_s1 confirms the STB with RTSP response thru its uplayer RTSP server, see @ref sec_ptv_rtsp_setup "RTSP SETUP"
+@li STB now start stream control
+
+@subsection ssec_ptv_sn_strmctrl Stream Control
+
+@li STB send a @ref sec_ptv_rtsp_play "PLAY", @ref sec_ptv_rtsp_teardown "TEARDOWN" request to the RTSP server.
+    see @ref spage_ptv_rtsp "RTSP Specifications for PauseTV" for more details
+@li ssm_PauseTV_s1 hooks the processing and handle the request, firstly it picks up the Stream instance proxy string
+    from its RTSP session context
+@li open the access to the stream instance then apply the operation, then
+@li confirm the STB with RTSP response messages
+
+@subsection ssec_ptv_sn_sanno Announcements on Streaming
+
+@li When a "end-of-stream", "end-of-item", "beginning-of-item" occurs on the stream instance, the ssm_PauseTV_s1
+    subscribes the events then
+@li index to the RTSP session, it fire a RTSP announcement thru the same TCP connection
+
+@subsection ssec_ptv_sn_canno Announcements on Channel Modification
+
+@li When some item has been changed on the Channel, the purchase of Channel-On-Demand application service will be
+marked as "dirty"
+@li If the current playing item is an item needs to be expired, callback of "ExpireItem" will be made to ssm_PauseTV_s1,
+  ssm_PauseTV_s1 is supposed to fire a RTSP announcement thru the same TCP connection,
+  see @ref ssec_ptv_rtsp_announce_roi "current-item-removed", then continue to play the first valid item in the same playlist.
+  Otherwise,
+@li Once the current playing item is not critical for a synchronization, the on-fly server-side playlist in StreamSmith
+ will be adjusted by Channel-On-Demand application service.
+
+*/
+
+////////////////////////////////////////////////////////////////////////////////////////////
+/*!
+
+@page spage_ptv_mn MeidaCluster and Multi-Cluster Deployment
+
+@image html pauseTV-f1.GIF
+
+@section sec_ptv_sn_comp Components
+
+@section sec_ptv_sn_chmgm Channel Management
+
+@section sec_ptv_sn_strmorder On-Demand Stream Ordering
+*/
+////////////////////////////////////////////////////////////////////////////////////////////
+/*!
+
+@page spage_ptv_rtsp RTSP Specifications for PauseTV
+
+@section sec_ptv_rtsp_hl  RTSP Specification Highlight
+
+@li Every request from the RTSP client will include the header field "User-Agent"
+@li Every request or response sent from the RTSP server will include the header field "Server: StreamSmith x.x"
+@li The URI is in the format of "rtsp://" <site> "/" <apppath> "?channelId=" <channelId>
+
+@section sec_ptv_rtsp_ext Extensions for PauseTV
+
+@li "SeaChange-Version"
+@li "SeaChange-MayNotify"
+@li "SeaChange-Server-Data"
+@li "SeaChange-Transport"
+@li "SeaChange-Notice"
+
+@section sec_ptv_rtsp_sc Status Codes
+
+@subsection ssec_ptv_rtsp_sc_200 200 OK
+Success
+@subsection ssec_ptv_rtsp_sc_404 404 Not Found
+The request channel hasn't been published
+
+@subsection ssec_ptv_rtsp_sc_454 454 Session Not Found
+The RTSP session identifier in the Session header is missing, invalid, or has timed out.
+@subsection ssec_ptv_rtsp_sc_457 457 Invalid Range
+The Range value given is out of bounds
+@subsection ssec_ptv_rtsp_sc_500 500 Internal Server Error
+The server encountered an unexpected condition which prevented it from fulfilling the request, the
+error message will be in the field "SeaChange-Notice"
+
+@section sec_ptv_rtsp_setup SETUP
+<i>ommitted</i>
+
+@subsection ssec_ptv_rtsp_setup_ip IP transport
+
+@subsection ssec_ptv_rtsp_setup_dvbc DVBC transport
+
+The following is a request example:
+@code
+SETUP rtsp://CatvOfChangNing/PauseTV?channelId=1 RTSP/1.0
+CSeq: 1
+Transport: MP2T/DVBC/QAM;unicast
+User-Agent: ITVLibrary 1.0; amino
+SeaChange-Version: 1
+SeaChange-MayNotify:
+SeaChange-Server-Data: node-group-id=2;smartcard-id=0000000001;device-id=000000000000;home-id=1234567890
+@endcode
+
+A response message may be sent by the RTSP server as below:
+@code
+RTSP/1.0 200 OK
+CSeq: 1
+Session: 0000000000021A5;timeout=600000
+Server: StreamSmith 1.0; ssm_tianshan_s1 1.0
+Transport: MP2T/DVBC/QAM;unicast
+SeaChange-Transport: program-number=3;frequency=573;qam-mode=64
+@endcode
+
+@section sec_ptv_rtsp_play PLAY
+
+The PLAY request is also used to change speed and seek content location in RTSP.
+
+@subsection ssec_ptv_rtsp_play_loc Positioning
+
+As the playback stream refers to a live channel, in the PauseTV solution, the on-demand stream is relocated by
+the absolute time on the source live channel:
+@li Play start at a given position
+@code
+Range: clock=20060801T123000Z-
+@endcode
+@li Play start from the current position of the stream
+@code
+Range: clock=
+@endcode
+@li Play start at last position of the ingestion
+@code
+Range: now
+@endcode
+
+Especially, when an end user first tune his viewable stream from a live channel to an on-demand stream, the
+content of the absolute time he/she specified maybe not available due to the ingestion latency. If the deference
+can be in a configurable window, then the on-demand stream will be seeked to the nearest location, otherwise,
+a @ref ssec_ptv_rtsp_sc_457 "457 Invalid Range" message will be responded.
+
+For those requests that do not specify the "Range", the system will automatically lead the the stream to the last
+frame that available to play.
+\nThe following is a request sample:
+@code
+PLAY * RTSP/1.0
+CSeq: 2
+Session: 0000000000021A5
+User-Agent: ITVLibrary 1.0; amino
+Range: clock=20060801T123411Z-
+Scale: 1.000000
+@endcode
+
+A response message may be sent by the RTSP server as below:
+@code
+RTSP/1.0 200 OK
+CSeq: 2
+Session: 0000000000021A5
+Server: StreamSmith 1.0; ssm_tianshan_s1 1.0
+Scale: 1.0
+Range: clock=20060801T123407Z-
+@endcode
+
+@subsection ssec_ptv_rtsp_play_speed Speed Change
+
+The speed change is also thru this PLAY request by specify header "Scale":
+@code
+Scale: 5.0
+@endcode
+@note If the specified trick speed is not available on the stream service, it will use the first speed that greater
+than the specified one at the same direction.
+@note If the specified speed is greater than the availabe maximal speed, the stream will always take the maximal speed at the same direction.
+@note If a speed change request is made when the stream is in the protection edge of switching items, the speed change
+will be denied. The RTSP client should always verify the "Scale" value of the response message to confirm the
+operation.
+
+@section sec_ptv_rtsp_teardown TEARDOWN
+@code
+TEARDOWN * RTSP/1.0
+CSeq: 16
+User-Agent: ITVLibrary 1.0; amino
+Session: 0000000000021A5
+x-reason: User Requested Teardown
+@endcode
+
+@section sec_ptv_rtsp_gp GET_PARAMETER
+Value of <i>Scale</i> and <i>Range</i> will be returned when a GET_PARAMETER request is received
+@code
+GET_PARAMETER * RTSP/1.0
+CSeq: 2
+Session: 0000000000021A5 
+User-Agent: ITVLibrary 1.0; amino
+Content-Type: text/parameter 
+Content-Length: 17
+
+BcastPos Scale
+@endcode
+The field <i>BcasePos</i> is a user defined one that keep the position value in abstract broadcast time.
+A response message may be sent by the RTSP server as below:
+@code
+RTSP/1.0 200 OK
+CSeq: 2 
+Session: 0000000000021A5
+Server: StreamSmith 1.0; ssm_tianshan_s1 1.0
+Content-Length: 43
+
+Scale: 1.0
+BcastPos: 20060801T123407Z
+@endcode
+
+@section sec_ptv_rtsp_announce ANNOUNCE
+@subsection ssec_ptv_rtsp_announce_eos end-of-stream
+When a stream reaches the end of last item, session will immediately destroyed by server
+@code
+ANNOUNCE rtsp://CatvOfChangNing/PauseTV?channelId=1 RTSP/1.0
+CSeq: 4
+Session: 0000000000021A5
+Server: StreamSmith 1.0; ssm_tianshan_s1 1.0
+SeaChange-Notice: 2101 "End-of-Stream Reached" 20060801T150707Z
+@endcode
+
+@subsection ssec_ptv_rtsp_announce_bos beginning-of-stream
+When a rewind reaches the beginning of the stream, stream will be held until timeout or a further PLAY request 
+@code
+ANNOUNCE rtsp://CatvOfChangNing/PauseTV?channelId=1 RTSP/1.0
+CSeq: 6
+Session: 0000000000021A5
+Server: StreamSmith 1.0; ssm_tianshan_s1 1.0
+SeaChange-Notice: 2102 "Beginning-of-Stream Reached" 20060801T090000Z
+@endcode
+
+@subsection ssec_ptv_rtsp_announce_boi end-of-item
+When a streaming reaches the end of an item in the channel, session will switch to next item in the list automatically
+@code
+ANNOUNCE rtsp://CatvOfChangNing/PauseTV?channelId=1 RTSP/1.0
+CSeq: 5
+Session: 0000000000021A5
+Server: StreamSmith 1.0; ssm_tianshan_s1 1.0
+SeaChange-Notice: 2103 "End-of-Item Reached" 20060801T090000Z
+@endcode
+
+@subsection ssec_ptv_rtsp_announce_scale scale-changed
+when the speed is changed by client's request, or by server automatically (i.e. FF meet the last frame, then turn to normal speed)
+@code
+ANNOUNCE rtsp://CatvOfChangNing/PauseTV?channelId=1 RTSP/1.0
+CSeq: 7
+Session:0000000000021A5
+Server: StreamSmith 1.0; ssm_tianshan_s1 1.0
+SeaChange-Notice:2104 "Scale Changed" 20060801T090000Z
+Scale: 1.0
+@endcode
+
+@subsection ssec_ptv_rtsp_announce_roi current-item-removed
+when the current playing item is removed by channel management
+@code
+ANNOUNCE rtsp://CatvOfChangNing/PauseTV?channelId=1 RTSP/1.0
+CSeq: 7
+Session:0000000000021A5
+Server: StreamSmith 1.0; ssm_tianshan_s1 1.0
+SeaChange-Notice:2105 "Current Item Removed" 20060801T090000Z
+@endcode
+
+*/
+
+////////////////////////////////////////////////////////////////////////////////////////////
+/*!
+
+@page spage_ptv_events Runtime Events and Notifications
+
+@section sec_ptv_event_client Client Notification
+In this stage of PauseTV solution, only RTSP is support. Please refer to @ref sec_ptv_rtsp_announce "ANNOUNCE" of 
+@ref spage_ptv_rtsp "RTSP Specifications for PauseTV" for more details
+
+@section sec_ptv_event_service Service
+@section sec_ptv_event_stream Stream
+
+@section sec_ptv_event_channel Channel Operations
+This category of events are collected from ChannelOnDemand service log by the service EventCollector. The event will be delivered as JMS messages with topic <b><i>ChannelOnDemand/Channel</i></b>.
+The events covered in this category includes the channel lifecycle operation and the changes made on channels
+
+@subsection ssec_ptv_event_channel_create Create a new Channel
+JMS message text:
+@code
+stamp=12/19 16:18:18:660;action=CreateChannel;channelName=0271812;maxBitrate=5000000
+@endcode
+log template:
+@code
+12/19 16:18:18:660 CHODSVC              0 [ChPublisher/315     | 000017B4]  Create new channel [0271812]; max bitrate 5000000; Channel0271812
+@endcode
+
+@subsection ssec_ptv_event_channel_destroy Destroy a channel
+JMS message text:
+@code
+stamp=12/19 16:18:18:660;action=DestroyChannel;channelName=0241810
+@endcode
+log template:
+@code
+12/19 16:19:42:754 CHODSVC              0 [ChPubPoint/640     | 000017B4]  destroy channel 0241810
+@endcode
+
+@subsection ssec_ptv_event_channel_rmitem Remove an item
+JMS message text:
+@code
+stamp=12/19 16:18:18:660;action=RemoveChannelItem;channelName=0271812;item=03018101
+@endcode
+log template:
+@code
+12/19 16:18:13:082 CHODSVC           1000 [ChODSvcEnv/515     | 000017B4]  Remove playlist item [0241811#02418100] from all purchases of channel [0241811]
+@endcode
+
+@subsection ssec_ptv_event_channel_repitem Replace an item
+JMS message text:
+@code
+stamp=12/19 16:18:18:660;action=ReplaceChannelItem;channelName=0241811;newItem=03018101;oldItem=03018100
+@endcode
+log template:
+@code
+12/26 12:56:15:526 CHODSVC              0 [ChPubPoint/419     | 00001348]  replace item [26592] with [26592] on channel [0241811]
+@endcode
+
+@subsection ssec_ptv_event_channel_apditem Append an item
+JMS message text:
+@code
+stamp=12/19 16:18:18:660;action=AppendChannelItem;channelName=0271812;item=26732;StartTime=2006-12-26T11:55:00;expiration=
+@endcode
+log template:
+@code
+12/26 12:56:15:730 CHODSVC              0 [ChPubPoint/249     | 00001348]  append item [12#26754] on channel [0241812], start time = 2006-12-26T12:15:00, expiration =
+@endcode
+
+@section sec_ptv_event_purchase Purchase Operations
+This category of events are collected from ChannelOnDemand service log by the service EventCollector. The event will be delivered as JMS messages with topic <b><i>ChannelOnDemand/Purchase</i></b>.
+The events covered in this category includes the purchase lifecycle operation and the client stream control requests
+
+@subsection ssec_ptv_event_purchase_create Create a purchase
+JMS message text:
+@code
+stamp=12/19 16:18:18:660;action=CreatePurchase;purchaseId=78811f12-e42e-4617-bd28-03a859fe5652;playlistId=e87a006e-65b1-43d5-a306-e2cbeabf879a;channelName=0271812;node_group_id=1;client_session_id=7d60c1400000000;home_id=0000003;smartcard_id=0000005000;mac_address=01005E010205;provider_id=;provider_asset_id=;broadcast_time=20061220T151259
+@endcode
+log template:
+@code
+12/26 12:56:14:448 CHODSVC              0 [Purchase/182     | 00001348]  Purchase: 6de0ebac-2012-4c15-a267-abb1f17f8bc9, playlistid: 032e3afe-c4d7-4c92-9125-fb4222046daf, session: 7d60c1a00000000, node_group_id: 3, channelid: 0271812, homeid: 0000003, smartcardid: 0000005000, mac_address:01005E010205, provider_id:, provider_asset_id:, broadcast_time:20061220T151259 
+@endcode
+
+@subsection ssec_ptv_event_purchase_ends Purchase ends
+JMS message text:
+@code
+stamp=12/19 16:18:18:660;action=PurchaseEnds;purchaseId=78811f12-e42e-4617-bd28-03a859fe5652
+@endcode
+log template:
+@code
+12/21 10:57:45:171 CHODSVC              0 [Purchase/562     | 000017B4]  Purchase item 08fe567a-3bbd-4ff7-a363-3dc82b9f2b60 destroyed
+@endcode
+
+@subsection ssec_ptv_event_purchase_setup Playlist Setup
+information in this event should also be covered in event @ref ssec_ptv_event_purchase_create "Create a purchase"
+JMS message text:
+@code
+stamp=12/19 16:18:18:660;action=PlaylistSetup;SessionId=7d60c1a00000002;playlistId=032e3afe-c4d7-4c92-9125-fb4222046daf;elementid=00006897;NPT=134.000000
+@endcode
+log template:
+@code
+12/26 13:11:00:792 CHODSVC           1000 [ChODApp/196     | 00001348]  Session 7d60c1a00000002 todas sessionSetup ok, playlistid 032e3afe-c4d7-4c92-9125-fb4222046daf, elementid 00006892, NPT 1560.000000
+@endcode
+
+@subsection ssec_ptv_event_purchase_seeknow Playlist seek
+JMS message text:
+@code
+stamp=12/19 16:18:18:660;action=PlaylistSeek;error=0;playlistId=e87a006e-65b1-43d5-a306-e2cbeabf879a;posResult=20061226T130837Z;posRequested=now;requestReceived=20061211T161818.660
+@endcode
+log template:
+@code
+12/26 13:08:49:558 CHODSVC              0 [Purchase/915     | 00001348]  Playlist 00e1e78f-2ab8-4b32-99c5-5ff6cc0a002c seek returned time 20061226T130837Z
+@endcode
+
+@subsection ssec_ptv_event_purchase_teardown Playlist teardown
+JMS message text:
+@code
+stamp=12/19 16:18:18:660;action=PlaylistTeardown;SessionId=7d60c1a00000001;playlistId=032e3afe-c4d7-4c92-9125-fb4222046daf;elementId=00000000;NPT=0.000000;timeStamp=20061211T161810;reason=server-side-timeout;reasonCode=0;
+@endcode
+log template:
+@code
+12/26 13:09:29:964 CHODSVC           1000 [Purchase/511     | 00001348]  Session 7d60c1a00000001 sessionTeardown ok, playlistid 032e3afe-c4d7-4c92-9125-fb4222046daf,  elementid 00000000, NPT 0.000000
+@endcode
+
+
+*/

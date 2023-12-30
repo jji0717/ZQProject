@@ -1,0 +1,2215 @@
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.1.58
+	RELEASE DATE:	 2007-10-16
+	RELEASER:        Hongquan Zhang
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+          If The version is under 1.5.0.1,remove all TianShan components and reinstall it
+            Remove service:
+                   instserv <servicename> remove
+          
+          1 For new Installation
+
+		a. Running TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in slave server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+          2 For upgrade from 1.5
+
+                a. Manually record down the site/app/mount settings. (Auto DB upgrade is not avalaible at this build)
+                
+                b. shut down all the TianShan service on the same machine.
+  
+                c. backup the existing databases. (default under c:\TianShan\data)
+                
+		d. Run TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --upgrade  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in salve server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                e. Follow the iteractive command to complete the installation.
+
+                f. copy the backup database expect "Sites" to the new installation location
+                
+                g. restart the services.
+                
+         - NEW FEATURE LIST
+                None
+         - Fix Bug
+                BugID 6003
+         - Remarks
+                1 StreamSmith 添加配置项
+                	StreamSmithServices.xml
+			<StreamSmith>
+				<Service>
+        			<StreamSmithService adapterThreadPool=""/>
+        
+       			 	maxWaitTimeToStartFirstItem:This configuration is only used when the first item has a critical start time,
+				    When play command comes,streamsmith will pause a while to meet the critical start time
+				    but if the difference between current time and critical start time is bigger than the config,
+				    play commands will be rejected					
+				<maxWaitTimeToStartFirstItem interval="3000"/>
+				</Service>
+				<Streamer>
+				<!--
+					partialSelect is not a official configuration,you should set enable to 0 at normal time
+					if you set it to 1 ,streamsmith select vstrm port through the configuration low and high.
+					the selection result will be [low,high)
+				-->
+				<partialSelect enable="0" low="" high=""/>
+				</Streamer>
+				<ServiceFrame>
+				<!--
+					maxLen:max message size in byte,if message size exceed this value,it failed to process the request
+				-->
+				<Request  maxLen="8192"/>
+				</ServiceFrame>
+			</StreamSmith>	
+
+		2. RtspProxy 添加配置项
+			RtspProxyServices.xml
+			<RtspProxy>
+				<ServiceFrame>
+					<!--
+						maxLen:max message size in byte,if message size exceed this value,it failed to process the request
+					-->
+					<Request  maxLen="81920"/>
+				</ServiceFrame>
+			</RtspProxy>	
+
+		3 ssm_NGOD_r2c1 添加配置项
+			ssm_NGOD_r2c1.xml
+			<ssm_NGOD_r2c1>		
+				<!-- params: only on param is configurable now.	
+				enableHeartBeat: 0 or 1. default value is 0.		
+				-->		
+				<SetParameter enableHeartBeat="0"/>
+			</ssm_NGOD_r2c1>
+
+		4 RTFCPNode
+			ZQRTFLib 1.6 replace RTFLib 1.1 to generate trick files
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.1.49
+	RELEASE DATE:	 2007-09-27
+	RELEASER:        Ken Qian
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+          If The version is under 1.5.0.1,remove all TianShan components and reinstall it
+            Remove service:
+                   instserv <servicename> remove
+          
+          1 For new Installation
+
+		a. Running TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in slave server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+          2 For upgrade from 1.5
+
+                a. Manually record down the site/app/mount settings. (Auto DB upgrade is not avalaible at this build)
+                
+                b. shut down all the TianShan service on the same machine.
+  
+                c. backup the existing databases. (default under c:\TianShan\data)
+                
+		d. Run TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --upgrade  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in salve server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                e. Follow the iteractive command to complete the installation.
+
+                f. copy the backup database expect "Sites" to the new installation location
+                
+                g. restart the services.
+                
+         - NEW FEATURE LIST
+                None
+
+         - FIXED BUG LIST
+                1. RtfCPNode: The uploaded content failed to stream out with error INVALID_FILE_VERSION if use TrickFilesLib with splicing enable. 
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.1.45
+	RELEASE DATE:	 2007-09-24
+	RELEASER:        Hongquan Zhang
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+          If The version is under 1.5.0.1,remove all TianShan components and reinstall it
+            Remove service:
+                   instserv <servicename> remove
+          
+          1 For new Installation
+
+		a. Running TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in slave server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+          2 For upgrade from 1.5
+
+                a. Manually record down the site/app/mount settings. (Auto DB upgrade is not avalaible at this build)
+                
+                b. shut down all the TianShan service on the same machine.
+  
+                c. backup the existing databases. (default under c:\TianShan\data)
+                
+		d. Run TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --upgrade  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in salve server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                e. Follow the iteractive command to complete the installation.
+
+                f. copy the backup database expect "Sites" to the new installation location
+                
+                g. restart the services.
+                
+         - NEW FEATURE LIST
+                None
+
+         - FIXED BUG LIST
+                StreamSmith Bugid 5976
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.1.39
+	RELEASE DATE:	 2007-09-13
+	RELEASER:        Hongquan Zhang
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+          If The version is under 1.5.0.1,remove all TianShan components and reinstall it
+            Remove service:
+                   instserv <servicename> remove
+          
+          1 For new Installation
+
+		a. Running TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in slave server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+          2 For upgrade from 1.5
+
+                a. Manually record down the site/app/mount settings. (Auto DB upgrade is not avalaible at this build)
+                
+                b. shut down all the TianShan service on the same machine.
+  
+                c. backup the existing databases. (default under c:\TianShan\data)
+                
+		d. Run TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --upgrade  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in salve server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                e. Follow the iteractive command to complete the installation.
+
+                f. copy the backup database expect "Sites" to the new installation location
+                
+                g. restart the services.
+                
+         - NEW FEATURE LIST
+
+
+         - FIXED BUG LIST
+                StreamSmith Bugid 5808
+
+         - REMARK 
+               Configuration changed
+                1) StreamSmithServices.xml
+                  a. Add progressScanInterval to node <playlist /> just like
+                      <playlist timeoutInterval="100000" timeoutOnPause="1" progressScanInterval="5000"/>
+                      This configuration is used to scan the vstrm session progress,1000 is the min interval and 5000 is sugguested
+                  b. <pendingRequestSize count="0"/>
+                      This is a new configuration and this config is only available when streamsmith accept rtsp reqeust
+                       if the pending request is bigger than the config value,request will be denied
+                       if the count is 0,pending count is ignored
+                2) RtspProxyServices.xml
+                     <pendingRequestSize count="0"/>
+                           This is a new configuration and this config is only available when streamsmith accept rtsp reqeust
+                           if the pending request is bigger than the config value,request will be denied
+                           if the count is 0,pending count is ignored
+                3) WeiwooServices.xml
+                   Add new log attribute for PHO
+                      <PHO>  
+                            <log level= "7" size="102400000" buffer="204800" flushtimeout="2" />
+                      </PHO>
+ 
+                      These configuration is used by PHO's log
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.1.38
+	RELEASE DATE:	 2007-09-11
+	RELEASER:        Ken Qian
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+          If The version is under 1.5.0.1,remove all TianShan components and reinstall it
+            Remove service:
+                   instserv <servicename> remove
+          
+          1 For new Installation
+
+		a. Running TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in slave server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+          2 For upgrade from 1.5
+
+                a. Manually record down the site/app/mount settings. (Auto DB upgrade is not avalaible at this build)
+                
+                b. shut down all the TianShan service on the same machine.
+  
+                c. backup the existing databases. (default under c:\TianShan\data)
+                
+		d. Run TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --upgrade  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in salve server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                e. Follow the iteractive command to complete the installation.
+
+                f. copy the backup database expect "Sites" to the new installation location
+                
+                g. restart the services.
+                
+         - NEW FEATURE LIST
+
+
+         - FIXED BUG LIST
+                1. Fix a new introduced issue in version 1.6.1.34, RTFCPNode did not register to ClusterContentStore 
+                   anymore after the first time registeration. So if ClusterContentStore restarted, 
+                   RTFCPNode will not be able to reconnect it again unless restart RTFCPNode service.
+
+         - REMARK 
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.1.34
+	RELEASE DATE:	 2007-09-10
+	RELEASER:        Ken Qian
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+          If The version is under 1.5.0.1,remove all TianShan components and reinstall it
+            Remove service:
+                   instserv <servicename> remove
+          
+          1 For new Installation
+
+		a. Running TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in slave server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+          2 For upgrade from 1.5
+
+                a. Manually record down the site/app/mount settings. (Auto DB upgrade is not avalaible at this build)
+                
+                b. shut down all the TianShan service on the same machine.
+  
+                c. backup the existing databases. (default under c:\TianShan\data)
+                
+		d. Run TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --upgrade  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in salve server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                e. Follow the iteractive command to complete the installation.
+
+                f. copy the backup database expect "Sites" to the new installation location
+                
+                g. restart the services.
+                
+         - NEW FEATURE LIST
+               1. Support Trick files generated by old trick library(TrickFilesLibraryUser) and splicing(Front and Back) insertion
+
+         - FIXED BUG LIST
+
+         -Remark 
+               1. In RTFCPNodeCfg.xml, following two configuration items were added to support the new feature.
+                  The two items are located at <service> section
+                  <!--
+                        trickGenType - The trick files library type, "RTFLib" or "TrickFilesLib", if not configured, default is "RTFLib"
+                        enableSplicing - Enable or Disable splicing, at this moment, this config is only avaliable when trickGenType = "TrickFilesLib"
+                  -->
+			<trickGenType value = "TrickFilesLib"/>
+			<enableSplicing value = "1" />
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.1.27 
+	RELEASE DATE:	 2007-08-28
+	RELEASER:        Hongquan Zhang
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+          If The version is under 1.5.0.1,remove all TianShan components and reinstall it
+            Remove service:
+                   instserv <servicename> remove
+          
+          1 For new Installation
+
+		a. Running TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in slave server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+          2 For upgrade from 1.5
+
+                a. Manually record down the site/app/mount settings. (Auto DB upgrade is not avalaible at this build)
+                
+                b. shut down all the TianShan service on the same machine.
+  
+                c. backup the existing databases. (default under c:\TianShan\data)
+                
+		d. Run TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --upgrade  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in salve server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                e. Follow the iteractive command to complete the installation.
+
+                f. copy the backup database expect "Sites" to the new installation location
+                
+                g. restart the services.
+                
+         - NEW FEATURE LIST
+               No
+         - FIXED BUG LIST
+               StreamSmith BugID: 5808
+               Weiwoo BugID:5822
+         -Remark 
+               Configuration changed
+               MODSvc: 添加一个配置项
+　　　　　　　　　　　　<EvictorSize purchaseSize="100"/>
+                             purchaseSize: purchase object size . 100 ~ 1000 is acceptable
+               Weiwoo: 添加配置项
+　　　　　　　　　　　　<evictorSize sessionSize="100"/>
+                             sessionSize:SRM session size 100 ~ 1000 is acceptable
+　　　　　　　　　　　　<evictorSize storagelinkSize="100" streamlinkSize="100" pathticketSize="1000"/>
+                             storagelinkSize:	SRM streamlink size. 100 ~ 1000 is acceptable
+			     streamlinkSize:		SRM storagelink size. 100 ~ 1000 is acceptable
+			     pathticketSize:		SRM pathticket size. 100 ~ 2000 is acceptable
+　　　　　　　 StreamSmith: 添加配置项
+　　　　　　　　　　　　<evictorSize playlistSize="200" itemSize="400"/>　
+                            playlistSize:playlist object size.200 ~ 2000 is acceptable
+			    itemSize:   item object size: 400 ~ 2000 is acceptable
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.1.23 
+	RELEASE DATE:	 2007-08-20
+	RELEASER:        Hongquan Zhang/Fei Huang
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+          If The version is under 1.5.0.1,remove all TianShan components and reinstall it
+            Remove service:
+                   instserv <servicename> remove
+          
+          1 For new Installation
+
+		a. Running TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in slave server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+          2 For upgrade from 1.5
+
+                a. Manually record down the site/app/mount settings. (Auto DB upgrade is not avalaible at this build)
+                
+                b. shut down all the TianShan service on the same machine.
+  
+                c. backup the existing databases. (default under c:\TianShan\data)
+                
+		d. Run TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --upgrade  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in salve server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                e. Follow the iteractive command to complete the installation.
+
+                f. copy the backup database expect "Sites" to the new installation location
+                
+                g. restart the services.
+                
+         - NEW FEATURE LIST
+               StreamSmith: 支持对预加密数据的处理
+               ContentStore：增加导出content的带宽控制
+         - FIXED BUG LIST
+               ContentStore BugID: 5782
+               StreamSmith BugID: 5776
+         -Remark 
+              ClusterContentStore configuration:
+                  ClusterContentStore.xml, 由于导出是Node完成，在Cluster中去掉了<Export>节点
+              NodeContentStore Configuration:
+                  NodeContentStore.xml: ftp用户名和密码不再可配，由服务自动返回，现在的配置为：
+
+           <Export>
+
+              Session的存活时间，以秒为单位，目前不需要配置
+
+              <ttl value="86400" />
+
+              带宽配置
+
+              <bitrate value="3750000" />
+
+              BindIP确定FTP服务器在哪个适配器上监听， 全0表示所有IP。
+
+              Port为FTP服务器的侦听端口 
+
+              DefaultDLBitrate确定非授权的匿名访问所能拥有的默认带宽。
+
+              HomeDir是FTP服务器的本地路径。
+
+              RootUrl是指客户端用来下载的根路径。
+
+              <FTPServer BindIP="0.0.0.0" Port="9910" DefaultDLBitrate="3750000" HomeDir="c:\ftphome" RootUrl="ftp://10.11.0.250:9910/" /> 
+
+              线程池的大小
+
+              <ThreadPoolSize value="40" />
+
+              本地DB的路径
+
+              <SafestorePath value="c:\ssdf" />
+
+             是否要session的管理，默认为不需要管理
+
+              <DisableSessionMgr value="0" />
+
+              BWClientID是Vstream用来进行带宽控制的识别号，对同一个vstream访问的所有服务应该有不同的ID。
+
+              <BWClientId value="773220" />
+
+         </Export>
+
+            StreamSmith Configuration:
+                StreamSmithServices.xml 对预加密数据处理的配置
+                   <preencryption cycle1="0" freq1="8" cycle2="15000" freq2="8"/>
+                            <!--
+			       pre-encryption data:
+			       cycle1 cycle2 freq1 freq2 should be positive number
+			    -->
+
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.1.20 
+	RELEASE DATE:	 2007-08-14
+	RELEASER:        Jie Zhang/Hongquan Zhang
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+          If The version is under 1.5.0.1,remove all TianShan components and reinstall it
+            Remove service:
+                   instserv <servicename> remove
+          
+          1 For new Installation
+
+		a. Running TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in slave server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+          2 For upgrade from 1.5
+
+                a. Manually record down the site/app/mount settings. (Auto DB upgrade is not avalaible at this build)
+                
+                b. shut down all the TianShan service on the same machine.
+  
+                c. backup the existing databases. (default under c:\TianShan\data)
+                
+		d. Run TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --upgrade  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in salve server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                e. Follow the iteractive command to complete the installation.
+
+                f. copy the backup database expect "Sites" to the new installation location
+                
+                g. restart the services.
+                
+         - NEW FEATURE LIST
+               MODSvc: For NGOD, 支持连接多个LAM getaelist
+         - FIXED BUG LIST
+               ChannelOnDemand BugID: 5744
+
+         -Remark 
+               For NGOD, 支持连接多个LAM，MODSvc 添加配置项
+                  <LAMInterface volumeName="" enableRequery="" ......\>
+                  <LAMInterfaceBackup>
+			<BackupLAM Endpoint="LAMFacade:tcp -h 10.50.12.4 -p 20089" volumeName="ctnt" />
+		  </LAMInterfaceBackup>
+               Interface struct PlaylistItemSetupInfo has been appended with a new field privateData, TianShan client need
+               update the TianShanSDK kit, no logic changes are needed but rebuild MAYBE is required up to the programming
+               languange.
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.1.11 
+	RELEASE DATE:	 2007-08-01
+	RELEASER:        Hongquan Zhang/ken qian
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+          If The version is under 1.5.0.1,remove all TianShan components and reinstall it
+            Remove service:
+                   instserv <servicename> remove
+          
+          1 For new Installation
+
+		a. Running TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in slave server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+          2 For upgrade from 1.5
+
+                a. Manually record down the site/app/mount settings. (Auto DB upgrade is not avalaible at this build)
+                
+                b. shut down all the TianShan service on the same machine.
+  
+                c. backup the existing databases. (default under c:\TianShan\data)
+                
+		d. Run TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --upgrade  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in salve server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                e. Follow the iteractive command to complete the installation.
+
+                f. copy the backup database expect "Sites" to the new installation location
+                
+                g. restart the services.
+                
+         - NEW FEATURE LIST
+               NO
+         - FIXED BUG LIST
+               Installation bugID: 5568
+               StreamSmith bugID :   5691
+               Weiwoo bugID:        5686
+               ContentStore
+                     改正由于异常导致lock无法释放，引起CPManager和RTF不能正常连接的错误
+		     修复重复上传时Task exists错误
+		     改正session状态无法修改问题
+
+
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.1.10 
+	RELEASE DATE:	 2007-07-30
+	RELEASER:        Hongquan Zhang/ken qian
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+          If The version is under 1.5.0.1,remove all TianShan components and reinstall it
+            Remove service:
+                   instserv <servicename> remove
+          
+          1 For new Installation
+
+		a. Running TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in slave server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+          2 For upgrade from 1.5
+
+                a. Manually record down the site/app/mount settings. (Auto DB upgrade is not avalaible at this build)
+                
+                b. shut down all the TianShan service on the same machine.
+  
+                c. backup the existing databases. (default under c:\TianShan\data)
+                
+		d. Run TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --upgrade  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in salve server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                e. Follow the iteractive command to complete the installation.
+
+                f. copy the backup database expect "Sites" to the new installation location
+                
+                g. restart the services.
+                
+         - NEW FEATURE LIST
+               NO
+         - FIXED BUG LIST
+               ContentStore
+                 BugID:5670, fixed
+                 在启动一个已经成功book过的session时候， 由于连接错误或者启动schedule导致的失败均会定期重试, fixed
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.1.8 
+	RELEASE DATE:	 2007-07-27
+	RELEASER:        Hongquan Zhang/ken qian
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+          If The version is under 1.5.0.1,remove all TianShan components and reinstall it
+            Remove service:
+                   instserv <servicename> remove
+          
+          1 For new Installation
+
+		a. Running TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in slave server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+          2 For upgrade from 1.5
+
+                a. Manually record down the site/app/mount settings. (Auto DB upgrade is not avalaible at this build)
+                
+                b. shut down all the TianShan service on the same machine.
+  
+                c. backup the existing databases. (default under c:\TianShan\data)
+                
+		d. Run TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --upgrade  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in salve server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                e. Follow the iteractive command to complete the installation.
+
+                f. copy the backup database expect "Sites" to the new installation location
+                
+                g. restart the services.
+                
+         - NEW FEATURE LIST
+               NO
+         - FIXED BUG LIST
+               RtspProxy 
+                 BugID:5587 5615 5636, fixed
+               ContentStore
+                 BugID:5610, fixed
+
+Other Remarks
+        WeiWoo配置文件 WeiwooServices.xml 新增加配置项
+          <CrashDump path="c:\crashDump" enableDump="1"/>
+             "CrashDump path": crashdump path
+	     "enableDump": 1 for enable crashDump 0 for disable crashDump
+
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.1.2 
+	RELEASE DATE:	 2007-07-20
+	RELEASER:        Hongquan Zhang
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+          If The version is under 1.5.0.1,remove all TianShan components and reinstall it
+            Remove service:
+                   instserv <servicename> remove
+          
+          1 For new Installation
+
+		a. Running TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in slave server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+          2 For upgrade from 1.5
+
+                a. Manually record down the site/app/mount settings. (Auto DB upgrade is not avalaible at this build)
+                
+                b. shut down all the TianShan service on the same machine.
+  
+                c. backup the existing databases. (default under c:\TianShan\data)
+                
+		d. Run TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --upgrade  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in salve server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                e. Follow the iteractive command to complete the installation.
+
+                f. copy the backup database expect "Sites" to the new installation location
+                
+                g. restart the services.
+                
+         - NEW FEATURE LIST
+               1。 ClusterContentStore: RTFCPNode安装在node上时，支持自动上传，而不需要通过NodeContentStore.
+	       2.  ClusterContentStore: RTFCPNode支持下载的带宽控制，
+         - FIXED BUG LIST
+               BugID: 5587
+               BugID: 5603
+
+Other Remarks
+        1。ClusterContentStore更新完之后需要删除data再重新启动。
+	2. RTFCPNode配置文件更新 RTFCPNode.xml
+             <Service>
+		<bufferPoolSize value="512"/>
+		<runningOnNode value="1"/>
+		<dumpContentFile value="0"/>
+		<delSucceedDumpFile value="1"/>
+		<traceDetailLog value="0"/>
+	    </Service>
+
+	    a. runningOnNode指出RTF是否运行在node上面，0或者1，这个标记决定是由nodeContentStore还是RTF来做上传。
+	    b. bufferPoolSize确定缓冲池里面最多同时有多少个buffer一起工作。
+	    c. dumpContentFile决定是否将主文件输出到output目录中，以在失败的时候作为备份保存。值为0或者1。
+	    d. delSucceedDumpFile决定是否在成功上传后，将输出的主文件删除。
+	    e. traceDetailLog决定是否在LOG中打印处理细节，调试时使用。
+
+	     这些选项仅在由RTF来做上传时有意义，如果runningOnNode为0, 则工作方式与前一版本相同。
+
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.0.36 
+	RELEASE DATE:	 2007-07-18
+	RELEASER:        Jie Zhang
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+          If The version is under 1.5.0.1,remove all TianShan components and reinstall it
+            Remove service:
+                   instserv <servicename> remove
+          
+          1 For new Installation
+
+		a. Running TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in slave server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+          2 For upgrade from 1.5
+
+                a. Manually record down the site/app/mount settings. (Auto DB upgrade is not avalaible at this build)
+                
+                b. shut down all the TianShan service on the same machine.
+  
+                c. backup the existing databases. (default under c:\TianShan\data)
+                
+		d. Run TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --upgrade  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in salve server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                e. Follow the iteractive command to complete the installation.
+
+                f. copy the backup database expect "Sites" to the new installation location
+                
+                g. restart the services.
+                
+         - NEW FEATURE LIST
+               NO
+         - FIXED BUG LIST
+               BugID: 5586, ChannelOnDemand blocked in some case, fixed.
+
+
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.0.32 
+	RELEASE DATE:	 2007-07-13
+	RELEASER:        Jie Zhang/Fei Huang
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+          If The version is under 1.5.0.1,remove all TianShan components and reinstall it
+            Remove service:
+                   instserv <servicename> remove
+          
+          1 For new Installation
+
+		a. Running TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in slave server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+          2 For upgrade from 1.5
+
+                a. Manually record down the site/app/mount settings. (Auto DB upgrade is not avalaible at this build)
+                
+                b. shut down all the TianShan service on the same machine.
+  
+                c. backup the existing databases. (default under c:\TianShan\data)
+                
+		d. Run TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --upgrade  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in salve server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                e. Follow the iteractive command to complete the installation.
+
+                f. copy the backup database expect "Sites" to the new installation location
+                
+                g. restart the services.
+                
+         - NEW FEATURE LIST
+               NO
+         - FIXED BUG LIST
+               BugID: 5490 ChannelOnDemand crush,fixed
+               RtspProxy handle leak, fixed
+               BugID: 5439,5447 and 5457 fixed
+               NodeContentStore: 无论provision是否成功，都删除trick files, fixed
+               NodeContentStore: 增加对VVX version 5 的支持 fixed
+               NodeContentStore: 增加对上传过程中的content的playtime的计算，避免VVX文件中数据未更新导致数据不准确。
+               BugID: 5542 ChannelOnDemand can not start, fixed
+               BugID: 5504 npt返回时间有误, fixed
+
+
+
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.0.25 
+	RELEASE DATE:	 2007-07-03
+	RELEASER:        Mei Zhang
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+          If The version is under 1.5.0.1,remove all TianShan components and reinstall it
+            Remove service:
+                   instserv <servicename> remove
+          
+          1 For new Installation
+
+		a. Running TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in slave server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+          2 For upgrade from 1.5
+
+                a. Manually record down the site/app/mount settings. (Auto DB upgrade is not avalaible at this build)
+                
+                b. shut down all the TianShan service on the same machine.
+  
+                c. backup the existing databases. (default under c:\TianShan\data)
+                
+		d. Run TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --upgrade  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in salve server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                e. Follow the iteractive command to complete the installation.
+
+                f. copy the backup database expect "Sites" to the new installation location
+                
+                g. restart the services.
+                
+         - NEW FEATURE LIST
+               StreamSmith: Modify Session Setup logic to reduce setup time consumption
+         - FIXED BUG LIST
+               None
+
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.0.21 
+	RELEASE DATE:	 2007-06-27
+	RELEASER:        Mei Zhang
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+          If The version is under 1.5.0.1,remove all TianShan components and reinstall it
+            Remove service:
+                   instserv <servicename> remove
+          
+          1 For new Installation
+
+		a. Running TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in slave server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+          2 For upgrade from 1.5
+
+                a. Manually record down the site/app/mount settings. (Auto DB upgrade is not avalaible at this build)
+                
+                b. shut down all the TianShan service on the same machine.
+  
+                c. backup the existing databases. (default under c:\TianShan\data)
+                
+		d. Run TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --upgrade  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in salve server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                e. Follow the iteractive command to complete the installation.
+
+                f. copy the backup database expect "Sites" to the new installation location
+                
+                g. restart the services.
+                
+         - NEW FEATURE LIST
+               1. rtspProxy will use default content handler for the unspecified mount path
+               2. NodeContentStore
+                  a) support of Vstream bandwidth management
+                  b) added version 5.x, version 6.x in to the supported VVX list. Now support VVX 5.x, 6.x, 7.x
+               3. TianShan RTSP specification 1.6 release + numeric category id
+
+         - FIXED BUG LIST
+               1. BugID: 5353 文件未成功上传至NODE时，不能删除。fixed
+               2. BugID: 5389 读取VVX/VV2时未更新subtype, 导致读取失败。fixed
+               3. BugId: 5297 item无法快退到上一个item,只是在本item中循环快退
+               3. 解决了RtfCPNode无法启动的问题(配置文件已更新)
+
+* OTHER REMARKS
+        1. RtspProxy configure file RtspProxyServices.xml
+              <applicationSite defaultHandler ="tianshan_s1" >
+                  <Application path="MOD" handler="tianshan_s1"/>
+                  <Application path="mediacluster" handler="tianshan_s1"/>
+                  <Application path="PauseTV" handler="tianshan_s1"/>
+                  <Application path="basic" handler="MOD"/>
+  
+                  这个是指如果rtspproxy在没有找到相关联的path与handler的时候就会使用defaultHandler
+                  在rtspProxy里面defaultHandler必须要设置，否则rtspProxy拒绝服务
+                  
+        2. NodeContentStore configure file NodeContentStore.xml
+        　　　增加一项vstrmBWClientId
+        　　　<Host netId="FEI" propagationIP="192.168.81.120" mediaClusterId="1" vstrmBWClientId="1" />
+
+        　　　　vstrmBWClientId用于标识占用vstream带宽的应用，当多个应用同时使用vstream时，应该用不同的ID加以区别。
+                不然资源可能会被错误的释放。 仅用于node.
+        
+        3. 所有TianShan components　在注册表中添加了新的注册项,安装过后会自动产生
+        　　　　　HKLM\Software\ZQ Interactive\TianShan\CurrentVersion\Services\<Service>
+                        logDir    - logfile path, default value %Installroot%\logs
+                        logLevel  - logLevel, default value 7
+                  HKLM\Software\ZQ Interactive\TianShan\CurrentVersion\Services\<Service_shell>
+                        logDir    - logfile path for shell, default value %Installroot%\logs
+
+        4. 配置文件删除项
+        　　　如果原来服务指定logfilename，logfilesize, loglevel，现sample xml中已将其删除，plugin的logfilename已经删除，logfilesize and loglevel,仍保留
+
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.0.12 
+	RELEASE DATE:	 2007-06-15
+	RELEASER:        Mei Zhang
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+          If The version is under 1.5.0.1,remove all TianShan components and reinstall it
+            Remove service:
+                   instserv <servicename> remove
+          
+          1 For new Installation
+
+		a. Running TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in salve server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+          2 For upgrade from 1.5
+
+                a. Manually record down the site/app/mount settings. (Auto DB upgrade is not avalaible at this build)
+  
+                b. backup the existing databases. (default under c:\TianShan\data)
+                
+		c. Running TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --upgrade  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in salve server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                d. Follow the iteractive command to complete the installation.
+
+                e. copy the backup database expect "Sites" to the new installation location
+                
+                f. restart the services.
+
+	- NEW FEATURE LIST
+	       a. 增加一个新的服务SiteAdminSvc,这个服务是从WeiwooService里面分离出来的, it can still be configured by using TestAdminCtrl.exe
+               b. Released the TianShan RTSP spec 1.6
+               c. ContentStore changes:
+                   i. Interface Changes on ContentStore for enum type to string type to avoid any potential issue in the future. So TianShan 1.6 is
+                      not compatible with 1.5.
+                   ii. Support Active Provision
+                   iii. Introduce a new service called RTFCPNode who is responsible for trick generation. It is managed by ContentStore's CPManager
+                        subcomponent, so it endpoint configuration need to point to ContentStore CPManager adapter's endpoint. 
+                   iv.  FTPContentStore is for freenet demo, NO need to install in TianShan deployment. But packaged in TianShan, just for it can 
+                        be used at anytime for necessary without release new version. 
+     
+	- FIXED BUG LIST
+ 
+* OTHER REMARKS
+        1. weiwoo的配置文件WeiwooServices.xml
+              在/tianshan/weiwoo下面
+                 <BusinessRouter endpoint="BusinessRouter:default -p 10003" />
+                 这个配置项是指BusinessRouter的endpoint,也就是SiteAdminSvc的服务endpoint
+              <prop name="Ice.Override.Timeout" value="200000" />
+                 这个是Ice底层的配置，远程请求如果20000毫秒没有回复就超时，并且报错
+              <prop name="Ice.Override.ConnectTimeout" value="200000" /
+                 这个是Ice底层的配置，远程链接如果20000毫秒没有完成就超时，并且报错
+        2. StreamSmith configure file StreamSmith.xml
+               <contentStore primary="",secondary=""/>
+　　　　　　　　　这个是新增的配置项，streamsmith需要询问ContentStore来获知item的基本信息，　StreamSmith会首先查询primary的contentStore，如果出错会尝试链接Secondary的contenStore
+　　　　　　　　　这两个配置项是完整的ContentStore的endpoint(包括adapter名称)
+
+　　　　　　　　　格式：ContentStore:tcp -h xxx.xxx.xxx.xxx -p xxx
+　　　　3. SiteAdminSvc configure file SiteAdminServices.xml
+               <SiteAdminService endPoint="tcp -h 192.168.81.107 -p 10003" /> 
+                  这个是SiteAdminService的服务endpoint
+               <ServiceThread count="10" /> 
+                  用于service内部的处理逻辑使用的thread的个数,建议这个使用默认值10
+
+　　　　4. ssm_tianshan_s1.dll configure file ssm_tianshan_s1.xml
+　　　         <LOGFILE_NUM value="5"/>
+                  log备份文件的数目
+               <GET_PARAMETER_FREQUENCY maxRequests="10" inSeconds="5"/>
+                  限制客户端Get_parameter请求的频率，当前的意思是，5秒钟内最多10个GetPrameter请求
+               <!-- IceProperty key1="value1" key2="value2 key3="value3" / -->
+                  这里只是演示如何添加Ice配置项，此行是注释行，请将此行注释掉。
+               <IceProperty Ice.Override.Timeout="30000" />  
+                  配置ssm_tianshan_s1.dll的Ice环境参数，Ice.Override.Timeout="30000"的意思是，当服务器30秒没有返回时，客户端调用就会超时。
+        5. ssm_NGOD_r2c1.dll configure file ssm_NGOD_r2c1.xml
+               参考 item 4
+
+        6. Database "Sites" is incompatible with that of TianShan 1.5. The number of records of all existing TianShan 1.5 should not exceeds 16 lines,
+           so manually setting is a recommend in this build
+        
+        7. Database of ContentStore is incompatible with that of TianShan 1.5, but the content data can be re-populated from the file system automatically,
+           so please leave the ContentStore database empty after upgrade.       
+        8. Setup automation for RTFCPNode is not ready in this build. RTFCPNode is not required for ZiBO
+	9. New items in NodeContentStore configuration file NodeContentStore.xml
+　　　　　　　　　　New item 1:
+　　　　　　　　　　<Export>
+　　　　　　　　　　  <userName value="anonymous" /> 
+　　　　　　　　　　  <password value="anonymous@" /> 
+　　　　　　　　　　  <ttl value="3600" /> 
+　　　　　　　　　　  <bitrate value="3750000" /> 
+　　　　　　　　　  </Export>
+　　　　　　　　　　　  The information to retrieve the content from the node content store through FTP.
+　　　　　　　　　　　　userName - ftp user name for access node and export content.
+			password -
+			ttl - number of seconds that a ftp client has to open connection.
+			bitrate - ftp transfer bitrate
+
+　　　　　　　　　　New item 2:
+        　　　　　　<Provision active="1" passive="0" />
+　　　　　　　　　　　　　switch to a specific provision mode, active or passive or both. CPManager is the module that does active provision.
+　　　　　　　　　　　
+　　　　　　　　　　New item 3:
+　　　　　　　　　　<CPNode>
+			　<RtfCPNode>
+				<rtfProp name="rtfTrickFileCount" value="1" />
+				<rtfProp name="rtfTrickIndexType" value="VVX" />
+	    　　　　　　　</RtfCPNode>
+　　　　　　　	　　</CPNode>
+　　　　　　　　　　　　　The new service that generates trick files. It will be connected to CPManager.
+        10. New items in ClusterContentStore configuration file ClusterContentStore.xml
+                     The same as nodecontentstore.xml
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.5.6.2
+	RELEASE DATE:	 2007-06-04
+	RELEASER:        Guan Han
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+        - OPERATION STEPS
+            If The version is under 1.5.0.1,remove all TianShan components and reinstall it
+            Remove service
+            instserv <servicename> remove
+
+           *For new Installation
+		[Same to previous version]
+
+	   *For Upgrading
+		[Same to previous version]
+
+	- NEW FEATURE LIST
+		NO
+     
+	- FIXED BUG LIST
+                5178 流被pause后，再次被pause会出错的问题,fixed
+* OTHER REMARKS
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.5.6.1
+	RELEASE DATE:	 2007-06-04
+	RELEASER:        Hongquan Zhang
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+        - OPERATION STEPS
+            If The version is under 1.5.0.1,remove all TianShan components and reinstall it
+            Remove service
+            instserv <servicename> remove
+
+           *For new Installation
+		[Same to previous version]
+
+	   *For Upgrading
+		[Same to previous version]
+
+	- NEW FEATURE LIST
+		NO
+     
+	- FIXED BUG LIST
+                5010  对同一个session进行重复的多次的play命令会导致后台流不产生...  
+ 
+                5192  发setup请求会出现weiwoo异常 
+
+* OTHER REMARKS
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.5.5.1
+	RELEASE DATE:	 2007-05-24
+	RELEASER:        huang fei
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+        - OPERATION STEPS
+            If The version is under 1.5.0.1,remove all TianShan components and reinstall it
+            Remove service
+            instserv <servicename> remove
+
+           *For new Installation
+		[Same to previous version]
+
+	   *For Upgrading
+		[Same to previous version]
+
+	- NEW FEATURE LIST
+		NO
+     
+	- FIXED BUG LIST
+                -  ContentStore 将待删除文件的DB(IdleContents)独立出来，不再放在ContentDict下面。并修改了在删除文件时的DB读写操作，
+                   以修正在运行一段时间后，文件无法删除的错误。
+
+* OTHER REMARKS
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.0.1
+	RELEASE DATE:	 2007-05-10
+	RELEASER:        Hongquan Zhang
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+	- OPERATION STEPS
+          If The version is under 1.5.0.1,remove all TianShan components and reinstall it
+            Remove service
+            instserv <servicename> remove
+          
+          1 For new Installation
+		a. Running TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in salve server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+          2 For upgrade
+		a. Running TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --upgrade  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in salve server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+	- NEW FEATURE LIST
+	       增加一个新的服务SiteAdminSvc,这个服务是从WeiwooService里面分离出来的
+     
+	- FIXED BUG LIST
+               NO
+
+* OTHER REMARKS
+               weiwoo的配置文件中添加一个新项
+                   在/tianshan/weiwoo下面
+                   <BusinessRouter endpoint="BusinessRouter:default -p 10003" />
+                   这个配置项是指BusinessRouter的endpoint,也就是SiteAdminSvc的服务endpoint
+
+              PS: 此版本weiwooservice 和 SiteAdminSvc 只支持DataOnDemand 不支持TianShan其他的服务
+
+
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.5.4.1
+	RELEASE DATE:	 2007-04-24
+	RELEASER:        Jason Zhang/Hongquan Zhang
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+	- OPERATION STEPS
+          If The version is under 1.5.0.1,remove all TianShan components and reinstall it
+            Remove service
+            instserv <servicename> remove
+          
+          1 For new Installation
+		a. Running TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in salve server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+          2 For upgrade
+		a. Running TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --upgrade  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in salve server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+	- NEW FEATURE LIST
+		NO
+     
+	- FIXED BUG LIST
+                -  修正了一个ZQ service shell的bug, service在两次异常退出后不会停止,而是再次启动起来.
+                -  添加了一点log来跟踪ChannelOnDemand和ContentStore异常退出的问题
+
+* OTHER REMARKS
+                - ClusterContentStore 为了支持多个instance，从1.5.3.1版本将配置文件的目录做了调整，调整为%InstallRoot%\etc\<ClusterContentStore指定服务名称>
+                  读取的文件依然是ClusterContentStore.xml
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.5.3.1
+	RELEASE DATE:	 2007-04-18
+	RELEASER:        Hongquan Zhang
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+	- OPERATION STEPS
+          If The version is under 1.5.0.1,remove all TianShan components and reinstall it
+            Remove service
+            instserv <servicename> remove
+          
+          1 For new Installation
+		a. Running TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in salve server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+          2 For upgrade
+		a. Running TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --upgrade  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in salve server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+	- NEW FEATURE LIST
+		- ClusterContentStore
+                   支持同一台机器安装多个instance，安装步骤：
+                   1.   修改profile.pl,指定安装服务的名称，名称指定为ClusterContentStore_"ClusterID",默认值为ClusterContentStore
+                        指定名称的方式：
+                        %ClusterContentStore = (
+                                                  'name'             => '需要设定的名称',
+                                                  'InstallID'        => '6',    /修改为与其他服务没有冲突的ID
+                                                   'Registry'         => \@ClusterContentStore,  /写定，无须修改
+                                                );  
+                   2.  修改之后保存文件profile.pl                      
+                   3.  运行TianShanSetup.pl
+                       参照- OPERATION STEPS，其中--servicename=<servicename> 是step 1指定的服务名称
+     
+	- FIXED BUG LIST
+                - RtspProxy plugin 
+                     1. 流播放完以后，无法继续对该session操作,fixed
+
+
+* OTHER REMARKS
+               - ClusterContentStore 为了支持多个instance，将配置文件的目录做了调整，调整为%InstallRoot%\etc\<ClusterContentStore指定服务名称>
+                 读取的文件依然是ClusterContentStore.xml
+
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.5.2.1
+	RELEASE DATE:	 2007-04-13
+	RELEASER:        Jason Zhang
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+	- OPERATION STEPS
+          If The version is under 1.5.0.1,remove all TianShan components and reinstall it
+            Remove service
+            instserv <servicename> remove
+          
+          1 For new Installation
+		a. Running TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in salve server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+          2 For upgrade
+		a. Running TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --upgrade  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in salve server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+	- NEW FEATURE LIST
+		NO
+     
+	- FIXED BUG LIST
+                - RDS
+                     1. 修正了一个内存泄漏的错误
+
+
+* OTHER REMARKS
+
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.5.1.1
+	RELEASE DATE:	 2007-04-11
+	RELEASER:        Hongquan Zhang/Fei Huang
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+	- OPERATION STEPS
+          If The version is under 1.5.0.1,remove all TianShan components and reinstall it
+            Remove service
+            instserv <servicename> remove
+          
+          1 For new Installation
+		a. Running TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in salve server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+          2 For upgrade
+		a. Running TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --upgrade  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in salve server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+	- NEW FEATURE LIST
+		NO
+     
+	- FIXED BUG LIST
+                - ContentStore
+                     1. NodeContentStore would not register itself to RDS while running as a standalone server. fixed
+
+                - StreamSmith
+                     1. pause的Timeout的配置项不起作用, fixed
+                     2. ssm_tianshan plugin向weiwoo去renew的时间太短,导致weiwoo主动destroy stream, fixed
+
+* OTHER REMARKS
+	-ContentStore
+                - ContentStore met local file DB issue, which cause ContentStore not functional, I had an additonal lock on
+                  local DB file in this version, even through, DB has its internal lock. 
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.5.0.2
+	RELEASE DATE:	 2007-03-30
+	RELEASER:        Ken Qian
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+	- OPERATION STEPS
+          If The version is under 1.5.0.1,remove all TianShan components and reinstall it
+            Remove service
+            instserv <servicename> remove
+          
+          1 For new Installation
+		a. Running TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in salve server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+          2 For upgrade
+		a. Running TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --upgrade  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in salve server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+	- NEW FEATURE LIST
+		- ContentStore 
+                     1. Adding addtional logic to process FF/FR file deletion failure issue, that is, in NodeContentStore, 
+                        if meets file deletion failure issue, remember the file name, and re-try to delete it later.
+		     
+	- FIXED BUG LIST
+                N/A
+
+* OTHER REMARKS
+	-ContentStore
+                - ContentStore met local file DB issue, which cause ContentStore not functional, I had an additonal lock on
+                  local DB file in this version, even through, DB has its internal lock. 
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.5.0.1
+	RELEASE DATE:	 2007-03-27
+	RELEASER:        Jie Zhang,Hongquan Zhang,Cary Xiao,Fei Huang,Guan Han, Yonghua Deng   
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+	- OPERATION STEPS
+          Remove all TianShan components and reinstall it
+          1 Remove service
+            instserv <servicename> remove
+          
+          2 For new Installation
+		a. Running TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in salve server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+                
+  
+	- NEW FEATURE LIST
+	          1. 通过ZQShell启动服务
+	          2. 通过文件形式配置
+
+	- CONFIGURATION AND PARAMETERS CHECKING
+		Config the related XML file at the directory %Installroot%\etc, the relation between Service and XML file is:
+		Service
+		ChOdSvc              ->  ChannelOnDemand.xml
+		StreamSmith          ->  StreamSmithServices.xml  SourceManager.xml
+		RtspProxy            ->  RtspProxyServices.xml
+		ClusterContentStore  ->  ClusterContentStore.xml
+		NodeContentStore     ->  NodeContentStore.xml
+		RDS                  ->  RDS.xml
+		WeiWoo               ->  WeiwooServices.xml
+		MODSvc               ->  MODAppServices.xml
+	        Plugin
+		ssm_tianshan_sl -> ssm_tianshan_s1.xml
+		
+
+	- FIXED BUG LIST
+                NO
+* OTHER REMARKS

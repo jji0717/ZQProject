@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TianShan>
+	<Definitions src="TianShanDef.xml"/>
+	<EGH_SMS>
+	<!--EGH_SMS module log setting
+		level		the log level
+		size		the size of log file
+	-->
+	<Log level="7" size="10240000" />
+	<!-- The EGH_SMS module to monitor the events and subscriber
+	Subscriber	the message will send to,this item can set more than one	
+		phoneNumber	subscriber,the event will send to
+	Event		event type this module attention and message format that the message send to. this item can set more than one
+		category	which category the module attention
+		eventId		which event id the module attention
+		message		message content,if it contain string "${a*}" will match string "a*" from event basic item(id,name,time) or properties.id:source net id, name:event name, time:UTC time stamp 
+	-->
+	<EventGroups>
+		<EventGroup>
+			<Subscriber phoneNumber="13711112222" />
+			<!--Subscriber phoneNumber="13800000000" / -->
+			<Event category="Demand" eventId="9001" message="Created a puchase id=${id}" />
+			<Event category="ChannelOnDemand" eventId="9002" message="Published a playlist id=${id},name=${name},time=${time}" />
+		</EventGroup>
+		<!--
+		<EventGroup>
+			<Subscriber phoneNumber="1381234xxxx" />
+			<Subscriber phoneNumber="1374567xxxx" />
+			<Event category="Play" eventId="9011" message="a" />
+			<Event category="Channel" eventId="9032" message="b" />
+		</EventGroup>
+		-->
+	</EventGroups>
+
+	<!-- Short message basic set
+		portName	serial port name of the GPRS modem connected,as "COM1","COM2",... 
+		smsCN		short message server center number,China mobile format like:"1380"+"4 SIM card area number"+"500",as ShanHai SIM card center number is "13800210500"
+		msgLLT		short message life time of live,unit is minute,between 5 minute to 24*60 minute
+		bWideChar	short message character type,0 is single character,as English or numeral and some simple symbol,1 is wide character,as Chinese and some complex symbol
+		sendInterval	send message interval,unit is second,value between 10 to 120,if frequency to high maybe filter by SP
+	-->
+	<MsgBasic portName="COM1" smsCN="13800210500" msgLLT="60" bWideChar="1" sendInterval="20" />
+
+	</EGH_SMS>
+</TianShan>

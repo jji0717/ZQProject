@@ -1,0 +1,207 @@
+<script type='text/javascript' src='AdminCtrl_Util.js'></script>
+<script type='text/javascript'>
+// typedef
+function TSVirtualSite(name, desc, maxBW, maxSess){
+    this.name = name;
+    this.desc = desc;
+    this.maxDownstreamBwKbps = maxBW;
+    this.maxSessions = maxSess;
+    this.properties = new Object();
+}
+// global vars
+var _sites = new Array();
+var _template = '';
+var _endpoint = '';
+var _propidx = 0;
+// func
+function newPropId(){
+    ++_propidx;
+    return ('site-prop-' + _propidx);
+}
+function indexOfSite(name){
+    for(var i in _sites){
+	if(_sites[i].name == name)
+	    return i;
+    }
+    return _sites.length;
+}
+function checkSiteName(name){
+    if(null != name.match(/^[\w\.]+$/g)) {
+        for(var i in _sites)
+        {
+            if(_sites[i].name.toLowerCase() == name.toLowerCase())
+            {
+//                alert("Site " + _sites[i].name + " already exist.");
+                return false;
+            }
+        }
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function updateSite(){
+    var action = '';
+    var nameNode = document.getElementById('site-name');
+//    if(!checkSiteName(nameNode.value))
+//  	action +='a';
+
+    // check prop field
+    var propFields = document.getElementById('prop-cell').getElementsByTagName('input');
+    for(var i = 0; i < propFields.length; ++i){
+	if(propFields[i].value == ''){
+	    propFields[i].select();
+	    return;
+	}
+    } // end for
+
+    var bwNode = document.getElementById('site-maxbw');
+    if(!bwNode.value.match(/[0-9]+/)){
+	bwNode.select();
+	return;
+    }
+    var sessNode = document.getElementById('site-maxsess');
+    if(!sessNode.value.match(/[0-9]+/)){
+	sessNode.select();
+	return;
+    }
+
+    // submmit form
+    nameNode.name = 'site#name';
+    document.getElementById('site-desc').name = 'site#desc';
+    action += 'u';
+
+    var props = document.getElementById('prop-cell').childNodes;
+    for(var i = 0; i < props.length; ++i){
+	var propFields = props[i].getElementsByTagName('input');
+	propFields[1].name = 'site.prop#' + propFields[0].value;
+    }
+    action += 'p';
+
+    document.getElementById('site-maxbw').name = 'site#maxbw';
+    document.getElementById('site-maxsess').name = 'site#maxsess';
+    action += 'l';
+
+    document.getElementById('ctrl-action').value = action;
+    nameNode.form.submit();
+}
+function removeSite(){
+    var nameNode = document.getElementById('site-name');
+    // validity check
+    if(indexOfSite(nameNode.value) == _sites.length){
+	return;
+    }
+    if(!confirm("Delete Site " + nameNode.value))
+        return;
+
+    nameNode.name = 'site#name';
+    document.getElementById('ctrl-action').value = 'r';
+    nameNode.form.submit();
+}
+function siteDetail(idx){
+    var site = _sites[idx];
+    // modify form fields
+    document.getElementById('site-name').value = site.name;
+    document.getElementById('site-desc').value = site.desc;
+    document.getElementById('site-maxbw').value = site.maxDownstreamBwKbps;
+    document.getElementById('site-maxsess').value = site.maxSessions;
+    var propCellNode = document.getElementById('prop-cell');
+    propCellNode.innerHTML = "";
+    for(prop in site.properties){
+	// hide resource limited property
+	if(prop == 'sys.maxDownstreamBwKbps' || prop == 'sys.maxSessions')
+	    continue;
+	propCellNode.appendChild(createPropNode(prop, site.properties[prop], true));
+    }
+    // back to top
+    document.getElementById('current').getElementsByTagName('a')[0].focus();
+}
+function siteReset(){
+    document.getElementById('site-name').value = '';
+    document.getElementById('site-desc').value = '';
+    document.getElementById('site-maxbw').value = '';
+    document.getElementById('site-maxsess').value = '';
+    document.getElementById('prop-cell').innerHTML = '';
+}
+
+function createPropNode(name, value, nameFixed){
+    var propNode = createKVNode(name, value, nameFixed);
+    if(nameFixed)
+	return propNode;
+
+    propNode.id = newPropId();
+
+    var spanNode = document.createElement('span');
+    spanNode.className = 'ctrl lnk';
+    spanNode.onclick = new Function("removePropNode('" + propNode.id + "');");
+    spanNode.appendChild(document.createTextNode('r'));
+    propNode.appendChild(spanNode);
+
+    return propNode;
+}
+function removePropNode(id){
+    document.getElementById('prop-cell').removeChild(document.getElementById(id));
+}
+
+function display(){
+    // site table
+    var tblNode = document.getElementById("site-tbl");
+    var tbodyNode = document.createElement("tbody");
+    for(var i = 0; i < _sites.length; ++i){
+  	var trNode = document.createElement("tr");
+  	trNode.className = 'lnk';
+  	trNode.onclick = new Function("siteDetail(" + i + ");return false;");
+
+	var tdNode = document.createElement('td');
+	var spanNode = document.createElement("span");
+	spanNode.onclick = new Function("siteDetail(" + i + ");removeSite();");
+	spanNode.className = 'ctrl';
+	spanNode.appendChild(document.createTextNode('r'));
+	tdNode.appendChild(spanNode);
+
+	trNode.appendChild(tdNode);
+  	trNode.appendChild(createTableCell(_sites[i].name));
+  	trNode.appendChild(createTableCell(_sites[i].desc));
+  	trNode.appendChild(createTableCell(_sites[i].maxDownstreamBwKbps));
+  	trNode.appendChild(createTableCell(_sites[i].maxSessions));
+
+  	tbodyNode.appendChild(trNode);
+    }
+    tblNode.appendChild(tbodyNode);
+
+    // setup page info
+    document.getElementById('page-tmpl').value = _template;
+    document.getElementById('page-endpoint').value = _endpoint;
+    siteReset();
+}</script>
+<div id='display-area'>
+<h3>Site</h3>
+<form id='ctrl-form' method=post action="SitePage.ac.tswl">
+<input id='page-tmpl' type=hidden name='#template' value=''>
+<input id='page-endpoint' type=hidden name='#endpoint' value=''>
+<input id='ctrl-action' type=hidden name='#action' value=''>
+<table>
+<colgroup><col span='2' class='heading'><col></colgroup>
+<tr><td>name</td><td>:</td><td><input id='site-name' type=text size='30' value=''></td></tr>
+<tr><td>desc</td><td>:</td><td>
+<input id='site-desc' type=text size='30 value=''>
+</td></tr>
+<tr><td>maxBW</td><td>:</td><td><input id='site-maxbw' type=text size='30 value=''></td></tr>
+<tr><td>maxSessions</td><td>:</td><td>
+<input id='site-maxsess' type=text size='30 value=''>
+</td></tr>
+<tr><td>properties(<span class='lnk' onclick="document.getElementById('prop-cell').appendChild(createPropNode('', ''));">+</span>)</td><td>:</td>
+<td id='prop-cell'>
+</td></tr>
+</table>
+
+<input type=button value='clear' onclick="siteReset();">
+<input type=button value=update onclick="updateSite();">
+</form>
+<hr>
+<table id='site-tbl' class='listTable'>
+<tr class='heading'><th>ctrl</th><th>name</th><th>desc</th><th>maxBW</th><th>maxSessions</th></tr>
+</table>
+</div>
+

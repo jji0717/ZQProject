@@ -1,0 +1,6 @@
+LIBRARY "edbb2"
+DESCRIPTION	'Entry Database, Berkeley database edition'
+VERSION		0.1
+
+EXPORTS
+	about

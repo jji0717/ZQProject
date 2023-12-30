@@ -1,0 +1,344 @@
+<script type='text/javascript' src='AdminCtrl_Util.js'></script>
+<script type='text/javascript'>
+// typedef
+function TSStorageLink(ident, strgId, stmrId, type, status){
+    this.ident = ident;
+    this.strgId = strgId;
+    this.stmrId = stmrId;
+    this.type = type;
+    this.status = status;
+    this.privateData = new Object();
+}
+// globe var
+var _template = '';
+var _endpoint = '';
+var _strgs = new Array();
+var _stmrs = new Array();
+var _types = new Array();
+var _lnks = new Array();
+// func
+function linkStorage(){
+    var strgNode = document.getElementById('lnk-strg');
+    var stmrNode = document.getElementById('lnk-stmr');
+    var typeNode = document.getElementById('lnk-type');
+    if((strgNode.selectedIndex == _strgs.length) ||
+       (stmrNode.selectedIndex == _stmrs.length) ||
+       (typeNode.selectedIndex == _types.length)){
+	lnkReset();
+	return;
+    }
+
+    var identNode = document.getElementById('lnk-ident');
+    if(identNode.value == ''){
+	document.getElementById('ctrl-action').value = 'l';
+    }else{
+	// update private data
+	identNode.name = 'path.lnk#ident';
+	document.getElementById('ctrl-action').value = 'p';
+    }
+    // check pd fields
+    var pdCellNode = document.getElementById('pd-cell');
+    var pdNode = pdCellNode.firstChild;
+    if(!pdNode){
+	alert('bad logic');
+	return;
+    }
+    var privateData = new Object();
+    var pdFieldNodes = pdNode.childNodes;
+    for(var iField = 0; iField < pdFieldNodes.length; ++iField){
+	var fieldValNodes = pdFieldNodes[iField].getElementsByTagName('input');
+	if(fieldValNodes.length != 2){
+	    alert('bad logic');
+	    return;
+	}
+	var keyNode = fieldValNodes[0];
+	if(keyNode.value == ''){
+	    keyNode.select();
+	    return;
+	}
+	var valNode = fieldValNodes[1];
+	if(valNode.value == ''){
+	    valNode.select();
+	    return;
+	}
+
+	var type = _types[typeNode.selectedIndex].variantTypeOf(keyNode.value);
+	var stdVarStr = standardizeVariantString(type, valNode.value);
+
+	privateData[keyNode.value] = stdVarStr;
+    }
+    strgNode.name = 'path.strg#netid';
+    stmrNode.name = 'path.stmr#netid';
+    typeNode.name = 'path.lnk#type';
+    pdCellNode.appendChild(createMapNode(privateData, 'path.pd#'));
+
+    typeNode.form.submit();
+}
+function unlinkStorage(){
+    var strgNode = document.getElementById('lnk-strg');
+    var stmrNode = document.getElementById('lnk-stmr');
+    var typeNode = document.getElementById('lnk-type');
+    var identNode = document.getElementById('lnk-ident');
+    if(identNode.value == ''){
+	identNode.select();
+	return;
+    }
+    if(!confirm("Delete " + identNode.value))
+        return;
+
+    strgNode.name = 'path.strg#netid';
+    stmrNode.name = 'path.stmr#netid';
+    typeNode.name = 'path.lnk#type';
+    identNode.name = 'path.lnk#ident';
+
+    document.getElementById('ctrl-action').value = 'u';
+    identNode.form.submit();
+}
+function indexOfLink(strgId, stmrId, type){
+    for(var i in _lnks){
+	if((strgId == _lnks[i].strgId) &&
+	   (stmrId == _lnks[i].stmrId) &&
+	   (type == _lnks[i].type)){
+	    return i;
+	}
+    }
+    return _lnks.length;
+}
+function indexOfStorage(strgId){
+    for(var i in _strgs){
+        if(_strgs[i] == strgId)
+            return i;
+    }
+    return _strgs.length;
+}
+function indexOfStreamer(stmrId){
+    for(var i in _stmrs){
+        if(_stmrs[i] == stmrId)
+            return i;
+    }
+    return _stmrs.length;
+}
+function indexOfType(type){
+    for(var i in _types){
+        if(_types[i].name == type)
+            return i;
+    }
+    return _types.length;
+}
+function lnkDetail(idx){
+    var lnk = _lnks[idx];
+    document.getElementById('lnk-strg').selectedIndex = indexOfStorage(lnk.strgId);
+    document.getElementById('lnk-stmr').selectedIndex = indexOfStreamer(lnk.stmrId);
+    document.getElementById('lnk-type').selectedIndex = indexOfType(lnk.type);
+
+    var pdCellNode = document.getElementById('pd-cell');
+    pdCellNode.innerHTML = '';
+    pdCellNode.appendChild(createPDNode(lnk.type, lnk.privateData));
+
+    document.getElementById('lnk-ident').value = lnk.ident;
+    document.getElementById('btn-submit').value = 'update';
+    // back to top
+    document.getElementById('current').getElementsByTagName('a')[0].focus();
+}
+function lnkReset(){
+    document.getElementById('lnk-strg').selectedIndex = _strgs.length;
+    document.getElementById('lnk-stmr').selectedIndex = _stmrs.length;
+    document.getElementById('lnk-type').selectedIndex = _types.length;
+    lnkApplyChange(true);
+}
+function lnkApplyChange(resetPD){
+    document.getElementById('lnk-ident').value='';
+    if(resetPD){
+	var pdCellNode = document.getElementById('pd-cell');
+	pdCellNode.innerHTML = '';
+	pdCellNode.appendChild(createPDNode(document.getElementById('lnk-type').value));
+    }
+    document.getElementById('btn-submit').value = 'add';
+}
+
+function createPDNode(type, privateData){
+    var pdNode = document.createElement('div');
+    var iType = indexOfType(type);
+    if(iType != _types.length){
+	var pdSchema = _types[iType].schema;
+	for(var i in pdSchema){
+	    var pdElement = pdSchema[i];
+	    var key = pdElement.keyname;
+	    var val = '';
+	    if(privateData && (key in privateData)){
+		val = valueOfVariant(privateData[key]);
+	    }else{
+		val = valueOfVariant(pdElement.defaultvalue);
+	    }
+	    pdNode.appendChild(createKVNode(key, val, true));
+	}
+    }
+    return pdNode;
+}
+
+function display(){
+    // link table
+    var tblNode = document.getElementById("lnk-tbl");
+    var tbodyNode = document.createElement("tbody");
+    for(var i = 0; i < _lnks.length; ++i){
+        var trNode = document.createElement("tr");
+        trNode.className = 'lnk';
+        trNode.onclick = new Function("lnkDetail(" + i + ");");
+        if (_lnks[i].status == "1"){
+						trNode.style.backgroundColor = "";
+				}else{
+						trNode.style.backgroundColor = "#BFBFBF";
+				}
+
+        trNode.appendChild(createTableCell(_lnks[i].strgId));
+        trNode.appendChild(createTableCell(_lnks[i].stmrId));
+        trNode.appendChild(createTableCell(_lnks[i].type));
+
+        var tdNode = document.createElement('td');
+				tdNode.style.textAlign = "left";
+        tdNode.style.textIndent = "12px";
+        tdNode.innerHTML = "<input id='el-checkbox' name='el-checkbox' type='checkbox' value='" + _lnks[i].ident + "' style='width: 10px;' onclick='selectEl(this);' />"+ "&nbsp;<span id='el-status' name='el-status'>" + ( _lnks[i].status == "1" ? "ON" : "OFF" ) + "</span>";
+        trNode.appendChild(tdNode);
+        
+        tdNode = document.createElement('td');
+        tdNode.innerHTML = "<img src='../img/delete.png' onclick='lnkDetail(" + i + "); unlinkStorage();'/>";
+        tdNode.className = 'ctrl';
+        trNode.appendChild(tdNode);
+
+        tbodyNode.appendChild(trNode);
+    }
+    tblNode.appendChild(tbodyNode);
+    // ctrl form
+    // storage id
+    var strgNode = document.getElementById('lnk-strg');
+    for(var i in _strgs){
+        strgNode.appendChild(createOptionNode(_strgs[i]));
+    }
+    // append a empty option as default value
+    strgNode.appendChild(createOptionNode(''));
+    // streamer id
+    var stmrNode = document.getElementById('lnk-stmr');
+    for(var i in _stmrs){
+        stmrNode.appendChild(createOptionNode(_stmrs[i]));
+    }
+    // append a empty option as default value
+    stmrNode.appendChild(createOptionNode(''));
+    var typeNode = document.getElementById('lnk-type');
+    for(var i in _types){
+        typeNode.appendChild(createOptionNode(_types[i].name));
+    }
+    // append a empty option as default value
+    typeNode.appendChild(createOptionNode(''));
+
+    // setup page info
+    document.getElementById('page-tmpl').value = _template;
+    document.getElementById('page-endpoint').value = _endpoint;
+    lnkReset();
+}
+
+function turnOn(){
+	var span = document.getElementsByName("el-status");
+	var checkbox = document.getElementsByName("el-checkbox");
+	var idents = [];
+	for ( var i = 0; i < span.length; i ++ ){
+		if ( checkbox[i].checked == true ){
+			span[i].innerHTML = "ON";
+			checkbox[i].checked = false;
+			idents.push(checkbox[i].getAttribute("value"));
+		}
+	}
+	if(idents.length == 0)
+	{
+		alert("please select link");
+		return;
+	}
+	document.getElementById('page-tmpl').value = _template;
+	document.getElementById('page-endpoint').value = _endpoint;
+ 	document.getElementById('ctrl-action').value = 'e';
+ 	document.getElementById('lnk-idents').value = idents.join(",");
+	document.ctrl-form.submit();
+}
+
+function turnOff(){
+	var span = document.getElementsByName("el-status");
+	var checkbox = document.getElementsByName("el-checkbox");
+	var idents = [];
+	for ( var i = 0; i < span.length; i ++ ){
+		if ( checkbox[i].checked == true ){
+			span[i].innerHTML = "OFF";
+			checkbox[i].checked = false;
+			idents.push(checkbox[i].getAttribute("value"));
+		}
+	}
+	if(idents.length == 0)
+	{
+		alert("please select link");
+		return;
+	}
+	document.getElementById('page-tmpl').value = _template;
+	document.getElementById('page-endpoint').value = _endpoint;
+ 	document.getElementById('ctrl-action').value = 'd';
+ 	document.getElementById('lnk-idents').value = idents.join(",");
+	document.ctrl-form.submit();
+}
+
+function selectEl(obj){
+	var total = 0;
+	var selectBtn = document.getElementById("select-all");
+	var checkbox = document.getElementsByName("el-checkbox");
+	for ( var i = 0; i < checkbox.length; i ++ ){
+		if ( checkbox[i].checked == true ){
+			total ++;
+			selectBtn.indeterminate = true;
+		}
+	}
+	if ( total == checkbox.length ){
+		selectBtn.indeterminate = false;
+		selectBtn.checked = true;
+	}
+}
+
+function selectAll(obj){
+	var checkbox = document.getElementsByName("el-checkbox");
+	for ( var i = 0; i < checkbox.length; i ++ ){
+		checkbox[i].checked = obj.checked;
+	}
+}
+</script>
+<div id='display-area'>
+<h3>Storage Link</h3>
+<form name='form' id='ctrl-form' method=post action="StorageLinkPage.ac.tswl">
+<input id='page-tmpl' type=hidden name='#template' value=''>
+<input id='page-endpoint' type=hidden name='#endpoint' value=''>
+<input id='ctrl-action' type=hidden name='#action' value=''>
+<input id='lnk-idents' type=hidden name='path.lnk#idents' value=''>
+<table>
+<colgroup><col span='2' class='heading'><col></colgroup>
+
+<tr><td>ident</td><td>:</td><td>
+<input id='lnk-ident' type='text' readonly value='' size='60'></td></tr>
+<tr><td>storage id</td><td>:</td><td>
+<select id='lnk-strg' onchange="lnkApplyChange();"></select></td></tr>
+<tr><td>streamer id</td><td>:</td><td>
+<select id='lnk-stmr' onchange="lnkApplyChange();"></select></td></tr>
+<tr><td>type</td><td>:</td><td>
+<select id='lnk-type' onchange="lnkApplyChange(true);"></select></td></tr>
+<tr><td>private data</td><td>:</td><td id='pd-cell'></td></tr>
+</table>
+<input type=button value='new' onclick="lnkReset();">
+<input id='btn-submit' type=button value='add' onclick="linkStorage();">
+</form>
+<hr>
+&nbsp;<input type='button' value=' enable ' onclick='turnOn();' />
+&nbsp;<input type='button' value=' disable ' onclick='turnOff();' />
+<br>
+<table id='lnk-tbl' class='listTable'>
+<tr class='heading' style='text-align: center;'>
+<th width='60px'>storage id</th>
+<th width='160px'>streamer id</th>
+<th width='120px'>type</th>
+<th width='50px'><input id='select-all' type='checkbox' style='width: 10px;' onclick='selectAll(this);' name='selectStatus' />&nbsp;Status</th>
+<th width='15px'>ctrl</th></tr>
+</table>
+</div>
+

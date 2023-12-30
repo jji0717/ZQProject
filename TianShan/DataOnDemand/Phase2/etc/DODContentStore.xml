@@ -1,0 +1,101 @@
+<!--
+Regular procedures of loading configurations:
+  1) When a service starts, read HKEY_LM\Softwares\ZQ Interactive\TianShan\Services\<ServiceName>\configDir, if the
+     TianShanService.xml is successfully opened, jump to 5)
+  2) tries HKEY_LM\Softwares\ZQ Interactive\TianShan\Services\configDir, if the TianShanService.xml is successfully
+     opened, jump to 5)
+  3) tries the dir ..\etc of where the executable is, if the TianShanService.xml is successfully opened, jump to 5)
+  4) puts an error as system event, say no configuration TianShanService.xml can be opened. Quit the program
+  5) reads the TianShanService.xml, if there is any XML formatting errors, put an error as system event then quit
+     the program
+  6) reads the LogFolder in the XML, take it if succeed, otherwise use ..\logs of where the executable is. Open the
+     main log file, and immediately put a line including
+       a) service name
+       b) service version number
+       c) the full pathname of TianShanService.xml
+     as the first log message in the main logfile
+  7) continues to populate other configurations
+  8) initialize the service and start serving
+-->
+
+<TianShan>
+	 <Definitions src="TianShanDef.xml">
+	 </Definitions>
+        <!-- default configurations for the services of this TianShan deployment -->
+        <Default>
+        <!-- The default folder where the services of this TianShan deployment accesses their local
+		     databases if it is not defined by their individual configurations
+		     attributes:
+		       path          - path to the location of database directory, default "../data/"
+        -->
+            <DatabaseFolder	path="${TianShanDatabaseDir}\"/>
+
+        <!-- The default folder where the services of this TianShan deployment puts their logfiles
+		     attributes:
+		       path          - path to the location of log directory, default "../logs/"
+        -->
+        
+        </Default>
+
+        <!-- configurations for the DODContentStore service -->
+        <DODContentStore>
+        <!-- The Ice adapter that the DODContentStore service is serving on
+		     attributes:
+                endpoint - the endpoint of DODContentStore 
+        -->
+        <Adapter endpoint="tcp -h 127.0.0.1 -p 55599" />
+
+        <!-- Ice properties -->
+        <IceProperties>
+            <prop name="Ice.Trace.Network"               value="0" />
+            <prop name="Ice.Trace.Protocol"              value="0" />
+            <prop name="Ice.Trace.Retry"                 value="0" />
+            <prop name="Ice.Trace.Slicing"               value="0" />
+            <prop name="Ice.Warn.Connections"            value="0" />
+            <prop name="Ice.Warn.Endpoints"              value="1" />
+            <prop name="ContentStore.ThreadPool.Size"    value="10" />
+            <prop name="ContentStore.ThreadPool.SizeMax" value="10" />
+            <prop name="Ice.ThreadPool.Client.Size"      value="1" />
+            <prop name="Ice.ThreadPool.Client.SizeMax"   value="1" />
+            <prop name="Ice.ThreadPool.Server.Size"      value="1" />
+            <prop name="Ice.ThreadPool.Server.SizeMax"   value="1" />
+            <prop name="Ice.Override.Timeout"            value="600000" />
+            <prop name="Ice.Override.ConnectTimeout"     value="600000" />
+            <prop name="Freeze.Evictor.UseNonmutating"   value="1" />
+            <prop name="ContentStore.EvictorSize"        value="10"/>
+        </IceProperties>
+
+        <!-- Host information. 
+		     attributes:
+		       netId - The unique Id of the DODContentStore .set is equal to HostName
+        -->
+        <Host netId="ADMIN2_SS_CL"/>
+        
+        <!-- Provision related configuration 
+            maxSessionCount - the max concurrent provision session.
+            buffPoolSize - buff count in BufferPool, each provision session has its own buffer pool, 
+                           most time, this did not need to change
+            buffSizeInPool - the buff size in the pool in byte, most of the object(file) size should be less than this
+                             configuration, that would be helpful to promote performance, default value is 64K
+            traceProvDetails - boolean flag to control whether log the provision detail information
+            progressReportInterval - report datawrapping process interval in seconds
+            homeDirectory - the output directory after provision
+            desURLPrefix - the output directory in format of URL, if DataStreamService and DODContentStore 
+                           are not in a same box, this must be network folder share format.
+            yieldTime -   the yield time between wrapping files for share folder mode, since in DODContentStore
+                          use full CPU to do wrapping, the yieldTime could reduce the CPU consumption by 
+                          DODContentStore, but will also reduce the wrapping speed, if DODContentStore and
+                          DataStreamService running on the same Server, this setting will helpful to keep the 
+                          IP stream stable. this value range is [0, 50] ms. if 0, means no yeild. 
+		    -->
+        <Provision
+                maxSessionCount ="5"
+                buffPoolSize ="50"
+                buffSizeInPool  ="65536"
+                traceProvDetails ="1"
+                progressReportInterval="5"
+                homeDirectory ="${TianShanHomeDir}\home"
+                desURLPrefix ="file://192.168.81.100/home"/>
+				    
+        </DODContentStore>	
+</TianShan>

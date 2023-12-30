@@ -1,0 +1,3 @@
+${SYS_INTERP} --library-path ${ICE_ROOT}/lib ${ICE_ROOT}/bin/slice2cpp  ${ZQProjsPath}/TianShan/EventGateway/Modules/EGH_JMS/Message.ICE -I . -I  ${ZQProjsPath}/TianShan/EventGateway/Modules/EGH_JMS -I ${ZQProjsPath}/TianShan/Ice -I ${ICE_ROOT}/slice --output-dir ${ZQProjsPath}/TianShan/EventGateway/Modules/EGH_JMS
+
+${SYS_INTERP} --library-path ${ICE_ROOT}/lib ${ICE_ROOT}/bin/slice2freeze -I . -I ${ZQProjsPath}/TianShan/EventGateway/Modules/EGH_JMS -I ${ZQProjsPath}/TianSHan/Ice -I ${ICE_ROOT}/slice --dict EventGateway::JMS::MessageRecord,long,EventGateway::JMS::Message MessageRecord ${ZQProjsPath}/TianShan/EventGateway/Modules/EGH_JMS/Message.ICE --output-dir ${ZQProjsPath}/TianShan/EventGateway/Modules/EGH_JMS 

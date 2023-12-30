@@ -1,0 +1,6 @@
+DESCRIPTION 'TSClient'
+EXPORTS
+  TCInitialize
+  TCUninitialize
+  TCPopulateSnmpVariables
+  TCFillGrid

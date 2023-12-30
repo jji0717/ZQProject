@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<TianShan>
+    <!-- common definitions -->
+    <Definitions src="TianShanDef.xml" />
+    <!-- Configuration on RTFRDS provision helper. It is passivly fed with MPEG source (from FTP push), performs RTF trick genenration and index
+             pacing then save the results into Vstream file system
+             attributes:
+        -->
+    <CPH_AquaLib>
+        <!-- Configuration on media content r/w buffer
+                     attributes:
+                       bufferSize    - the buffer size in byte per each read/write on the input media content
+        -->
+        <MediaSample bufferSize="65536" maxAllocSampleCount= "400"/>
+        <!-- ProvisionMethod propertis configuration
+             attributes:
+                       maxSessions - the maximal concurrent sessions that this instance can host
+                       maxBandwidth - the maximal bandwidth in Kbps that this instance can host
+        -->
+        <ProvisionMethod>
+            <Method name="XOR.Aqua.FTPRTF" maxSessions="30" maxBandwidth="115200" enable="1" />
+            <Method name="XOR.Aqua.FTPRTF.H264" maxSessions="30" maxBandwidth="115200" enable="1" />
+            <Method name="XOR.Aqua.FTPRTF.H265" maxSessions="30" maxBandwidth="115200" enable="1" />
+            <Method name="XOR.Aqua.NTFSRTF" maxSessions="30" maxBandwidth="115200" enable="1" />
+            <Method name="XOR.Aqua.NTFSRTF.H264" maxSessions="10" maxBandwidth="115200" enable="1" />
+            <Method name="XOR.Aqua.NTFSRTF.H265" maxSessions="10" maxBandwidth="115200" enable="1" />
+            <Method name="XOR.Aqua.RTI" maxSessions="30" maxBandwidth="115200" enable="1" />
+            <Method name="XOR.Aqua.RTI.H264" maxSessions="30" maxBandwidth="115200" enable="1" />
+            <Method name="XOR.Aqua.RTI.H265" maxSessions="30" maxBandwidth="115200" enable="1" />
+            <Method name="XOR.Aqua.Index" maxSessions="30" maxBandwidth="115200" enable="1" />
+            <Method name="XOR.Aqua.Index.H264" maxSessions="30" maxBandwidth="115200" enable="1" />
+            <Method name="XOR.Aqua.Index.H265" maxSessions="30" maxBandwidth="115200" enable="1" />
+            <Method name="XOR.Raw.RTI"  maxSessions="30" maxBandwidth="115200" enable="1"/>
+            <Method name="XOR.Aqua.CSI"  maxSessions="30" maxBandwidth="115200" enable="1"/>
+        </ProvisionMethod>
+        <PacedIndex enablePacing="0" pacedFile="${TianShanHomeDir}/bin/libPacing.so" />
+        <!-- Configuration on the download 
+                  attributes:
+                    waitTime       - the timeout period that filesize stops growing
+                    bandwidthCtrlInterval  - bandwidth ctrl interval
+                    targetDir      - target directory ,using in windows and linux enviorment, vstrm using "" as default value
+                    enableResume   - enable resume for download, default is 0 which means didn't support
+                    deleteOnFail        -       "1" delete file when propagation failed, "0" for not, rename file(filename+"_bak"), defaut is "1" 
+        -->
+        <DownLoad waitTime="10000" bandwidthCtrlInterval="10000" enableResume="1" targetDir="/tmp" deleteOnFail="1" />
+        <!-- Configuration on the ingestion session
+             attributes:
+               overSpeedRate  - the percentage of the encoded MPEG to allow over speed if the session is fed faster
+               enableMD5           - enable/disable caculate MD5 checksum for provisioned file(main file), default is 1
+               enableCacheModeForIndex          -       enable/disable cache mode for index file vstream write(VsOpen), default is 1
+                                On a single node Vstream6.0, enable cache for index would cause "VsSeek failed with VSTRM_TIMECODE_OUTOF_RANGE" sometime
+              localNetworkInterface     -       the local network interface to bind for ftp transfering, default is empty
+        -->
+        <Session overSpeedRate="110" enableMD5="1" enableCacheModeForIndex="1" localNetworkInterface="" />
+        <!-- Configuration on IP capture
+             attributes:                        
+                sessionTimeout - timeout in seconds for the session being captured, session will be stopped if no more data
+                       can be captured within this timeout window.  default 30 second
+                      winpcapKernelBuffer       -       winpcap kernel buffer size in MB for multicast capture, default 128MB
+                winpcapMinBufferCopy    -       winpcap minimal buffer size in KB to copy, default is 512KB
+        
+             NetworkInterface, we configure the network adapter ip and bandwidth for the capture, if more than one interface configured here, we would 
+             do some load balance on the usable network interfaces.
+                ip              - the ip address of the network adapter for the capture
+                bandwidth               -       the bandwidth in bps for capture
+        -->
+        <Capture sessionTimeout="30" winpcapKernelBuffer="128" winpcapMinBufferCopy="512">
+            <NetworkInterface ip="${IngestNetIf}" bandwidth="1000000000" />
+        </Capture>
+        <!-- dump the captured data for test or analysis when needed
+             attributes:
+               enable   -       "1" to enable RTI dump captured data to local NTFS, "0" disable, default "0"
+               dumpPath -       the output path for dump files
+               deleteOnSuccess  -       "1" delete dumped file when ingestion success, "0" for not, defaut is "1"
+        -->
+        <CaptureDumper enable="0" dumpPath="c:\temp" deleteOnSuccess="1" />
+        <!-- Configuration on the url encode
+                 attributes:
+                   urlEncode -the location where to specify the type of url encode
+        -->
+        <Encode urlEncode="utf-8" decodePecentOfSourceURL="1" />
+        <!-- Configuration on the TrickGeneration parameters
+                     attributes:
+                       maxSessionNum  - max session number that the TrickGeneration will process. this parameter will affect memory allocation during
+                                        initialization, so only put the number as neccesary
+                       maxInputBufferBytes  - the size of RtfInputBuffer, should be equal or greater than the MediaSample::bufferSize
+                       maxInputBuffersPerSession  - the buffer per session for TrickGeneration, default 128
+                       sessionFailThreshold  - the session failure threshold. The TrickGeneration Libary will be shut down if failed session count more than this value. 0 to disable, default is 0
+        -->
+        <TrickGeneration maxSessionNum="40" maxInputBufferBytes="65536" maxInputBuffersPerSession="512" sessionFailThreshold="0" />
+        <!-- Configuration on the Vstream API
+                     attributes:
+                       BWMgrClientId  - the client Id of Vstream Bandwidth Management. Default 773220, 0 to disable bandwidth management
+                       disableBufDrvThrottle  - 1 would increased the vstrm write performance, default 1
+        -->
+        <Vstream BWMgrClientId="773220" disableBufDrvThrottle="1" />
+        <!-- Configuration on the process events
+        -->
+        <Event>
+            <!-- Configuration on the progress events
+                             attributes:
+                               enable  - 1 to enable sending progress events
+            -->
+            <Progress enable="1" minIntervalMs="60000"/>
+            <!-- Configuration on the streamable events
+                             attributes:
+                               enable  - 1 to enable sending streamable events
+                               lagAfterStart  - the time lag in second after the provision starts to notify streamable
+            -->
+            <Streamable enable="1" lagAfterStart="5" />
+        </Event>
+        
+        <Augmentation pids="" />
+        <!-- Unified Trick File for .H264
+                       enable  - 1 to use unified trick file(FFR), 0 to use  separated trick file(FF, FR), default 1;
+        -->
+        <UnifiedTrickFile enable="1" />
+        <!--
+        0- default, 1-cisco 0x22333333, 2-objectId consistof PAID PID
+        -->
+        <FileExtName mode="0" />
+        <MountPath entry="/mnt/CPESvc/" />
+        <RetryCapture retrycount="0"/>
+        
+        <!-- Configuration on AquaServer: backStoreType = 2
+	    	rootUrl	-	Aqua Server URL,include username and password
+	    	container	-	folder Name under the root URL path
+	        flags - flag Dump MsgBody ,HexDump ,curlclient send ,info ,recviver log etc
+	    	maxThreadPoolSize	- curl client threadpool size
+     		connectTimeout - Connect Aqua Server timeout (default 5000ms)
+     		timeout - Aqua request timeout (default 10000ms)
+	-->
+	<AquaServer rootUrl="http://user:password@ip:port/aqua/rest/cdmi" connectTimeout="5000" timeout="10000" homeContainer="" userDomain="/cdmi_domains/default/" 
+		    flags="0" maxThreadPoolSize="5" mainFileExtension="${MainFileExtension}" contentNameFormat="${PAID}_${PID}" bindIp=""/>
+        <Cache  enable="0" cacheBuffersForwrite="12800" cacheBuffersizeForwrite="65536" cacheLogFlag="10" cacheFlushThreads="10" 
+                cacheForceFlushInterval="1000" cacheWriteSegmentsMax="10" cacheWriteLengthMax="4194304" cacheWriteLengthMin="524288"/>
+
+    </CPH_AquaLib>
+</TianShan>

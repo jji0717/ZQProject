@@ -1,0 +1,26 @@
+Ice.Warn.Connections=1
+Ice.Trace.Network=2
+Ice.Trace.Retry=2
+Ice.Trace.Slicing=1
+Ice.UseEventLog=1
+Ice.Logger.Timestamp=1
+Ice.ThreadPool.Server.Size=5
+Ice.ThreadPool.Server.SizeMax=10
+Ice.ThreadPool.Client.Size=5
+Ice.ThreadPool.Client.SizeMax=10
+Ice.Override.ConnectTimeout=10000
+
+Freeze.Trace.Map=1
+Freeze.Trace.Evictor=2
+Freeze.Evictor.DODAppService.evictordod.SaveSizeTrigger=1
+DODAppService.EvictorSize=7
+
+DODAppService.Endpoints=default -p 10012
+DODAppService.DataStreamServiceEndPoint=tcp -h 192.168.81.101 -p 10011
+DODAppService.JBossIpAddress=10.50.15.40:13001
+DODAppService.ConfigQueueName=queue/queue_cf
+DODAppService.ConfigMsgTimeOut=7000
+DODAppService.UsingJboss=1
+DODAppService.SourceCachePath=\\192.168.81.116\sharefloder\
+DODAppService.RemoteLogUserName=
+DODAppService.RemoteLogPassword=

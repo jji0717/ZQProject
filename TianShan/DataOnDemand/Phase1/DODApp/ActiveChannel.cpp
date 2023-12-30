@@ -1,0 +1,31 @@
+// ActiveChannel.cpp: implementation of the ActiveChannel class.
+//
+//////////////////////////////////////////////////////////////////////
+
+#include "stdafx.h"
+#include "ActiveChannel.h"
+
+//////////////////////////////////////////////////////////////////////
+// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
+
+ActiveChannel::ActiveChannel()
+{
+
+}
+
+ActiveChannel::~ActiveChannel()
+{
+
+}
+
+bool ActiveChannel::init()
+{
+	return true;
+}
+
+void ActiveChannel::uninit()
+{
+
+
+}

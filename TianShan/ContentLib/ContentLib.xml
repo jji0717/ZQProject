@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TianShan>
+	<Definitions src="TianShanDef.xml">
+	</Definitions>
+	<ContentLib>
+		<!-- Specify crashdump settings -->
+		<CrashDump path="${TianShanCrashDumpDir}" fullDump="1"/>
+					
+		<!--
+		path: SafestorePath, must be set 
+		-->
+		<Database path="${TianShanDatabaseDir}\ContentLib"/>
+		
+		<!-- MetaData category -->
+		<MetaData>
+			<param category="user.ProviderId" indexFlag="1"/>
+			<param category="user.ProviderAssetId" indexFlag="1"/>	
+			<param category="user.nPVRCopy" indexFlag="0"/>
+			<param category="user.SubscriberId" indexFlag="0"/>
+			<param category="user.ResponseURL" indexFlag="0"/>
+			<param category="sys.SourceUrl" indexFlag="0"/>
+			<param category="sys.ParentName" indexFlag="0"/>
+			<param category="sys.Comment" indexFlag="0"/>
+			<param category="sys.FileSize" indexFlag="0"/>
+			<param category="sys.SupportFileSize" indexFlag="0"/>
+			<param category="sys.PixelHorizontal" indexFlag="0"/>
+			<param category="sys.PixelVertical" indexFlag="0"/>
+			<param category="sys.BitRate" indexFlag="0"/>
+			<param category="sys.PlayTime" indexFlag="0"/>
+			<param category="sys.FrameRate" indexFlag="0"/>
+			<param category="sys.SourceType" indexFlag="0"/>
+			<param category="sys.LocalType" indexFlag="0"/>
+			<param category="sys.SubType" indexFlag="0"/>
+			<param category="sys.MD5CheckSum" indexFlag="0"/>
+			<param category="sys.ScheduledProvisonStart" indexFlag="0"/>
+			<param category="sys.ScheduledProvisonEnd" indexFlag="0"/>
+			<param category="sys.MaxProvisonBitRate" indexFlag="0"/>
+			<param category="sys.nPVRLeadCopy" indexFlag="0"/>
+			<param category="sys.StampLastUpdated" indexFlag="0"/>
+			<param category="sys.StampCreated" indexFlag="0"/>
+			<param category="sys.State" indexFlag="0"/>
+		</MetaData>							
+
+		<!--
+		endpoint: EndPoint of ContentLib service, format: tcp -h ip -p port 
+		timeToSync: how long to sync with ContentStore, default 3600(s)-->
+		<ContentLibApp endpoint="tcp -h ${ServerNetIf} -p 11900" timeToSync="3600"/>
+				
+		<!-- ThreadPoolSize, default: 20 -->
+		<ThreadPool size="20"/>
+		
+		<!--
+		EventChannelEndPoint: the EventChannel service's endpoint, format: "tcp -h x.x.x.x -p 11000"
+		listenEndpoint: the local ip and port to receive event from EventChannel, format: "tcp -h x.x.x.x -p 10000"-->
+		<TianShanEvents  EventChannelEndPoint="${PrimeEventChannelEndpoint}" 
+				listenEndpoint="tcp -h ${ServerNetIf} -p 11901" />
+				
+    <!--
+    <IceTrace enable="1" level="7" size="10240000" count="5"/>
+    enable: if equal to 1, ice log file will be created for stores ice message.
+    level: log file's level
+    size: log file's size
+    count: log file's count
+    -->
+    <IceTrace enable="1" level="7" size="10240000" count="5"/>				
+				
+		<!-- ContentStore instance -->
+		<ContentStore>
+			<param endpoint="ContentStore:tcp -h ${ClusterCSNetIf} -p 10400"/>
+		</ContentStore>		
+
+		<!-- Ice properties -->
+		<IceProperties>			
+			<!--  the following are performance tuning parameters, please don't modify if you are not an expert at them 
+			--> 
+			<prop name="Ice.Trace.Network"                    value="0" />
+			<prop name="Ice.Trace.Protocol"                   value="0" />
+			<prop name="Ice.Trace.Retry"                      value="1" />
+			<prop name="Ice.Warn.Connections"                 value="1" />
+			<prop name="Ice.Warn.Endpoints"                   value="1" />
+			<prop name="Ice.Logger.Timestamp"                 value="1" />
+			<prop name="Freeze.Warn.Deadlocks"                value="1" />
+			<prop name="Freeze.Trace.Map"                     value="0" />
+			<prop name="Freeze.Trace.DbEnv"                   value="2" />
+			<prop name="Freeze.Trace.Evictor"                 value="0" />
+			<prop name="Ice.Override.ConnectTimeout"          value="30000"/>
+			<prop name="Ice.Override.Timeout"                 value="20000"/>
+			<prop name="Ice.ThreadPool.Server.Size"           value="5"/>
+			<prop name="Ice.ThreadPool.Server.SizeMax"        value="20"/>
+			<prop name="Ice.ThreadPool.Client.Size"           value="5"/>
+			<prop name="Ice.ThreadPool.Client.SizeMax"        value="30"/>
+			<prop name="Ice.MessageSizeMax"        						value="409600"/>
+		</IceProperties>	
+	</ContentLib>	
+</TianShan>

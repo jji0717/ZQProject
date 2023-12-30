@@ -1,0 +1,10 @@
+
+; CPH_RTI.def : Declares the module parameters for the DLL.
+
+LIBRARY      "CPH_RTI"
+DESCRIPTION  'CPH_RTI" TianShan Content Provision Helper Object - RDSRTF'
+
+EXPORTS
+    ; Explicit exports can go here
+InitCPH
+UninitCPH

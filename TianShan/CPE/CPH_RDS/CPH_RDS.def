@@ -1,0 +1,10 @@
+
+; CPH_CopyDemo.def : Declares the module parameters for the DLL.
+
+LIBRARY      "CPH_RDS"
+DESCRIPTION  'CPH_RDS" TianShan Content Provision Helper Object - RDS'
+
+EXPORTS
+    ; Explicit exports can go here
+InitCPH
+UninitCPH

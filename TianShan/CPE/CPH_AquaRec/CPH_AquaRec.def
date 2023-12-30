@@ -1,0 +1,10 @@
+
+; CPH_AquaRec.def : Declares the module parameters for the DLL.
+
+LIBRARY      "CPH_AquaRec"
+DESCRIPTION  'CPH_AquaRec" TianShan Content Provision Helper Object --AquaRec'
+
+EXPORTS
+    ; Explicit exports can go here
+InitCPH
+UninitCPH

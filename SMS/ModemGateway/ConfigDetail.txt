@@ -1,0 +1,16 @@
+注册表中：
+ComPort       	: GSM Modem所接的串口号, 通常是1
+DBPath  	: Access数据库存放的位置, 通常是和程序存在同一个目录下
+Echo		: GSM Modem是否反馈收到的指令, 1代表反馈, 0代表不反馈
+ErrorResponse 	: 出错是否反馈给用户, 0表示只有出错才反馈, 1表示不管是否出错都反馈
+Interval	: 与 TICP 服务器交互的间隔
+LogFileName   	: 日志的位置
+LogFileSize   	: 日志的最大容量
+LogLevel      	: 日志的可记录的程度, 通常为7, 不需要改动
+OverTime      	: 数据库重读的间隔时间, 以小时为单位
+PlayProfix    	: 短信点播标志
+Response      	: 是否反馈给用户, 如果该值为0不反馈, 忽略 ErrorResponse, 1表示反馈
+TicpIpAddress 	: TICP服务器的IP地址(socket)
+TicpPort      	: TICP服务器的端口号(socket)
+Times	      	: 每条短信最多与TICP交互的次数
+ 

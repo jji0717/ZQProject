@@ -1,0 +1,1 @@
+<DODMessage>   <DODMessageHeader Time="2006-07-27 14:29:18" MessageCode="3004"/>   <DODMessageBody DataType="11" GroupID="0">      <FileOperation Root="\\172.25.1.104\multiverse\Repository\DODRootPath\20060727142917907" UpdateMode="0"/>   </DODMessageBody></DODMessage>

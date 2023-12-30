@@ -1,0 +1,218 @@
+// ===========================================================================
+// Copyright (c) 2004 by
+// ZQ Interactive, Inc., Shanghai, PRC.,
+// All Rights Reserved.  Unpublished rights reserved under the copyright
+// laws of the United States.
+// 
+// The software contained  on  this media is proprietary to and embodies the
+// confidential technology of ZQ Interactive, Inc. Possession, use,
+// duplication or dissemination of the software and media is authorized only
+// pursuant to a valid written license from ZQ Interactive, Inc.
+// 
+// This software is furnished under a  license  and  may  be used and copied
+// only in accordance with the terms of  such license and with the inclusion
+// of the above copyright notice.  This software or any other copies thereof
+// may not be provided or otherwise made available to  any other person.  No
+// title to and ownership of the software is hereby transferred.
+//
+// The information in this software is subject to change without notice and
+// should not be construed as a commitment by ZQ Interactive, Inc.
+//
+// Ident : $Id: ZQVersion.RC$
+// Branch: $Name:  $
+// Author: Hui Shao
+// Desc  : Define generic file version for ZQ releases
+//
+// Revision History: 
+// ---------------------------------------------------------------------------
+// $Log: /ZQProjs/Common/CombString.h $
+// ===========================================================================
+/*
+  ABSTRACT:
+**    
+**      This is the ZQ Interactive generic Version resource.
+**      To include this resource in your project do the following:
+**      
+        1. Create your own resource file in your own project directory
+        --If you have NO resource file:
+            Insert--Resources...
+            Select String Table
+            Add an arbitrary string, name it ZQVersion, put anything in it.
+            Save the resource file, use an appropriate name.rc
+            Add the .rc file to your project.
+        
+        2. Edit the resource file  
+        --If you have an existing Version resource in your resource file, DELETE it.
+        --Open the .RC file using File--Open, open in TEXT mode.
+        --Find the block below and add ZQVersion.RC (it must go before "\0"!):
+                3 TEXTINCLUDE DISCARDABLE 
+                BEGIN
+                    "\r\n"
+                    "#include ""ZQVersion.RC ""// non-Microsoft Visual C++ edited version resource"
+                    "\0"
+                END
+        --At the end of the file find the following comment and add the #include directive:
+          (This should go with the other #includes, before any trailing #endif)
+                /////////////////////////////////////////////////////////////////////////////
+                //
+                // Generated from the TEXTINCLUDE 3 resource.
+                //
+                #include "ZQVersion.RC" //non-Microsoft edited C++ version resource
+
+        --Save the file.
+        
+        3. Change your project settings for resources  
+        --Under the Project--Settings--Resources tab, for All Configurations, add the 
+          path to the "$(ZQProjsPath)/build" directory (that's where the ZQVersion.RC file lives).
+        --Append the same setting with the location of VOD SDK: "$(ITVSDKPATH)", the field of
+          "Additional resource include directories" now looks like:
+          $(ZQPROJSPATH)/build;$(ITVSDKPATH)
+        --If you have additional SDK must be specified with version number, please repeat the previous
+          step by using delimitation ';'
+        --Click OK.
+
+        4. Create ZQResource.H in your home directory
+        --Create a new text file.
+        --Copy in the following information:
+		#ifndef __ZQRESOURCE_H__
+		#define __ZQRESOURCE_H__
+
+		// the following section will be replaced with the real value by the ZQAutoBuild process
+		#define ZQ_PRODUCT_VER_MAJOR		1
+		#define ZQ_PRODUCT_VER_MINOR		0
+		#define ZQ_PRODUCT_VER_PATCH		0
+		#define ZQ_PRODUCT_VER_BUILD		177
+		#define ZQ_PRODUCT_VER_STR1		"1.0.0.177"
+		#define ZQ_PRODUCT_VER_STR2		"1,0,0,177"
+		#define ZQ_PRODUCT_VER_STR3		"V1.0.0 (build 177)"
+
+		// #define ZQ_FILE_VER "1.0.0.11"
+
+		// the following section are static per-project
+		#define ZQ_PRODUCT_NAME			"Project Template"
+		#define ZQ_FILE_DESCRIPTION        	"Simple Console Program Template"
+		#ifdef _DEBUG
+		#define ZQ_FILE_NAME               	"console_d.exe"
+		#define ZQ_INTERNAL_FILE_NAME      	"console_d"
+		#else
+		#define ZQ_FILE_NAME               	"console.exe"
+		#define ZQ_INTERNAL_FILE_NAME      	"console"
+		#endif
+
+		// the following section are static per-project, but you can define many SDK involved
+		#include "VODVersion.h"
+		#define ZQ_PRODUCT_COMMENT          	ZQ_PRODUCT_NAME " " ZQ_PRODUCT_VER_STR3 " for: " VOD_VERSION_DESC
+
+		#endif // __ZQRESOURCE_H__
+
+
+        --Important, you must include a couple of carriage returns at the end of the
+          header file or the resource compiler will fail to build this resource.
+        --Edit the information specific to your project.
+        --Save the file as "ZQResource.h" in your projects home directory.  This is the
+          first directory in which the compiler looks to find #included header files.
+
+        5. Build the project.
+
+        6. Observe your handy-work by opening the file properties in MS Explorer.
+
+        7. Take the rest of the day off.
+
+        *For an example of a raw inplementation see the ZQProjs/projTemplate/console project.
+
+***************************************************************************/
+
+#include "ZQResource.h"  // defined by the user in their project directory
+                          // See abstract above.
+
+#define __N2S2__(x) #x
+#define __N2S__(x) __N2S2__(x)
+#define ZQ_PRODUCT_VER_STR1		__N2S__(ZQ_PRODUCT_VER_MAJOR) "." __N2S__(ZQ_PRODUCT_VER_MINOR) "." __N2S__(ZQ_PRODUCT_VER_PATCH) "." __N2S__(ZQ_PRODUCT_VER_BUILD)
+#define ZQ_PRODUCT_VER_STR2		__N2S__(ZQ_PRODUCT_VER_MAJOR) "," __N2S__(ZQ_PRODUCT_VER_MINOR) "," __N2S__(ZQ_PRODUCT_VER_PATCH) "," __N2S__(ZQ_PRODUCT_VER_BUILD)
+#define ZQ_PRODUCT_VER_STR3		"V" __N2S__(ZQ_PRODUCT_VER_MAJOR) "." __N2S__(ZQ_PRODUCT_VER_MINOR) "." __N2S__(ZQ_PRODUCT_VER_PATCH) "(build " __N2S__(ZQ_PRODUCT_VER_BUILD) ")"
+
+#define ZQ_VERSION_PRODUCTNAME		ZQ_PRODUCT_NAME "\0"
+#define ZQ_VERSION_PRODUCTVERSION	ZQ_PRODUCT_VER_STR2 "\0"
+#define ZQ_VERSION_COMPANYNAME		"ZQ Interactive; SeaChange International, Inc.\0"
+#define ZQ_VERSION_FILEDESCRIPTION	ZQ_FILE_DESCRIPTION "\0"
+
+#define PLATBIT ""
+#if (defined(_M_IA64) || defined(_M_AMD64))
+#  define PLATBIT "64bit"
+#endif 
+
+#ifdef  ZQ_FILE_VER
+#  define ZQ_VERSION_FILEVERSION	ZQ_FILE_VER "\0"
+#else
+#  define ZQ_VERSION_FILEVERSION	ZQ_PRODUCT_VER_STR2 "\0"
+#endif //  ZQ_FILE_VER
+
+#define ZQ_VERSION_ORIGINALFILENAME	ZQ_FILE_NAME "\0"
+#define ZQ_VERSION_INTERNALNAME		ZQ_INTERNAL_FILE_NAME "\0"
+#define ZQ_VERSION_LEGALCOPYRIGHT	"Copyright ?2005-2009\0"
+
+#undef  ZQ_VERSION_FOR
+#ifdef _VSTRM_VER_H_
+#  ifdef __VODSDKVERSION_H__
+#    define ZQ_VERSION_FOR			"SeaChange Axiom V" __N2S__(VOD_VERSION_MAJOR) "." __N2S__(VOD_VERSION_MINOR) "." __N2S__(VOD_VERSION_PATCH) "; Vstream V" __N2S__(VER_PRODUCTVERSION_MAJOR) "." __N2S__(VER_PRODUCTVERSION_MINOR) "(" __N2S__(VER_PRODUCTVERSION_ECO) "b" __N2S__(VER_PRODUCTBUILD) ")"
+#  else // !__VODSDKVERSION_H__
+#    define ZQ_VERSION_FOR			"SeaChange Vstream V" __N2S__(VER_PRODUCTVERSION_MAJOR) "." __N2S__(VER_PRODUCTVERSION_MINOR) "(" __N2S__(VER_PRODUCTVERSION_ECO) "b" __N2S__(VER_PRODUCTBUILD) ")"
+#  endif // __VODSDKVERSION_H__
+#elif defined(__VODSDKVERSION_H__)
+#  define ZQ_VERSION_FOR			"SeaChange Axiom V" __N2S__(VOD_VERSION_MAJOR) "." __N2S__(VOD_VERSION_MINOR) "." __N2S__(VOD_VERSION_PATCH)
+#endif
+
+#ifdef ZQ_PRODUCT_COMMENT
+#  define ZQ_VERSION_COMMENT 		ZQ_PRODUCT_COMMENT " " PLATBIT "\0"
+#else
+#  ifdef ZQ_VERSION_FOR
+#    define ZQ_VERSION_COMMENT		ZQ_PRODUCT_NAME " " ZQ_PRODUCT_VER_STR3 " " PLATBIT " for " ZQ_VERSION_FOR "\0"
+#  else
+#    define ZQ_VERSION_COMMENT		ZQ_PRODUCT_NAME " " ZQ_PRODUCT_VER_STR3 " " PLATBIT "\0"
+#  endif
+#endif // ZQ_PRODUCT_COMMENT
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+VS_VERSION_INFO VERSIONINFO
+	FILEVERSION		ZQ_PRODUCT_VER_MAJOR,ZQ_PRODUCT_VER_MINOR,ZQ_PRODUCT_VER_PATCH,ZQ_PRODUCT_VER_BUILD
+	PRODUCTVERSION	ZQ_PRODUCT_VER_MAJOR,ZQ_PRODUCT_VER_MINOR,ZQ_PRODUCT_VER_PATCH,ZQ_PRODUCT_VER_BUILD
+	FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+	FILEFLAGS 0x1L
+#else
+	FILEFLAGS 0x0L
+#endif
+	FILEOS 0x40004L
+	FILETYPE 0x1L
+	FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "Comment", 		ZQ_VERSION_COMMENT
+            VALUE "CompanyName", 	ZQ_VERSION_COMPANYNAME
+            VALUE "FileDescription", 	ZQ_VERSION_FILEDESCRIPTION
+            VALUE "FileVersion", 	ZQ_VERSION_FILEVERSION
+            VALUE "InternalName", 	ZQ_VERSION_INTERNALNAME
+            VALUE "LegalCopyright", 	ZQ_VERSION_LEGALCOPYRIGHT
+            VALUE "OriginalFilename", 	ZQ_VERSION_ORIGINALFILENAME
+            VALUE "ProductName", 	ZQ_VERSION_PRODUCTNAME
+            VALUE "ProductVersion", 	ZQ_VERSION_PRODUCTVERSION
+#ifdef ZQ_PRODUCT_BUILDTIME
+            VALUE "BuildTime", 	ZQ_PRODUCT_BUILDTIME
+#endif
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif    // !_MAC
+

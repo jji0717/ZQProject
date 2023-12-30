@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE SrvrList SYSTEM "SrvrList.dtd">
+<SrvrList>
+	<Header>
+		<Version>0</Version>
+		<DateTime>07.11.14.04.26.07</DateTime>
+		<Interval>300</Interval>
+	</Header>
+	<CMGroup>
+		<NodeGroup>0X1</NodeGroup>
+		<PGLevel>0</PGLevel>
+		<Instance>
+			<IPAddress>10.11.0.23</IPAddress>
+			<Port>2915</Port>
+			<Load>2</Load>
+			<LifeTime>330</LifeTime>
+		</Instance>
+	</CMGroup>
+	<SCTPGroup>
+		<Instance>
+			<IPAddress>10.11.0.23</IPAddress>
+			<Port>7004</Port>
+			<Load>0</Load>
+			<LifeTime>330</LifeTime>
+		</Instance>
+	</SCTPGroup>
+</SrvrList>

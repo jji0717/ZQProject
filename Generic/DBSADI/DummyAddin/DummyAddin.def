@@ -1,0 +1,17 @@
+; DummyAddin.def : Declares the module parameters for the DLL.
+
+LIBRARY      "DummyAddin"
+DESCRIPTION  'DummyAddin Windows Dynamic Link Library'
+
+EXPORTS
+    ; Explicit exports can go here
+
+DBSA_Initialize
+DBSA_Uninitialize
+DBSA_SyncBegin
+DBSA_SyncEnd
+DBSA_TriggerMd
+DBSA_TriggerMdd
+DBSA_TriggerHierarchy
+DBSA_TriggerCa
+DBSA_TriggerState

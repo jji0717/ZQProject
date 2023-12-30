@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="soapMRT"
+ targetNamespace="http://www.xor-media.tv/soapMRT.wsdl"
+ xmlns:tns="http://www.xor-media.tv/soapMRT.wsdl"
+ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+ xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+ xmlns:ZQ="ZQ:soapMRT"
+ xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/"
+ xmlns:MIME="http://schemas.xmlsoap.org/wsdl/mime/"
+ xmlns:DIME="http://schemas.xmlsoap.org/ws/2002/04/dime/wsdl/"
+ xmlns:WSDL="http://schemas.xmlsoap.org/wsdl/"
+ xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<types>
+
+ <schema targetNamespace="ZQ:soapMRT"
+  xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:ZQ="ZQ:soapMRT"
+  xmlns="http://www.w3.org/2001/XMLSchema"
+  elementFormDefault="unqualified"
+  attributeFormDefault="unqualified">
+  <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+  <simpleType name="Enum-1">
+   <restriction base="xsd:string">
+    <enumeration value="UNKNOWN"/><!-- enum const = 0 -->
+    <enumeration value="SETUP"/><!-- enum const = 1 -->
+    <enumeration value="TEARDOWM"/><!-- enum const = 2 -->
+   </restriction>
+  </simpleType>
+  <complexType name="pair">
+   <sequence>
+     <element name="key" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="value" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="map">
+   <sequence>
+     <element name="ptr" type="ZQ:pair" minOccurs="0" maxOccurs="unbounded"/>
+     <element name="size" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="setupInfo">
+   <sequence>
+     <element name="asset" type="xsd:string" minOccurs="1" maxOccurs="1" nillable="false"/>
+     <element name="resource" type="ZQ:map" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="params" type="ZQ:map" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="cbNotification" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="ctxNotification" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+ </schema>
+
+</types>
+
+<message name="setup">
+ <part name="setupInfo" type="ZQ:setupInfo"/>
+</message>
+
+<message name="setupInfoResponse">
+ <part name="resource" type="ZQ:map"/>
+ <part name="sessionId" type="xsd:string"/>
+ <part name="controlURL" type="xsd:string"/>
+ <part name="ret" type="xsd:boolean"/>
+</message>
+
+<message name="teardownRequest">
+ <part name="sessionId" type="xsd:string"/>
+</message>
+
+<message name="teardownResponse">
+ <part name="ret" type="xsd:boolean"/>
+</message>
+
+<message name="getStatus">
+ <part name="sessionId" type="xsd:string"/>
+</message>
+
+<message name="getStatusInfoResponse">
+ <part name="upTime" type="xsd:long"/>
+ <part name="state" type="State"/>
+ <part name="lastError" type="xsd:string"/>
+ <part name="ret" type="xsd:boolean"/>
+</message>
+
+<message name="notifyStatus">
+</message>
+
+<message name="notifyStatusInfo">
+ <part name="ctxNotification" type="xsd:string"/>
+ <part name="sessionId" type="xsd:string"/>
+ <part name="state" type="State"/>
+ <part name="lastError" type="xsd:string"/>
+</message>
+
+<portType name="soapMRTPortType">
+ <operation name="setup">
+  <documentation>Service definition of function ZQ__setup</documentation>
+  <input message="tns:setup"/>
+  <output message="tns:setupInfoResponse"/>
+ </operation>
+ <operation name="teardown">
+  <documentation>Service definition of function ZQ__teardown</documentation>
+  <input message="tns:teardownRequest"/>
+  <output message="tns:teardownResponse"/>
+ </operation>
+ <operation name="getStatus">
+  <documentation>Service definition of function ZQ__getStatus</documentation>
+  <input message="tns:getStatus"/>
+  <output message="tns:getStatusInfoResponse"/>
+ </operation>
+ <operation name="notifyStatus">
+  <documentation>Service definition of function ZQ__notifyStatus</documentation>
+  <input message="tns:notifyStatus"/>
+  <output message="tns:notifyStatusInfo"/>
+ </operation>
+</portType>
+
+<binding name="soapMRT" type="tns:soapMRTPortType">
+ <SOAP:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+ <operation name="setup">
+  <SOAP:operation style="rpc" soapAction=""/>
+  <input>
+     <SOAP:body use="encoded" namespace="ZQ:soapMRT" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+  </input>
+  <output>
+     <SOAP:body use="encoded" namespace="ZQ:soapMRT" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+  </output>
+ </operation>
+ <operation name="teardown">
+  <SOAP:operation style="rpc" soapAction=""/>
+  <input>
+     <SOAP:body use="encoded" namespace="ZQ:soapMRT" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+  </input>
+  <output>
+     <SOAP:body use="encoded" namespace="ZQ:soapMRT" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+  </output>
+ </operation>
+ <operation name="getStatus">
+  <SOAP:operation style="rpc" soapAction=""/>
+  <input>
+     <SOAP:body use="encoded" namespace="ZQ:soapMRT" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+  </input>
+  <output>
+     <SOAP:body use="encoded" namespace="ZQ:soapMRT" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+  </output>
+ </operation>
+ <operation name="notifyStatus">
+  <SOAP:operation style="rpc" soapAction=""/>
+  <input>
+     <SOAP:body use="encoded" namespace="ZQ:soapMRT" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+  </input>
+  <output>
+     <SOAP:body use="encoded" namespace="ZQ:soapMRT" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+  </output>
+ </operation>
+</binding>
+
+<service name="soapMRT">
+ <documentation>gSOAP 2.7.10 generated service definition</documentation>
+ <port name="soapMRT" binding="tns:soapMRT">
+  <SOAP:address location="http://localhost:8895"/>
+ </port>
+</service>
+
+</definitions>

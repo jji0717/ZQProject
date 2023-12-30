@@ -1,0 +1,26 @@
+<Syntax>
+	<!-- type is the log file type that this syntax to match ,value is "filelog" or "sclog" -->	
+	<EventSource type="filelog">
+	    <!--Event is the basic info of every event .contain event name,event category,event id,stampUTc(the timestam of event that is the match result substring use syntax),SourceNetId(the network id where the event is fired. hostname is recommended if no network id),
+	    enabled(is or not use this event set ,value "1" is use,"0" is not) -->
+	    <Event name="ServiceStarted" category="RTSPProxy" eventId="0001" stampUTC="$1" sourceNetId="${SourceNetId}" enabled="1">
+	       <!-- Syntax is the regular expression to match the log -->
+	       <Syntax value="([\d]{2}.[\d]{2} [\d]{2}:[\d]{2}:[\d]{2}.[\d]{3}).*===================== Loading service common interface.*" />
+
+	       <!-- Param the description of substring of match result, value is the special substring,such as "$2" is the second match string  -->
+   	       <Param name="#syslog.msg"    value="&lt;GeneralEvent type=&quot;Startup&quot; msgSeq=&quot;${SEQ}&quot; /&gt;"/>
+	    </Event>
+
+	    <Event name="InitializationFailure" category="RTSPProxy" eventId="0003" stampUTC="$1" sourceNetId="${SourceNetId}" enabled="1">
+			<Syntax value="([\d]{2}.[\d]{2} [\d]{2}:[\d]{2}:[\d]{2}.[\d]{3}).*OnInit() failed with \[.*\].*" />
+			<Param name="#syslog.msg"    value="&lt;GeneralEvent type=&quot;Shutdown&quot; msgSeq=&quot;${SEQ}&quot; reason=&quot;500&quot;/&gt;"/>
+	    </Event>
+	 
+	    <Event name="ServerLoad" category="RTSPProxy" eventId="0011" stampUTC="$1" sourceNetId="${SourceNetId}" enabled="1">
+	       <Syntax value="([\d]{2}.[\d]{2} [\d]{2}:[\d]{2}:[\d]{2}.[\d]{3}).*RtspProxy\s*loadInfo\(\)\s*serverIP\[(.*)\]\s*serverPort\[(.*)\]\s*session\[(.*)\]\s*connection\[(.*)\]\s*load\[(.*)\]\s*.*" />
+	       <Param name="#snapshot.target" value="c:\serverload.snapshot.xml"/>
+	       <Param name="#snapshot.template" value="\\10.50.12.4\e$\serverload.tmpl.xml"/>
+	       <Param name="#snapshot.env"    value="ip=$2;port=$3;load=$6"/>
+	    </Event>
+	</EventSource>
+</Syntax>

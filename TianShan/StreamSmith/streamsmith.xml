@@ -1,0 +1,72 @@
+
+<StreamSmith>
+	<Service>		
+		<serverPort value = "1554"/>
+		<!--service socket port -->
+		<maxConnection value = "850"/>
+		<!--connection limit -->
+		<isSecure value = "0"/>
+		<threadCount value = "3"/>
+		<!--how many thread to work for receiving client request -->
+		<publicKeyFile value = "server.pem"/>
+		<privateKeyFile value = "server.pem"/>
+		<privateKeyFilePwd value = "xiao"/>
+		<dhParamFile value = "dhParam.pem"/>
+		<randFile value = "rand.pem"/>
+		<debugLevel value="4"/>
+		<!--5 is a default from 1 to 5-->
+		<debugDetail value="3"/>
+		<!--0 is default from 1 to 3-->
+		<idleTimeout value="300000"/>
+		<maxPollTime value="500"/>
+		<sessionTimeout value="3000000"/>
+		<idsAddress value="ids://10.15.10.22/?username=sa"/>
+		<!--ids query server address with username-->
+		<KillerWaitInterlval value="1000000"/>
+		<!--this time interval is used for playlist destroy management (in ms) -->
+		<playlistTimeout value="100000"/>
+		<!--playlist expired time if no action (in ms) -->
+		<timeoutOnPause value="1"/>
+		<!--destroy the expired playlist when in PAUSE state,if the value is 1 ,playlist will be deleted,otherwise,playlist will be kept alive -->
+		<SessMonLogFilePath value="c:\rdebug\log\StreamSmith.sess.log"/>
+		<!--Vstrm session log file path -->
+		<SessMonLogLevel value="900"/>
+		<!--Vstrm session log level 900 is a default-->
+		<SessMonLogFileSize value="10000000"/>
+		<!--Vstrm Session log file size-->
+		<pluginLogFileSize value="100000000"/>
+		<!--plugin log file size in bytes-->		
+		<pluginLogLevel value="900"/>
+		<!--plugin log file level,default is 900-->
+		<pluginLogFilePath value="c:\rdebug\log\streamsmith.log.plugin"/>
+		<ResourceConfigFile value="c:\rdebug\etc\SourceManager.xml"/>
+		<!--resource config file path-->
+		<ServiceThreadCount value="50" /> 
+		<!--service thread for processing request(not from client directly)-->
+		<failOverDBDirectory value="c:\rdebug\log\DBFailOver\"/>
+		<!--fail store directory to store fail over data-->
+		<SuperPluginPath value="c:\rdebug\modules\ssm_tianshan.dll"/>
+		<!--super plugin path -->
+		<IceStormEndPoint value="tcp -h 10.15.10.251 -p 10001"/>
+		<!--ice storm end point such like tcp -h 10.15.10.251 -p 10001-->
+		<ServiceEndPoint value="default -p 10000"/>
+		<!--service end point -->
+		<DefaultSpigotID value="0"/>
+		<!--default spigot id,-1 for every spigots;if you want to set multi spigot id,use semi-colon to seperate it just like "0;2;3"-->
+		<ForceNormalSpeedTimeOnPauseTv value="-1"/>
+		<!--available on PuaseTV only,how many milliseconds should streamsmith set stream to normal speed before last item done.if streamsmith is not used for pausetv,Set it to -1 please-->
+		<eventSinkTimeout value="600000"/>
+		<!--event sink timeout in ms-->
+		<StreamSmithServiceID value="10.15.10.251"/>
+		<!--unique streamsmith service ID,string format-->
+	</Service>
+	<StreamSmithSite>
+		<Application path="basic" handler="MOD"/>
+		<virtualSite name="10.15.10.252">
+			<Application path="basic" handler="MOD"/>
+		</virtualSite>
+		<plugin>		
+			<module file="c:\rdebug\modules\SSM_burn.dll" configuaretion=""/>
+		</plugin>
+	</StreamSmithSite>	
+</StreamSmith>

@@ -1,0 +1,44 @@
+<project name="TianShan" default="dist" basedir=".">
+  <description>
+       simple example build file
+  </description>
+
+  <property environment="env"/>
+
+  <!-- set global properties for this build -->
+  <property name="src" location="java"/>
+  <property name="build" location="build"/>
+  <property name="dist"  location="bin"/>
+
+  <target name="init">
+    <tstamp/>
+    <mkdir dir="${build}"/>
+  </target>
+
+  <target name="compile" depends="init"  description="compile the source " >
+
+    <!-- Compile the java code from ${src} into ${build} -->
+    <javac source="1.4" srcdir="${src}" destdir="${build}" classpath="${env.ICE_ROOT}/java2/Ice.jar" deprecation="on" />
+    
+	<!-- <javac source="1.4" srcdir="${src}" destdir="${src}" classpath="${env.ICE_ROOT}/java2/Ice.jar" deprecation="on" />  -->
+
+  </target>
+
+  <target name="dist" depends="compile"  description="generate the distribution" >
+    <!-- Create the distribution directory -->
+    <mkdir dir="${dist}"/>
+
+    <jar jarfile="${dist}/../../../bin/StreamSmithAdimIce.jar"  basedir="${build}"/>
+    <!-- <jar jarfile="${dist}/TianShanIceSrc.jar" basedir="${src}"/> -->
+
+  </target>
+
+  <target name="clean" description="clean up" >
+
+    <!-- Delete the ${build} and ${dist} directory trees -->
+    <delete dir="${build}"/>
+    <delete dir="${dist}"/>
+
+  </target>
+</project>
+

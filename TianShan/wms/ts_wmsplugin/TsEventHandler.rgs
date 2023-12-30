@@ -1,0 +1,49 @@
+HKCR
+{
+	Ts_wmsplugin.TsEventHandler.1 = s 'TsEventHandler Class'
+	{
+		CLSID = s '{ABCE7B3C-B8E5-4829-B70B-9556A42F5B34}'
+	}
+	Ts_wmsplugin.TsEventHandler = s 'TsEventHandler Class'
+	{
+		CLSID = s '{ABCE7B3C-B8E5-4829-B70B-9556A42F5B34}'
+		CurVer = s 'Ts_wmsplugin.TsEventHandler.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {ABCE7B3C-B8E5-4829-B70B-9556A42F5B34} = s 'TsEventHandler Class'
+		{
+			ProgID = s 'Ts_wmsplugin.TsEventHandler.1'
+			VersionIndependentProgID = s 'Ts_wmsplugin.TsEventHandler'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{5D42A84B-2787-4480-9C8F-5D637693A0FA}'
+		}
+	}
+}
+
+HKLM 
+{
+	NoRemove SOFTWARE
+	{
+		NoRemove Microsoft
+		{
+			NoRemove 'Windows Media'
+			{
+				NoRemove Server
+				{
+					NoRemove RegisteredPlugins
+					{
+                        NoRemove 'Event Notification and Authorization'
+                        {
+					        ForceRemove {ABCE7B3C-B8E5-4829-B70B-9556A42F5B34} = s 'TianShan Event Plugin'
+					    }
+					}
+				}
+			}
+		}
+	}
+}

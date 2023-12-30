@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+Notice: TianShanDef.xml has been preloaded when this configuration file is being parsed, please refer to
+        TianShanDef.xml for the common properties
+-->
+<TianShan>
+	<Definitions src="TianShanDef.xml">
+	</Definitions>
+	<!-- configurations on SSM plugin for NGOD2
+	-->
+	<ssm_NGOD2>
+		<!-- log file
+		     attributes:
+		       level         - the log level of this main log
+		       size          - the size that this trace log must roll
+		       maxCount      - config the max number of rolled log files.
+		       bufferSize    - the buffer size of log in byte
+		-->
+		<LogFile size="50000000" level="${DefaultLogLevel}" maxCount="10" bufferSize="8192"/>
+		
+		<!-- event log file
+		     attributes:
+		       level         - the log level of this main log
+		       size          - the size that this trace log must roll
+		       maxCount      - config the max number of rolled log files.
+		       bufferSize    - the buffer size of log in byte
+		-->
+		<EventLogFile size="50000000" level="7" maxCount="5" bufferSize="8192"/>
+		
+		<!-- The IceStorm service where the services of this TianShan deployment will deliver events to.
+		     attributes:
+		       endpoint - the ICE endpoint to the IceStorm service
+		-->
+		<EventChannel endpoint="${PrimeEventChannelEndpoint}" />
+		
+		<!-- The local bind endpoint that the ssm_NGOD2 is serving on
+		     attributes:
+		       endpoint      - the bind endpoint of this Weiwoo service
+		       dispatchSize  - the initial thread pool size to dispatch client requests, values in the range 4-20 are acceptable
+		       dispatchMax   - the max thread pool size to dispatch client requests
+		-->
+		<Bind endpoint="tcp -h ${ServerNetIf} -p 11200" dispatchSize="5" dispatchMax="30"/>
+
+		<!-- configurations on RTSP sessions
+		     attributes:
+			timeout - timeout of an unattended RTSP session in seconds, minimal acceptable value 60, default 600s. 
+			          note: be sure this value should no longer than RTSPProxy's connection idle timeout RtspProxy/SocketServer/idleTimeout
+			cacheSize - the count of sessions to cache from the database, range [1000, 5000] are acceptable, default 1000
+			monitorThreads - the thread count to perform background maintenace, minimal 3, default 5
+			defaultServiceGroup - the default service group Id if not provided.
+            timeoutCount - accept arrage[3, 100], if a session is inactive during timeout * timeoutCount, the 
+            session will be destroyed
+		-->
+		<RTSPSession timeout="600" monitorThreads="5" defaultServiceGroup="5" timeoutCount = "3" />
+		
+		
+		<!-- The default folder where the services of this TianShan deployment accesses their local
+		     databases if it is not defined by their individual configurations
+		     attributes:
+		       path          - path to the location of database directory, default "../data/"
+		       the rest of this node are the performance tunning configuration, these configuratio will override the configuration in IceProperties
+		-->
+		<Database path="${TianShanDatabaseDir}" runtimePath="${TianShanDatabaseDir}\runtime" evictorSize="5000" fatalRecover="1" checkpointPeriod="120" saveSizeTrigger="-1" savePeriod="0"/>
+		
+		<!-- Configurations on RTSP ANNOUNCE
+		     attributes:
+			useGlobalCSeq, non-zero means enable use global CSeq for ANNOUNCEs
+			notifyTrickRestriction, positive means enable TrickRestriction ANNOUNCEs
+			notifyItemSkip, positive means enable ItemSkip ANNOUNCEs
+			includeTeardownRange, positive means include npt in Teardown
+		-->
+		<Announce useGlobalCSeq="0" includeTransition="1" notifyTrickRestriction="1" notifyItemSkip="1" includeTeardownRange="1" sendTianShanStateChangeAnnounce="0" sendTianShanScaleChangeAnnounce="0" resubscribeAtIdle="3600000"/>
+		
+		<!-- Configurations on RTSP Response
+             attributes:
+            setupFailureWithSessId, non-zero means enable provide the session id even if a SETUP is failed            
+			streamCtrlProt: to specify the stream control protocol, acceptable value "rtsp" and "lscp"; default "rtsp"
+        --> 
+        <Response setupFailureWithSessId="1" streamCtrlProt="rtsp"/>
+        
+		<!-- Log files to publish thru SentryService
+		-->		
+		<PublishedLogs enabled="1">
+			<!-- Log file to publish thru SentryService
+		     	     attributes:
+		       		path    - full path of the log file
+		       		syntax  - the file defines the syntax of the events via the regular expressions
+			-->
+			<Log path="${TianShanLogDir}\ssm_NGOD2_events.log" syntax="${TianShanHomeDir}\etc\syntax.xml" key="SSM_OSTR"/>
+			<Log path="${TianShanLogDir}\RTSPProxy.log" syntax="${TianShanHomeDir}\etc\syntax.xml" key="RTSPProxy"/>
+			<Log path="${TianShanLogDir}\RTSPProxy_shell.log" syntax="${TianShanHomeDir}\etc\syntax.xml" key="RTSPProxy_Shell"/>
+        	</PublishedLogs>
+		
+		<IceProperties>
+			<!--
+			the following are performance tuning parameters, please don't modify if you are not an expert at them 
+			--> 
+	    		<prop name="Ice.Trace.Network"                  value="1" />
+        		<prop name="Ice.Trace.Protocol"                 value="0" />
+        		<prop name="Ice.Trace.Retry"                    value="1" />
+        		<prop name="Ice.Warn.Connections"               value="1" />
+        		<prop name="Ice.Warn.Endpoints"                 value="1" />
+        		<prop name="Ice.Logger.Timestamp"               value="1" />
+        		<prop name="Freeze.Warn.Deadlocks"              value="1" />
+        		<prop name="Freeze.Trace.Map"                   value="0" />
+        		<prop name="Freeze.Trace.DbEnv"                 value="2" />
+        		<prop name="Freeze.Trace.Evictor"               value="0" />
+        		<prop name="Ice.Override.Timeout"               value="20000"/>
+        		<prop name="Ice.Override.ConnectTimeout"     	value="2000"/>
+        		<prop name="Ice.ThreadPool.Server.Size"         value="30"/>
+        		<prop name="Ice.ThreadPool.Server.SizeMax"      value="60"/>
+        		<prop name="Ice.ThreadPool.Client.Size"         value="10"/>
+        		<prop name="Ice.ThreadPool.Client.SizeMax"      value="30"/>
+            	<!--
+	            	<prop name="Freeze.DbEnv.E:\tianshan\data\ssm_ngod2\.DbRecoverFatal" value="1"/>
+            		<prop name="Freeze.DbEnv.E:\tianshan\data\ssm_ngod2\.CheckpointPeriod" value="6" />
+            		<prop name="Freeze.Evictor.E:\tianshan\data\ssm_ngod2\.Contexts.SaveSizeTrigger" value="-1" />
+	    			<prop name="Freeze.Evictor.E:\tianshan\data\ssm_ngod2\.Contexts.SavePeriod" value="0" />
+	    		-->
+		</IceProperties>
+
+		<!-- Configurations on SOP restrictions:
+	     		attributes:
+	       		enableWarmup - if this configuration is turned on(set it to 1) ,NGOD2 will connect to streamer when it startup
+	                turn it off if you do not want it to connect to streamer when plugin startup
+	       		retryCount - the max number of the retries if failed to setup streams
+	       		maxPenaltyValue - the penalty to apply if an SOP failed to setup a stream
+		-->
+		<SOPProp fileName="${TianShanConfDir}\ssm_NGOD2_SOP.xml" />
+		
+		<!-- Configurations on PassThru streaming:
+	     		attributes:
+	       		enabled - 0 to disable PassThru streaming
+	                muteStat - 1 to disable responding the inquiry about statistics on the importing interfaces
+		-->
+		<PassThruStreaming enabled="1" muteStat="0" excludeC2Down="0">
+			<!-- Configurations on SOP restrictions:
+	     		     attributes:
+	       			name - the unique name to identify a import channel, it is recommended to include the NIC name of the node
+	                	bandwidth - the max bandwidth in Kbps of the import channel
+	       			maxImport - the max number of the simultaneous session the channel can support
+			-->
+			<ImportChannel name="SEACnnnnnNx_PG" bandwidth="1000000" maxImport="1000" />
+			<ImportChannel name="SEACnnnnnNy_PG" bandwidth="1000000" maxImport="1000" />
+		</PassThruStreaming>
+		<LAM enableWarmup="0" >
+			<!-- Test mode to work without LAM
+			-->
+			<TestMode enabled="0">
+				<item name="00000001" bandwidth="3750000" cuein="0" cueout="0">
+					<attrs>
+						<attr key="replicaStateOfVol_CL3/$" value="ProvisioningStreamable"/>
+						<attr key="ImportEdgeNodeOfVol_CL3/$" value="10.15.10.250/Spigot02"/>
+					</attrs>
+					<remoteurl>
+						<url name="\\10.15.10.250\c$\tianshan\test\00000001"/>
+					</remoteurl>
+					<volumeList>
+						<volume name="CL2/$" />						
+					</volumeList>
+				</item>			
+			</TestMode>
+			
+			<!-- Connfiguration of the commucation to LAM instance
+			     attributes:
+			     	name - unique name to identify to the instance of LAM
+				endpoint - the endpoint to connect to the LAM instance
+			-->
+			<LAMServer name="OSTR01" endpoint="tcp -h OSTR01_SS_CL -p 20089" >
+				<!-- Connfiguration of the volume that the LAM can manage
+			     	   attributes:
+					name - name of the volume, wildcard is supported
+			       		cache - "1" to indicate the volume can work as a cache of the library storage to be candidate for the orders
+			                	for reference assets. default "0", the volume can be the persistent storage of asset, i.e. HDS cluster
+			       		cacheLevel - the priority to sort LAM instances to query for asset existance. acceptable range [0, 100] 0 - highest, 100 - lowest; default 50
+			                    	i.e. FMS cacheLevel="20" and HDS cacheLevel="10"
+			       		supportNasStreaming - "1" to indicate the volume is bind with streaming device(s) that can perform pass-thru streaming
+			                    	directly from the external storage. default "0"
+				-->
+				<Volume name="SEACnnnnn/*" cache="1" cacheLevel="50" supportNasStreaming="0" />
+				<Volume name="SEACmmmmm/*" cache="1" cacheLevel="60" supportNasStreaming="1" />
+			</LAMServer>
+		</LAM>
+				
+		<!-- playlistControl , control playlist behaviour
+				enableEOT	: enable EOT protection , 
+								if this valus is 1 , stream will be forced normal play at the EOT proection area
+								if this value is 0 , no additional action will be performed when stream is in EOT protection area
+				ignoreDestMac : 1 for ignore destination mac address in transport header , 0 for use destination mac address
+		-->
+		<playlistControl enableEOT="0" ignoreDestMac="0"/>
+	
+	  <!-- protocolVersioning
+	       enable : 1, enable protocol versioning between ngod client and server
+	       enable : 0, disable protocol versiioning between ngod client and server
+	  -->	
+		<protocolVersioning enable="0" />
+		
+		<!-- sessionHistory
+		     enable : 1, enable session history data in teardown response message
+		     enablePlayEvent: only available when enable=1. enablePlayEvent=1, enale play event history in session history
+		     enablePauseEvent : only available when enable=1. enablePauseEvent=1, enale pause event history in session history
+		-->
+		<sessionHistory enable="0" enablePlayEvent="1" enablePauseEvent="1" />
+		<!-- D5Speaker
+         enable -  0  to disable D5 advertising
+         listenterIp - the IP to specify the VREP listener of this advertising
+         listenterPort - the port to specify the VREP listener of this advertising
+         streamZone - string name to specify the stream zone
+         holdTime - time in msec about the The initial hold timer in seconds for local VREP peer
+         hopServer - next hop server address
+         updateInterval - interval for updating bandwidth changed information, in millisecond         
+		-->		
+		<D5Speaker enable="0"  listenerIP=""  listenerPort=""  streamZone="ZQ" holdTimer="240000" hopServer="${ServerNetIf}" updateInterval="1800000" diffPercent="5">
+			<!-- 
+			If you have additional D5 listener, Please add it here
+			-->
+			<!--SubSlistener listenerIP=""  listenerPort=""/-->
+		</D5Speaker>
+		
+		<!--
+		ssm_ngod use asset stack technology to select streamer
+		enable - enable asset stack this one >= 1
+		adjustWeight - adjust threshold , do not modify this value unless you what you are doing
+		startMode - if this is 0, ssm_ngod2 select streamer by asset name if the asset is not at local at all. if this is 1 node load will be used on selection algorithm
+		-->
+		<AssetStack enable="1" adjustWeight="9900" startMode="0"/>
+		
+		<!--
+		enabled - enable ads replacement >= 1
+		provideLeadingAdsPlaytime - provide primaryItemNPT in announce
+		defaultTrickRestriction - set ads restriction as defaultTrickRestriction if not given
+		-->
+		<AdsReplacement enable="1" provideLeadingAdsPlaytime="1" defaultTrickRestriction="FR" playOnce="1">
+			<AdsProvider pid="ads.schange.com" />
+		</AdsReplacement>
+		
+  	</ssm_NGOD2>
+
+</TianShan>

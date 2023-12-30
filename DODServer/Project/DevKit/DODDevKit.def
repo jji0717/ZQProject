@@ -1,0 +1,6 @@
+; DODDevKit.def : Declares the module parameters for the DLL.
+
+LIBRARY      "DODDevKit"
+
+EXPORTS
+    ; Explicit exports can go here

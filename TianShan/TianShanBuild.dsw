@@ -1,0 +1,1655 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "AdminControl"=.\AccreditedPath\AdminControl\AdminControl.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "AdminCtrl_web"=.\Sentry\AdminCtrl_web\AdminCtrl_web.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Buildall"=.\Buildall.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ChODSvc
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ClusterContentStore
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name NodeContentStore
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name pho_NGOD_ss
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RDS
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RtfCPNode
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name rtspProxy
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name SiteAdminSvcCmd
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ssm_NGOD_r2c1
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ssm_tianshan
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TestAdminCtlWtl
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name WeiwooService
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RDA
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ssmTianShanS1
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name SentryService
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ChPub
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTICPNode
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ssm_ngod2
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name snmpplug
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name AdminCtrl_web
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CodMan_web
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ModSvc
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CPESvc
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CPH_RDS
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQSNMPExtAgent
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CPH_RTFRDS
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ssm_richurl
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name NASContentStore
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "CPESvc"=.\CPE\service\CPESvc.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQAppshell
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCfgPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQShellMsgs
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQSNMPManPkg
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "CPH_RDS"=.\CPE\CPH_RDS\CPH_RDS.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCfgPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQSNMPManPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CPESvc
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "CPH_RTFRDS"=.\CPE\CPH_RTFRDS\CPH_RTFRDS.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CPESvc
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCfgPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQRTFLib
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQSNMPManPkg
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "CPManager"=.\ContentStore\CPManager\CPManager.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQSNMPManPkg
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ChODSvc"=.\ChannelOnDemand\service\ChODSvc.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name JMSCpp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanShell
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQAppshell
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCfgPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQShellMsgs
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQSNMPManPkg
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ChPub"=.\ChannelOnDemand\Tests\ChPub\ChPub.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ChODSvc
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ClusterContentStore"=.\ContentStore\MediaCluster\ClusterContentStore\ClusterContentStore.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CPManager
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name JMSPublisherLib
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name PushManager
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQAppshell
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCfgPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQShellMsgs
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQSNMPManPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RDAMgr
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "CodMan_web"=.\Sentry\CodMan_web\CodMan_web.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "EPManager"=.\ContentStore\EPManager\EPManager.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "EventSender"=.\Sentry\Plug_EventSender\EventSender.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQSNMPManPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name JMSCpp
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "JMSCpp"=..\generic\JMSCppLib\JMSCpp\JMSCpp.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "JMSPublisherLib"=.\common\JMSPublisherLib\JMSPublisherLib.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name JMSCpp
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "JavaClient"=.\ChannelOnDemand\JavaClient\JavaClient.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "LogPage"=.\Sentry\LogPage\LogPage.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MOD"=.\application\MOD\MOD.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanShell
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQAppshell
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCfgPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQShellMsgs
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQSNMPManPkg
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "MODPlugIn"=.\application\MODPlugIn\MODPlugIn.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ModSvc"=.\application\MOD2\ModSvc.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanShell
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQAppshell
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCfgPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQShellMsgs
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQSNMPManPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name MODPlugIn
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "NASContentStore"=.\ContentStore\MediaCluster\NASContentStore\NASContentStore.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CPManager
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanShell
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQAppshell
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCfgPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQSNMPManPkg
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "NodeContentStore"=.\ContentStore\MediaCluster\NodeContentStore\NodeContentStore.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CPManager
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name EPManager
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name JMSPublisherLib
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name PushManager
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name VstrmCPNode
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQAppshell
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCfgPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQShellMsgs
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQSNMPManPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RDAMgr
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "PathAmin"=.\AccreditedPath\admin\PathAdmin.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQSNMPManPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name WeiwooService
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "PushManager"=.\ContentStore\PushManager\PushManager.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "RDA"=.\ContentStore\RDA\RDA.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name isaLink
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQAppshell
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCfgPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQShellMsgs
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQSNMPManPkg
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RDAMgr"=.\ContentStore\RDAManager\RDAMgr.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "RDS"=.\ContentStore\RDS\RDS.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanShell
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQAppshell
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCfgPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQShellMsgs
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQSNMPManPkg
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RTICPNode"=.\ContentStore\RTICPNode\RTICPNode.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQAppshell
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCfgPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQRTFLib
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQShellMsgs
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQSNMPManPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RtfCPNode"=.\ContentStore\RtfCPNode\service\RtfCPNode.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name RTFLib
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQAppshell
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCfgPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQShellMsgs
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQSNMPManPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQRTFLib
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RtspParser"=..\Common\Rtsp\RtspParser\RtspParser.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "SentryService"=.\Sentry\service\SentryService.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanShell
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TSClient
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name WebLayout
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQAppshell
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCfgPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQShellMsgs
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQSNMPManPkg
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ServiceFrame"=..\Common\ServiceFrame\Lib\ServiceFrame.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "SiteAdmin"=.\SiteAdminSvc\admin\SiteAdmin.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQAppshell
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCfgPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQShellMsgs
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQSNMPManPkg
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "SiteAdminSvcCmd"=.\SiteAdminSvc\service\SiteAdminSvcCmd.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanShell
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQAppshell
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCfgPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQShellMsgs
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQSNMPManPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name EventSender
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name JMSCpp
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "StreamSmith"=.\StreamSmith\Service\StreamSmith.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name RtspParser
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ServiceFrame
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ssm_zq_lam
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanShell
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQAppshell
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCfgPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQShellMsgs
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQSNMPManPkg
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "StreamSmithAdmin"=.\StreamSmith\StreamSmithAdmin\StreamSmithAdmin.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TSClient"=.\Sentry\TSClient\TSClient.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TestAdminCtlWtl"=.\AccreditedPath\TestAdminCtl\TestAdminCtlWtl.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name AdminControl
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TianShanCommon"=.\common\TianShanCommon.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TianShanIce"=.\Ice\TianShanIce.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TianShanShell"=.\Shell\ZQShell\TianShanShell.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ZQAppshell
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCfgPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQShellMsgs
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQSNMPManPkg
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "VstrmCPNode"=.\ContentStore\VstrmCPNode\VstrmCPNode.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "WebLayout"=.\Sentry\webLayout\WebLayout.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name LogPage
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TSClient
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "WeiwooAdmin"=.\Weiwoo\admin\WeiwooAdmin.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Weiwoo
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "WeiwooService"=.\Weiwoo\service\WeiwooService.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name pho_SeaChange
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanShell
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQAppshell
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCfgPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQShellMsgs
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQSNMPManPkg
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ZQAppshell"=.\Shell\ZQAppShell\zqappshell.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ZQShellMsgs
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ZQCfgPkg"=.\Shell\ZQCfgPkg\ZQcfgpkg.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ZQCommonStlp"=..\Common\dll\ZQCommonStlp.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ZQRTFLib"=..\generic\RTFLib\ZQRTFLib.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ZQSNMPExtAgent"=.\Sentry\ZQSNMPExtAgent\ZQSNMPExtAgent.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ZQCfgPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ZQSNMPManPkg"=.\Shell\ZQSNMPManPkg\ZQSNMPManPkg.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ZQCfgPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ZQShellMsgs"=.\Shell\ZQShellMsgs\ZQShellMsgs.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "isaLink"=.\ContentStore\isaLink\isaLink\isaLink.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name libbz
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "libbz"=.\ContentStore\isaLink\libbz\libbz.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "lscpLib"=.\StreamSmith\LSCP\lscpLib\lscpLib.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "pho_NGOD_ss"=.\ComcastNGOD\pho_NGOD_ss\pho_NGOD_ss.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQSNMPManPkg
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "pho_SeaChange"=.\AccreditedPath\pho\pho_SeaChange\pho_SeaChange.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQSNMPManPkg
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "rtspProxy"=.\StreamSmith\Service\rtspProxy.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name RtspParser
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ServiceFrame
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanShell
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQAppshell
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCfgPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQShellMsgs
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQSNMPManPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name lscpLib
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "sdk"=.\sdk\sdk.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "snmpplug"=.\Sentry\Plug_EventSender\snmp\snmpplug.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQSNMPManPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ssmTianShanS1"=.\StreamSmith\Modules\SsmTianShanS1_Now\ssmTianShanS1.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ssm_NGOD_r2c1"=".\ComcastNGOD\ssmNGODr2c1(Improved)\ssm_NGOD_r2c1.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name rtspProxy
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ssm_ngod2"=.\ComcastNGOD\ssm_ngod2\ssm_ngod2.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQSNMPManPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCfgPkg
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ssm_richurl"=.\StreamSmith\Modules\ssm_richurl\ssm_richurl.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ssm_tianshan"=.\StreamSmith\Modules\ssm_tianshan\ssm_tianshan.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name StreamSmith
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name StreamSmithAdmin
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ssm_zq_lam"=.\StreamSmith\Modules\ssm_zq_lam\ssm_zq_lam.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

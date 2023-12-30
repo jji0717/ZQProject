@@ -1,0 +1,10 @@
+<TianShan>
+<!-- configurations for the CntCrypt service -->
+	<FTPServer>   
+	  <Server BindIP="192.168.81.101" Port="21" MaxConnection="100" HomeDir="c:\ftphome\"/>		
+	  <BufferMaxNumber value="150"/>
+	  <BufferBlockSize value="188000"/>
+	  <SocketReadTimeOutSecs value="30"/>
+	  <log dir="c:\ftphome\" level="10" size ="524288"/>
+	 </FTPServer>
+</TianShan>

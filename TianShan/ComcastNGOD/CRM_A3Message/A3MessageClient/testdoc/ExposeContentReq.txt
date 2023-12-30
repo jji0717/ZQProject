@@ -1,0 +1,8 @@
+
+set volumeName=volume7
+set pid=1000
+set paid=6000
+set protocol=http
+set transferBitRate=3750000
+get
+exec7

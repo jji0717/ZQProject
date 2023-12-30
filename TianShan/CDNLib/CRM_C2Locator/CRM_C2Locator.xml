@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TianShan>
+  <Definitions src="TianShanDef.xml">
+    <!-- property name="" value="" /-->
+    <property name="LAMEndpoint" value="LAMFacade:tcp -h 10.15.10.33 -p 20086"/>
+  </Definitions>
+  <default>
+    <EventChannel endpoint="${PrimeEventChannelEndpoint}" />
+    <Database path="${TianShanDatabaseDir}" runtimePath="${TianShanDatabaseDir}" />
+
+    <!-- Log files to publish thru SentryService
+	  -->
+    <PublishedLogs>
+      <Log path="${TianShanLogDir}/CRM_C2Locator.log" syntax="${TianShanHomeDir}/etc/syntax.xml" key="C2Loc" type="FileLog">
+      </Log>
+      <Log path="${TianShanLogDir}/HttpCRG.log" syntax="${TianShanHomeDir}/etc/syntax.xml" key="HttpCRG" type="FileLog">
+      </Log>
+    </PublishedLogs>
+    <!-- Additional Ice properties if there is any, <prop /> is its sub element
+		     attrib of <prop />:
+		        name         == the name of the Ice property
+		        value        == the value of the Ice property
+		-->
+    <IceProperties>
+      <prop name="Ice.Trace.Network"                    value="1" />
+      <prop name="Ice.Trace.Retry"                      value="1" />
+      <prop name="Ice.Warn.Connections"                 value="1" />
+      <prop name="Ice.Warn.Endpoints"                   value="1" />
+      <prop name="Freeze.Trace.DbEnv"                   value="2" />
+      <prop name="Freeze.Trace.Evictor"                 value="1" />
+      <prop name="Freeze.Warn.Deadlocks"                value="1" />
+      <prop name="Ice.ThreadPool.Server.Size"           value="40"/>
+      <prop name="Ice.ThreadPool.Server.SizeMax"        value="100"/>
+      <prop name="Ice.Override.Timeout"                 value="20000"/>
+      <prop name="Ice.Override.ConnectTimeout"          value="2000"/>
+    </IceProperties>
+  </default>
+
+  <!-- The C2 Locater configuration
+        uri     - the alternate locate uri format
+        notice  - 1 to enable the TianShan-Notice header; 0 to disable
+  -->
+  <C2Locator uri="/?sccdn(\.cgi)?|/?vodadi(\.cgi)?|/?ngbBOne" notice="1">
+    <!-- The module logger configuration
+         level   -   level of the output logs
+         size    -   size of the logger file
+         buffer  -   interal buffer size of the logger
+         count   -   log file count
+      -->
+    <Log level="7" size="10240000" buffer="204800" count="5"/>
+    <!-- The locator service binding info
+         endpoint -  the endpoint that locater service bind to
+      -->
+    <Bind endpoint="tcp -h ${ServerNetIf} -p 6789" />
+
+    <!-- The thread pool used by locater
+         size    -   size of the pool
+      -->
+    <ThreadPool size="200"/>
+
+    <!-- The transfer port management configuration
+         updateInterval - the interval of updating the port's status from
+                          the stream service.(in second).
+         selectionRetryMax - the max retries of the port selection.
+         mask4          - IPv4 subnet mask
+         ignoreExclusion - temporarily ignore the ExclusionList when
+                           the normal selection doesn't hit any port.
+         ignoreIngressCapacity - ignore the client's IngressCapacity.
+      -->
+    <TransferPort updateIntervalSec="30" selectionRetryMax="3" mask4="0.0.0.0" ignoreExclusion="1" ignoreIngressCapacity="0">
+      <!-- The penalty setting
+           punishmentUnit - the number of penalty points per failure
+           reducingIntervalMsec - how long to reduce 1 penalty point(in msec)
+           retryLimit     - the minimal penalty points needed to retry the port
+           max            - maximum number of the penalty point
+        -->
+      <Penalty punishmentUnit="10" reducingIntervalMsec="1000" retryLimit="5" max="30"/>
+    </TransferPort>
+
+    <!-- The transfer rate settings
+         indexFileRate        - the transfer rate of the ".index" file
+         transferAheadPercent - the transfer ahead rate for the non-index
+                                file that with a transfer delay
+      --> 
+    <TransferOption indexFileRate="5000000" transferAheadPercent="101" authEnable="0" checkExpirationInAuth="1" authKeyfile="" exposeIndex="0"/>
+
+    <!-- The transfer session settings
+         timeout        - the transfer session timeout value(in ms)
+         cacheSize(default:100) - the in-memory sessions cache size
+      -->
+    <TransferSession timeOut="50000" cacheSize="3000"/>
+	<!--
+		
+	-->
+	<CacheServer fullname="CacheEndpoint" cachesEndpoint="CacheStore:${CacheStoreEndpoint}" uri="/?cacheserver" forwardURL="" />
+    <!-- The content info
+         fullName - the full name of the content in the storage.
+                    can be formatted with $Volume, $Name.
+         lamEndpoint  - the endpoint of LAM facade
+         contentLibraryEndpoint   - the endpoint of ContentLibrary. C2Locator will
+                                    query content from ContentLibrary if the lamEndpoint
+                                    keep *EMPTY*.
+         overwriteAvailableRange  - Overwrite the AvailableRange with the value from CDNSS
+      -->
+    <Content fullName="/$Volume/$Name" lamEndpoint="${LAMEndpoint}" contentLibraryEndpoint="" overwriteAvailableRange="1">
+      <!-- The resolution rule that convert the object identifer
+           to content attributes
+           enabled    - 1 for enable this resolution, 0 for disable.
+           type       - the content type of the resolution
+           identifier - the syntax of the object identifer. it's a
+                        regular expression and the matched data can be
+                        referred by the content attributes.
+           providerId - the provider id of the content
+           assetId    - the asset id of the content
+           extension  - the extension of the member file
+        -->
+      <ObjectResolution enabled="1" type="SeaChange" identifier="(.{20})(.{20})(\.\w*)" providerId="$2" assetId="$1" extension="$3"/>
+
+      <!--
+      FixupVSIS: VSIS would send partial of PID as subtype to locator to request a file
+      						if subtype send by vsis much any of type list below, it will be append to pid
+      -->
+      <FixupVSIS subTypeToPID=".com;.cn;.net;.com.cn;.COM;.CN;.COM.CN;.NET"/>
+
+      <!-- Storage map.(multiple)
+           netid    - the netid of the ContentStore
+           endpoint - the endpoint of the ContentStore
+        -->
+      <!--Storage netid="" endpoint=""/-->
+    </Content>
+
+    <!-- The test entry that make the locator skip the LAM query
+         name       - the content name, can be format with $PID, $PAID
+         bandwidth  - the content encoded bandwidth
+         volumeList - the list of volumes that can supply the content
+      -->
+    <!--IgnoreLAMWithContent name="$PID$PAID" bandwidth="3750000" volumeList="192.168.81.111/$"/-->
+
+    <!-- The setting used for forwarding request to national locate server
+         enable    - 1 to enable the locate forward; 0 to disable
+         excludeStates - the volume states that shouldn't be forwarded
+         onOutOfResource - 1 to forward the request when the resource run out
+         maxHop    - the max hop of the forward. default 2.
+      -->
+         <LocateForward enable="0" excludeStates="InService,ProvisioningStreamable" onOutOfResource="0" maxHop="2">
+      <!--
+         url     - The url of national locator. for examble: http://192.168.81.111:10080/vodadi
+        -->
+      <Server url=""/>
+    </LocateForward>
+   <AssetStack enable="0" >
+      <Provider name="gehua.cn" />
+      <Provider name="hefei.cn" />
+   </AssetStack>
+  </C2Locator>
+</TianShan>

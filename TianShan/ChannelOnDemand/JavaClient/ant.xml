@@ -1,0 +1,54 @@
+<project name="TianShan" default="dist" basedir=".">
+  <description>
+       simple example build file
+  </description>
+
+  <property environment="env"/>
+
+  <!-- set global properties for this build -->
+  <property name="src" location="java"/>
+  <property name="build" location="build"/>
+  <property name="dist"  location="../../bin"/>
+
+  <path id="classpath">
+        <pathelement path="${env.ICE_ROOT}/lib/java2/Ice.jar"/>
+        <fileset dir="../../bin">
+           <include name="*.jar"/>
+        </fileset>
+  </path>
+
+
+  <target name="init">
+    <tstamp/>
+    <mkdir dir="${build}"/>
+  </target>
+
+  <target name="compile" depends="init"  description="compile the source " >
+
+    <!-- Compile the java code from ${src} into ${build} -->
+    <javac source="1.5" srcdir="${src}" destdir="${build}" deprecation="on">
+	<classpath refid="classpath"/>
+	</javac>
+    
+	<!-- <javac source="1.4" srcdir="${src}" destdir="${src}" classpath="${env.ICE_ROOT}/java2/Ice.jar;${env.ZQProjsPath}/TianShan/bin/TianShanIceSDK.jar" deprecation="on" />  -->
+
+  </target>
+
+  <target name="dist" depends="compile"  description="generate the distribution" >
+    <!-- Create the distribution directory -->
+    <mkdir dir="${dist}"/>
+
+    <jar jarfile="${dist}/ChannelOnDemand.jar"  basedir="${build}"/>
+    <jar jarfile="${dist}/ChannelOnDemandSrc.jar" basedir="${src}"/>
+
+  </target>
+
+  <target name="clean" description="clean up" >
+
+    <!-- Delete the ${build} and ${dist} directory trees -->
+    <delete dir="${build}"/>
+    <delete dir="${dist}"/>
+
+  </target>
+</project>
+

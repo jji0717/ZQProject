@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TianShan>
+	<!-- Notice: TianShanDef.xml has been preloaded when this configuration file is being parsed, please
+		 refer to TianShanDef.xml for the common properties
+	-->
+	<Definitions src="TianShanDef.xml"/>
+	<default>
+    	<CrashDump path="${TianShanCrashDumpDir}" enabled="1"/>
+	</default>	
+	<xmlshd >
+      <Http address="${ServerNetIf}" port="10085" capacity="5"/>
+      <AllowedCommands>
+        <Cmd pattern="/bin/ls .*"/>
+        <!--
+        <Cmd pattern="/bin/ping –c 3 mail.i-zq.com"/>
+        -->
+        <Cmd pattern="/sbin/ifconfig"/>
+        <Cmd pattern="/bin/ps auxw"/>
+        <Cmd pattern="/sbin/chkconfig --list"/>
+        <Cmd pattern="/usr/bin/top -n 1"/>
+        <Cmd pattern="/usr/sbin/scmon network once"/>
+        <Cmd pattern="/bin/df -h"/>
+        <Cmd pattern="/usr/sbin/crm_mon -1"/>
+        <Cmd pattern="/usr/bin/fscm status"/>
+        <Cmd pattern="/usr/bin/bwadmin -l"/>
+        <Cmd pattern="/bin/cat /sys/class/scsi_host/host7/(host|disk)_io" />
+        <Cmd pattern="/usr/local/shas/uml-seastats"/>
+        <Cmd pattern="/bin/cat .*"/>
+        <Cmd pattern="/usr/sbin/bcadm -M -qa"/>
+      </AllowedCommands>
+	</xmlshd>
+</TianShan>

@@ -1,0 +1,398 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "Buildall"=.\Buildall.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name DataStream
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name DODApp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name DODContentStore
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name DodPho
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name tsdump
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "DODApp"=.\Phase2\dodapp\DODApp.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name JMSDispatch
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanShell
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQAppshell
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCfgPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQShellMsgs
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQSNMPManPkg
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "DODCSClient"=.\Phase2\DODContentStore\DODCSClient\DODCSClient.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "DODContentStore"=.\Phase2\DODContentStore\DODContentStore.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name STBParser
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanShell
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQAppshell
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCfgPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQShellMsgs
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQSNMPManPkg
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "DODGraphTest"=.\Phase2\DODContentStore\DODGraphTest\DODGraphTest.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name STBParser
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "DSClient"=.\Phase2\DSClient\DSClient.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "DataStream"=.\Phase2\DataStream\DataStream.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanShell
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQAppshell
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCfgPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQShellMsgs
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQSNMPManPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name DSClient
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "DodPho"=.\Phase2\DodPho\DodPho.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TianShanCommon
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "JMSCpp"=..\generic\JMSCppLib\JMSCpp\JMSCpp.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "JMSDispatch"=.\Phase2\dodapp\JMSDispatch\JMSDispatch.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name JMSCpp
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TianShanIce
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "STBParser"=.\Phase2\DODContentStore\itv_parse\STBParser.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "TianShanCommon"=..\TianShan\common\TianShanCommon.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "TianShanIce"=..\TianShan\Ice\TianShanIce.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "TianShanShell"=..\TianShan\Shell\ZQShell\TianShanShell.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ZQShellMsgs
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCfgPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQAppshell
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ZQAppshell"=..\TianShan\Shell\ZQAppShell\zqappshell.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ZQCfgPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQShellMsgs
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQSNMPManPkg
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ZQCfgPkg"=..\TianShan\Shell\ZQCfgPkg\ZQcfgpkg.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ZQCommonStlp"=..\Common\dll\ZQCommonStlp.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ZQSNMPManPkg"=..\TianShan\Shell\ZQSNMPManPkg\ZQSNMPManPkg.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ZQCfgPkg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZQCommonStlp
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ZQShellMsgs"=..\TianShan\Shell\ZQShellMsgs\ZQShellMsgs.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "tsdump"=..\Generic\TsDump\tsdump.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

@@ -1,0 +1,57 @@
+// ColorBar.idl : IDL source for ColorBar.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (ColorBar.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+#include "olectl.h"
+    [
+		object,
+		uuid(AF10C27B-775E-4BFD-9772-14806BC780A9),
+		dual,
+		helpstring("IColorBarControl Interface"),
+		pointer_default(unique)
+	]
+	interface IColorBarControl : IDispatch
+	{
+		[id(1), helpstring("method FillColor")]        HRESULT FillColor([in] COLORREF crColor, [in] double dStartPos, [in] double dEndPos,[in] BSTR bstrName);
+		[id(2), helpstring("method ShowRange")]        HRESULT ShowRange([in] double dStartPos, [in] double dEndPos);
+		[id(3), helpstring("method CreateCursor")]     HRESULT CreateCursor([in] COLORREF crColor,[out,retval] int  *pID);
+		[id(4), helpstring("method DeleteCursor")]     HRESULT DeleteCursor([in] int  pID);
+		[id(5), helpstring("method DrawLine")]         HRESULT DrawLine( [in] int iID, [in] double dCurPos);
+		[id(6), helpstring("method DeletePaint")]      HRESULT DeletePaint();
+	};
+	[
+		uuid(026271A3-C126-4D77-963D-97B4EB50490C),
+		version(1.0),
+		helpstring("ColorBar 1.0 Type Library")
+	]
+	
+	library COLORBARLib
+	{
+		importlib("stdole32.tlb");
+		importlib("stdole2.tlb");
+
+		[
+			uuid(6BF0D3EF-37BB-4637-95BF-BEA86A69F1E4),
+			helpstring("_IColorBarControlEvents Interface")
+		]
+		dispinterface _IColorBarControlEvents
+		{
+			properties:
+			methods:
+		};
+
+		[
+			uuid(6CC8D260-B070-4428-98FC-C3F412802DCB),
+			helpstring("ColorBarControl Class")
+		]
+		
+		coclass ColorBarControl
+		{
+			[default] interface IColorBarControl;
+			[default, source] dispinterface _IColorBarControlEvents;
+		};
+	};

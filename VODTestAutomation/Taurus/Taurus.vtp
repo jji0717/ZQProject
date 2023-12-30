@@ -1,0 +1,23 @@
+
+[SystemSettings]
+Description=Taurus Silk Automation Project - Mod Billing
+
+[ProjectProfile]
+ProjectIni=C:\Autotest\zodiac\Taurus\Taurus.ini
+[ProjectScript]
+Source=C:\autotest\zodiac\script\taurus\taurus.t
+[ProjectFrame]
+Source=C:\autotest\zodiac\inc\global\basestate.inc
+Source=C:\autotest\zodiac\inc\global\zodiacdatabase.inc
+Source=C:\autotest\zodiac\inc\global\zodiacdefs.inc
+Source=C:\autotest\zodiac\inc\global\zodiacfiles.inc
+Source=C:\autotest\zodiac\inc\global\zodiacfunc.inc
+Source=C:\autotest\zodiac\inc\global\zodiacmsgs.inc
+Source=C:\autotest\zodiac\inc\global\zodiacnt.inc
+Source=C:\autotest\zodiac\inc\global\zodiacutil.inc
+Source=C:\autotest\zodiac\inc\taurus\taurusdefs.inc
+Source=C:\autotest\zodiac\inc\taurus\taurusfunc.inc
+Source=C:\autotest\zodiac\inc\taurus\taurusmsgs.inc
+[ProjectPlan]
+[ProjectResults]
+[ProjectData]

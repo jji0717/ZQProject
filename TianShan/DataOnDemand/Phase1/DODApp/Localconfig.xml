@@ -1,0 +1,78 @@
+<ConfResponse State="1" Format="2">
+   <ListOfNode>
+      <DCAPortConfiguration DataTypeWithInitial="" QueueName="queue_DOD">
+         <Port>
+           
+            <TELMSG PMTPID="261" GroupID="2" TotalRate="800000">
+               <Channel>
+                  <Message RepeatTime="4000" Encrypted="1" StreamCount="0" StreamType="248" SendWithDestination="1" DataExchangeType="1" SendMsgExpiredTime="0" StreamID="141" Tag="MSG" ChannelRate="100000" MessageCode="1911" DataType="24;29" SendMsgDataType="0" ChannelType="0" QueueName="queue_TICP"/>
+                  <TicketListMessage RepeatTime="1000" Encrypted="1" StreamCount="0" StreamType="247" SendWithDestination="1" DataExchangeType="1" SendMsgExpiredTime="0" StreamID="151" Tag="TMS" ChannelRate="250000" MessageCode="1331" DataType="27;28" SendMsgDataType="0" ChannelType="0" QueueName="queue_OTE"/>
+               </Channel>
+               <IPPort>
+                  <NSG SendType="2" IPAddress="224.1.1.100" IPPort="1532"/>
+                  <NSG2 SendType="2" IPAddress="224.1.1.100" IPPort="1788"/>
+                  <NSG3 SendType="2" IPAddress="224.1.1.100" IPPort="1276"/>
+               </IPPort>
+            </TELMSG>
+             <TELCOF PMTPID="281" GroupID="0" TotalRate="4400000">
+               <Channel>
+                  <Configuration RepeatTime="0" Encrypted="1" StreamCount="0" StreamType="249" SendWithDestination="0" DataExchangeType="0" SendMsgExpiredTime="0" StreamID="101" Tag="CFG" ChannelRate="250000" MessageCode="1523" DataType="16" SendMsgDataType="0" ChannelType="0" QueueName="queue_STBCF"/>
+                  <Portal RepeatTime="0" Encrypted="0" StreamCount="0" StreamType="176" SendWithDestination="0" DataExchangeType="2" SendMsgExpiredTime="180" StreamID="111" Tag="POR" ChannelRate="4000000" MessageCode="0" DataType="24" SendMsgDataType="24" ChannelType="0" QueueName="\\10.9.0.196\DODserver\navigation\portal"/>
+               </Channel>
+               <IPPort>
+                  <NSG SendType="2" IPAddress="224.1.1.100" IPPort="1529"/>
+               </IPPort>
+            </TELCOF>
+            <TELNAV PMTPID="221" GroupID="0" TotalRate="4150000">
+               <Channel>
+                  <Navigation RepeatTime="0" Encrypted="1" StreamCount="5" StreamType="144" SendWithDestination="0" DataExchangeType="0" SendMsgExpiredTime="180" StreamID="121" Tag="NAV" ChannelRate="4000000" MessageCode="1411" DataType="11" SendMsgDataType="24" ChannelType="1" QueueName="queue_NAV"/>
+               </Channel>
+               <IPPort>
+                  <NSG SendType="2" IPAddress="224.1.1.100" IPPort="1530"/>
+               </IPPort>
+            </TELNAV>
+            <TELNAVEx PMTPID="287" GroupID="0" TotalRate="3500000">
+               <Channel>
+                  <ExtNav RepeatTime="300" Encrypted="1" StreamCount="0" StreamType="155" SendWithDestination="0" DataExchangeType="0" SendMsgExpiredTime="180" StreamID="191" Tag="EXN" ChannelRate="3000000" MessageCode="1411" DataType="19" SendMsgDataType="0" ChannelType="0" QueueName="queue_NAV"/>
+               </Channel>
+               <IPPort>
+                  <NSG SendType="1" IPAddress="192.168.80.137" IPPort="1534"/>
+                  <NSG2 SendType="1" IPAddress="192.168.80.137" IPPort="1790"/>
+                  <NSG3 SendType="1" IPAddress="192.168.80.137" IPPort="1278"/>
+               </IPPort>
+            </TELNAVEx>
+            <TELOTE PMTPID="286" GroupID="2" TotalRate="900000">
+               <Channel>
+                  <Ticketlist RepeatTime="0" Encrypted="2" StreamCount="0" StreamType="224" SendWithDestination="0" DataExchangeType="0" SendMsgExpiredTime="0" StreamID="171" Tag="TKL" ChannelRate="400000" MessageCode="1331" DataType="17" SendMsgDataType="0" ChannelType="0" QueueName="queue_OTE"/>
+                  <Transactionlist RepeatTime="0" Encrypted="2" StreamCount="0" StreamType="230" SendWithDestination="0" DataExchangeType="0" SendMsgExpiredTime="0" StreamID="181" Tag="TST" ChannelRate="400000" MessageCode="1332" DataType="18" SendMsgDataType="0" ChannelType="0" QueueName="queue_OTE"/>
+               </Channel>
+               <IPPort>
+                  <NSG SendType="1" IPAddress="192.168.80.137" IPPort="1789"/>
+               </IPPort>
+            </TELOTE>
+            <TELPOS PMTPID="241" GroupID="0" TotalRate="1150000">
+               <Channel>
+                  <Poster RepeatTime="0" Encrypted="0" StreamCount="0" StreamType="160" SendWithDestination="0" DataExchangeType="2" SendMsgExpiredTime="180" StreamID="131" Tag="POS" ChannelRate="1000000" MessageCode="0" DataType="141" SendMsgDataType="24" ChannelType="0" QueueName="\\10.9.0.196\DODserver\navigation\poster"/>
+               </Channel>
+               <IPPort>
+                  <NSG SendType="1" IPAddress="192.168.80.137" IPPort="1531"/>
+               </IPPort>
+            </TELPOS>
+            <TELPosEx PMTPID="289" GroupID="0" TotalRate="300000">
+               <Channel>
+                  <ExtPos RepeatTime="300" Encrypted="0" StreamCount="0" StreamType="171" SendWithDestination="0" DataExchangeType="2" SendMsgExpiredTime="0" StreamID="201" Tag="EXP" ChannelRate="200000" MessageCode="1411" DataType="0" SendMsgDataType="0" ChannelType="0" QueueName="\\10.9.0.196\DODServer\navigation\posex"/>
+               </Channel>
+               <IPPort>
+                  <NSG SendType="1" IPAddress="192.168.80.137" IPPort="1528"/>
+                  <NSG2 SendType="1" IPAddress="192.168.80.137" IPPort="1784"/>
+                  <NSG3 SendType="1" IPAddress="192.168.80.137" IPPort="1272"/>
+               </IPPort>
+            </TELPosEx>
+         </Port>
+               <DODQueue>
+                   <Queue1 Priority="P1" Name="queue_testSep"/>
+                   <Queue1 Priority="P2" Name="queue_DOD"/>
+             </DODQueue>
+      </DCAPortConfiguration>
+   </ListOfNode>
+</ConfResponse>

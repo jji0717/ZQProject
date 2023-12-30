@@ -1,0 +1,46 @@
+
+Set @db_job_name = 'TianShanRtspSrvLoadJob_' + @db_name
+Set @db_job_schedule_name = 'TianShanRtspSrvLoadJobSchedule_' + @db_name
+Set @db_job_command = 'exec updateTianShanSrvLoad ''' + @rtspPrxyIP1 + ''', ''' + @rtspPrxyIP2 + ''''
+
+SELECT @JobID = job_id     
+	FROM   msdb.dbo.sysjobs    
+  	WHERE (name = @db_job_name)
+
+IF (@JobID IS NOT NULL) 
+Begin  	  
+	EXEC msdb.dbo.sp_delete_job @job_name = @db_job_name
+End
+
+exec msdb.dbo.sp_add_job
+    @job_name = @db_job_name,
+    @enabled = 1, -- enable
+    @description = 'TianShan Rtsp SrvLoad',
+    @notify_level_eventlog = 3, -- always
+    @delete_level = 0, -- never delete
+    @start_step_id = 1
+
+
+exec msdb.dbo.sp_add_jobstep
+    @job_name = @db_job_name,
+    @step_id = 1,
+    @step_name = 'Update TianShan RTSP Server Load',
+    @subsystem = 'TSQL',
+    @command = @db_job_command,
+    @database_name = @db_name
+
+
+exec msdb.dbo.sp_add_jobschedule
+    @job_name = @db_job_name,
+    @name = @db_job_schedule_name,
+    @enabled = 1, -- enable
+    @freq_type = 4, -- daily
+    @freq_subday_type = 0x4, -- minute
+    @freq_subday_interval = 1,
+    @freq_interval = 1 -- do job every day
+
+exec msdb.dbo.sp_add_jobserver
+    @job_name = @db_job_name,
+    @server_name = N'(LOCAL)'
+
+

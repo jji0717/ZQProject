@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- DsmccTest:
+		protocolType   -0 the protocol type is MOTO
+		               -1 the protocol type is Tangberg
+-->
+<DsmccCRGClient protocolType="0" client="1" iterationPerClient="1" loop="1" interval="50" messageTimeout="5000" sessionCount="150" threadpoolSize="3" > 
+  <Log level="7" filename="DsmccTest.log" size="50000000" count="10" hexdumpSentMsg="0" hexDumpRcvdMsg="0"/>  
+  <DsmccCRG> 
+    <server protocol="dsmcc" type="tcp" ip="192.168.81.52" port="9527"/>  
+    <server protocol="lscp"  type="udp" ip="192.168.81.52" port="9528"/> 
+  </DsmccCRG>  
+  <Session> 
+    <!-- each out-going request in the sequence of the session
+  	  attributes:
+             skipable: 0- this request can not be skipped even if the session had error
+                       1- this request can be skipped, continue with the next request if this one has error
+	-->  
+    <DsmccCommonHeader protocolDiscriminator="17" dsmccType="2" transactionId="32" reserved="255"/>  
+    <Request operation="SETUP" skip="0" protocol="dsmcc" messageId="16400"> 
+      <Header name="sessionId" value="a4a80f1896748bdc6f00" /> 
+      <Header name="reserved" value="ffff" /> 
+      <Header name="clientId" value="2d997666110902675240000000a4a80f18967400" /> 
+      <Header name="serverId" value="2d0000000000000000ac14e04400000000000000" /> 
+      
+      <!-- MOTO metadata for JiangSu -->  
+      <AppData name="AssetId" value="10623412"/>  
+      <AppData name="nodeGroupId" value="1308"/>  
+      <AppData name="billingId" value="5"/>  
+      <AppData name="purchaseTime" value="3"/>  
+      <AppData name="remainingPlayTime" value="4"/>  
+      <AppData name="errorCode" value="6"/>  
+      <AppData name="homeId" value="1"/>  
+      <AppData name="purchaseId" value="8"/>  
+      <AppData name="analogCopyPurchase" value="7"/>  
+      <AppData name="packageId" value="0"/>
+      
+      <!-- Tangberg metadata for HeNan
+      <AppData name="serviceGateway" value="0"/>
+      <AppData name="service" value="0"/>
+      <AppData name="serviceGroup" value="0"/>
+      <AppData name="assetIdPayLoad" value="0"/>
+      <AppData name="ProtocolId" value="0"/>
+      <AppData name="ProtocolVersion" value="0"/>
+      --> 
+	  <Sleep wait="1000"/>
+    </Request>  
+    <!-- the sleep time to yield between two operation/requests in the sequence of the session -->  
+      
+    <!-- some further request samples in the sequence-->  
+    <Request operation="PLAY" skip="0" protocol="lscp" messageId="6"> 
+	  <Header name="version" value="1" /> 
+	  <Header name="transactionId" value="0" /> 
+	  <Header name="statusCode" value="0" /> 
+	  
+      <AppData name="StartNpt" value="2147483648"/>
+      <AppData name="StopNPT" value="2147483647"/> 
+      <AppData name="Numerator" value="1"/> 
+      <AppData name="Denominator" value="1"/>
+	   <Sleep wait="5000"/> 
+    </Request>  
+    
+    
+    <Request operation="PAUSE" skip="0" protocol="lscp" messageId="1"> 
+	  <Header name="version" value="1" /> 
+	  <Header name="transactionId" value="0" /> 
+	  <Header name="statusCode" value="0" /> 
+	  
+      <AppData name="StopNPT" value="3280650880"/> 
+	  
+	  <Sleep wait="5000"/> 
+    </Request>  
+	
+    
+    <Request operation="STATUS" skip="0" protocol="lscp" messageId="3"> 
+	  <Header name="version" value="1" /> 
+	  <Header name="transactionId" value="0" /> 
+	  <Header name="statusCode" value="0" />
+	  
+	  <Sleep wait="5000"/> 	  
+    </Request>  
+    
+    
+    <Request operation="RESUME" skip="0" protocol="lscp" messageId="2"> 
+	  <Header name="version" value="1" /> 
+	  <Header name="transactionId" value="0" /> 
+	  <Header name="statusCode" value="0" /> 
+	  
+      <AppData name="StartNpt" value="2147483648"/>
+      <AppData name="Numerator" value="1"/> 
+      <AppData name="Denominator" value="1"/>
+	  <Sleep wait="5000"/> 
+    </Request>  
+     
+    
+    <Request operation="RELEASE" skip="0" protocol="dsmcc" messageId="16416"> 
+	  <Header name="sessionId" value="a4a80f1896748bdc6f00" /> 
+      <AppData name="reason" value="0"/>
+	  <Sleep wait="5000"/>
+    </Request> 
+  </Session> 
+</DsmccCRGClient>

@@ -1,0 +1,8 @@
+{
+	"Sentry": 45,
+	"EventChannl": 20,
+	"EventGateWay": 22,
+	"RtspProxy":13,
+	"EdgeFE":30,
+	"MQTT":13
+}

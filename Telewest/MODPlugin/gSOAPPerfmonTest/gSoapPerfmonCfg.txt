@@ -1,0 +1,12 @@
+[CONFIG]
+ConnTimeout=15000
+WSDL=http://10.50.10.50:7070/services/MoDSoapInterface?wsdl
+ProviderID=asset1
+ProviderAssetID=asset10000000K001
+MacAddress=0000F0DDDF70
+TicketID=1500000786
+TicketCount=1
+ConcurrentCount=1
+RequestCount=2
+RequestHoldTime=1000
+Yield=0

@@ -1,0 +1,4 @@
+#command;time(ms);path;protocol;ip:port
+setup; 100;./data/setup.data;udp;192.168.81.132:9527
+play; 10000;./data/lscpPlay.bin;udp;192.168.81.132:9528
+close; 3000;./data/rrs.bin;udp; 192.168.81.132:9527

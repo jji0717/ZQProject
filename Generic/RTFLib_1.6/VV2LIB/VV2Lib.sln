@@ -1,0 +1,21 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VV2Lib", "VV2Lib.vcproj", "{771DFCC5-E118-46BB-8CB1-F9B4147A770C}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{771DFCC5-E118-46BB-8CB1-F9B4147A770C}.Debug.ActiveCfg = Debug|Win32
+		{771DFCC5-E118-46BB-8CB1-F9B4147A770C}.Debug.Build.0 = Debug|Win32
+		{771DFCC5-E118-46BB-8CB1-F9B4147A770C}.Release.ActiveCfg = Release|Win32
+		{771DFCC5-E118-46BB-8CB1-F9B4147A770C}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

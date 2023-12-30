@@ -1,0 +1,71 @@
+[ ] // ===========================================================================
+[ ] // Copyright (c) 2004 by
+[ ] // ZQ Interactive, Inc., Shanghai, PRC.,
+[ ] // All Rights Reserved.  Unpublished rights reserved under the copyright
+[ ] // laws of the United States.
+[ ] // 
+[ ] // The software contained  on  this media is proprietary to and embodies the
+[ ] // confidential technology of ZQ Interactive, Inc. Possession, use,
+[ ] // duplication or dissemination of the software and media is authorized only
+[ ] // pursuant to a valid written license from ZQ Interactive, Inc.
+[ ] // 
+[ ] // This software is furnished under a  license  and  may  be used and copied
+[ ] // only in accordance with the terms of  such license and with the inclusion
+[ ] // of the above copyright notice.  This software or any other copies thereof
+[ ] // may not be provided or otherwise made available to  any other person.  No
+[ ] // title to and ownership of the software is hereby transferred.
+[ ] //
+[ ] // The information in this software is subject to change without notice and
+[ ] // should not be construed as a commitment by ZQ Interactive, Inc.
+[ ] //
+[ ] // $Workfile: ZodiacTest.pln $
+[ ] // Author: Bernie Zhao (Tianbin Zhao)
+[ ] //
+[ ] // Revision History: 
+[ ] // ---------------------------------------------------------------------------
+[ ] // $Log: /ZQProjs/VODTestAutomation/ZODIACTEST/ZodiacTest.pln $
+[ ] // 
+[ ] // 1     10-11-12 16:08 Admin
+[ ] // Created.
+[ ] // 
+[ ] // 1     10-11-12 15:42 Admin
+[ ] // Created.
+[ ] // 
+[ ] // 3     04-08-31 18:56 Bernie.zhao
+[ ] // before 1st Delivery
+[ ] // 
+[ ] // 2     04-08-31 15:34 Bernie.zhao
+[ ] // 
+[ ] // 1     04-08-26 15:45 Bernie.zhao
+[ ] // 3 tests combined
+[ ] // ===========================================================================
+[ ] 
+[ ] 
+[-] TestPlan Zodiac. Test the basic function of SeaChange ITV system
+	[+] Scorpio test. Test the asset streaming function
+		[ ] itv_ver: 2.02
+		[ ] testmodule: Asset Streaming
+		[ ] script_ver: 0.9
+		[ ] testcase: tcCreateAsset0001
+		[ ] script: ..\script\scorpio\scorpio.t
+		[ ] developer: Rommy Xu
+		[ ] category: ITV test
+		[ ] 
+	[-] Aquarius test. Test the asset upload function
+		[ ] itv_ver: 2.02
+		[ ] testmodule: Asset Management
+		[ ] script_ver: 0.9
+		[ ] testcase: Aquarius0001
+		[ ] script: ..\script\aquarius\aquarius.t
+		[ ] developer: Rommy Xu
+		[ ] category: ITV test
+		[ ] 
+	[+] Taurus test. Test the billing report function
+		[ ] itv_ver: 2.02
+		[ ] testmodule: Billing
+		[ ] script_ver: 0.9
+		[ ] script: ..\script\taurus\taurus.t
+		[ ] testcase: tcModBillingReports
+		[ ] developer: Bernie Zhao
+		[ ] category: ITV test
+[ ] 

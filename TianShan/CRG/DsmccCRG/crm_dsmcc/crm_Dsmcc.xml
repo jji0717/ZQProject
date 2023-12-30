@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TianShan>
+	<!--
+		Notice: TianShanDef.xml has been preloaded when this configuration file is being parsed, please refer to
+        	TianShanDef.xml for the common properties
+	-->
+	<Definitions src="TianShanDef.xml">
+	</Definitions>
+	
+	<!-- default configurations for the services of this TianShan deployment -->
+	<default>
+	
+		<!--
+		EventChannelEndPoint: the EventChannel service's endpoint, format: "tcp -h x.x.x.x -p 11000"
+		listenEndpoint: the local ip and port to receive event from EventChannel, format: "tcp -h x.x.x.x -p 10000"
+		-->
+		<TianShanEvents  EventChannelEndPoint="${PrimeEventChannelEndpoint}" 
+				             listenEndpoint="tcp -h ${ServerNetIf} -p 10901" />
+
+		<!-- The Ice trace log setting for all the services of this TianShan deployment.
+		     attributes:
+		       enabled       - non-zero to enable
+		       level         - the log level of the ice trace log
+		       size          - the size that this trace log must roll
+		-->
+		<IceTrace enabled="1" level="7" size="50000000" maxCount="10" />
+
+	</default>
+
+	<!-- Configurations of DSMCC/LSCP plugin -->
+	<crm_Dsmcc>
+		
+		<!-- Configuration of Log.
+		     attributes:
+		       size - log file's maxinum size.
+		       level - level of logging, form Fatal to Debug: 0 ~ 7
+		       number - config the max number of log files to roll
+		       path - the full pathname of the log file folder
+		-->
+		<LogFile size="50000000" level="${DefaultLogLevel}" maxCount="10" bufferSize="8192" />
+		
+		<!-- Configuration of SessionManager
+		     attributes:
+		       endpoint - proxy string to connect to the TianShan weiwoo
+		       heartbeatInterval - SET send sessionInProgress message to  SRM interval, default value (600000ms)
+		-->
+		<SessionManager endpoint="${PartitionServerEndpoint}" heartbeatInterval="600000"  optionalInterval="120000" >
+		  <NodeGroup rangeStart="0"  rangeEnd="0" SM="SessionManager:tcp -h *.*.*.* -p 10100" />
+	    <NodeGroup rangeStart="0"  rangeEnd="0" SM="SessionManager:tcp -h *.*.*.* -p 10100" />
+	  </SessionManager>
+	  
+		<!-- configurations on client sessions
+		     attributes:
+			timeout - timeout of an unattended session in seconds, minimal acceptable value 60, default 600s
+			cacheSize - the count of sessions to cache from the database, range [1000, 5000] are acceptable, default 1000
+			monitorThreads - the thread count to perform background maintenace, minimal 3, default 5
+		-->
+		<ClientSession timeout="1200" monitorThreads="5" />
+
+		<!-- configurations on stream control
+		     attributes:
+			proxyMode - 1 if the same session server act as a proxy on stream control messaging to the video server
+			            0 not supported. default 1
+			lscUdp    - 1 to prioritize the LSC over UDP if both LSC over UDP and TCP are supported, default 0
+			FixedSpeedSet use the list to fix the appropriate speed for FF/FR
+              enable  - 0 do not change the speed of the dsmcc message
+                      - 1 use the config to change the speed of the damcc message
+              mode    - 0 use the forware/backward list to fix the speed 
+                        if the speed is reach the last speed,then refuse other request
+											- 1 use the forware/backward list to fix the speed 
+											    if the speed is reach the last speed,then change the speed to the begin for loop
+                      - 2 use the forware/backward list and the inputFF/inputREW list to map the speed
+						 forward/backward  the speed list to fixed
+						 inputFF/inputREW  the speed list of dsmcc message request, if the mode=2 then valid
+		-->
+		<StreamCtrl proxyMode="1" lscUdp="0" >
+					<FixedSpeedSet enable="0" mode="0" forward="3 9 18 33" backward="-3 -9 -18 -33" inputFF="0.5 3 9 18" inputREW="-0.5 -3 -9 -18"/>
+		</StreamCtrl>
+		<!-- configuration on applciation to integrate 
+		     attributes:
+		         urlPattern - to format the URL, reserved keywords are
+		         			for MOTO
+		                     ${Asset} - from DSMCC CSSR
+		              for Tangberg       
+		                     ${purchaseToken} - from DSMCC CSSR 
+		                     ${ServerID} - from DSMCC CSSR 
+		
+		<Application urlPattern="rtsp://./60010001?purchaseToken=${purchaseToken}&amp;serverID=${ServerID}"/>
+		-->
+		<Application urlPattern="rtsp://./60010001?asset=#${Asset}" />
+
+		<!-- configurations about the TS pumper to advertizing ServiceGroup parameters
+		     attributes:
+			interval - interval between two pump for the packets of a same service group
+			tsFolder - the file folder where to monitor the TS/HEX input files
+			bindIp   - the local IP from the UDP pumper to bind
+			hexMode  - 0 to input TS file, 1 to input hexfile
+			deHexCommand - command line to covert hex file to binary ts file
+		-->
+		<ServiceGroupAds interval="100" tsFolder="${TianShanDatabaseDir}\DsmccCRG\sgts" bindIp="0.0.0.0" hexMode="0" deHexCommand="xxd -s"/>
+		<!-- links to TV-NOW_JSYX_CR002-SSS_Enhancement_for_JSYX
+			add a new configuration   eosNptErr,  which means the npt error allowed in msec, default 5000 (5sec)
+		-->
+		<Event eosNptErr="5000" />
+		
+			<!-- links to Ticket 16645
+			 PhysicalChannel
+			 convertFreq: convert frequency from KHZ to HZ, 0 indicate not to convert, 1 to convert. default 0
+		-->
+		<PhysicalChannel convertFreq = "0" />
+		
+	</crm_Dsmcc>
+  <DefaultResource>
+     <MpegProgram pmtPId="65536" caPid="65536" />
+     <TsDownstreamBandwidth tsid="0"/>
+     <EthernetInterface  srcMac="0" srcIP="0" srcPort="0" destIP="0" destPort="0"/>
+     <AtscModulationMode transmissionSystem="2" interleaveDepth="255" modulationMode="0" FEC ="0"/>
+     <HeadendId id ="00000000000000000000" flag="1" tsid="0"/>
+  </DefaultResource>
+</TianShan>

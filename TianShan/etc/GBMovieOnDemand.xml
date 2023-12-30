@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TianShan>
+	 <Definitions src="TianShanDef.xml">
+	 </Definitions>
+	 <!-- MODService
+            netid: If there are many MODService On the same Computer, indicate MODService instance
+                      Sample: netid="1"
+                      if no this attribute, denote the first MODService instance
+                      Default no this attribute, and netid = 1-->
+<MODService netid= "1">
+	<!--
+	<CrashDump enable="1" path="C:\TianShan\Logs\"/>
+	-->
+	<CrashDump enable="1" path="${TianShanCrashDumpDir}"/>
+
+  <!--
+	<Default  
+	   bandWidth default value is equal to 0
+	   if the weiwoo resource and asset by call LAM returned also has no bandwidth resource and
+	   if the bandwidth >0, add the bandwidth to weiwoo resource "
+	-->
+  <Default  bandWidth="0"/>
+	<!--
+	<SafeStore path="C:\TianShan\Data\"/>
+	-->
+	<Database path="${TianShanDatabaseDir}" runtimePath="${TianShanDatabaseDir}/runtime" CheckpointPeriod="240" DbRecoverFatal="1"/>
+
+
+	<IceProperties>
+		<!--  the following are performance tuning parameters, please don't modify if you are not an expert at them 
+		--> 
+		<prop name="Ice.Trace.Network"                    value="0" />
+		<prop name="Ice.Trace.Protocol"                   value="0" />
+		<prop name="Ice.Trace.Retry"                      value="1" />
+		<prop name="Ice.Warn.Connections"                 value="1" />
+		<prop name="Ice.Warn.Endpoints"                   value="1" />
+		<prop name="Ice.Logger.Timestamp"                 value="1" />
+		<prop name="Freeze.Warn.Deadlocks"                value="1" />
+		<prop name="Freeze.Trace.Map"                     value="0" />
+		<prop name="Freeze.Trace.DbEnv"                   value="2" />
+		<prop name="Freeze.Trace.Evictor"                 value="0" />
+		<prop name="Ice.Override.ConnectTimeout"          value="3000"/>
+		<prop name="Ice.Override.Timeout"                 value="5000"/>
+		<prop name="Ice.ThreadPool.Server.Size"           value="20"/>
+		<prop name="Ice.ThreadPool.Server.SizeMax"        value="60"/>
+		<prop name="Ice.ThreadPool.Client.Size"           value="5"/>
+		<prop name="Ice.ThreadPool.Client.SizeMax"        value="60"/>
+		<prop name="Freeze.Evictor.UseNonmutating"        value="1" />
+	</IceProperties>		
+
+
+	<!--
+	<EventChannel endpoint="tcp -h *.*.*.* -p *"/>
+	endPoint: indicates the EventChannel service endpoint
+	-->
+	<EventChannel endpoint="${Domain.eventChannel}"/>
+
+
+	<!--
+	<IceLog enable="1" path="E:\TianShan\Logs\" level="7" size="10240000" />
+	enable: if equal to 1, ice log file will be created for stores ice message.
+	path: just the log file's directory name, no file name expected to be specified.
+	level: log file's level
+	size: log file's size
+	-->
+	<IceLog enable="0" path="${TianShanLogDir}" level="7" size="10240000" count="5"/>
+
+
+	<!--
+	<Bind endpoint="tcp -h *.*.*.* -p 11100"/>
+	endPoint: the local endPoint for mod application, the ip address must be local machine's
+	-->
+	<Bind endpoint="tcp -h ${ServerNetIf} -p 11100"/>
+
+		<LibraryAsset mandatory="0">
+      <AllowedStorageLink type="SeaChange.NSS.C2Transfer"/>
+  </LibraryAsset>
+  
+	<!--
+	<PurchaseRecord cacheSize="500" timeout="1800000"/>
+	cacheSize: define the size of the evictor's active queue which storing purchases
+	timeout: define every purchase timeout value, unit is ms
+	initRecordBufferSize: defines the initial record buffer size for the records in db, if the config value is 
+	less than the records in db, it may has a bad efficient
+	maxTTL: the maximal time to live of the purchase in second, default 0 - unlimited
+	sendNotice:send setup notice to AAA time inteval when purchase provision success, unit is ms
+	-->
+	<PurchaseRecord cacheSize="500" timeout="1800000" initRecordBufferSize="20000" maxTTL="10800" sendNotice="120000"/>
+
+
+	<!--
+	take the process of the path which is not listed in the following AppPath configuration
+	-->
+	<UrlPattern pattern="rtsp://(.*?)(/\d{8})" enable="1" priority="10">
+		<!--
+		enable: indicates whether or not to authorize, 1 means authorization, 0 means not authorization
+		entry:  defines the function entry in the dll which to authorize the request
+		        option value: 1> AuthorizationOnOTE
+		                      2> AuthorizationOnLSMS
+		-->
+		<Authorization enable="1" entry="AuthorizationOnOTE">
+			<param name="OTEEndPoint" value="MoDIceInterface:tcp -h *.*.*.* -p 2222"/>
+			<param name="ActiveConnectionSize" value="8" />
+		</Authorization>
+		
+		<!--
+				if TestElement.enable is enabled, the application won't use the following config to load
+		asset element from LAM system
+		  entry: defines the function entry in the dll which to get playlist the request
+		         option value: 1> GetPlayListFromLAM
+		                       2> GetPlayListFromLAM3
+		-->
+		<PlayList entry="GetPlayListFromLAM">
+			<param name="LAMEndPoint" value="LAMFacade:tcp -h *.*.*.* -p 2222"/>
+		</PlayList>
+		
+		<!--
+		configuration to the ADM
+		entry  - the API name exported from the plugin
+		
+		param["ADMEndpoint"] - the endpoint to the ADM service
+	 -->
+	
+		<AdsReplacement entry="AdReplacementRequest">
+			<param name="ADMEndpoint" value="ADSForTianshan:tcp -h *.*.*.* -p 2222"/>
+		</AdsReplacement>
+		
+		
+		<!-- AAA configuration to the Accounting Authentication Authorization
+		entry  - the API name exported from the plugin, GB="AAARequest", HeNanGB = "HeNanAAARequest"
+		 param["endpoint"]    - http server url, must config
+		 param["bind"]        - the local ip which http client bind
+	   param["port"]        - the local port which http client bind 
+	   param["timeout"]     - timeout interval with http server and client 
+	   param["contentid"]   - content id for AAA  must config 
+	   param["receiverid"]  - receiver id for AAA must config
+	   param["smname"]      - session manage server name, must config
+		-->
+    <AAA  entry="AAARequest">
+			<param name="endpoint" value="http://0.0.0.0:0/GBServlet"/>
+			<param name="bindip"      value="0.0.0.0"/>
+			<param name="port"        value="0"/>
+			<param name="contentid"   value="${0}"/>
+			<param name="receiverid"  value="0.0.0.0"/>
+			<param name="smname"       value="${HostNetID}"/>
+			<param name="timeout"     value="20"/> 
+		</AAA>
+
+	</UrlPattern>
+
+	<!--
+	take the process of a specified path which represented by the AppPath.path config.
+	enable: if enable is not equal to 1, application will use the DefaultAppPath to process this path
+	-->	
+	<UrlPattern pattern="rtsp://(.*?)(/60010001)" enable="1" priority="5">
+		<!--
+		enable: indicates whether or not to authorize, 1 means authorization, 0 means not authorization
+		entry:  defines the function entry in the dll which to authorize the request
+		        option value: 1> AuthorizationOnOTE
+		                      2> AuthorizationOnLSMS
+		-->
+		<Authorization enable="1" entry="AuthorizationOnOTE">
+			<param name="OTEEndPoint" value="MoDIceInterface:tcp -h *.*.*.* -p 2222"/>
+			<param name="ActiveConnectionSize" value="8" />
+			<AppDataPattern param="purchase-id" pattern="00(.*)" >
+				<param name="OTEEndPoint" value="MoDIceInterface:tcp -h TVBS2IP -p 2222"/>
+			</AppDataPattern>
+		</Authorization>
+		
+		<!--
+			if TestElement.enable is enabled, the application won't use the following config to load
+		asset element from LAM system
+		  entry: defines the function entry in the dll which to get playlist the request
+		         option value: 1> GetPlayListFromLAM
+		-->
+		<PlayList entry="GetPlayListFromLAM">
+			<param name="LAMEndPoint" value="LAMFacade:tcp -h *.*.*.* -p 2222"/>
+			<AppDataPattern param="purchase-id" pattern="00(.*)" >
+				<param name="LAMEndPoint" value="LAMFacade:tcp -h TVBS2IP -p 2222"/>
+			</AppDataPattern>
+		</PlayList>	
+		<!--
+	  <PlaylistRender playAdOnce="1" />
+	  -->
+		<!--
+		<AdsReplacement  entry="AdReplacementRequest">
+			<param name="ADMEndpoint" value="ADSForTianshan:tcp -h *.*.*.* -p 2222"/>
+		</AdsReplacement>
+		-->
+
+		<AAA entry="AAARequest">
+			<param name="endpoint" value="http://0.0.0.0:0/GBServlet"/>
+			<param name="bindip"      value="0.0.0.0"/>
+			<param name="port"        value="0"/>
+			<param name="contentid"   value="${0}"/>
+			<param name="receiverid"  value="0.0.0.0"/>
+			<param name="smname"       value="${HostNetID}"/>
+			<param name="timeout"     value="20"/> 
+		</AAA>
+
+		
+		<!--  For JiangSuYouXian 
+		 <AssociateProvider enable="0" entry="LookupPid">
+          <param name="endpoint" value="LAMFacade:tcp -h *.*.*.* -p 2222"/>
+     </AssociateProvider>  -->
+	</UrlPattern>
+	
+	<!--
+	take the process of a specified path which represented by the AppPath.path config.
+	enable: if enable is not equal to 1, application will use the DefaultAppPath to process this path
+	-->	
+	<UrlPattern pattern="rtsp://(.*?)(/60010000)" enable="1" priority="5">
+		<!--
+		enable: indicates whether or not to authorize, 1 means authorization, 0 means not authorization
+		 entry: defines the function entry in the dll which to authorize the request
+		        option value: 1> AuthorizationOnOTE
+		                      2> AuthorizationOnLSMS
+		-->
+		<Authorization enable="1" entry="AuthorizationOnLSMS">
+			<param name="OTEEndPoint" value="LSMSForMoD:tcp -h *.*.*.* -p 2222"/>
+			<param name="ActiveConnectionSize" value="8" />
+			<AppDataPattern param="purchase-id" pattern="00(.*)" >
+				<param name="OTEEndPoint" value="LSMSForMoD:tcp -h TVBS2IP -p 2222"/>
+			</AppDataPattern>
+		</Authorization>
+		
+		<!--
+		if TestElement.enable is enabled, the application won't use the following config to load
+		asset element from LAM system
+		 entry: defines the function entry in the dll which to get playlist the request
+		        option value: 1> GetPlayListFromLAM
+		-->
+		<PlayList entry="GetPlayListFromLAM">
+			<param name="LAMEndPoint" value="LAMFacade:tcp -h *.*.*.* -p 2222"/>
+			<AppDataPattern param="purchase-id" pattern="00(.*)" >
+				<param name="LAMEndPoint" value="LAMFacade:tcp -h TVBS2IP -p 2222"/>
+			</AppDataPattern>
+		</PlayList>
+	  <!--
+	  <PlaylistRender playAdOnce="1" />
+	  -->
+	 <!--
+		<AdsReplacement  entry="AdReplacementRequest">
+			<param name="ADMEndpoint" value="ADSForTianshan:tcp -h *.*.*.* -p 2222"/>
+		</AdsReplacement>
+		-->
+		
+
+	 	<AAA entry="AAARequest">
+			<param name="endpoint" value="http://0.0.0.0:0/GBServlet"/>
+			<param name="bindip"      value="0.0.0.0"/>
+			<param name="port"        value="0"/>
+			<param name="contentid"   value="${0}"/>
+			<param name="receiverid"  value="0.0.0.0"/>
+			<param name="smname"       value="${HostNetID}"/>
+			<param name="timeout"     value="20"/> 
+		</AAA>
+	
+		<!--  For JiangSuYouXian 
+		 <AssociateProvider enable="0" entry="LookupPid">
+          <param name="endpoint" value="LAMFacade:tcp -h *.*.*.* -p 2222"/>
+     </AssociateProvider>  -->
+	</UrlPattern>
+	
+  <UrlPattern pattern="rtsp://(.*?)(/60010003)" enable="1" priority="5">
+		<!--
+		enable: indicates whether or not to authorize, 1 means authorization, 0 means not authorization
+		entry:  defines the function entry in the dll which to authorize the request
+		        option value: 1> AuthorizationOnOTE
+		                      2> AuthorizationOnLSMS
+		-->
+		<Authorization enable="0" entry="AuthorizationOnOTE">
+			<param name="OTEEndPoint" value="MoDIceInterface:tcp -h *.*.*.* -p 2222"/>
+			<AppDataPattern param="purchase-id" pattern="00(.*)" >
+				<param name="OTEEndPoint" value="MoDIceInterface:tcp -h TVBS2IP -p 2222"/>
+			</AppDataPattern>
+		</Authorization>
+		
+		<!--
+				if TestElement.enable is enabled, the application won't use the following config to load
+		asset element from LAM system
+		  entry: defines the function entry in the dll which to get playlist the request
+		         option value: 1> GetPlayListFromLAM
+		-->
+		<PlayList entry="GetPlayListFromLAM">
+			<param name="LAMEndPoint" value="SurfForTianshan:tcp -h *.*.*.* -p 2222"/>
+			<AppDataPattern param="purchase-id" pattern="00(.*)" >
+				<param name="LAMEndPoint" value="SurfForTianshan:tcp -h TVBS2IP -p 2222"/>
+			</AppDataPattern>
+		</PlayList>
+	</UrlPattern>
+	
+	<PlugIns>
+		<MHO file="${TianShanHomeDir}\modules\MHO_MODPlugIn.dll"   enable="0" />
+		<MHO file="${TianShanHomeDir}\modules\MHO_GBMODPlugIn.dll"   enable="1" />
+	</PlugIns>
+		<!--
+	<MODPlugIn
+						level      log file level
+						size       log file size
+						count      log file count
+	-->
+	<MODPlugIn level="${DefaultLogLevel}" size="10240000" count="5"/>
+</MODService>
+</TianShan>

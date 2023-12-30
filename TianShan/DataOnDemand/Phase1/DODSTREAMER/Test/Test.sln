@@ -1,0 +1,34 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test", "Test\Test.vcproj", "{30ECC4CC-A2D7-4612-AE4B-13D74A8DAF8F}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 2
+		SccProjectName0 = $/ZQProjs/DataOnDemand/Test
+		SccLocalPath0 = ..\\..\\..
+		SccProvider0 = MSSCCI:SourceOffSite
+		CanCheckoutShared = true
+		SccProjectFilePathRelativizedFromConnection0 = Phase1\\DODStreamer\\Test\\
+		SolutionUniqueID = {95C88A58-FB87-45ED-99D8-A0A28F8E21DE}
+		SccProjectUniqueName1 = Test\\Test.vcproj
+		SccLocalPath1 = ..\\..\\..
+		CanCheckoutShared = true
+		SccProjectFilePathRelativizedFromConnection1 = Phase1\\DODStreamer\\Test\\Test\\
+	EndGlobalSection
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{30ECC4CC-A2D7-4612-AE4B-13D74A8DAF8F}.Debug.ActiveCfg = Debug|Win32
+		{30ECC4CC-A2D7-4612-AE4B-13D74A8DAF8F}.Debug.Build.0 = Debug|Win32
+		{30ECC4CC-A2D7-4612-AE4B-13D74A8DAF8F}.Release.ActiveCfg = Release|Win32
+		{30ECC4CC-A2D7-4612-AE4B-13D74A8DAF8F}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,7 @@
+DESCRIPTION	"ZQSNMP Configuration Package Library"
+EXPORTS
+	SNMPOpenSession           @1
+	SNMPManageVariable        @2
+	SNMPCloseSession          @3
+
+

@@ -1,0 +1,1 @@
+{"expiration":"2016-12-20T16:40:00.000+08:00","RtspProxy":{"maxConnections":30000,"maxSessions":20000}}

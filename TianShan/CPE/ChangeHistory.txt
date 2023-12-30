@@ -1,0 +1,18 @@
+***************************************************************************************************************
+* CPE CHANGE HISTORY
+	MODULE NAME:	CPE
+	CHANGE DATE:	2009-03-16
+	RELEASER:       Zhang Jie
+
+  [NEW FEATURE LIST]
+					
+
+  [FIXED BUG LIST]
+
+
+  [CONFIGURATION AND PARAMETERS CHECKING]
+
+
+  [REMARK]
+
+===============================================================================================================

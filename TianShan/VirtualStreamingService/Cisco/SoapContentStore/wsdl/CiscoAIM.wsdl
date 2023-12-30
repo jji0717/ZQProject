@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions
+xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+xmlns:tns="http://cisco.aim.ns/CiscoAIM"
+xmlns:s="http://www.w3.org/2001/XMLSchema"
+xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+targetNamespace="http://cisco.aim.ns/CiscoAIM"
+xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://cisco.aim.ns/CiscoAIM">
+      <s:element name="IngestPackage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ADIURL" type="s:string"/>
+            <s:element minOccurs="0" maxOccurs="1" name="PackageName" type="s:string"/>
+            <s:element minOccurs="0" maxOccurs="1" name="MetaDataOnly" type="s:int"/>
+            <s:element minOccurs="0" maxOccurs="1" name="DoAsync" type="s:int"/>
+            <s:element minOccurs="0" maxOccurs="1" name="AsyncTargets" type="tns:EndpointList"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="IngestPackageResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="IngestResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeletePackage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PackageName" type="s:string"/>
+            <s:element minOccurs="0" maxOccurs="1" name="MetaDataOnly" type="s:int"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeletePackageResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DeleteResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdatePackage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ADIURL" type="s:string"/>
+            <s:element minOccurs="0" maxOccurs="1" name="PackageName" type="s:string"/>
+            <s:element minOccurs="0" maxOccurs="1" name="MetaDataOnly" type="s:int"/>
+            <s:element minOccurs="0" maxOccurs="1" name="DoAsync" type="s:int"/>
+            <s:element minOccurs="0" maxOccurs="1" name="AsyncTargets" type="tns:EndpointList"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdatePackageResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UpdateResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPackageStatus">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PackageName" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPackageStatusResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="StatusResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllPackages">
+      </s:element>
+      <s:element name="GetAllPackagesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PackageList" type="tns:List"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="List">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true"
+          type="s:string"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="EndpointList">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ServerIp" nillable="false"
+          type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Port" nillable="false" type="s:int"/>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Path" nillable="false"
+          type="s:string"/>
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="IngestPackageSoapIn">
+    <wsdl:part name="parameters" element="tns:IngestPackage"/>
+  </wsdl:message>
+  <wsdl:message name="IngestPackageSoapOut">
+    <wsdl:part name="parameters" element="tns:IngestPackageResponse"/>
+  </wsdl:message>
+  <wsdl:message name="DeletePackageSoapIn">
+    <wsdl:part name="parameters" element="tns:DeletePackage"/>
+  </wsdl:message>
+  <wsdl:message name="DeletePackageSoapOut">
+    <wsdl:part name="parameters" element="tns:DeletePackageResponse"/>
+  </wsdl:message>
+  <wsdl:message name="UpdatePackageSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdatePackage"/>
+  </wsdl:message>
+  <wsdl:message name="UpdatePackageSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdatePackageResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetPackageStatusSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPackageStatus"/>
+  </wsdl:message>
+  <wsdl:message name="GetPackageStatusSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPackageStatusResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetAllPackagesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllPackages"/>
+  </wsdl:message>
+  <wsdl:message name="GetAllPackagesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllPackagesResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="CiscoAIMSoap11">
+    <wsdl:operation name="IngestPackage">
+      <wsdl:input message="tns:IngestPackageSoapIn"/>
+      <wsdl:output message="tns:IngestPackageSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePackage">
+      <wsdl:input message="tns:UpdatePackageSoapIn"/>
+      <wsdl:output message="tns:UpdatePackageSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="DeletePackage">
+      <wsdl:input message="tns:DeletePackageSoapIn"/>
+      <wsdl:output message="tns:DeletePackageSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetPackageStatus">
+      <wsdl:input message="tns:GetPackageStatusSoapIn"/>
+      <wsdl:output message="tns:GetPackageStatusSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllPackages">
+      <wsdl:input message="tns:GetAllPackagesSoapIn"/>
+      <wsdl:output message="tns:GetAllPackagesSoapOut"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CiscoAIMSoap11" type="tns:CiscoAIMSoap11">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="IngestPackage">
+      <soap:operation soapAction="CISCOAIM#IngestPackage" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePackage">
+      <soap:operation soapAction="CISCOAIM#UpdatePackage" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeletePackage">
+      <soap:operation soapAction="CISCOAIM#DeletePackage" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPackageStatus">
+      <soap:operation soapAction="CISCOAIM#GetPackageStatus" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllPackages">
+      <soap:operation soapAction="CISCOAIM#GetAllPackages" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="CiscoAIMSoap12" type="tns:CiscoAIMSoap11">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="IngestPackage">
+      <soap:operation soapAction="CISCOAIM#IngestPackage" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePackage">
+      <soap:operation soapAction="CISCOAIM#UpdatePackage" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeletePackage">
+      <soap:operation soapAction="CISCOAIM#DeletePackage" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPackageStatus">
+      <soap:operation soapAction="CISCOAIM#GetPackageStatus" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllPackages">
+      <soap:operation soapAction="CISCOAIM#GetAllPackages" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CiscoAIM">
+    <wsdl:port name="CiscoAIMSoap11" binding="tns:CiscoAIMSoap11">
+      <soap:address location="http://localhost:8792/CiscoAIM"/>
+    </wsdl:port>
+    <wsdl:port name="CiscoAIMSoap12" binding="tns:CiscoAIMSoap11">
+      <soap:address location="http://localhost:8793/CiscoAIM"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

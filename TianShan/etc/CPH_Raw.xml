@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TianShan>
+	<Definitions src="TianShanDef.xml">
+	</Definitions>
+	
+	<!-- Configuration on RTI provision helper. It captures IP streaming traffic, performs RTF trick genenration and index
+	     pacing then save the results into Vstream file system
+	     
+		Note: 1 RTI session use 2 threads, so in CPE.xml threadpool setting, if we want max to 30 sessions, need to set "threads" to at least 65	     
+		
+	-->
+	<CPH_RTIRaw>
+		<!-- Configuration on media content r/w buffer
+		     attributes:
+		       bufferSize    - the buffer size in byte per each read/write on the input media content
+		-->
+		<MediaSample bufferSize="65536"/>		
+		<!-- ProvisionMethod propertis configuration
+          attributes:
+              maxSessions - the maximal concurrent sessions that this instance can host
+              maxBandwidth - the maximal bandwidth in Kbps that this instance can host
+     -->
+		<ProvisionMethod>
+		    <Method name="XOR.Raw.RTI"  maxSessions="30" maxBandwidth="115200"/>
+  	</ProvisionMethod>
+    
+		<!-- Configuration on the ingestion session
+		     attributes:
+		       enableMD5	   - enable/disable caculate MD5 checksum for provisioned file(main file), default is 1
+		       enableCacheModeForIndex		-	enable/disable cache mode for index file vstream write(VsOpen), default is 1
+		       			On a single node Vstream6.0, enable cache for index would cause "VsSeek failed with VSTRM_TIMECODE_OUTOF_RANGE" sometime
+		       enableRAID1ForIndex		-	set RAID_1 flag for index writing on vstream, get better performance, default is 1
+		       preLoad			 - the session preload time in milliseconds, initialize the session in advance of the start time, random from "preLoad/2" to "preLoad + preLoad/2"
+		       warningDiskWriteLongLatency		-	warning when disk write a buffer block spent more than this value, in miliseconds. default is 100ms
+		-->
+		<Session enableMD5="0" enableCacheModeForIndex="1" enableRAID1ForIndex="1" preLoad="10000" warningDiskWriteLongLatency="100"/>		
+		
+			<!-- Configuration on IP capture
+	     	     attributes:	     	        
+	     	        sessionTimeout - timeout in seconds for the session being captured, session will be stopped if no more data
+	     	               can be captured within this timeout window.  default 30 second
+	 	     	      winpcapKernelBuffer	-	winpcap kernel buffer size in MB for multicast capture, default 128MB
+	     	        winpcapMinBufferCopy	-	winpcap minimal buffer size in KB to copy, default is 512KB
+    	        
+	     	     NetworkInterface, we configure the network adapter ip and bandwidth for the capture, if more than one interface configured here, we would 
+	     	     do some load balance on the usable network interfaces.
+	     	        ip 		- the ip address of the network adapter for the capture
+	     	        bandwidth		-	the bandwidth in bps for capture
+		-->
+ 		<Capture captureIp="${IngestNetIf}" bandwidth="1000000000" sessionTimeout="30" winpcapKernelBuffer="64" winpcapMinBufferCopy="512"/>
+ 		
+ 		<!-- dump the captured data for test or analysis when needed
+		     attributes:
+		       enable	-	"1" to enable RTI dump captured data to local NTFS, "0" disable, default "0"
+		       dumpPath	-	the output path for dump files
+		       deleteOnSuccess	-	"1" delete dumped file when ingestion success, "0" for not, defaut is "1"
+		-->
+ 		<CaptureDumper enable="0" dumpPath="c:\temp" deleteOnSuccess="1" />
+		<!-- Configuration on the process events
+		-->
+		<Event>
+			<!-- Configuration on the progress events
+			     attributes:
+			       enable  - 1 to enable sending progress events
+			-->
+			<Progress enable="1"/>
+			
+			<!-- Configuration on the streamable events
+			     attributes:
+			       enable  - 1 to enable sending streamable events
+			       lagAfterStart  - the time lag in second after the provision starts to notify streamable
+			-->
+			<Streamable enable="1" lagAfterStart="5" />
+		</Event>
+	 </CPH_RTIRaw>
+</TianShan>

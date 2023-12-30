@@ -1,0 +1,107 @@
+.tableCss{
+	table-layout: fixed;
+	text-align: center;
+	margin: auto;
+	border-spacing: 1px;
+	border-collapse:collapse;
+	padding: 2px;
+	word-break:break-all;
+	word-wrap:break-all;
+}
+
+.unselect{
+	-moz-user-select:none;/*火狐*/
+	-webkit-user-select:none;/*webkit浏览器*/
+	-ms-user-select:none;/*IE10*/
+	-khtml-user-select:none;/*早期浏览器*/
+	user-select:none;
+}
+
+.grid{
+	-o-text-overflow:ellipsis;
+	text-overflow:ellipsis;
+	overflow:hidden;
+	white-space:nowrap;
+}
+
+.line{
+	background: green;
+}
+
+.select{
+	border:none;
+	-moz-appearance:none;
+	-webkit-appearance:none;
+	appearance:none;
+}
+
+canvas{
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+}
+
+/*
+	分块布局
+*/
+
+#wrap{
+   width:100%;
+   height:100%;
+   margin:0 auto;
+}   
+#left   {
+	float:left;
+	width:49%;
+	border:1px solid #000;
+}
+#right {
+	float:right;
+	width:49%;
+	border:1px solid #000;
+}
+
+/*
+	整体样式布局
+*/
+
+body,div{ margin:0; padding:0;}
+
+.container{  
+	width: 100%;
+	background: #FFF;  
+	margin: 0 auto;/*侧边的自动值与宽度结合使用，可以将布局居中对齐*/  
+	text-align: left;
+}  
+
+.header{  
+	padding: 1px 0;
+	text-align: center;
+	background: #666699;
+	margin-bottom:2px;
+}
+
+.sidebar{  
+	float: right;/*侧边栏居左，改为right可令侧边栏居右*/ 
+	position:relative;
+	background: #339999;
+	margin-right:2px;
+}
+
+.sidebar .l{
+	list-style-type:none;
+	padding:2px;
+}
+
+.maincontent{	
+	background: #99CCCC;
+	margin-left:2px;	
+}
+
+.footer{
+	clear: both;/*清除前后的浮动元素，使页脚显示在其下方*/
+	position: relative;/*修改IE浏览器中clear无效的bug*/  
+	padding: 1px 0;  
+	background: #CC6600;
+	margin-top:2px;
+}

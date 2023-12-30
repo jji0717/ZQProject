@@ -1,0 +1,17 @@
+<configuration>
+    <configure 
+    LOGFILE_NAME="D:\work\project\ZQProjs\TianShan\bin\log\rtspproxy\ssm_PauseTV_s1.log" 
+    LOGFILE_SIZE="100000000" 
+    CHANNELONDEMANDAPP_NAME="ChannelOnDemandApp" 
+    CHANNELONDEMANDAPP_IP="10.50.12.4" 
+    CHANNELONDEMANDAPP_PORT="9832" 
+    STREAMSERVICE_NAME ="StreamSmith" 
+    STREAMSERVICE_IP="10.15.10.250" 
+    STREAMSERVICE_PORT="10000" 
+    LISTEN_EVENT_PORT="9048" 
+    ICESTORM_IP="10.50.12.4" 
+    ICESTORM_PORT="10000" 
+    RECONNECT_INTERNAL="5000" 
+    SESSION_TIME_OUT="600" 
+    />
+</configuration>

@@ -1,0 +1,93 @@
+all variables in this document need to invoke command 'set'
+eg:
+	set <key>=<value>
+
+1.export <contentName> <subfile> <streamTimeout> <cacheStoreDepth>
+to export a Content as a Stream session
+variables:
+		lowBandwidth 
+		highBandwidth 
+		sessionInterface
+		destIP
+param:
+		contentName:the name of content to export
+		subfile:the subfile extension name of content to export in this stream
+		streamTimeout:session timeout in millisecond
+ 		cacheStoreDepth:to indicated whether this invocation is from forwarded by another CacheStore
+	                  0 - the invocation is issued originally by a ServiceEdge
+	                  non-0 the invocations may be forwarded form other CacheStores, usually it is not recommended
+	                  to forward again from the invokeed	                    
+eg:
+		export cdntest1234567890166zq.com * 60000 0
+	
+2.cache <contentName> <srcCacheStoreEndPoint>
+cache a content into local
+param:
+		contentName:the name of content to cache
+		srcCacheStoreEndPoint:ice_endpoint,the source CacheStore to propage the content from,NIL if up to the CacheStore determine
+	                      	which source storage to pull the content from
+eg:
+		cache cdntest1234567890199zq.com "tcp -h 10.15.10.50 -p 10700"
+	
+3.exportFolder <contentName>
+converts the inputed content name to the path name of in the cache with hashed folders
+param:
+		contentName:the name of content	
+eg:
+		exportFolder cdntest1234567890166zq.com
+		
+4.sleep <msec>
+param:
+		msec in millisecond
+		
+5.getAccessCount <contentName>
+get the access count of the content
+eg:
+		getAccessCount cdntest1234567890166zq.com
+		
+6.addAccessCount <contentName> <countToAdd>
+to add access count of a given content		
+variable:
+	  since:the time, in the format of ISO8601, since when the content is counted by this CacheStore
+	  eg:
+	  		set time=20120412	  
+param:
+		contentName:the name of content to query
+		coutToAdd:the amount of times that the content has been accessed from this CacheStore to add
+eg:
+		addAccessCount cdntest1234567890166zq.com 10
+		
+7.getMissedContent <maxNum>
+to query for the missed contents known by the CacheStore
+param:
+		maxNum:the max number of ContentAccess wish to receive		
+eg:
+		getMissedContent 10
+		
+8.setThreshold
+To set the threshold of access count for missed content to be cached
+variables:
+		timeWinOfPopular:to specify the float time window, in seconds, to count the access
+		countOfPopular: in the resent time window specified by timeWinOfPopular, A content is known as popular
+	                  if its access count exceeds what countOfPopular specifies
+		hotTimeWin:as the most recent part, in milliseconds, of timeWinOfPopular
+		
+9.getThreshold
+get the threshold settings of access count for missed contents
+
+10.distance <contentName> <CacheSotreId>
+calculate the distance between a given content and a store netId
+param:
+		CacheStoreId:the computer name of cacheStore		
+eg:
+		distance cdntest1234567890166zq.com "se1-build"
+		
+11.nameOfLocal <contentName> <subfile>
+converts the inputed content name to the full path name of in the local cache with hashed folders
+param:
+		subfile:the subfile extension name of Content to export in this stream.		
+eg:
+		nameOfLocal cdntest1234567890166zq.com index
+
+12.sleep <millisecond>
+

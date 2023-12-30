@@ -1,0 +1,6 @@
+INSTRUCTION
+
+1) Create the operations trace file.
+    TODO: detail instructions by ZhangJie
+2) Run the emulator.
+    nleemulator <OperationsTrace> <TestDirectory>

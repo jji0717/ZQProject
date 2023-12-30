@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "McpDemo", "McpDemo.vcproj", "{788D4EE4-8815-4A3E-9011-1D7151784CEE}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(DPCodeReviewSolutionGUID) = preSolution
+		DPCodeReviewSolutionGUID = {00000000-0000-0000-0000-000000000000}
+	EndGlobalSection
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{788D4EE4-8815-4A3E-9011-1D7151784CEE}.Debug.ActiveCfg = Debug|Win32
+		{788D4EE4-8815-4A3E-9011-1D7151784CEE}.Debug.Build.0 = Debug|Win32
+		{788D4EE4-8815-4A3E-9011-1D7151784CEE}.Release.ActiveCfg = Release|Win32
+		{788D4EE4-8815-4A3E-9011-1D7151784CEE}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TianShan>
+  <!-- Notice: TianShanDef.xml has been preloaded when this configuration file is being parsed, please
+		 refer to TianShanDef.xml for the common properties
+	-->
+  <Definitions src="TianShanDef.xml"/>
+  <!-- default configurations for the services of this TianShan deployment -->
+  <default>
+    <!-- The EventChannel service where the services of this TianShan deployment will deliver events to.
+		     attributes:
+		       endpoint - the ICE endpoint to the EventChannel service
+		-->
+    <EventChannel endpoint="${PrimeEventChannelEndpoint}"/>
+    <CrashDump path="${TianShanCrashDumpDir}" enabled="1"/>
+    <!-- The Ice trace log setting for all the services of this TianShan deployment.
+		     attributes:
+		       enabled       - 1 if the Ice trace is enabled, default "0"
+		       level         - the log level of the ice trace log
+		       size          - the size that this trace log must roll
+		-->
+    <IceTrace enabled="1" level="${DefaultLogLevel}" size="10240000"/>
+    <!-- Additional Ice properties if there is any, <prop /> is its sub element
+		     attrib of <prop />:
+		        name         == the name of the Ice property
+		        value        == the value of the Ice property
+		-->
+    <IceProperties>
+      <prop name="Ice.Override.Timeout" value="30000"/>
+      <prop name="Ice.Override.ConnectTimeout" value="2000"/>
+    </IceProperties>
+  </default>
+  <!-- The Sentry configuration
+		attributes:
+			type		- the type of the machine, a string value up to 15 Bytes. Such as NGODGateway, MediaCluster etc.
+	-->
+  <Sentry type="">
+    <!-- The Ice adapter that the Sentry service is serving on
+		     attributes:
+		       endpoint      - the endpoint of SentrySvc adapter. format: tcp -h IPSTR -p PORT
+		       threadPool    - the threadpool of the adapter, values in the range 2-20 are acceptable
+		-->
+    <Bind endpoint="tcp -h ${ServerNetIf} -p 10020" threadpool="20"/>
+    <WebReference>
+      <!-- The web extension dll reference.
+			   name:	uri's file ext, leading with '.'
+			   value:	the extension dll's name.
+			-->
+      <reference name=".tswl" value="libWebLayout.so"/>
+      <reference name=".ac.tswl" value="AdminCtrl_web.dll"/>
+      <reference name=".codweb.tswl" value="CodMan_web.dll"/>
+      <reference name=".ngod2web.tswl" value="ngod2view.dll"/>
+      <reference name=".cpemanweb.tswl" value="libCPEMan_web.so"/>
+      <reference name=".cpcmanweb.tswl" value="libCPCMan_web.so"/>
+      <reference name=".mdb.tswl" value="MDB_web.dll"/>
+      <reference name=".storage.tswl" value="libStorage_web.so"/>
+      <reference name=".bcastweb.tswl" value="BcastChMan_web.dll"/>
+      <reference name=".apm.tswl" value="APM_web.dll"/>
+      <reference name=".c2loc.tswl" value="libc2loc_web.so"/>
+      <reference name=".ermweb.tswl" value="ErmMan_web.dll"/>
+      <reference name=".clibweb.tswl" value="libClibMan_web.so"/>
+    </WebReference>
+    <!-- The neighbor discovery settings
+             	attributes:
+                	groupBind       - multicast group local bind address
+                 	groupAddress    - multicast group address
+                 	groupPort       - multicast group port
+          	-->
+    <Neighbor groupBind="0.0.0.0" groupAddress="239.200.222.1" groupPort="65001"/>
+    <!-- The logfile setting of the Http service
+		     attributes:
+		       level         - the log level
+		       size          - the size that this trace log must roll
+			   buffer		 - size of memory buffer for logging, in bytes
+		       flushTimeout  - timeout in second that the logfile must flush
+		-->
+    <HttpLog level="0" size="10240000" buffer="204800" flushTimeout="2"/>
+    <!-- The HTTP server configuration
+			attributes:
+                bindAddr            - HTTP bind address
+				ServePort   		- HTTP port
+				webRoot				- web root folder, MUST 'TianShanPath/webctrl'
+				webLayoutConfig		- web layout config file path
+		-->
+    <http bindAddr="${ServerNetIf}" ServePort="10000" webRoot="${TianShanHomeDir}/webctrl" weblayoutConfig="${TianShanHomeDir}/etc/weblayout.xml"/>
+    <!-- The NTP client configuration
+      		attributes:
+        		enabled       - 1 for enable the sync function, 0 for disable it.
+        		adjustTimeout - Max time in msec of every sync's adjusting.
+        		syncInterval  - Interval between the syncs.
+    		-->
+    <NTP enabled="0" adjustTimeout="60000" syncInterval="600000" timeMaxOffset="3600000">
+      <!-- The remote time server's configuration
+        	attributes:
+          		address     - Network address of the time server
+          		port        - The NTP service port on the time server
+        		supported:
+          		support multiple time servers configuration
+      		-->
+      <TimeServer address="*.*.*.*" port="123"/>
+      <TimeServer address="*.*.*.*" port="123"/>
+    </NTP>
+    <!-- The NTP server configuration
+      		attributes:
+        		enabled     - 1 for enable this machine as a NTP server, 0 for disable.
+        		address     - The address of the local NTP service.
+        		port        - The listen port of the local NTP service.
+    		-->
+    <NTPServer enabled="0" address="${ServerNetIf}" port="1230"/>
+    <!-- The disk monitor conf
+         		enabled      - 1 to enable the monitor, 0 to disable.
+         		pollInterval - time interval of the polling, in msec.
+         		reportBy     - the event senders that is used to report the warning.
+                        multiple targets are delimited by SPACE, for example:(ice snmp)
+                        set this value "*" for every available senders.
+    		-->
+    <DiskSpaceMonitor enabled="1" pollInterval="60000" reportBy="ice">
+      <!-- the target disk info
+        		name        - the path of the target disk
+        		freeWarning - the safe free space level(in percent) of the disk.
+        		repeatStep  - the step(in percent) of the subsequent *WARNING*
+      		-->
+      <!--
+     	 		<Path name="/" freeWarning="10%" repeatStep="1%" />
+      			-->
+    </DiskSpaceMonitor>
+    <DiskIOMonitor enabled="0" pollInterval="30000" reportBy="">
+      <!--the disk device to monitor
+        		name           logical disk name(sda,sdb,sda1)
+        		warning value(if greater one of the values will have a warning message) 
+        		busyWarning    device I/O utilization(in percent)
+        		queueSize      disk I/O request queue size
+       		-->
+      <!--
+       	 		<Device name="sda" busyWarning="70%" queueSize="2"/>
+      		-->
+    </DiskIOMonitor>
+  </Sentry>
+  <EventSink>
+    <!-- The global context for the log parsing -->
+    <Context>
+      <!-- The property that every event handler can refer. -->
+      <property name="SourceNetId" value="${ServerNetIf}"/>
+    </Context>
+    <!-- The log file that be monitoring on the service start -->
+    <InitialMonitoring>
+      <!--
+			<Log path="${TianShanLogDir}/RTSPProxy_shell.Log" syntax="${TianShanHomeDir}/etc/syntax.xml key="RTSPProxy_Shell" type="" >
+				<property name="SourceNetId" value="*.*.*.*"/>
+			</Log>
+			<Log  path="Application" syntax="${TianShanHomeDir}/etc/syntax.xml"  key="WinEventApp" type="WinEventLog">
+	   		</Log>
+	   		<Log  path="Security"    syntax="${TianShanHomeDir}/etc/syntax.xml"  key="WinEventSecurity" type="WinEventLog">
+	   		</Log>
+			-->
+      <!--	 <Log  path="System"      syntax="${TianShanHomeDir}/etc/syntax.xml"  key="WinEventSystem"  type="WinEventLog">
+		     		SourceNetID must be configured to HostName
+         			<property name="SourceNetId" value="hostname"/>     
+		 	</Log>-->
+      <Log path="/var/log/messages" syntax="${TianShanHomeDir}/etc/syntax.xml" key="SysMessage" type="SysLog">
+         		</Log>
+      <Log path="/var/log/asf_status.log" syntax="${TianShanHomeDir}/etc/syntax.xml" key="LinuxSystemEvent" type="FileLog">
+        <!-- SourceNetID must be configured to HostName-->
+        <property name="SourceNetId" value="${HostNetID}"/>
+      </Log>
+      <Log path="/var/log/svc.log" syntax="${TianShanHomeDir}/etc/syntax.xml" key="TSSAndUMLEvent" type="FileLog">
+        <property name="SourceNetId" value="${HostNetID}"/>
+      </Log>
+    </InitialMonitoring>
+    <Log LogPath="${TianShanLogDir}/EventSink.log" LogFileSize="10240000" LogLevel="0"/>
+    <!--PosDataBase is to save the position of log file that EventSink should monitor
+		Path is the database path of the position file -->
+    <PosDataBase Path="${TianShanRtRecDir}/EventSink"/>
+    <!-- 
+		PlugIn can be more than one,they are maybe the same dll,but different type,such as "jms","ice","text" or "snmp".
+		Dll is the plugin file path,Config is the config file of plugin. 
+		 -->
+    <PlugIn>
+      <Module Dll="${TianShanHomeDir}/bin/libMsgSender.so" Config="${TianShanHomeDir}/etc/MsgSender.xml" Type="ice" Enable="1"/>
+      <Module Dll="${TianShanHomeDir}/bin/libMsgSender.so" Config="${TianShanHomeDir}/etc/MsgSender.xml" Type="text" Enable="0"/>
+      <Module Dll="${TianShanHomeDir}/bin/snmpplug.dll" Config="${TianShanHomeDir}/etc/snmpsender.xml" Type="snmp" Enable="0"/>
+      <Module Dll="${TianShanHomeDir}/bin/MsgSender.dll" Config="${TianShanHomeDir}/etc/MsgSender.xml" Type="snapshot" Enable="0"/>
+      <Module Dll="${TianShanHomeDir}/bin/libSysLogger.so" Config="destination=192.168.81.124; facility=daemon" Type="syslog" Enable="1"/>
+    </PlugIn>
+  </EventSink>
+</TianShan>

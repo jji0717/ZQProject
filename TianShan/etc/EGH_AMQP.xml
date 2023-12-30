@@ -1,0 +1,728 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TianShan>
+  <Definitions src="TianShanDef.xml"/>
+  <EGH_AMQP>
+    <!-- Log: The log setting of this module
+      level:  The log level(1-7).
+      size:   The log file size(in Byte).
+      count:  The log file count
+    -->
+    <Log level="${DefaultLogLevel}" size="10240000" count="5"/>
+
+    <!-- SafeStore: The safe store setting of this module
+      path:   The root data path. Every working RabbitMQ server connection
+              will be assigned a subfolder as the safe store path.
+    -->
+    <SafeStore path="${TianShanDatabaseDir}\EGH_AMQP"/>
+
+    <!-- RabbitMQServer: The RabbitMQ server setting
+      name:   The name of this server. This name will also be used as the safe store folder name.
+      Ip:    The ip of the rabbitMq server listen
+      port:  The port of the rabbitMq server listen
+      user:  access rabbitmq Server user account
+      passwd:  access rabbitmq Server user account password
+      enable: 1 for enable this RabbitMQ server, 0 for disable.
+    -->
+    <RabbitMQServer name="RabbitMQServer1" ip="10.50.12.23" port="5672" user="guest" passwd="guest" enabled="1" >
+
+      <!-- Channel: The message channel setting
+        name:         The name of the channel. This value always be a specific value and
+                      be known by the module.
+        destination:  The desitination of the jms message.
+      -->
+      <Channel name="Content" id="1">
+        <!-- The message properties-->
+        <MessageProperties>
+          <!-- StringProperty: String property of the message -->
+          <StringProperty name="content_type" value="text/plain" />
+          <StringProperty name="expiration" value="300000" />
+          <!-- IntProperty: Integer property of the message -->
+          <IntProperty name="delivery_mode" value="1" />
+        </MessageProperties>
+        <!-- Option: The message option
+          TTL:      The ttl of the message, in milliseconds
+          enabled:  The sign for wether or not will the option setting be applied. 1 for enabled, 0 for disabled.
+        -->
+        <Option TTL="0" enabled="0"/>
+      </Channel>
+      <Channel name="ProvisionProgress" id="2">
+        <MessageProperties>
+          <!-- StringProperty: String property of the message -->
+          <StringProperty name="content_type" value="text/plain" />
+          <StringProperty name="expiration" value="300000" />
+          <!-- IntProperty: Integer property of the message -->
+          <IntProperty name="delivery_mode" value="1" />
+        </MessageProperties>
+        <Option TTL="0" enabled="0"/>
+      </Channel>
+
+      <Channel name="Stream" id="3">
+        <!-- The message properties-->
+        <MessageProperties>
+          <!-- StringProperty: String property of the message -->
+          <StringProperty name="content_type" value="text/plain" />
+          <StringProperty name="expiration" value="300000" />
+          <!-- IntProperty: Integer property of the message -->
+          <IntProperty name="delivery_mode" value="1" />
+        </MessageProperties>
+        <!-- Option: The message option
+          TTL:      The ttl of the message, in milliseconds
+          enabled:  The sign for wether or not will the option setting be applied. 1 for enabled, 0 for disabled.
+        -->
+        <Option TTL="0" enabled="0"/>
+      </Channel>
+
+      <Channel name="PlayList" id="4">
+        <!-- The message properties-->
+        <MessageProperties>
+          <!-- StringProperty: String property of the message -->
+          <StringProperty name="content_type" value="text/plain" />
+          <StringProperty name="expiration" value="300000" />
+          <!-- IntProperty: Integer property of the message -->
+          <IntProperty name="delivery_mode" value="1" />
+        </MessageProperties>
+        <!-- Option: The message option
+          TTL:      The ttl of the message, in milliseconds
+          enabled:  The sign for wether or not will the option setting be applied. 1 for enabled, 0 for disabled.
+        -->
+        <Option TTL="0" enabled="0"/>
+      </Channel>
+    </RabbitMQServer>
+
+   <RabbitMQServer name="RabbitMQServerTest" ip="10.50.12.23" port="5672" user="guest" passwd="guest" enabled="0" >
+      <Channel name="Content" id="111">
+        <!-- The message properties-->
+        <MessageProperties>
+          <!-- StringProperty: String property of the message -->
+          <StringProperty name="content_type" value="text/plain" />
+          <StringProperty name="expiration" value="300000" />
+          <!-- IntProperty: Integer property of the message -->
+          <IntProperty name="delivery_mode" value="1" />
+        </MessageProperties>
+        <Option TTL="0" enabled="0"/>
+      </Channel>
+    </RabbitMQServer>
+
+  <RabbitMQServer name="RabbitMQServer2" ip="10.50.12.23" port="5672" user="guest" passwd="guest" enabled="1" >
+
+      <Channel name="SystemEvent" id="5">
+        <!-- The message properties-->
+        <MessageProperties>
+          <StringProperty name="MESSAGECLASS" value="NOTIFICATION" />
+          <IntProperty name="MESSAGECODE" value="1234" />
+        </MessageProperties>
+        <Option TTL="0" enabled="0"/>
+      </Channel>  
+       <Channel name="DMEvent" id="6">
+        <!-- The message properties-->
+        <MessageProperties>
+          <!-- StringProperty: String property of the message -->
+          <StringProperty name="content_type" value="text/plain" />
+          <StringProperty name="expiration" value="300000" />
+          <!-- IntProperty: Integer property of the message -->
+          <IntProperty name="delivery_mode" value="1" />
+        </MessageProperties>
+        <Option TTL="0" enabled="0"/>
+      </Channel>
+  </RabbitMQServer>
+
+
+    <!-- The event transfer handlers setting -->
+    <EventHandlers>
+      <!-- Handler: The event handler setting
+        enabled:    0 for disable this handler, 1 for enable it.
+        name:       The description name of this handler.
+        target:     The destination of the jms message. In format of JMSServer.Topic
+        source:     The source of the event, which is the topic of original events.
+      -->
+      <Handler enabled="0" name="sample" target="RabbitMQServer1.sample">
+        <!-- filter: The filter predicate of the events distribution
+          eventName:    The name field of the event.
+          category:     The category field of the event.
+          sourceNetId:  The netid field of the event.
+        -->
+        <filter eventName=".*" category="Content" sourceNetId=".*">
+          <!-- parameter: The parameter of the event filter.
+            key:    The key of the parameter which exactly match the parameter key in the event.
+            value:  The value format of parameter.
+          -->
+          <parameter key="name" value=".*"/>
+        </filter>
+        <!-- message: the outgoing message definition
+          type:   Type of the message template. The value can be text or map.
+        -->
+        <message type="text">
+          <!-- text: The text message definition.
+            content:  The template of the text message. The format of the template string
+                      is consist of variables that start with '$' and other text. The variables
+                      can be the fixed filed of the incoming event or the parameters of the
+                      event. The fixed filed variables include: EventName, Category, EventId,
+                      SourceNetId, StampUTC. The parameter variables may be any parameter that
+                      consist of [a-zA-Z].
+          -->
+          <text content="event=$EventName|category=$Category|id=$EventId|netId=$SourceNetId|stamp=$StampUTC"/>
+          <!-- map: The map message definition. -->
+          <map>
+            <!-- property: The template of the map message.
+              key:    The key of the property.
+              value:  The value of the property which in the same format of the text message template.
+            -->
+            <property key="event" value="$EventName"/>
+            <!--other properties-->
+          </map>
+        </message>
+      </Handler>
+
+      <!-- Volume::Mounted -->
+      <Handler enabled="1" name="VolumeMounted" target="RabbitMQServer1.Content">
+        <filter eventName="Mounted" category="Content" sourceNetId=".*">
+        </filter>
+        <message type="text">
+          <text content="V1.11&gt;Volume::Mounted(3)|timestamp=$StampUTC|netId=$SourceNetId|volume=$volume|path=$path"/>
+        </message>
+      </Handler>
+      <!-- Created, Destroyed, ProvisionStarted, ProvisionStreamable -->
+      <Handler enabled="1" name="Generic" target="RabbitMQServer1.Content">
+        <filter eventName="Created|Destroyed|ProvisionStarted|ProvisionStreamable" category="Content" sourceNetId=".*">
+        </filter>
+        <message type="text">
+          <text content="V1.11&gt;Content::$EventName($EventId)|timestamp=$StampUTC|netId=$SourceNetId|content=$content|volume=$volume|name=$name"/>
+        </message>
+      </Handler>
+      <!-- Content::StateChanged, except newState==OutService or Cleaning per ticket#9077-->
+      <Handler enabled="1" name="ContentStateChanged" target="RabbitMQServer1.Content">
+        <filter eventName="StateChanged" category="Content" sourceNetId=".*">
+            <parameter key="newState" value="(?:NotProvisioned.*)|(?:Provisioning.*)|(?:ProvisioningStreamable.*)|(?:InService.*)"/>
+        </filter>
+        <message type="text">
+          <text content="V1.11&gt;Content::StateChanged(2)|timestamp=$StampUTC|netId=$SourceNetId|content=$content|volume=$volume|name=$name|oldState=$oldState|newState=$newState"/>
+        </message>
+      </Handler>
+      <!-- Content::ProvisionStopped -->
+      <Handler enabled="1" name="ProvisionStopped" target="RabbitMQServer1.Content">
+        <filter eventName="ProvisionStopped" category="Content" sourceNetId=".*">
+        </filter>
+        <message type="text">
+          <text content="V1.11&gt;Content::ProvisionStopped(21)|timestamp=$StampUTC|netId=$SourceNetId|content=$content|volume=$volume|name=$name|lastError=$lastError|lastErrMsg=$lastErrMsg"/>
+        </message>
+      </Handler>
+      <!-- Content::ProvisionProgress -->
+      <Handler enabled="1" name="ProvisionProgress" target="RabbitMQServer1.ProvisionProgress">
+        <filter eventName="ProvisionProgress" category="Content" sourceNetId=".*">
+        </filter>
+        <message type="text">
+          <text content="V1.11&gt;Content::ProvisionProgress(22)|timestamp=$StampUTC|netId=$SourceNetId|content=$content|volume=$volume|name=$name|processed=$processed|total=$total"/>
+          </message>
+      </Handler>
+      <!-- deliver Content::ProvisionGivenUp as ProvisionStopped -->
+      <Handler enabled="1" name="ProvisionGivenUp" target="RabbitMQServer1.Content">
+        <filter eventName="ProvisionGivenUp" category="Content" sourceNetId=".*">
+        </filter>
+        <message type="text">
+          <text content="V1.11&gt;Content::ProvisionStopped(21)|timestamp=$StampUTC|netId=$SourceNetId|content=$content|volume=$volume|name=$name|lastError=7024|lastErrMsg=$lastErrMsg"/>
+        </message>
+      </Handler>
+      <!-- Content::ProvisionScheduleAdjusted -->
+      <Handler enabled="1" name="ProvisionScheduleAdjusted" target="RabbitMQServer1.Content">
+        <filter eventName="ProvisionScheduleAdjusted" category="Content" sourceNetId=".*">
+        </filter>
+        <message type="text">
+          <text content="V1.11&gt;Content::ProvisionScheduleAdjusted(27)|timestamp=$StampUTC|netId=$SourceNetId|content=$content|volume=$volume|name=$name|newScheduledStart=$startUTC|newScheduledEnd=$endUTC"/>
+        </message>
+      </Handler>
+      <Handler enabled="1" name="VolumeMounted" target="RabbitMQServer1.Content">
+        <filter eventName="MSDEFail" category="MSSQLSERVER" sourceNetId=".*">
+        </filter>
+        <message type="text">
+          <text content="MSSQLSERVER|$eventId|$sourceNetId|$stampUTC|desc=$desc"/>
+        </message>
+      </Handler>
+      <!-- Streamer::Stream -->
+      <Handler enabled="0" name="OnBeginningOfStream" target="RabbitMQServer1.Stream" source="TianShan/Event/Streamer/Stream">
+        <filter eventName="OnBeginningOfStream" category="Stream" sourceNetId=".*">
+        </filter>
+        <message type="text">
+          <text content="V1.11&gt;Stream::OnBeginningOfStream(28)|timestamp=$StampUTC|netId=$SourceNetId|proxy=$proxy|playlistId=$playlistId"/>
+        </message>
+      </Handler>
+      <Handler enabled="0" name="OnEndOfStream" target="RabbitMQServer1.Stream" source="TianShan/Event/Streamer/Stream">
+        <filter eventName="OnEndOfStream" category="Stream" sourceNetId=".*">
+        </filter>
+        <message type="text">
+          <text content="V1.11&gt;Stream::OnEndOfStream(29)|timestamp=$StampUTC|netId=$SourceNetId|proxy=$proxy|playlistId=$playlistId"/>
+        </message>
+      </Handler>
+      <Handler enabled="0" name="OnSpeedChanged" target="RabbitMQServer1.Stream" source="TianShan/Event/Streamer/Stream">
+        <filter eventName="OnSpeedChanged" category="Stream" sourceNetId=".*">
+        </filter>
+        <message type="text">
+          <text content="V1.11&gt;Stream::OnSpeedChanged(30)|timestamp=$StampUTC|netId=$SourceNetId|proxy=$proxy|playlistId=$playlistId|currentSpeed=$currentSpeed|preSpeed=$prevSpeed"/>
+        </message>
+      </Handler>
+      <Handler enabled="0" name="OnStateChanged" target="RabbitMQServer1.Stream" source="TianShan/Event/Streamer/Stream">
+        <filter eventName="OnStateChanged" category="Stream" sourceNetId=".*">
+        </filter>
+        <message type="text">
+          <text content="V1.11&gt;Stream::OnStateChanged(31)|timestamp=$StampUTC|netId=$SourceNetId|proxy=$proxy|playlistId=$playlistId|currentState=$currentState|prevState=$prevState"/>
+        </message>
+      </Handler>
+     <!-- Streamer::PlayList -->
+     <Handler enabled="0" name="OnItemStepped" target="RabbitMQServer1.PlayList" source="TianShan/Event/Streamer/Playlist">
+        <filter eventName="OnItemStepped" category="PlayList" sourceNetId=".*">
+        </filter>
+        <message type="text">
+          <text content="V1.11&gt;PlayList::OnItemStepped(32)|timestamp=$StampUTC|netId=$SourceNetId|proxy=$proxy|playlistId=$playlistId|currentUserCtrlNum=$currentUserCtrlNum|preUserCtrlNum=$preUserCtrlNum"/>
+        </message>
+      </Handler>
+      <!-- System event log: service start and stop
+      JMS message format "|Component|Code| Source sequence |Host|InstanceID|Time|Properties count n|Key1=Value1|..|Description"-->
+      <Handler enabled="1" name="SysEventServiceStart" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="SysEventServiceStart" category="ServiceControlManager" sourceNetId=".*">
+          <parameter key="servicename" value="(?:ZQ.*)|(?:MSSQLSERVER)|(?:SQLSERVERAGENT)|(?:JBOSS)|(?:NSSync)|(?:ServerLoad)|(?:Multiverse)|(?:AutoplayI)|(?:MMA-9010)|(?:WFES)|(?:MPCService)"/>
+        </filter>
+        <message type="text">
+          <text content="|WinEvent|$code|0|$SourceNetId|ZQ EventGateway|$time|0|$eventtype:The $servicename entered the running state."/>
+        </message>
+      </Handler>
+      <Handler enabled="1" name="SysEventServiceStop" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="SysEventServiceStop" category="ServiceControlManager" sourceNetId=".*">
+          <parameter key="servicename" value="(?:ZQ.*)|(?:MSSQLSERVER)|(?:SQLSERVERAGENT)|(?:JBOSS)|(?:NSSync)|(?:ServerLoad)|(?:Multiverse)|(?:AutoplayI)|(?:MMA-9010)|(?:WFES)|(?:MPCService)"/>
+        </filter>
+        <message type="text">
+          <text content="|WinEvent|$code|0|$SourceNetId|ZQ EventGateway|$time|0|$eventtype:The $servicename entered the stopped state."/>
+        </message>
+      </Handler>
+      <Handler enabled="1" name="SysEventServiceStartFailed" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="SysEventServiceStartFailed" category="ServiceControlManager" sourceNetId=".*">
+          <parameter key="description" value=".*((?:ZQ.*)|(?:MSSQLSERVER)|(?:SQLSERVERAGENT)|(?:JBOSS)|(?:NSSync)|(?:ServerLoad)|(?:Multiverse)|(?:AutoplayI)|(?:MMA-9010)|(?:WFES)|(?:MPCService)).*"/>
+        </filter>
+        <message type="text">
+          <text content="|WinEvent|$code|0|$SourceNetId|ZQ EventGateway|$time|0|$eventtype:$description"/>
+        </message>
+      </Handler>
+      <Handler enabled="1" name="SysEventServiceTerminated" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="SysEventServiceTerminated" category="ServiceControlManager" sourceNetId=".*">
+          <parameter key="description" value=".*((?:ZQ.*)|(?:MSSQLSERVER)|(?:SQLSERVERAGENT)|(?:JBOSS)|(?:NSSync)|(?:ServerLoad)|(?:Multiverse)|(?:AutoplayI)|(?:MMA-9010)|(?:WFES)|(?:MPCService)).*"/>
+        </filter>
+        <message type="text">
+          <text content="|WinEvent|$code|0|$SourceNetId|ZQ EventGateway|$time|0|$eventtype:$description"/>
+        </message>
+      </Handler>      
+     <Handler enabled="1" name="DiskFull" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="DiskFull" category="ServiceControlManager" sourceNetId=".*">
+        </filter>
+        <message type="text">
+          <text content="|WinEvent|$code|0|$SourceNetId|ZQ EventGateway|$time|0|$eventtype:$driver Disk Full"/>
+        </message>
+      </Handler>
+      <Handler enabled="1" name="LegatoTransportLinkFailed" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="LegatoTransportLinkFailed" category="ServiceControlManager" sourceNetId=".*">
+        </filter>
+        <message type="text">
+          <text content="|WinEvent|$code|0|$SourceNetId|ZQ EventGateway|$time|0|$eventtype:Legato Transport Link Connection Fail"/>
+        </message>
+      </Handler>
+      <Handler enabled="1" name="DriverOffline" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="DriverOffline" category="ServiceControlManager" sourceNetId=".*">
+        </filter>
+        <message type="text">
+          <text content="|WinEvent|$code|0|$SourceNetId|ZQ EventGateway|$time|0|$eventtype:D Drive is offline"/>
+        </message>
+      </Handler>
+      <Handler enabled="1" name="DriverConnectedToOtherNode" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="DriverConnectedToOtherNode" category="ServiceControlManager" sourceNetId=".*">
+        </filter>
+        <message type="text">
+          <text content="|WinEvent|$code|0|$SourceNetId|ZQ EventGateway|$time|0|$eventtype:Driver is connected to other node"/>
+        </message>
+      </Handler> 
+      <Handler enabled="1" name="MSSQLServerCrash" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="MSSQLServerCrash" category="ServiceControlManager" sourceNetId=".*">
+        </filter>
+        <message type="text">
+          <text content="|WinEvent|$code|0|$SourceNetId|ZQ EventGateway|$time|0|$eventtype:$description"/>
+        </message>
+      </Handler>     
+            
+      <!-- service crash -->
+      <Handler enabled="1" name="ServiceCrash" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="ServiceCrash" category="ServiceControlManager" sourceNetId=".*">
+        </filter>
+        <message type="text">
+          <text content="|WinEvent|$code|0|$SourceNetId|ZQ EventGateway|$time|0|$eventtype:$servicename crash"/>
+        </message>
+      </Handler>  
+      
+      <Handler enabled="1" name="VstreamEventVolumeWriteLocked" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="VstreamEventVolumeWriteLocked" category="ServiceControlManager" sourceNetId=".*">
+        </filter>
+        <message type="text">
+          <text content="|VstreamEvent|$code|0|$SourceNetId|ZQ EventGateway|$time|0|$eventtype:$description"/>
+        </message>
+      </Handler>      
+      <Handler enabled="1" name="VstreamEventAdapteFailed" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="VstreamEventAdapteFailed" category="ServiceControlManager" sourceNetId=".*">
+        </filter>
+        <message type="text">
+          <text content="|VstreamEvent|$code|0|$SourceNetId|ZQ EventGateway|$time|0|$eventtype:$description"/>
+        </message>
+      </Handler>    
+      <Handler enabled="1" name="VstreamEventControllerRptError" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="VstreamEventControllerRptError" category="ServiceControlManager" sourceNetId=".*">
+        </filter>
+        <message type="text">
+          <text content="|VstreamEvent|$code|0|$SourceNetId|ZQ EventGateway|$time|0|$eventtype:$description"/>
+        </message>
+      </Handler>
+      <Handler enabled="1" name="VstreamEventStreamSmithTimeOutOutofService" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="VstrmEventStreamSmithTimeOutOutofService" category="ServiceControlManager" sourceNetId=".*">
+        </filter>
+        <message type="text">
+          <text content="|VstreamEvent|$code|0|$SourceNetId|ZQ EventGateway|$time|0|$eventtype:$description"/>
+        </message>
+      </Handler>
+      
+
+      
+      <!-- CLink Event log: 
+      JMS message format "|Component|Code| Source sequence |Host|InstanceID|Time|Properties count n|Key1=Value1|..|Description"-->
+      <Handler enabled="1" name="TaskStatusChanged" target="RabbitMQServer2.DMEvent">
+        <filter eventName="TaskStatusChanged" category="TaskStatus" sourceNetId=".*">
+        </filter>
+        <message type="text">
+          <text content="&lt; TaskMessage taskID=&quot;$taskid&quot; currentStatus=&quot;$currentstatus&quot; previousStatus=&quot;$provisoustatus&quot;/&gt;"/>
+        </message>
+      </Handler>
+      <Handler enabled="1" name="TaskStatusChangedNormal" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="TaskStatusChanged" category="TaskStatus" sourceNetId=".*">
+          <parameter key="msglevel" value="Infomation"/>
+        </filter>
+        <message type="text">
+          <text content="|CLink|CLINK_TSK_1021|$msgid|$hostname|ZQ EventGateway|$time|0|INFO:Task $description($taskid) status is '$currentstatus', changed from '$provisoustatus'"/>
+        </message>
+      </Handler>
+      <Handler enabled="1" name="TaskStatusChangedFailed" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="TaskStatusChanged" category="TaskStatus" sourceNetId=".*">
+          <parameter key="msglevel" value="(?:Warning)|(?:Error)"/>
+        </filter>
+        <message type="text">
+          <text content="|CLink|CLINK_TSK_1022|$msgid|$hostname|ZQ EventGateway|$time|0|WARNING:Task $description($taskid) status is '$currentstatus', changed from '$provisoustatus'"/>
+        </message>
+      </Handler>
+      <Handler enabled="1" name="TaskOfCatcherStatusChangedNormal" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="TaskOfCatcherStatusChanged" category="TaskStatus" sourceNetId=".*">
+          <parameter key="msglevel" value="Infomation"/>
+        </filter>
+        <message type="text">
+          <text content="|CLink|CLINK_TSK_1021|$msgid|$hostname|ZQ EventGateway|$time|0|INFO:Task $description($taskid) status is '$currentstatus', changed from '$provisoustatus' [at '$catchername'($catcherid)]"/>
+        </message>
+      </Handler>
+      <Handler enabled="1" name="TaskOfCatcherStatusChangedFailed" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="TaskOfCatcherStatusChanged" category="TaskStatus" sourceNetId=".*">
+          <parameter key="msglevel" value="(?:Warning)|(?:Error)"/>
+        </filter>
+        <message type="text">
+          <text content="|CLink|CLINK_TSK_1022|$msgid|$hostname|ZQ EventGateway|$time|0|WARNING:Task $description($taskid) status is '$currentstatus', changed from '$provisoustatus' [at '$catchername'($catcherid)]"/>
+        </message>
+      </Handler>
+      <Handler enabled="1" name="CatcherStatusChangedOnline" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="CatcherStatusChanged" category="CatcherStatus" sourceNetId=".*">
+            <parameter key="msglevel" value="Infomation"/>
+        </filter>
+        <message type="text">
+          <text content="|CLink|CLINK_CAT_1011|$msgid|$hostname|ZQ EventGateway|$time|0|INFO:'$catchername'($catcherid) status is '$currentstatus', changed from '$provisoustatus'"/>
+        </message>
+      </Handler>
+      <Handler enabled="1" name="CatcherStatusChangedWarnOrOffline" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="CatcherStatusChanged" category="CatcherStatus" sourceNetId=".*">
+          <parameter key="msglevel" value="(?:Warning)|(?:Error)"/>
+        </filter>
+        <message type="text">
+          <text content="|CLink|CLINK_CAT_1012|$msgid|$hostname|ZQ EventGateway|$time|0|WARNING:'$catchername'($catcherid) status is '$currentstatus', changed from '$provisoustatus'"/>
+        </message>
+      </Handler>
+     <Handler enabled="1" name="SystemInfo" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="SystemInfo" category="System" sourceNetId=".*">
+        </filter>
+        <message type="text">
+          <text content="|CLink|CLINK_SYS_1001|$msgid|$hostname|ZQ EventGateway|$time|0|$message"/>
+        </message>
+      </Handler>
+      <Handler enabled="1" name="AutoUpgradeStatusSuccessful" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="AutoUpgradeStatus" category="AutoUpgradeStatus" sourceNetId=".*">
+            <parameter key="msglevel" value="Infomation"/>
+        </filter>
+        <message type="text">
+          <text content="|CLink|CLINK_UPG_1031|$msgid|$hostname|ZQ EventGateway|$time|0|Catcher '$catchername'($catcherid) auto-upgrade $autoupgradestatus for version '$version'"/>
+        </message>
+      </Handler>
+      <Handler enabled="1" name="AutoUpgradeStatusFailed" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="AutoUpgradeStatus" category="AutoUpgradeStatus" sourceNetId=".*">
+          <parameter key="msglevel" value="(?:Warning)|(?:Error)"/>
+        </filter>
+        <message type="text">
+          <text content="|CLink|CLINK_UPG_1032|$msgid|$hostname|ZQ EventGateway|$time|0|Catcher '$catchername'($catcherid) auto-upgrade $autoupgradestatus for version '$version', because of $comment"/>
+        </message>
+      </Handler>
+
+      <!-- RemoteAssetResolved
+        -->
+      <Handler enabled="1" name="RemoteAssetResolved" target="minips.Content">
+        <filter eventName="RemoteAssetResolved" category="ContentLocator" sourceNetId=".*">
+          <parameter key="LocalState" value="^(.{0}|NotProvisioned)$"/>
+          <parameter key="OutOfResource" value="false"/>
+        </filter>
+        <message type="text">
+          <text content="V1.11&gt;PropagateContent(901)|timestamp=$StampUTC|netId=$SourceNetId|providerId=$ProviderId|providerAssetId=$ProviderAssetId|name=$Name|reason=ordered by $DemandedBy"/>
+        </message>
+      </Handler>
+
+     <!-- LinuxSystemEvent
+        -->
+      <Handler enabled="1" name="LinuxServiceStatus" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="LinuxServiceStatus" category="ServicesStatus" sourceNetId=".*">
+        <parameter key="servicename" value="(?:MonitorCenter)"/>
+        </filter>
+        <message type="text">
+          <text content="|LinuxSystemEvent|Linux_System_1001|0|$SourceNetId|ZQ EventGateway|$time|0|$servicename enters stopped state."/>
+        </message>
+      </Handler>
+      <Handler enabled="1" name="LinuxServiceStatus1" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="LinuxServiceStatus" category="ServicesStatus" sourceNetId=".*">
+        <parameter key="servicename" value="(?:AssetFlow)|(?:Jboss)|(?:MySQL)"/>
+        </filter>
+        <message type="text">
+          <text content="|LinuxSystemEvent|Linux_System_1001_$servicename|0|$SourceNetId|ZQ EventGateway|$time|0|$servicename enters stopped state."/>
+        </message>
+      </Handler>
+      <Handler enabled="1" name="LinuxDRBDStopped" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="LinuxDRBDStopped" category="ServicesStatus" sourceNetId=".*">
+        </filter>
+        <message type="text">
+          <text content="|LinuxSystemEvent|Linux_System_1004|0|$SourceNetId|ZQ EventGateway|$time|0|DRBD is stopped on $servername."/>
+        </message>
+      </Handler>
+       <Handler enabled="1" name="LinuxDRBDResource0Error" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="LinuxDRBDResource0Error" category="ServicesStatus" sourceNetId=".*">
+        <parameter key="status" value="(?!^ConnectedUpToDate/UpToDate$)^.*"/>
+        </filter>
+        <message type="text">
+          <text content="|LinuxSystemEvent|Linux_System_1005|0|$SourceNetId|ZQ EventGateway|$time|0|DRBD Resource 0 in Error state."/>
+        </message>
+      </Handler>
+       <Handler enabled="1" name="LinuxDRBDResource1Error" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="LinuxDRBDResource1Error" category="ServicesStatus" sourceNetId=".*">
+        <parameter key="status" value="(?!^ConnectedUpToDate/UpToDate$)^.*"/>
+        </filter>
+        <message type="text">
+          <text content="|LinuxSystemEvent|Linux_System_1006|0|$SourceNetId|ZQ EventGateway|$time|0|DRBD Resource 1 in Error state."/>
+        </message>
+      <!-- Note:
+          In COF_LinuxSystemEvent.xml please according to actual <node name> to config following items
+
+           <EventHandlingEntry name="HeartBeatDead">
+
+                 <Criteria CODE=" Linux_System_1007_<node name>"/>
+
+                 <UseDefaultAction useDefaultSNMPAction="false"/> 
+
+                 <UseDefaultAction useDefaultMailAction="false"/>             
+
+           </EventHandlingEntry>   
+
+         In DEF_LinuxSystemEvent.xml please according to actual <node name> to config following items
+
+           <Event category="Services Status" code=" Linux_System_1007_<node name>" severity="error">
+
+                 <Translation>HeartBeat node dead.</Translation>
+
+                 <Translation locale="zh">HeartBeat node dead.</Translation>
+
+           </Event>
+      -->
+      </Handler>
+       <Handler enabled="1" name="LinuxHeartBeatdead" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="LinuxHeartBeatdead" category="ServicesStatus" sourceNetId=".*">
+        </filter>
+        <message type="text">
+          <text content="|LinuxSystemEvent|Linux_System_1007_$servername|0|$SourceNetId|ZQ EventGateway|$time|0|HeartBeat $servername dead."/>
+        </message>
+      </Handler>
+      <Handler enabled="1" name="LinuxHeartBeatStopped" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="LinuxHeartBeatStopped" category="ServicesStatus" sourceNetId=".*">
+        </filter>
+        <message type="text">
+          <text content="|LinuxSystemEvent|Linux_System_1008|0|$SourceNetId|ZQ EventGateway|$time|0|HeartBeat is stopped on $servername."/>
+        </message>
+      </Handler>     
+      <Handler enabled="1" name="DiskFree" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="FreeSpaceLow" category="DiskState" sourceNetId=".*">
+        </filter>
+        <message type="text" vars="MonitorCenterTime">
+          <text content="|System|System_Event_1020|0|$SourceNetId|ZQ EventGateway|$MonitorCenterTime|0|path[$path] low disk space: freeMB[$freeMB], totalMB[$totalMB]."/>
+        </message>
+      </Handler>
+      <Handler enabled="1" name="VolumeFreeSpace" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="FreeSpace" category="Volume" sourceNetId=".*">
+        </filter>
+        <message type="text" vars="MonitorCenterTime">
+          <text content="|System|System_Event_1020|0|$SourceNetId|ZQ EventGateway|$MonitorCenterTime|0|volume[$vol] low disk space: freeMB[$freeMB], totalMB[$totalMB]." />
+        </message>
+      </Handler>
+      
+ <!-- TSS_Event-->
+       <!-- Note:
+          In COF_LinuxSystemEvent.xml  and In DEF_LinuxSystemEvent.xml 
+          
+          useing actual "cdncs" serivce name to config following items
+          TSS_1001_cdncs?
+          
+       useing actual "cdncs" serivce name to replace <parameter key="servicename" value="(?:cdncs?)
+       <Handler enabled="1" name="TSSServiceStatus" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="TSSServiceStatus" category="ServicesStatus" sourceNetId=".*">
+        <parameter key="servicename" value="(?:cdncs?)|(?:eventchannel)|(?:eventgateway)|(?:httpcrg)|(?:sentry)"/>
+        </filter>
+        <message type="text">
+          <text content="|LinuxSystemEvent|TSS_1001_$servicename|0|$SourceNetId|ZQ EventGateway|$time|0|$servicename enters stopped state."/>
+        </message>
+      </Handler>
+      -->
+       <Handler enabled="1" name="EthernetDown" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="EthernetDown" category="ServicesStatus" sourceNetId=".*">
+        </filter>
+        <message type="text">
+          <text content="|LinuxSystemEvent|Linux_System_1100|0|$SourceNetId|ZQ EventGateway|$time|0|$ethernetname is $status on $umlid."/>
+        </message>
+      </Handler>
+      <Handler enabled="1" name="TSSServiceStatus" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="TSSServiceStatus" category="ServicesStatus" sourceNetId=".*">
+        <parameter key="servicename" value="(?:cdncs?)|(?:eventchannel)|(?:eventgateway)|(?:httpcrg)"/>
+        </filter>
+        <message type="text">
+          <text content="|LinuxSystemEvent|TSS_1001_$servicename|0|$SourceNetId|ZQ EventGateway|$time|0|$servicename enters stopped state."/>
+        </message>
+      </Handler>
+      <Handler enabled="1" name="TSSServiceStatusSentry" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="TSSServiceStatus" category="ServicesStatus" sourceNetId=".*">
+        <parameter key="servicename" value="(?:sentry)"/>
+        </filter>
+        <message type="text">
+          <text content="|LinuxSystemEvent|TSS_1001_$servicename|0|$SourceNetId|ZQ EventGateway|$time|0|$servicename enters stopped state on $umlid."/>
+        </message>
+      </Handler>
+      <Handler enabled="1" name="TSSServiceStatusOnNode" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="TSSServiceStatus" category="ServicesStatus" sourceNetId=".*">
+        <parameter key="servicename" value="(?:cdnss)|(?:cpesvc)"/>
+        </filter>
+        <message type="text">
+          <text content="|LinuxSystemEvent|TSS_1050_$servicename|0|$SourceNetId|ZQ EventGateway|$time|0|$servicename enters stopped state on $umlid."/>
+        </message>
+      </Handler>
+ <!-- UML_Event-->
+      <Handler enabled="1" name="UMLServiceStatus" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="TSSServiceStatus" category="ServicesStatus" sourceNetId=".*">
+        <parameter key="servicename" value="(?:bwfs)|(?:smbd)|(?:nmbd)|(?:vsftpd)|(?:enfs)"/>
+        </filter>
+        <message type="text">
+          <text content="|LinuxSystemEvent|UML_System_1001_$servicename|0|$SourceNetId|ZQ EventGateway|$time|0|$servicename stop on $umlid."/>
+        </message>
+      </Handler>
+      <Handler enabled="1" name="UMLServiceStatusFailed" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="UMLServiceStatusFailed" category="ServicesStatus" sourceNetId=".*">
+        <parameter key="servicename" value="(?:shas)"/>
+        </filter>
+        <message type="text">
+          <text content="|LinuxSystemEvent|UML_System_1050_$servicename|0|$SourceNetId|ZQ EventGateway|$time|0|$servicename failed on $umlid."/>
+        </message>
+      </Handler>
+      <Handler enabled="1" name="UMLArrayDegraded" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="UMLArrayDegraded" category="ServicesStatus" sourceNetId=".*">
+        <parameter key="servicename" value="(?:array)"/>
+        </filter>
+        <message type="text">
+          <text content="|LinuxSystemEvent|UML_System_1100_array_degraded|0|$SourceNetId|ZQ EventGateway|$time|0|Array is degraded on $umlid."/>
+        </message>
+      </Handler>
+      <Handler enabled="1" name="UMLArrayCritica" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="UMLArrayCritica" category="ServicesStatus" sourceNetId=".*">
+        <parameter key="servicename" value="(?:array)"/>
+        </filter>
+        <message type="text">
+          <text content="|LinuxSystemEvent|UML_System_1200_array_critical|0|$SourceNetId|ZQ EventGateway|$time|0|Array is in critical state on $umlid."/>
+        </message>
+      </Handler>
+      <Handler enabled="1" name="UMLClusterAbnormal" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="UMLClusterAbnormal" category="ServicesStatus" sourceNetId=".*">
+        </filter>
+        <message type="text">
+          <text content="|LinuxSystemEvent|UML_System_1300_Cluster_Abnormal|0|$SourceNetId|ZQ EventGateway|$time|0|Cluster is at unknown state on $umlid."/>
+        </message>
+      </Handler>
+      <Handler enabled="1" name="UMLfsBWFSNotMounted" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="UMLfsBWFSNotMounted" category="ServicesStatus" sourceNetId=".*">
+        <parameter key="servicename" value="(?:bwfs)"/>
+        </filter>
+        <message type="text">
+          <text content="|LinuxSystemEvent|UML_System_1400_fsBWFS|0|$SourceNetId|ZQ EventGateway|$time|0|BWFS is not mounted on $umlid."/>
+        </message>
+      </Handler>
+      <Handler enabled="1" name="HeartBeatStatus" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="HeartBeatStatus" category="ServicesStatus" sourceNetId=".*">
+        <parameter key="status" value="(?:offline)|(?:failover)|(?:abnormal)|(?:stopped)"/>
+        </filter>
+        <message type="text">
+          <text content="|LinuxSystemEvent|Linux_System_1007|0|$SourceNetId|ZQ EventGateway|$time|0|heartbeat is $status on $umlid."/>
+        </message>
+      </Handler>
+      <Handler enabled="1" name="UMLHeadIOFailure" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="UMLHeadIOFailure" category="SysMessage" sourceNetId=".*">
+        </filter>
+        <message type="text">
+          <text content="|System|UML_System_1500_FS_RW_Error|0|$SourceNetId|ZQ EventGateway|$time|0|$SourceNetId had IO ERROR $description."/>
+        </message>
+      </Handler>
+      <Handler enabled="1" name="UMLHeadLoginFail" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="UMLHeadLoginFail" category="SysMessage" sourceNetId=".*">
+        </filter>
+        <message type="text">
+          <text content="|System|UML_System_1600_Fail_Login|0|$SourceNetId|ZQ EventGateway|$time|0|$SourceNetId had failed login: $description."/>
+        </message>
+      </Handler>
+      <Handler enabled="1" name="UMLHeadReadOnly" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="UMLHeadReadOnly" category="SysMessage" sourceNetId=".*">
+        </filter>
+        <message type="text">
+          <text content="|System|UML_System_1700_FS_ReadOnly|0|$SourceNetId|ZQ EventGateway|$time|0|$SourceNetId had file system readonly error: $description."/>
+        </message>
+      </Handler>
+      <Handler enabled="1" name="UMLHWSlowDiskRead" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="UMLHWSlowDiskRead" category="SysMessage" sourceNetId=".*">
+        </filter>
+        <message type="text">
+          <text content="|System|UML_HW_2010_Slow_Disk_Read|0|$SourceNetId|ZQ EventGateway|$time|0|Slow Disk $description on Read"/>
+        </message>
+      </Handler>
+      <Handler enabled="1" name="UMLHWSlowDiskWrite" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="UMLHWSlowDiskWrite" category="SysMessage" sourceNetId=".*">
+        </filter>
+        <message type="text">
+          <text content="|System|UML_HW_2020_Slow_Disk_Write|0|$SourceNetId|ZQ EventGateway|$time|0|Slow Disk $description on Write"/>
+        </message>
+      </Handler>
+      <Handler enabled="1" name="UMLHWReadImproved" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="UMLHWReadImproved" category="SysMessage" sourceNetId=".*">
+        </filter>
+        <message type="text">
+          <text content="|System|UML_HW_2011_Read_Improved|0|$SourceNetId|ZQ EventGateway|$time|0|Read performance on Disk $description is improved"/>
+        </message>
+      </Handler>
+      <Handler enabled="1" name="UMLHWWriteImproved" target="RabbitMQServer2.SystemEvent">
+        <filter eventName="UMLHWWriteImproved" category="SysMessage" sourceNetId=".*">
+        </filter>
+        <message type="text">
+          <text content="|System|UML_HW_2021_Write_Improved|0|$SourceNetId|ZQ EventGateway|$time|0|Write performance on Disk $description is improved"/>
+        </message>
+      </Handler>
+    </EventHandlers>
+  </EGH_AMQP>
+</TianShan>

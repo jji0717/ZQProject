@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TianShan>
+      
+<Definitions src="TianShanDef.xml" />
+
+	<default>
+		<!-- The EventChannel service where the services of this TianShan deployment will deliver events to.
+		     attributes:
+		       endpoint - the ICE endpoint to the EventChannel service
+		-->
+		<EventChannel endpoint="${PrimeEventChannelEndpoint}" enabled="0" />
+		
+					
+		<!-- The Ice trace log setting for all the services of this TianShan deployment.
+		     attributes:
+		       enabled       - 1 if the Ice trace is enabled, default "0"
+		       level         - the log level of the ice trace log
+		       size          - the size that this trace log must roll
+		-->
+		<IceTrace enabled="1" level="7" size="10240000" />
+
+		<!-- The default folder where the services of this TianShan deployment accesses their local
+		     databases if it is not defined by their individual configurations
+		     attributes:
+		       path          - path to the location of database directory, default "../data/"
+		       runtimePath   - path to keep the runtime data, default as the value of path
+		-->
+		<Database path="${TianShanDatabaseDir}" />
+
+    </default>
+
+	<!-- configurations for the ContentStore service
+	     attributes:
+	       netId  - The unique id of ClusterContentStore instance, 
+                    Ex: SeaChange MediaCluster Id is 70001, netId="SEAC70001"
+	-->
+    <ContentStore netId="SEAC00000" cacheMode="0" cacheLevel="1" threads="4" >
+			<!-- The local bind endpoint that the ContentStore service is serving on 
+			     attributes:
+			       endpoint      - the bind endpoint of this ContentStore service
+			       dispatchSize  - the initial thread pool size to dispatch client requests, values in the range 4-20 are acceptable 
+			       dispatchMax   - the max thread pool size to dispatch client requests 
+			-->
+		<Bind endpoint="tcp -h ${ServerNetIf} -p 10400" dispatchSize="5" dispatchMax="30"/>
+
+		<!-- The database cache
+		     attributes:
+		       volumeSize  - the size of volume records to cache, 20 ~ 200 are acceptable
+		       contentSize  - the size of content records to cache, 400 ~ 4000 are acceptable
+		-->
+		<DatabaseCache volumeSize="40" contentSize="2000"/>
+
+		<Volumes>
+			<volume name="vol1" path="/tmp/aaa" default="1" />
+			<volume name="vol2" path="/tmp/bbb" />
+		</Volumes>
+
+        <!-- Additional Ice properties if there is any, <prop /> is its sub element
+             attrib of <prop />:
+                name         - the name of the Ice property
+                value        - the value of the Ice property
+        -->
+        <IceProperties>
+            <prop name="Ice.Trace.Network"                    value="0" /> 
+            <prop name="Ice.Trace.Protocol"                   value="0" />
+            <prop name="Ice.Trace.Retry"                      value="0" />
+            <prop name="Ice.Warn.Connections"                 value="1" />
+            <prop name="Ice.Warn.Endpoints"                   value="1" />
+            <prop name="Freeze.Warn.Deadlocks"                value="1" />
+            <prop name="Freeze.Trace.Map"                     value="0" />
+            <prop name="Freeze.Trace.DbEnv"                   value="2" />
+            <prop name="Freeze.Trace.Evictor"                 value="0" />
+            <prop name="Ice.Override.Timeout"                 value="5000"/>
+            <prop name="Ice.Override.ConnectTimeout"          value="5000"/>
+            <prop name="Ice.ThreadPool.Server.Size"           value="5"/>
+            <prop name="Ice.ThreadPool.Server.SizeMax"        value="15"/>
+            <prop name="Ice.ThreadPool.Client.Size"           value="5"/>
+            <prop name="Ice.ThreadPool.Client.SizeMax"        value="15"/>
+	    </IceProperties>
+
+        <!-- 
+            defaultBandwidth: default provision bandwidth while called with 0 transfer bitrate (bps) 
+            trickSpeeds:      speed collection required for trick generation represented as float numbers,
+                              multiple speeds are separated by space. eg: "7.5 12.5 15.0"
+        -->
+        <Provision defaultBandwidth="5000000" trickSpeeds="7.5" />
+    
+        <!--
+            registerInterval - heartbeat freq in milliseconds
+        -->
+        <CPC>
+          <Bind endpoint="tcp -h ${ServerNetIf} -p 11500" />
+          <Sessions registerInterval="15000" />
+        </CPC>
+    </ContentStore>
+
+</TianShan>

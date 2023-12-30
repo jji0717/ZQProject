@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TianShan>
+    <Definitions src="TianShanDef.xml">
+   	
+    </Definitions>
+
+
+    <EventSender>
+	<!--
+	logPath 	: the full path of the log file,this log file is used in event sender plugin
+	logFileSize	: log file size in byte
+	logLevel	: log level 0 ~ 7
+  logNumber : log file number
+	 -->
+    	<Log logPath="${TianShanLogDir}\MsgSender.log" logFileSize="10240000" logLevel="${DefaultLogLevel}" logNumber="2" />
+    	<IceSender>
+       <!-- Ice basic config item -->
+       <!--
+       endpoint : EventChannel's service endpoint like TianShanEvents/TopicManager:tcp -h ip -p port
+       timeout	: leave it as 200 is recommended
+       -->
+       <Basic endPoint="TianShanEvents/TopicManager:${PrimeEventChannelEndpoint}" timeout="200" />
+       
+    	</IceSender>
+    	<TextWriter>
+       	<!-- Write the message to special file, receiveFile: Set File path that the message write to -->
+       	<Basic receiveFile="${TianShanRtRecDir}\MsgSender.text.txt" />
+    	</TextWriter> 
+    </EventSender>
+</TianShan>

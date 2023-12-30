@@ -1,0 +1,32 @@
+#include "reg.rul" 
+//---------------------------------------------------------------------------
+// The Installing event is sent after the component Application Files
+// is installed.
+//---------------------------------------------------------------------------
+ 
+export prototype ApplicationFiles_Installed();
+function ApplicationFiles_Installed()
+begin
+	SetupService(szLocation,
+	   			 szServiceName,
+				 szServicePort,
+			     szServiceShellPort,
+			     szExecutableName,
+			     szAccount,
+	 		     szPassWord,
+				 szDisplayName,
+				 szProductName
+				 );  
+	RegServiceInformation(szServiceName);
+end;
+//---------------------------------------------------------------------------
+// The UnInstalling event is sent just before the component 
+// Application Files is uninstalled.
+//---------------------------------------------------------------------------
+ 
+export prototype ApplicationFiles_UnInstalling();
+function ApplicationFiles_UnInstalling()
+begin
+	RegDBSetDefaultRoot (HKEY_LOCAL_MACHINE);     
+    UnInstallService(szLocation, szServiceName);
+end;

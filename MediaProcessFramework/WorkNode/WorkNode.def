@@ -1,0 +1,8 @@
+; WorkNode.def : Declares the module parameters for the DLL.
+
+LIBRARY      "WorkNode"
+DESCRIPTION  'WorkNode Windows Dynamic Link Library'
+SECTIONS
+	.shared READ WRITE SHARED
+EXPORTS
+    ; Explicit exports can go here

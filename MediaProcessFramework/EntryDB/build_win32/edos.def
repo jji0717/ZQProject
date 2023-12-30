@@ -1,0 +1,5 @@
+LIBRARY "edos"
+DESCRIPTION	'Enterprise Domain Objects, by Shao Hui'
+VERSION		0.1
+
+EXPORTS

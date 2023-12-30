@@ -1,0 +1,180 @@
+<script type='text/javascript' src='AdminCtrl_Util.js'></script>
+<script type='text/javascript'>
+// typedef
+function TSStorage(netId, type, desc, ifep){
+    this.netId = netId;
+    this.type = type;
+    this.desc = desc;
+    this.ifep = ifep;
+    this.privateData = new Object();
+}
+// global vars
+var _strgs = new Array();
+var _template = '';
+var _endpoint = '';
+var _newStorage;
+// func
+function indexOfStorage(netId){
+    for(var i in _strgs){
+        if(_strgs[i].netId == netId)
+            return i;
+    }
+    return _strgs.length;
+}
+function connectContentStore(){
+    var ifepNode = document.getElementById('strg-ifep');
+    var ifep = ifepNode.value;
+    // check
+    if(!ifep.match(/\w+:[ \w\.-]+/)){
+	ifepNode.select();
+	return;
+    }
+    if(_newStorage && (_newStorage.ifep == ifep)){
+	strgReset();
+	ifepNode.value = ifep;
+	return;
+    }
+    ifepNode.name = 'path.strg#ifep';
+    document.getElementById('ctrl-action').value = 'c';
+    ifepNode.form.submit();
+}
+function updateStorage(){
+    var idNode = document.getElementById('strg-netid');
+    // validity check
+    if(idNode.value == ''){
+        idNode.select();
+        return;
+    }
+    // submmit form
+    idNode.name = 'path.strg#netid';
+    document.getElementById('strg-type').name = 'path.strg#type';
+    document.getElementById('strg-desc').name = 'path.strg#desc';
+    document.getElementById('strg-ifep').name = 'path.strg#ifep';
+    document.getElementById('ctrl-action').value = 'u';
+    idNode.form.submit();
+}
+function removeStorage(){
+    var idNode = document.getElementById('strg-netid');
+    // validity check
+    if(indexOfStorage(idNode.value) == _strgs.length){
+        idNode.select();
+        return;
+    }
+    if(!confirm("Delete Storage " + idNode.value))
+        return;
+
+    // submmit form
+    idNode.name = 'path.strg#netid';
+    document.getElementById('ctrl-action').value = 'r';
+    idNode.form.submit();
+}
+
+function strgDetail(idx){
+    var strg;
+    if(typeof(idx) == 'undefined'){
+	if(_newStorage){
+	    var selectedIdx = document.getElementById('new-strg').selectedIndex;
+	    if(0 == selectedIdx){
+		idx = indexOfStorage(_newStorage.netId);
+		if(idx == _strgs.length){
+		    strg = _newStorage;
+		}else{
+		    strg = _strgs[idx];
+		}
+	    }else{
+		strgReset();
+		return;
+	    }
+	}else{
+	    alert('bad logic');
+	    strgReset();
+	    return;
+	}
+    }else{
+	strg = _strgs[idx];
+    }
+    // modify form fields
+    document.getElementById('strg-netid').value = strg.netId;
+    document.getElementById('strg-type').value = strg.type;
+    document.getElementById('strg-desc').value = strg.desc;
+    document.getElementById('strg-ifep').value = strg.ifep;
+    if(_newStorage){
+	document.getElementById('new-strg').selectedIndex = (_newStorage.netId == strg.netId) ? 0 : 1;
+    }
+    document.getElementById('current').getElementsByTagName('a')[0].focus();
+}
+function strgReset(){
+    document.getElementById('strg-netid').value = '';
+    document.getElementById('strg-type').value = '';
+    document.getElementById('strg-desc').value = '';
+    document.getElementById('strg-ifep').value = '';
+    if(_newStorage){
+	document.getElementById('new-strg').selectedIndex = 1;
+    }
+}
+function display(){
+    // storage table
+    var tblNode = document.getElementById("strg-tbl");
+    var tbodyNode = document.createElement("tbody");
+    for(var i = 0; i < _strgs.length; ++i){
+        var trNode = document.createElement("tr");
+        trNode.className = 'lnk';
+        trNode.onclick = new Function("strgDetail(" + i + ");");
+
+        var tdNode = document.createElement('td');
+        var spanNode = document.createElement("span");
+        spanNode.onclick = new Function("strgDetail(" + i + ");removeStorage();");
+        spanNode.className = 'ctrl';
+        spanNode.appendChild(document.createTextNode('r'));
+        tdNode.appendChild(spanNode);
+        trNode.appendChild(tdNode);
+
+        trNode.appendChild(createTableCell(_strgs[i].netId));
+        trNode.appendChild(createTableCell(_strgs[i].type));
+        trNode.appendChild(createTableCell(_strgs[i].desc));
+        trNode.appendChild(createTableCell(_strgs[i].ifep));
+
+        tbodyNode.appendChild(trNode);
+    }
+    tblNode.appendChild(tbodyNode);
+    // new storage info
+    if(_newStorage){
+	var idsNode = document.getElementById('new-strg');
+	idsNode.appendChild(createOptionNode(_newStorage.netId));
+	idsNode.appendChild(createOptionNode(''));
+    }
+    // setup page info
+    document.getElementById('page-tmpl').value = _template;
+    document.getElementById('page-endpoint').value = _endpoint;
+    strgReset();
+    if(_newStorage){
+	document.getElementById('strg-ifep').value = _newStorage.ifep;
+    }
+}</script>
+<div id='display-area'>
+<h3>Storage</h3>
+<form id='ctrl-form' method=get action="StoragePage.ac.tswl">
+<input id = 'page-tmpl' type=hidden name='#template' value=''>
+<input id = 'page-endpoint' type=hidden name='#endpoint' value=''>
+<input id = 'ctrl-action' type=hidden name='#action' value=''>
+
+<table>
+<tr><td>endpoint</td><td>:</td><td><input id='strg-ifep' type=text size='50' value=''>
+<input type='button' value='connect' onclick="connectContentStore();">
+</td></tr>
+<tr><td>net id</td><td>:</td><td><input id='strg-netid' type=text size='30' readonly value=''>
+<select id='new-strg' onchange="strgDetail();"></select>
+</td></tr>
+<tr><td>type</td><td>:</td><td><input id='strg-type' type=text size='30' readonly value=''></td></tr>
+<tr><td>desc</td><td>:</td><td><input id='strg-desc' type=text size='30' value=''></td></tr>
+</table>
+
+<input type=button value='clear' onclick="strgReset();">
+<input type=button value=update onclick="updateStorage();">
+</form>
+<hr>
+<table id='strg-tbl' class='listTable'>
+<tr class='heading'><th>ctrl</th><th>net id</th><th>type</th><th>desc</th><th>endpoint</th></tr>
+</table>
+</div>
+

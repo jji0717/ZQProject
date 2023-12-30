@@ -1,0 +1,31 @@
+PUT /Content/4d854d85-4e6c-d06f-b15b-d06fa6d85eef/ HTTP/1.1
+Content-Type: text/xml;charset=ISO-8859-1
+Content-Length: 377
+
+<?xml version="1.0" encoding="utf-8"?>
+<Content id="4d854d85-4e6c-d06f-b15b-d06fa6d85eef" xmlns="urn:eventis:cpi:1.0">
+<Name>The nine o'clock news</Name>
+<Provider>BBC</Provider>
+<SourceUri>CH-001</SourceUri>
+<IngestStartTime>2013-07-31T21:00:00Z</IngestStartTime>
+<IngestEndTime>2013-08-01T22:00:00Z</IngestEndTime>
+<BitrateInBps>4500000</BitrateInBps>
+</Content>
+
+DELETE /Content/4d854d85-4e6c-d06f-b15b-d06fa6d85eef/ HTTP/1.1
+Content-Type: text/xml;charset=ISO-8859-1
+Content-Length: 0
+
+GET /Content/4d854d85-4e6c-d06f-b15b-d06fa6d85eef/ HTTP/1.1 
+Content-Type: text/xml;charset=ISO-8859-1
+Content-Length: 0
+
+GET /Content/4d854d85-4e6c-d06f-b15b-d06fa6d85eef/Status  HTTP/1.1 
+Content-Type: text/xml;charset=ISO-8859-1
+Content-Length: 0
+
+GET /Contents?Status=Ingesting HTTP/1.1
+Content-Type: text/xml;charset=ISO-8859-1
+Content-Length: 0
+
+

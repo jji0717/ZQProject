@@ -1,0 +1,256 @@
+#include "LRUMap.h"
+
+// -----------------------------
+// interface C2ContentQueryBind
+// -----------------------------
+// the callback interface to receive obtained content attribute
+class C2ContentQueryBind
+{
+public:
+	typedef std::map < std::string, std::string > AttrMap;
+	typedef struct _ContentAttr
+	{
+		std::string assetId, providerId;
+		std::string mainFileExtName;
+		int playTime_msec;
+		int muxBitrate;
+		bool isPWE;
+		AttrMap  attrs;
+
+		int64    stampAsOf;
+	} ContentAttr;
+
+public:
+	void OnContentAttributes(const std::string& contentName, const ContentAttr& cattr) =0;
+	void OnError(int errCode, const std::string& errMsg) =0;
+};
+
+// -----------------------------
+// class C2ContentResultDispatcher
+// -----------------------------
+// the command module to dispatch associated content attribute to the subscribers
+class C2ContentResultDispatcher : public ThreadRequest
+{
+public:
+	C2ContentResultDispatcher(C2ContentAttrCache& cache, std::string contentName);
+protected:
+	int run()
+	{
+		// step 1. read the await subscribers who interests this content
+		QueryAwaitList slist;
+		{
+			ZQ::common::MutexGuard g(_cache._lkAwaitMap);
+			QueryAwaitMap::iterator it = _awaitMap.find(_contentName);
+			if (_awaitMap.end() == it)
+				return 0;
+
+			slist = it->second;
+			_awaitMap.erase(_contentName);
+		}
+
+		// step 1. read the attribute of content from the cache
+		ContentAttr ca;
+		{
+			ZQ::common::MutexGuard g(_cache._lkAttrCache);
+			AttrCache::iterator it = _attrCache.find(_contentName);
+			if (_attrCache.end() == it)
+				return 1;
+			ca = it->second;
+		}
+
+		// step 3. call each subsribers
+		for (QueryAwaitList::iterator it = slist.begin(); it< slist.end(); it++)
+		{
+			if (NULL == *it)
+				continue;
+
+			(*it)->OnContentAttributes(_contentName, ca);
+		}
+
+		return 0;
+	}
+
+};
+
+// -----------------------------
+// class C2ContentAttrCache
+// -----------------------------
+// the container of C2 content attributes
+class C2ContentAttrCache : ThreadRequest
+{
+public:
+	C2ContentAttrCache(ZQ::common::Log& logger, );
+	virtual ~C2ContentAttrCache();
+
+	void lookupContent_async(C2ContentQueryBind& cb, const std::string& contentName)
+	{
+		ContentAttr ca;
+		if (_lookupCacheAndLocate(contentName, ca, &cb))
+			cb.OnContentAttributes(contentName, ca);
+	}
+
+	bool lookupContent(C2ContentQueryBind::ContentAttr& ca, int timeout)
+	{
+		int64 stampNow = ZQ::common::now();
+		if (_lookupCacheAndLocate(contentName, ca, NULL))
+			return true;
+
+		int eslaped = timeout;
+		while (timeout <0 || eslaped >=0)
+		{
+			if (SYS::SingleObject::SIGNALED == _event->wait(eslaped)) // wait for event arrives
+			{
+				ZQ::common::MutexGuard g(_cache._lkAttrCache);
+				AttrCache::iterator it = _attrCache.find(_contentName);
+				if (_attrCache.end() != it && it->second.stampAsOf >= stampNow)
+				{
+					ca = it->second;
+					return true;
+				}
+			}
+
+			if (timeout >=0)
+				eslaped = stampStart + timeout - ZQ::common::now();
+			if (eslaped<0)
+				eslaped = 0;
+		}
+
+		return false;
+	}
+
+protected:
+
+	//@return true if hit cache
+	bool _lookupCacheAndLocate(const std::string& contentName, ContentAttr& ca, C2ContentQueryBind* pCb=NULL)
+	{
+		// step 1. check if the content already cached
+		ca.stampAsOf= -1;
+		{
+			ZQ::common::MutexGuard g(_cache._lkAttrCache);
+			AttrCache::iterator it = _attrCache.find(_contentName);
+			if (_attrCache.end() != it)
+			{
+				ca = it->second;
+				return true;
+			}
+		}
+
+		// put the cb into await list
+		if (NULL != cb)
+		{
+			ZQ::common::MutexGuard g(_cache._lkAwaitMap);
+			QueryAwaitMap::iterator it = _awaitMap.find(contentName);
+			if (_awaitMap.end() != it)
+				it->second.push_back(&cb);
+			else
+			{
+				QueryAwaitList slist;
+				slist.push_back(&cb);
+				MAPSET(..., _awaitMap, contentName, slist;
+			}
+		}
+
+		httpClient = openHttpClient();
+		httpClient->sendC2LocateRequest(contentName, "index");
+		return false;
+	}
+
+	virtual void OnC2LocateResponse(std::string& contentName, const AttrMap& locRespParamters)
+	{
+		// TODO:
+		// if this is a rich response
+		// {
+		//	1.1 build up ContentAttr and 
+		//  1.2 insert it into _attrCache
+		//	{
+		//	ZQ::common::MutexGuard g(_cache._lkAttrCache);
+		//	MAPSET(..., _attrCache, contentName, ca);
+		//	}
+		//  1.2.1 trigger the event  
+		//	1.3 (new C2ContentResultDispatcher(*this, contentName))->start();
+		// }
+		// else
+		// {
+		// 2.1 send a HTTP request to fetch the first 8KB of index content
+		// }
+	}
+
+	virtual void OnC2IndexHeader(std::string& contentName, const uint8* buf, const int len)
+	{
+		// TODO:
+		// 1. parse the buffer and build up ContentAttr, then
+		// 2 insert it into _attrCache
+		//	{
+		//	ZQ::common::MutexGuard g(_cache._lkAttrCache);
+		//	MAPSET(..., _attrCache, contentName, ca);
+		//	}
+		// 3. (new C2ContentResultDispatcher(*this, contentName))->start();
+	}
+
+	typedef std::vector < C2ContentQueryBind* > QueryAwaitList;
+	typedef std::map<std::string, QueryAwaitList> QueryAwaitMap; // map of contentName to QueryAwaitList
+	QueryAwaitMap _awaitMap;
+	ZQ::common::Mutex _lkAwaitMap;
+
+protected:
+
+protected: // common members
+	ZQ::common::Log& _log;
+
+protected: // about the content attributes
+
+	typedef ZQ::common::LRUMap< std::string, ContentAttr > AttrCache; // map of content name to ContentAttr
+	AttrCache _attrCache;
+	ZQ::common::Mutex _lkAttrCache;
+
+	Event _event;
+}
+
+
+class C2SSEnv : public StreamService, public C2ContentQueryBind
+{
+protected:
+
+...
+StreamService::doValidatePlaylistItem()
+{
+	// step1 insert to _interestMap
+	// step2, _CAOfSessionMap[sessionId].pushback(CA={name=ContentName, stampAsOf=-1})
+	_attrCache.lookupContent_async(*this, contentName);
+	
+}
+
+StreamService::doCommit()
+{
+	// wait for all the interested CA collected
+	while (eslaped >0)
+	{ 
+		if ( SYS::SingleObject::SIGNALED == _event->wait(eslaped))
+		{
+			// TEST IF the CA of this session has been ready
+			// commit the SS if true, otherwise continue to wait 
+		}
+	}
+
+}
+
+protected:
+	void OnContentAttributes(const std::string& contentName, const ContentAttr& cattr)
+	{
+		// 
+		for each session in _interestMap[content]
+		{
+			associate(_CAOfSessionMap[sessionId], cattr);
+			if all the CA in _CAOfSessionMap[sessionId] have stampAsOf > 0
+				_wakeup.set()
+		}
+
+
+	}
+
+	
+
+	std::map < contentName, sessionIdList > _interestMap;
+	std::map < sessionId, CAList > _CAOfSessionMap;
+	Event _wakeup;
+}

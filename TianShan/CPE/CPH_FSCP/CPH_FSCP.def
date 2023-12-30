@@ -1,0 +1,10 @@
+
+; CPH_RDSRTF.def : Declares the module parameters for the DLL.
+
+LIBRARY      "CPH_FSCP"
+DESCRIPTION  'CPH_FSCP" TianShan Content Provision Helper Object - CPH_FSCP'
+
+EXPORTS
+    ; Explicit exports can go here
+InitCPH
+UninitCPH

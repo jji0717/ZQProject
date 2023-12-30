@@ -1,0 +1,4 @@
+<DCAConfiguration>
+	<DODJBOSS IPAddress="192.168.80.81" IPPort="4001" ConfigQueueName="DODqueue"/>
+	<SRMLocation IPAddress="192.168.80.21" IPPort="4000"/>
+</DCAConfiguration>

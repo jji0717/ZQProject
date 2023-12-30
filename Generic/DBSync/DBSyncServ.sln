@@ -1,0 +1,91 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DBSyncServ", "DBSyncServ.vcproj", "{928797E6-1501-48FD-BE34-BC36DBE11076}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E88FAA31-DCB9-48C8-8D16-46E894BDD21B} = {E88FAA31-DCB9-48C8-8D16-46E894BDD21B}
+		{2E722579-29CA-4DC2-BC08-3E6042558ACF} = {2E722579-29CA-4DC2-BC08-3E6042558ACF}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JMS_DBSyncAddIn", "..\DBSADI\IDSSyncEventPlugin\IDSSyncEventPlugin\JMS_DBSyncAddIn.vcproj", "{2E722579-29CA-4DC2-BC08-3E6042558ACF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AD9FF379-FF13-440F-86DB-66A8078F550C} = {AD9FF379-FF13-440F-86DB-66A8078F550C}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ManualSyncAddin", "..\DBSADI\ManualSyncAddin\ManualSyncAddin\ManualSyncAddin.vcproj", "{E88FAA31-DCB9-48C8-8D16-46E894BDD21B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AD9FF379-FF13-440F-86DB-66A8078F550C} = {AD9FF379-FF13-440F-86DB-66A8078F550C}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JMSCpp", "..\JMSCppLib\JMSCpp\JMSCpp_VC7.vcproj", "{AD9FF379-FF13-440F-86DB-66A8078F550C}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 4
+		SccProjectUniqueName0 = DBSyncServ.vcproj
+		SccProjectName0 = \u0022$/ZQProjs/ScheduledTV/DBSync/DBSyncServ\u0022,\u0020RQEAAAAA
+		SccLocalPath0 = .
+		SccProvider0 = MSSCCI:SourceOffSite
+		CanCheckoutShared = true
+		SccProjectUniqueName1 = ..\\DBSADI\\IDSSyncEventPlugin\\IDSSyncEventPlugin\\JMS_DBSyncAddIn.vcproj
+		SccProjectName1 = \u0022$/ZQProjs/Generic/DBSADI/JMS_DBSA/JMS_DBSyncAddIn\u0022,\u0020CQQAAAAA
+		SccLocalPath1 = ..\\DBSADI\\IDSSyncEventPlugin\\IDSSyncEventPlugin
+		SccProvider1 = MSSCCI:SourceOffSite
+		CanCheckoutShared = true
+		SccProjectUniqueName2 = ..\\DBSADI\\ManualSyncAddin\\ManualSyncAddin\\ManualSyncAddin.vcproj
+		SccProjectName2 = \u0022$/ZQProjs/Generic/DBSync\u0022,\u0020GFIAAAAA
+		SccLocalPath2 = .
+		SccProvider2 = MSSCCI:SourceOffSite
+		CanCheckoutShared = true
+		SccProjectFilePathRelativizedFromConnection2 = ..\\DBSADI\\ManualSyncAddin\\ManualSyncAddin\\
+		SccProjectUniqueName3 = ..\\JMSCppLib\\JMSCpp\\JMSCpp_VC7.vcproj
+		SccProjectName3 = \u0022$/ZQProjs/Generic/JMSCppLib/JMSCpp\u0022,\u0020XUKAAAAA
+		SccLocalPath3 = ..\\JMSCppLib\\JMSCpp
+		SccProvider3 = MSSCCI:SourceOffSite
+		CanCheckoutShared = true
+	EndGlobalSection
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+		Unicode Debug = Unicode Debug
+		Unicode Release = Unicode Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{928797E6-1501-48FD-BE34-BC36DBE11076}.Debug.ActiveCfg = Debug|Win32
+		{928797E6-1501-48FD-BE34-BC36DBE11076}.Debug.Build.0 = Debug|Win32
+		{928797E6-1501-48FD-BE34-BC36DBE11076}.Release.ActiveCfg = Release|Win32
+		{928797E6-1501-48FD-BE34-BC36DBE11076}.Release.Build.0 = Release|Win32
+		{928797E6-1501-48FD-BE34-BC36DBE11076}.Unicode Debug.ActiveCfg = Debug|Win32
+		{928797E6-1501-48FD-BE34-BC36DBE11076}.Unicode Debug.Build.0 = Debug|Win32
+		{928797E6-1501-48FD-BE34-BC36DBE11076}.Unicode Release.ActiveCfg = Release|Win32
+		{928797E6-1501-48FD-BE34-BC36DBE11076}.Unicode Release.Build.0 = Release|Win32
+		{2E722579-29CA-4DC2-BC08-3E6042558ACF}.Debug.ActiveCfg = Debug|Win32
+		{2E722579-29CA-4DC2-BC08-3E6042558ACF}.Debug.Build.0 = Debug|Win32
+		{2E722579-29CA-4DC2-BC08-3E6042558ACF}.Release.ActiveCfg = Release|Win32
+		{2E722579-29CA-4DC2-BC08-3E6042558ACF}.Release.Build.0 = Release|Win32
+		{2E722579-29CA-4DC2-BC08-3E6042558ACF}.Unicode Debug.ActiveCfg = Debug|Win32
+		{2E722579-29CA-4DC2-BC08-3E6042558ACF}.Unicode Debug.Build.0 = Debug|Win32
+		{2E722579-29CA-4DC2-BC08-3E6042558ACF}.Unicode Release.ActiveCfg = Release|Win32
+		{2E722579-29CA-4DC2-BC08-3E6042558ACF}.Unicode Release.Build.0 = Release|Win32
+		{E88FAA31-DCB9-48C8-8D16-46E894BDD21B}.Debug.ActiveCfg = Debug|Win32
+		{E88FAA31-DCB9-48C8-8D16-46E894BDD21B}.Debug.Build.0 = Debug|Win32
+		{E88FAA31-DCB9-48C8-8D16-46E894BDD21B}.Release.ActiveCfg = Release|Win32
+		{E88FAA31-DCB9-48C8-8D16-46E894BDD21B}.Release.Build.0 = Release|Win32
+		{E88FAA31-DCB9-48C8-8D16-46E894BDD21B}.Unicode Debug.ActiveCfg = Debug|Win32
+		{E88FAA31-DCB9-48C8-8D16-46E894BDD21B}.Unicode Debug.Build.0 = Debug|Win32
+		{E88FAA31-DCB9-48C8-8D16-46E894BDD21B}.Unicode Release.ActiveCfg = Release|Win32
+		{E88FAA31-DCB9-48C8-8D16-46E894BDD21B}.Unicode Release.Build.0 = Release|Win32
+		{AD9FF379-FF13-440F-86DB-66A8078F550C}.Debug.ActiveCfg = Debug|Win32
+		{AD9FF379-FF13-440F-86DB-66A8078F550C}.Debug.Build.0 = Debug|Win32
+		{AD9FF379-FF13-440F-86DB-66A8078F550C}.Release.ActiveCfg = Release|Win32
+		{AD9FF379-FF13-440F-86DB-66A8078F550C}.Release.Build.0 = Release|Win32
+		{AD9FF379-FF13-440F-86DB-66A8078F550C}.Unicode Debug.ActiveCfg = Unicode Debug|Win32
+		{AD9FF379-FF13-440F-86DB-66A8078F550C}.Unicode Debug.Build.0 = Unicode Debug|Win32
+		{AD9FF379-FF13-440F-86DB-66A8078F550C}.Unicode Release.ActiveCfg = Unicode Release|Win32
+		{AD9FF379-FF13-440F-86DB-66A8078F550C}.Unicode Release.Build.0 = Unicode Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

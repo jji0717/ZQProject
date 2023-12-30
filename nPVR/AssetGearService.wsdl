@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://localhost/services/AssetGearService" xmlns:intf="http://localhost/services/AssetGearService" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://localhost/services/AssetGearService">
+	<wsdl:types>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://localhost/services/AssetGearService" elementFormDefault="qualified">
+			<xs:complexType name="AssetModel">
+				<xs:sequence>
+					<xs:element name="Schedule" type="impl:ScheduleModel"/>
+					<xs:element name="ListOfMetaData" type="impl:ListOfMetaDataModel" minOccurs="0"/>
+					<xs:element name="Status" type="impl:StatusModel"/>
+				</xs:sequence>
+				<xs:attribute name="programID" type="xs:string" use="required"/>
+				<xs:attribute name="assetName" type="xs:string"/>
+				<xs:attribute name="assetID" type="xs:string"/>
+				<xs:attribute name="url" type="xs:string"/>
+				<xs:attribute name="provider" type="xs:string"/>
+				<xs:attribute name="bitRate" type="xs:int" default="0"/>
+				<xs:attribute name="retryFlag" default="0">
+					<xs:simpleType>
+						<xs:restriction base="xs:NMTOKEN">
+							<xs:enumeration value="0"/>
+							<xs:enumeration value="1"/>
+							<!-- Non-retry -->
+							<!-- retry -->
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:complexType>
+			<xs:complexType name="ScheduleModel">
+				<xs:attribute name="scheduleID" type="xs:int" use="required"/>
+				<xs:attribute name="channelID" type="xs:int"/>
+				<xs:attribute name="channelName" type="xs:string"/>
+				<xs:attribute name="startTime" type="xs:string"/>
+				<xs:attribute name="endTime" type="xs:string"/>
+				<xs:attribute name="priority" type="xs:int"/>
+			</xs:complexType>
+			<xs:complexType name="MetaDataModel">
+				<xs:simpleContent>
+					<xs:extension base="xs:string">
+						<xs:attribute name="mdUID" type="xs:int" use="required"/>
+						<xs:attribute name="mdName" type="xs:string" use="required"/>
+						<xs:attribute name="mdType" type="xs:int" use="required"/>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+			<xs:complexType name="ListOfMetaDataModel">
+				<xs:sequence>
+					<xs:element name="MetaData" type="impl:MetaDataModel" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="StatusModel">
+				<xs:attribute name="errorCode" type="xs:int" use="required"/>
+				<xs:attribute name="errorMessage" type="xs:string"/>
+			</xs:complexType>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="serviceResponse">
+		<wsdl:part name="serviceReturn" type="intf:AssetModel"/>
+	</wsdl:message>
+	<wsdl:message name="serviceRequest">
+		<wsdl:part name="asset" type="intf:AssetModel"/>
+	</wsdl:message>
+	<wsdl:portType name="AssetGearService">
+		<wsdl:operation name="createAsset" parameterOrder="asset">
+			<wsdl:input name="request" message="impl:serviceRequest"/>
+			<wsdl:output name="response" message="impl:serviceResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="AssetGearServiceSoapBinding" type="impl:AssetGearService">
+		<wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="createAsset">
+			<wsdlsoap:operation soapAction="urn:#createAsset"/>
+			<wsdl:input>
+				<wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost/services/AssetGearService"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost/services/AssetGearService"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="AssetGearServiceService">
+		<wsdl:port name="AssetGearService" binding="impl:AssetGearServiceSoapBinding">
+			<wsdlsoap:address location="http://localhost/services/AssetGearService"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

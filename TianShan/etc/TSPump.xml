@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TianShan>
+	<Definitions src="TianShanDef.xml">
+	</Definitions>
+	<TSPump>
+		<!--CrashDump can help devoloper diagnose the program when it crashed
+			path   - crashdump path
+		 -->
+		<CrashDump path="${TianShanCrashDumpDir}"/>
+		
+		<!-- configurations about the TS pumper to advertizing ServiceGroup parameters
+		     attributes:
+			interval - interval between two pump for the packets of a same service group
+			tsFolder - the file folder where to monitor the TS/HEX input files
+			bindIp   - the local IP from the UDP pumper to bind
+			hexMode  - 0 to input TS file, 1 to input hexfile
+			deHexCommand - command line to covert hex file to binary ts file
+		-->
+		
+		<ServiceGroupAds interval="100" tsFolder="${TianShanDatabaseDir}\DsmccCRG\sgts" bindIp="0.0.0.0"  port="0" hexMode="false" deHexCommand="xxd -s"  scanFolderInterval="300000" subfolderDepth="0" />
+	</TSPump>
+
+</TianShan>

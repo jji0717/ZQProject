@@ -1,0 +1,6 @@
+.toolbar{font-size:11px;font-family:Tahoma;cursor:hand;}
+.separator{margin:2;}
+.icon{border:0px solid #DED7CE;padding:1;cursor:hand;}
+.iconRaised{border-width:1px;padding:0;border-style:solid;border-color:#08246B;background-color:#D6D7DE;cursor:hand;}
+.iconSunken{border-width:1px;padding:0;border-style:solid;border-color:#08246B;background-color:#7B86AD;cursor:hand;}
+.iconLabel{padding-left:3;padding-right:3;}

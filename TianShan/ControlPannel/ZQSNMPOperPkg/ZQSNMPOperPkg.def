@@ -1,0 +1,7 @@
+DESCRIPTION	"ZQSNMPOper Configuration Package Library"
+EXPORTS
+	SNMPOperOpenSession    @1
+	SNMPOperCloseSession   @2
+	SNMPOperSetVarValue    @3
+	SNMPOperGetVarValue    @4
+	SNMPOperGetAllVarValue @5

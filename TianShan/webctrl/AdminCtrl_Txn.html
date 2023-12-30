@@ -1,0 +1,78 @@
+<script type='text/javascript' src='AdminCtrl_Util.js'></script>
+<script type='text/javascript'>
+// typedef
+function TSTxnInfo(sessId){
+    this.sessId = sessId;
+    this.params = new Object();
+}
+// global vars
+var _txns = new Array();
+var _paramNames = new Array();
+var _paramTitles = new Object();
+var _template = '';
+var _endpoint = '';
+var _startid = '';
+var _maxcount = 50;
+// func
+
+function display(){
+    // storage table
+    var tblNode = document.getElementById("txn-tbl");
+    var tbodyNode = document.createElement("tbody");
+    // table header
+    {
+        var trNode = document.createElement("tr");
+	trNode.className = 'heading';
+	trNode.appendChild(createTableCell('Session', true));
+	for(var iParam in _paramNames){
+	    var paramName = _paramNames[iParam];
+	    trNode.appendChild(createTableCell(((paramName in _paramTitles) ? _paramTitles[paramName] : ''), true));
+	}
+	tbodyNode.appendChild(trNode);
+    }
+    // table data
+    for(var i = 0; i < _txns.length; ++i){
+        var trNode = document.createElement("tr");
+
+        trNode.appendChild(createTableCell(_txns[i].sessId));
+
+	for(var iParam in _paramNames){
+	    var paramName = _paramNames[iParam];
+	    var paramValue = (paramName in _txns[i].params) ? _txns[i].params[paramName] : '';
+	    trNode.appendChild(createTableCell(paramValue));
+	}
+        tbodyNode.appendChild(trNode);
+    }
+    tblNode.appendChild(tbodyNode);
+
+    // setup page info
+    el = document.getElementById;
+    el('page-tmpl').value = _template;
+    el('page-endpoint').value = _endpoint;
+    el('txn-startid').value = _startid;
+    el('txn-maxcount').value = _maxcount;
+    el('txn-params').value = _paramlist;
+}
+</script>
+<div id='display-area'>
+<form method='get' action='TxnPage.ac.tswl' style='margin:3px'>
+<input id='page-tmpl' type='hidden' name='#template' value=''>
+<input id='page-endpoint' type='hidden' name='#endpoint' value=''>
+<input id='txn-params' type='hidden' name='site.txn#params' value=''>
+<input id='txn-startid' type='hidden' name='startid' value=''>
+<input type='button' value="previous" onclick="window.history.back()" style="margin-right:5px">
+
+<input type='button' id="txn-next" value=' next ' style="margin-right:20px" onclick="this.form.submit()">
+
+<select id='txn-maxcount' name='maxcount' size='1' onchange="el('txn-startid').value = ''; this.form.submit()">
+  <option value='20'>20/page</option>
+  <option value='50'>50/page</option>
+  <option value='100'>100/page</option>
+</select>
+</form>
+<table id='txn-tbl' class='chunk listTable'>
+
+</table>
+
+</div>
+

@@ -1,0 +1,9 @@
+[StringTable:Data:0009]
+Component Desc for STV App=The main ScheduleTV service application executable files.  This is vital for this service.
+Component Stat for STV App=ScheduleTV Application Service
+Component Desc for Sc common=The related files of ITV system, including executable files as well as dynamic link libraries.  These components must be available in system path.  If you already had ITV system completely intalled, you may ignore this part.
+Component Stat for Sc common=necessary ITV system applications and libraries
+Service Desc=Provide scheduled program streaming based on ITV system
+Component Desc for SeaChange App=This Component includes some SeaChange applications.
+Component Stat for SeaChange App=SeaChange Applications
+

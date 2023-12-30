@@ -1,0 +1,30 @@
+11-23 13:38:17.207 [    INFO ] Start DsmccCRG Client
+11-23 13:38:38.232 [   ERROR ] DsmccTcpSocket  	[T00034876] Tcp client connect error [Code:422],ip = 10.15.10.73,port = 9527
+11-23 13:38:38.232 [    INFO ] session completed:status[success] step[-1][connect DsmccServer 10.15.10.73:9527] result[422][tcp connect error] comment[DsmccCRGClient Test]
+11-23 16:19:38.542 [    INFO ] Start DsmccCRG Client
+11-23 16:19:59.561 [   ERROR ] DsmccTcpSocket  	[T00045828] Tcp client connect error [Code:422],ip = 10.15.10.73,port = 9527
+11-23 16:19:59.571 [    INFO ] session completed:status[success] step[-1][connect DsmccServer 10.15.10.73:9527] result[422][tcp connect error] comment[DsmccCRGClient Test]
+11-24 09:28:36.916 [    INFO ] Start DsmccCRG Client
+11-24 10:49:16.117 [    INFO ] Start DsmccCRG Client
+11-24 10:49:37.145 [   ERROR ] DsmccTcpSocket  	[T00052468] Tcp client connect error [Code:422],ip = 10.15.10.73,port = 9527
+11-24 10:49:37.145 [    INFO ] session completed:status[success] step[-1][connect DsmccServer 10.15.10.73:9527] result[422][tcp connect error] comment[DsmccCRGClient Test]
+11-24 14:03:10.878 [    INFO ] Start DsmccCRG Client
+11-24 14:06:18.894 [    INFO ] Start DsmccCRG Client
+11-24 14:06:39.910 [   ERROR ] DsmccTcpSocket  	[T00057292] Tcp client connect error [Code:422],ip = 10.15.10.73,port = 9527
+11-24 14:06:39.926 [    INFO ] session completed:status[success] step[-1][connect DsmccServer 10.15.10.73:9527] result[422][tcp connect error] comment[DsmccCRGClient Test]
+11-24 14:52:26.084 [    INFO ] Start DsmccCRG Client
+11-24 14:52:26.103 [    INFO ] SingleSession  	[T00056716] dcmcc client Init sucess,ip = 10.15.10.73,port = 9527
+11-24 14:52:26.103 [    INFO ] SingleSession  	[T00056716] lscp client Init sucess,ip = 10.15.10.73,port = 9528
+11-24 14:52:26.142 [    INFO ] SingleSession  	[T00056716] Setup Request SessionId = b934da55876314352b93
+11-24 14:52:26.367 [   DEBUG ] DsmccTcpSocket  	[T00061360] received len = 24
+11-24 14:52:26.367 [    INFO ] DsmccTcpSocket  	[T00061360] Setup message is processing
+11-24 14:52:26.564 [   DEBUG ] DsmccTcpSocket  	[T00061360] received len = 46
+11-24 14:52:27.363 [    INFO ] session completed:status[failed] step[1][SETUP] result[25][RspNeNoResource] comment[DsmccCRGClient Test]
+11-24 16:29:51.940 [    INFO ] Start DsmccCRG Client
+11-24 16:29:52.037 [    INFO ] SingleSession  	[T00062128] dcmcc client Init sucess,ip = 10.15.10.73,port = 9527
+11-24 16:29:52.037 [    INFO ] SingleSession  	[T00062128] lscp client Init sucess,ip = 10.15.10.73,port = 9528
+11-24 16:29:52.052 [    INFO ] SingleSession  	[T00062128] Setup Request SessionId = 52c6e818ff4c4a4b8b67
+11-24 16:29:52.235 [   DEBUG ] DsmccTcpSocket  	[T00070596] received len = 24
+11-24 16:29:52.235 [    INFO ] DsmccTcpSocket  	[T00070596] Setup message is processing
+11-24 16:29:52.433 [   DEBUG ] DsmccTcpSocket  	[T00070596] received len = 46
+11-24 16:29:53.233 [    INFO ] session completed:status[failed] step[1][SETUP] result[25][RspNeNoResource] comment[DsmccCRGClient Test]

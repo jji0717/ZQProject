@@ -1,0 +1,74 @@
+<Syntax>
+	<!-- type is the log file type that this syntax to match ,value is "filelog" or "sclog" -->	
+	<EventSource type="filelog">
+	    <!--Event is the basic info of every event .contain event name,event category,event id,stampUTc(the timestam of event that is the match result substring use syntax),SourceNetId(the network id where the event is fired. hostname is recommended if no network id),
+	    enabled(is or not use this event set ,value "1" is use,"0" is not) -->
+	    <Event name="Failed to connect IceStorm" category="SSM_NGOD2" eventId="0003" stampUTC="$1" sourceNetId="${SourceNetId}" enabled="1">
+	       <!-- Syntax is the regular expression to match the log -->
+	       <Syntax value="([\d]{2}.[\d]{2} [\d]{2}:[\d]{2}:[\d]{2}.[\d]{3}) \[   ERROR \].*connect to IceStorm.*" />
+	       <!-- Param the description of substring of match result, value is the special substring,such as "$2" is the second match string  -->
+	    </Event>
+		<Event name="Initializing" category="SSM_NGOD2" eventId="0002" stampUTC="$1" sourceNetId="${SourceNetId}" enabled="1">
+			<!-- Initializing -->
+			<Syntax value="([\d]{2}.[\d]{2} [\d]{2}:[\d]{2}:[\d]{2}.[\d]{3}).*NGOD initialize start.*"/>
+
+			<Param name="#syslog.msg"    value="&lt;GeneralEvent type=&quot;DeviceStatus&quot; msgSeq=&quot;${SEQ}&quot; reason=&quot;100&quot;/&gt;"/>
+		</Event>
+		<Event name="Initialized" category="SSM_NGOD2" eventId="0003" stampUTC="$1" sourceNetId="${SourceNetId}" enabled="1">
+			<!-- Operational -->
+			<Syntax value="([\d]{2}.[\d]{2} [\d]{2}:[\d]{2}:[\d]{2}.[\d]{3}).*NGOD initialize OK.*"/>
+
+			<Param name="#syslog.msg"    value="&lt;GeneralEvent type=&quot;DeviceStatus&quot; msgSeq=&quot;${SEQ}&quot; reason=&quot;202&quot;/&gt;"/>
+		</Event>
+		<Event name="NoPenalty" category="SSM_NGOD2" eventId="0004" stampUTC="$1" sourceNetId="${SourceNetId}" enabled="1">
+			<!-- Operational -->
+			<Syntax value="([\d]{2}.[\d]{2} [\d]{2}:[\d]{2}:[\d]{2}.[\d]{3}).*PenaltyManager streamer hasn't penlty.*"/>
+
+			<Param name="#syslog.msg"    value="&lt;GeneralEvent type=&quot;DeviceStatus&quot; msgSeq=&quot;${SEQ}&quot; reason=&quot;202&quot;/&gt;"/>
+		</Event>
+		<Event name="HasPenalty" category="SSM_NGOD2" eventId="0005" stampUTC="$1" sourceNetId="${SourceNetId}" enabled="1">
+			<!-- Reduced Capacity -->
+			<Syntax value="([\d]{2}.[\d]{2} [\d]{2}:[\d]{2}:[\d]{2}.[\d]{3}).*PenaltyManager streamer has penlty.*"/>
+
+			<Param name="#syslog.msg"    value="&lt;GeneralEvent type=&quot;DeviceStatus&quot; msgSeq=&quot;${SEQ}&quot; reason=&quot;502&quot;/&gt;"/>
+		</Event>
+		
+		<Event name="SessLog.msg" category="SSM_NGOD2" eventId="0006" stampUTC="$1" sourceNetId="${SourceNetId}" enabled="1">
+	       <Syntax value="([\d]{2}.[\d]{2} [\d]{2}:[\d]{2}:[\d]{2}.[\d]{3}).*Sess\((.*)\)Seq\((.*)\)Req\((.*)\)Mtd\((.*)\) to response OK" />
+	       <Param name="#Setup.sess"    value="$2"/>
+	       <Param name="#Setup.Method"  value="$5"/>
+	  </Event>
+	  
+	  <Event name="SessLog.msg" category="SSM_NGOD2" eventId="0007" stampUTC="$1" sourceNetId="${SourceNetId}" enabled="1">
+	       <Syntax value="([\d]{2}.[\d]{2} [\d]{2}:[\d]{2}:[\d]{2}.[\d]{3}).*Sess\((.*)\)Seq\((.*)\)Req\((.*)\)Mtd\((.*)\) get header \[SessionGroup: (.*)\]" />
+	       <Param name="#Setup.sess"    value="$2"/>
+	       <Param name="#Setup.SG"      value="$6"/>
+	  </Event>
+	  
+	  <Event name="SessLog.msg" category="SSM_NGOD2" eventId="0008" stampUTC="$1" sourceNetId="${SourceNetId}" enabled="1">
+	       <Syntax value="([\d]{2}.[\d]{2} [\d]{2}:[\d]{2}:[\d]{2}.[\d]{3}).*Sess\((.*)\)Seq\((.*)\)Req\((.*)\)Mtd\((.*)\) select the streamer with bandwidth\[(.*)\] and networkID\[(.*)\] endpoint\[.*\] volumnName\[.*\] and now usedBW\[.*\] totalBW\[.*\] usedStreamCount\[.*\] totalStreamCount\[.*\]" />
+	       <Param name="#Setup.sess"      value="$2"/>
+	       <Param name="#Setup.BandWidth" value="$6"/>
+	       <Param name="#Setup.Streamer"  value="$7"/>
+	  </Event>
+	  
+	  <Event name="SessLog.msg" category="SSM_NGOD2" eventId="0009" stampUTC="$1" sourceNetId="${SourceNetId}" enabled="1">
+	       <Syntax value="([\d]{2}.[\d]{2} [\d]{2}:[\d]{2}:[\d]{2}.[\d]{3}).*Sess\((.*)\)Seq\((.*)\)Req\((.*)\)Mtd\((.*)\) get header \[OnDemandSessionId: (.*)\]" />
+	       <Param name="#Setup.sess"    value="$2"/>
+	       <Param name="#Setup.Stream"  value="$6"/>
+	  </Event>
+	  
+	  <Event name="SessLog.msg" category="SSM_NGOD2" eventId="0010" stampUTC="$1" sourceNetId="${SourceNetId}" enabled="1">
+	       <Syntax value="([\d]{2}.[\d]{2} [\d]{2}:[\d]{2}:[\d]{2}.[\d]{3}).*Sess\((.*)\)Seq\((.*)\)Req\((.*)\)Mtd\((.*)\) get header \[x-reason: (.*)\]" />
+	       <Param name="#Setup.sess"    value="$2"/>
+	       <Param name="#Teardown.Reason"  value="$6"/>
+	  </Event>
+	 
+	  <Event name="SessLog.msg" category="SSM_NGOD2" eventId="0011" stampUTC="$1" sourceNetId="${SourceNetId}" enabled="1">
+	       <Syntax value="([\d]{2}.[\d]{2} [\d]{2}:[\d]{2}:[\d]{2}.[\d]{3}) \[   ERROR \](.*)Sess\((.*)\)Seq\((.*)\)Req\((.*)\)Mtd\((.*)\) (.*)" />
+	       <Param name="#Setup.sess"   value="$3"/>
+	       <Param name="#Error.Module" value="$2"/>
+	       <Param name="#Last.Error"   value="$7"/>
+	  </Event>
+	</EventSource>
+</Syntax>

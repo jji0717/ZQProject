@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TianShan>
+      
+<Definitions src="TianShanDef.xml" />
+
+	<default>
+		<!-- The EventChannel service where the services of this TianShan deployment will deliver events to.
+		     attributes:
+		       endpoint - the ICE endpoint to the EventChannel service
+		-->
+		<EventChannel endpoint="${PrimeEventChannelEndpoint}" enabled="1" />
+		
+					
+		<!--CrashDump can help devoloper diagnose the program when it crashed
+			if you set enable to "1" you must make sure that the path is accessible
+			path   - crashdump path
+			enabled - 1 to enable crashDump  
+		 -->
+		<CrashDump path="${TianShanCrashDumpDir}" enabled="1"/>
+
+		<!-- The Ice trace log setting for all the services of this TianShan deployment.
+		     attributes:
+		       enabled       - 1 if the Ice trace is enabled, default "0"
+		       level         - the log level of the ice trace log
+		       size          - the size that this trace log must roll
+		-->
+		<IceTrace enabled="1" level="7" size="10240000" />
+
+		<!-- The default folder where the services of this TianShan deployment accesses their local
+		     databases if it is not defined by their individual configurations
+		     attributes:
+		       path          - path to the location of database directory, default "../data/"
+		       runtimePath   - path to keep the runtime data, default as the value of path
+		-->
+		<Database path="${TianShanDatabaseDir}" />
+
+    </default>
+
+	<!-- configurations for the ContentStore service
+	     attributes:
+	       netId  - The unique id of ClusterContentStore instance, 
+                    Ex: SeaChange MediaCluster Id is 70001, netId="SEAC70001"
+		   rootPath  - If empty is clustercs, else set local directory path as nativecs,
+		               Ex: rootPath= "" or rootPath="d:/temp"	   
+               enableInServiceValidate	-	enable/disable the validate fileset when content in InService state, default is 0
+               		set this value to 0 to avoid mis-deleting content files
+        	exportedLocator : the interface to C2Locator (in the format of "<ip>:<port>") if want to export content
+                          via transfer protocol c2http://
+	-->
+    <ContentStore netId="SEAC00000" rootPath="" cacheMode="0" cacheLevel="1" threads="20" enableInServiceValidate="0">
+			<!-- The local bind endpoint that the ContentStore service is serving on 
+			     attributes:
+			       endpoint      - the bind endpoint of this ContentStore service
+			       dispatchSize  - the initial thread pool size to dispatch client requests, values in the range 4-20 are acceptable 
+			       dispatchMax   - the max thread pool size to dispatch client requests 
+			-->
+		<Bind endpoint="tcp -h ${ServerNetIf} -p 10400" dispatchSize="5" dispatchMax="30"/>
+
+		<!-- The database cache
+		     attributes:
+		       volumeSize  - the size of volume records to cache, 20 ~ 200 are acceptable
+		       contentSize  - the size of content records to cache, 400 ~ 4000 are acceptable
+		       contentSavePeriod		-	content background save interval in milisecond, default is 4000 (4 seconds)
+		       contentSaveSizeTrigger		-	content background save if the number of changed contents reach to this value, default is 150
+		-->
+		<DatabaseCache volumeSize="40" contentSize="2000" contentSavePeriod="4000" contentSaveSizeTrigger="150"/>
+
+		<!-- Log files to publish thru SentryService -->
+		<PublishedLogs>
+			<!-- Log file to publish thru SentryService
+		     	     attributes:
+		       		path    - full path of the log file /// you can publish multiple logs,one log one instance.
+		       		syntax  - the file defines the syntax of the events via the regular expressions
+			-->
+			<Log path="${TianShanLogDir}\CDNCS_events.log" syntax="${TianShanHomeDir}\etc\syntax.xml" key="CSEvents" type=""/>
+       </PublishedLogs>				
+
+			<Replica  replicaId="${ServerNetIf}" replicaGroupId="${ReplicaGroupId}" replicaPriority="0" timeout="60000"/>
+	
+			<!-- Additional Ice properties if there is any, <prop /> is its sub element
+			     attrib of <prop />:
+			        name         - the name of the Ice property
+			        value        - the value of the Ice property
+			-->
+			<IceProperties>
+				<prop name="Ice.Trace.Network"                    value="0" /> 
+				<prop name="Ice.Trace.Protocol"                   value="0" />
+				<prop name="Ice.Trace.Retry"                      value="0" />
+				<prop name="Ice.Warn.Connections"                 value="1" />
+				<prop name="Ice.Warn.Endpoints"                   value="1" />
+				<prop name="Freeze.Warn.Deadlocks"                value="1" />
+				<prop name="Freeze.Trace.Map"                     value="0" />
+				<prop name="Freeze.Trace.DbEnv"                   value="2" />
+				<prop name="Freeze.Trace.Evictor"                 value="0" />
+				<prop name="Ice.Override.Timeout"                 value="20000"/>
+				<prop name="Ice.Override.ConnectTimeout"          value="5000"/>
+				<prop name="Ice.ThreadPool.Client.Size"           value="5"/>
+				<prop name="Ice.ThreadPool.Client.SizeMax"        value="15"/>
+	    </IceProperties>
+
+        <!-- 
+            defaultBandwidth: default provision bandwidth while called with 0 transfer bitrate (bps) 
+            trickSpeeds:      speed collection required for trick generation represented as float numbers,
+                              multiple speeds are separated by space. eg: "7.5 12.5 15.0"
+        -->
+        <Provision defaultBandwidth="5000000" trickSpeeds="7.5" />
+    
+        <!--
+            registerInterval - heartbeat freq in milliseconds
+            DefaultIndexType - VVX or VVC
+        -->
+        <CPC>
+          <Bind endpoint="tcp -h ${ServerNetIf} -p 11500" />
+          <Sessions registerInterval="15000" DefaultIndexType="VVC"/>
+        </CPC>
+		    <!--
+                folderName - regular expression like $CUT(${ContentName}, 0, 4)/$CUT(${ContentName}, 4, -1) or
+			                  $CUT(${NOW}, 0,4)/$CUT(${NOW}, 4,4), for hash folder name from contentstore name
+            -->
+		    <HashedFolder folderName="$CUT(${ContentName}, 0, 4)/$CUT(${ContentName}, 4, -1)" />
+		
+		    <!-- 
+		        expression - ExportURL expression such as ftp://192.168.1.1/${ContentName}
+					          assume the full path of the current content is /$/folder1/folder2/contentA
+	                          then vol=$, ${FolderPath}="folder1/folder2/"; ${ContentName} = "contentA"
+	                          so the final output url= "ftp://192.168.1.1/folder1/folder2/contentA"
+		    -->
+        <ExportURL expression="ftp://192.168.1.1/${FolderPath}/${ContentName}"/>
+    </ContentStore>
+
+</TianShan>

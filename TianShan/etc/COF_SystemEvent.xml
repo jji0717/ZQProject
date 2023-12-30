@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EventHandlingConfiguration component="System" version="1.0" description="" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="monitoring_event_handling_definition.xsd" lastUpdateTime="2001-12-17T09:30:47">
+	<EventHandling>
+		<EventHandlingEntry name="WinSystemServiceTerminated">
+			<Criteria CODE="System_Event_1020"/>
+			<UseDefaultAction useDefaultSNMPAction="false"/> 
+			<UseDefaultAction useDefaultMailAction="false"/>			
+		</EventHandlingEntry>		
+		<EventHandlingEntry name="UMLSystemFSRW">
+                           <Criteria CODE="UML_System_1500_FS_RW_Error"/>
+                           <UseDefaultAction useDefaultSNMPAction="false"/> 
+                           <UseDefaultAction useDefaultMailAction="false"/>                     
+ 		</EventHandlingEntry>
+ 		<EventHandlingEntry name="UMLSystemFSLongin">
+                           <Criteria CODE="UML_System_1600_Fail_Login"/>
+                           <UseDefaultAction useDefaultSNMPAction="false"/> 
+                           <UseDefaultAction useDefaultMailAction="false"/>                     
+ 		</EventHandlingEntry>
+ 		<EventHandlingEntry name="UMLSystemFSReadOnly">
+                           <Criteria CODE="UML_System_1700_FS_ReadOnly"/>
+                           <UseDefaultAction useDefaultSNMPAction="false"/> 
+                           <UseDefaultAction useDefaultMailAction="false"/>                     
+ 		</EventHandlingEntry>
+ 		<EventHandlingEntry name="UMLHWSlowDiskRead">
+                           <Criteria CODE="UML_HW_2010_Slow_Disk_Read"/>
+                           <UseDefaultAction useDefaultSNMPAction="false"/> 
+                           <UseDefaultAction useDefaultMailAction="false"/>                     
+ 		</EventHandlingEntry>
+ 		<EventHandlingEntry name="UMLHWSlowDiskWrite">
+                           <Criteria CODE="UML_HW_2020_Slow_Disk_Write"/>
+                           <UseDefaultAction useDefaultSNMPAction="false"/> 
+                           <UseDefaultAction useDefaultMailAction="false"/>                     
+ 		</EventHandlingEntry>
+ 		<EventHandlingEntry name="UMLHWReadImproved">
+                           <Criteria CODE="UML_HW_2011_Read_Improved"/>
+                           <UseDefaultAction useDefaultSNMPAction="false"/> 
+                           <UseDefaultAction useDefaultMailAction="false"/>                     
+ 		</EventHandlingEntry>
+ 		<EventHandlingEntry name="UMLHWWriteImproved">
+                           <Criteria CODE="UML_HW_2021_Write_Improved"/>
+                           <UseDefaultAction useDefaultSNMPAction="false"/> 
+                           <UseDefaultAction useDefaultMailAction="false"/>                     
+ 		</EventHandlingEntry>
+	</EventHandling>	
+</EventHandlingConfiguration>

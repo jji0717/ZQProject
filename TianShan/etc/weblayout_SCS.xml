@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+  <!-- global property definition.
+		usage: ${<property>} will be replaced with the property value.
+	-->
+  <Definitions src="TianShanDef.xml">
+    <!-- predefined macro: HOSTNAME -->
+    <property name="BIN_DIR" value="${TianShanHomeDir}/bin"/>
+    <property name="LOG_DIR" value="${TianShanLogDir}"/>
+    <property name="UTIL_DIR" value="${TianShanUtilDir}"/>
+
+    <property name="CPE_EP" value="tcp -h ${ServerNetIf} -p 10500"/>
+    <property name="CPC_EP" value="tcp -h ${ServerNetIf} -p 11500"/>
+
+    <property name="MediaServerEP" value="tcp -h ${ServerNetIf} -p 10700"/>
+    <!-- The C2Locator service's endpoint -->
+    <property name="C2LocEp" value="tcp -h ${ServerNetIf} -p 6789"/>
+    <property name="CDNCSEp" value="tcp -h ${ServerNetIf} -p 10400"/>
+    <property name="CDNCS_CPCEp" value="tcp -h ${ServerNetIf} -p 11501"/>
+    <property name="SNMP_OID_PREFIX" value=".1.3.6.1.4.1.22839.4.1"/>
+    <property name="SNMP_COMMUNITY" value="TianShan"/>
+    <property name="SNMP_OID_CDNSS" value="2100"/>
+    <property name="SNMP_OID_CPE" value="700"/>
+    <property name="SNMP_OID_RTSP" value="1000"/>
+    <property name="SNMP_OID_EventGw" value="1200"/>
+    <property name="SNMP_OID_EventChannel" value="1300"/>
+    <property name="SNMP_OID_CDNCS" value="2000"/>
+    <property name="SNMP_OID_HttpCRG" value="2200"/>
+
+    <property name="SNMP_Server_Default" value="127.0.0.1"/>
+    <property name="LOG_PAGESIZE" value="20480"/>
+    <property name="SrvrLoadTmplPath" value="\\10.50.12.4\e$\serverload.tmpl.xml"/>
+    <property name="SessionsHistoryPath" value="${TianShanDatabaseDir}\Txn.history\TxnData.mdb"/>
+  </Definitions>
+  <!-- page's default attributes
+		attributes:
+			charset - page's default charset
+	-->
+  <pagedefault charset="utf-8"/>
+  <!-- The TianShan pages configuration
+		tag name:		page
+		attributes:
+			name		- page title
+			uri			- page's uri, indicate page type
+			template	- page's header/footer template name, always unique
+			charset		- page's charset
+		child node:
+			param: HTTP request parameter
+				name		- fixed, relate to page type
+				value		- parameter value
+	-->
+  <local name="${HOSTNAME}" defaultpage="1">
+
+    <page name="${HOSTNAME}" uri="localhost.sysinvoke" template="LOCAL_LOCALHOST"/>
+    <page name="Modules" uri="interfaces.sysinvoke" template="LOCAL_INTERFACES"/>
+
+    <page name="netstat" uri="CmdPage.tswl" template="LOCAL_NETSTAT">
+      <param name="cmd#cmdline" value="netstat -n -a -p"/>
+    </page>
+    <page name="Processes" uri="CmdPage.tswl" template="LOCAL_PROCESSES">
+       <param name="cmd#cmdline" value="top -b -n 1" />
+    </page>
+    <page name="FileVersion" uri="CmdPage.tswl" template="LOCAL_VERCHECK">
+      <param name="cmd#cmdline" value="${UTIL_DIR}/ver_check ${BIN_DIR} ${TianShanHomeDir}/modules"/>
+    </page>
+
+    <page name="Sentry.log" uri="LogPage.tswl" template="LOCAL_SENTRY_LOG1">
+      <param name="#datasource" value="${BIN_DIR}/LogPage"/>
+      <param name="log#filename" value="${LOG_DIR}/Sentry.log"/>
+      <param name="log#filetype" value="filelog"/>
+      <param name="log#pagesize" value="${LOG_PAGESIZE}"/>
+      <param name="log#pageidx" value="-1"/>
+    </page>
+    <page name="SentryHttp.log" uri="LogPage.tswl" template="LOCAL_SENTRY_LOG2">
+      <param name="#datasource" value="${BIN_DIR}/LogPage"/>
+      <param name="log#filename" value="${LOG_DIR}/SentryHttp.log"/>
+      <param name="log#filetype" value="filelog"/>
+      <param name="log#pagesize" value="${LOG_PAGESIZE}"/>
+      <param name="log#pageidx" value="-1"/>
+    </page>
+
+    <service name="RtspProxy" defaultpage="1">
+      <page name="Configuration" uri="SnmpPage.tswl" template="LOCAL_RTSPPROXY_GENERAL">
+        <param name="#datasource" value="${BIN_DIR}/libTSClient.so"/>
+        <param name="#entry" value="TCPopulateSnmpVariables"/>
+        <param name="#logfilepath" value="${LOG_DIR}/tsclient.log"/>
+        <param name="snmp#baseoid" value="${SNMP_OID_PREFIX}.${SNMP_OID_RTSP}.2"/>
+        <param name="snmp#serverip" value="${SNMP_Server_Default}"/>
+        <param name="snmp#community" value="${SNMP_COMMUNITY}"/>
+      </page>
+      <page name="RtspProxy.log" uri="LogPage.tswl" template="LOCAL_RTSPPROXY_LOG">
+        <param name="#datasource" value="${BIN_DIR}/LogPage"/>
+        <param name="log#filename" value="${LOG_DIR}/RtspProxy.log"/>
+        <param name="log#filetype" value="filelog"/>
+        <param name="log#pagesize" value="${LOG_PAGESIZE}"/>
+        <param name="log#pageidx" value="-1"/>
+      </page>
+      <page name="ssm_tianshan_s1.log" uri="LogPage.tswl" template="LOCAL_SSM_TS_LOG">
+        <param name="#datasource" value="${BIN_DIR}/LogPage"/>
+        <param name="log#filename" value="${LOG_DIR}/ssm_tianshan_s1.log"/>
+        <param name="log#filetype" value="filelog"/>
+        <param name="log#pagesize" value="${LOG_PAGESIZE}"/>
+        <param name="log#pageidx" value="-1"/>
+      </page>
+    </service>
+
+    <service name="CDNSS" displayname="CDNSS" defaultpage="1">
+      <page name="Configuration" uri="SnmpPage.tswl" template="LOCAL_CDNSS_GENERAL">
+        <param name="#datasource" value="${BIN_DIR}/libTSClient.so"/>
+        <param name="#entry" value="TCPopulateSnmpVariables"/>
+        <param name="#logfilepath" value="${LOG_DIR}/tsclient.log"/>
+        <param name="snmp#baseoid" value="${SNMP_OID_PREFIX}.${SNMP_OID_CDNSS}.2"/>
+        <param name="snmp#serverip" value="${SNMP_Server_Default}"/>
+        <param name="snmp#community" value="${SNMP_COMMUNITY}"/>
+      </page>
+      <page name="Directories" uri="ListVolumes.storage.tswl" template="CDNSS_VOLUMES">
+        <param name="#endpoint" value="${MediaServerEP}"/>
+        <param name="#maxcount" value="15" />
+        <param name="#volumeinfostruct" value="Name;Virtual;Quota Space(MB)" />
+      </page>
+      <page name="Managed Content" uri="ListContents.storage.tswl" template="CDNSS_CONTENTS">
+        <param name="#endpoint" value="${MediaServerEP}"/>
+        <param name="#metaDataNames" value="name:Name;volume:Directory;sys.State:State;sys.PlayTime:PlayTime;sys.FileSize:FileSize;sys.BitRate:BitRate;sys.SourceUrl:SourceUrl" />
+        <param name="#maxcount" value="15" />
+      </page>
+    </service>
+    <service name="CPESvc" displayname="ContentProvisionEngine" defaultpage="1">
+      <page name="Configuration" uri="SnmpPage.tswl" template="LOCAL_CPE_GENERAL">
+        <param name="#datasource" value="${BIN_DIR}/libTSClient.so"/>
+        <param name="#entry" value="TCPopulateSnmpVariables"/>
+        <param name="#logfilepath" value="${LOG_DIR}/tsclient.log"/>
+        <param name="snmp#baseoid" value="${SNMP_OID_PREFIX}.${SNMP_OID_CPE}.2"/>
+        <param name="snmp#serverip" value="${SNMP_Server_Default}"/>
+        <param name="snmp#community" value="${SNMP_COMMUNITY}"/>
+      </page>
+      <page name="Sessions In Progress" uri="session.cpemanweb.tswl" template="LOCAL_CPE_SESSION">
+        <param name="up#ContentProvisionAddress" value="${CPE_EP}"/>
+        <param name="up#SessionNumberPerPage" value="20"/>
+      </page>
+      <page name="Method List" uri="method.cpemanweb.tswl" template="LOCAL_CPC_METHOD">
+        <param name="up#ContentProvisionAddress" value="${CPE_EP}"/>
+      </page>
+    </service>
+    <service name="EventGateway" defaultpage="1">
+      <page name="Configuration" uri="SnmpPage.tswl" template="LOCAL_EventGw_GENERAL">
+        <param name="#datasource" value="${BIN_DIR}/libTSClient.so"/>
+        <param name="#entry" value="TCPopulateSnmpVariables"/>
+        <param name="#logfilepath" value="${LOG_DIR}/tsclient.log"/>
+        <param name="snmp#baseoid" value="${SNMP_OID_PREFIX}.${SNMP_OID_EventGw}.2"/>
+        <param name="snmp#serverip" value="${SNMP_Server_Default}"/>
+        <param name="snmp#community" value="${SNMP_COMMUNITY}"/>
+      </page>
+      <page name="EventGateway.log" uri="LogPage.tswl" template="LOCAL_EventGw_LOG_1">
+        <param name="#datasource" value="${BIN_DIR}/LogPage"/>
+        <param name="log#filename" value="${LOG_DIR}/EventGateway.log"/>
+        <param name="log#filetype" value="filelog"/>
+        <param name="log#pagesize" value="${LOG_PAGESIZE}"/>
+        <param name="log#pageidx" value="-1"/>
+      </page>
+      <page name="EventGwIceTrace.log" uri="LogPage.tswl" template="LOCAL_EventGw_LOG_2">
+        <param name="#datasource" value="${BIN_DIR}/LogPage"/>
+        <param name="log#filename" value="${LOG_DIR}/EventGwIceTrace.log"/>
+        <param name="log#filetype" value="filelog"/>
+        <param name="log#pagesize" value="${LOG_PAGESIZE}"/>
+        <param name="log#pageidx" value="-1"/>
+      </page>
+    </service>
+    <service name="EventChannel" defaultpage="1">
+      <page name="Configuration" uri="SnmpPage.tswl" template="LOCAL_EventChannel_GENERAL">
+        <param name="#datasource" value="${BIN_DIR}/libTSClient.so"/>
+        <param name="#entry" value="TCPopulateSnmpVariables"/>
+        <param name="#logfilepath" value="${LOG_DIR}/tsclient.log"/>
+        <param name="snmp#baseoid" value="${SNMP_OID_PREFIX}.${SNMP_OID_EventChannel}.2"/>
+        <param name="snmp#serverip" value="${SNMP_Server_Default}"/>
+        <param name="snmp#community" value="${SNMP_COMMUNITY}"/>
+      </page>
+      <page name="EventChannel.log" uri="LogPage.tswl" template="LOCAL_EventChannel_LOG_1">
+        <param name="#datasource" value="${BIN_DIR}/LogPage"/>
+        <param name="log#filename" value="${LOG_DIR}/EventChannel.log"/>
+        <param name="log#filetype" value="filelog"/>
+        <param name="log#pagesize" value="${LOG_PAGESIZE}"/>
+        <param name="log#pageidx" value="-1"/>
+      </page>
+      <page name="EventChannelIceTrace.log" uri="LogPage.tswl" template="LOCAL_EventChannel_LOG_2">
+        <param name="#datasource" value="${BIN_DIR}/LogPage"/>
+        <param name="log#filename" value="${LOG_DIR}/EventChannelIceTrace.log"/>
+        <param name="log#filetype" value="filelog"/>
+        <param name="log#pagesize" value="${LOG_PAGESIZE}"/>
+        <param name="log#pageidx" value="-1"/>
+      </page>
+    </service>
+    <service name="CDNCS" defaultpage="1">
+      <page name="Configuration" uri="SnmpPage.tswl" template="LOCAL_CDNCS_GENERAL">
+        <param name="#datasource" value="${BIN_DIR}/libTSClient.so"/>
+        <param name="#entry" value="TCPopulateSnmpVariables"/>
+        <param name="#logfilepath" value="${LOG_DIR}/tsclient.log"/>
+        <param name="snmp#baseoid" value="${SNMP_OID_PREFIX}.${SNMP_OID_CDNCS}.2"/>
+        <param name="snmp#serverip" value="${SNMP_Server_Default}"/>
+        <param name="snmp#community" value="${SNMP_COMMUNITY}"/>
+      </page>
+      <page name="Directories" uri="ListVolumes.storage.tswl" layoutId="volumes">
+        <param name="#endpoint" value="${CDNCSEp}"/>
+        <param name="#maxcount" value="15" />
+        <param name="#volumeinfostruct" value="Name;Virtual;Quota Space(MB)" />
+      </page>
+      <page name="Managed Content" uri="ListContents.storage.tswl" layoutId="contents">
+        <param name="#endpoint" value="${CDNCSEp}"/>
+        <param name="#metaDataNames" value="name:Name;volume:Directory;sys.State:State;sys.PlayTime:PlayTime;sys.FileSize:FileSize;sys.BitRate:BitRate;sys.SourceUrl:SourceUrl" />
+        <param name="#maxcount" value="15" />
+      </page>
+      <page name="CPE List" uri="service.cpcmanweb.tswl" layoutId="cpcsvc">
+        <param name="up#ContentProvisionClusterAddress" value="${CPC_EP}"/>
+      </page>
+      <page name="Method List" uri="method.cpcmanweb.tswl" layoutId="cpcmtd">
+        <param name="up#ContentProvisionClusterAddress" value="${CPC_EP}"/>
+      </page>
+      <page name="CDNCS.log" uri="LogPage.tswl" layoutId="mainlog">
+        <param name="#datasource" value="${BIN_DIR}/LogPage"/>
+        <param name="log#filename" value="${LOG_DIR}/CDNCS.log"/>
+        <param name="log#filetype" value="filelog"/>
+        <param name="log#pagesize" value="${LOG_PAGESIZE}"/>
+        <param name="log#pageidx" value="-1"/>
+      </page>
+    </service>
+    <service name="HttpCRG" defaultpage="1">
+      <page name="Configuration" uri="SnmpPage.tswl" template="LOCAL_HttpCRG_GENERAL">
+        <param name="#datasource" value="${BIN_DIR}/libTSClient.so"/>
+        <param name="#entry" value="TCPopulateSnmpVariables"/>
+        <param name="#logfilepath" value="${LOG_DIR}/tsclient.log"/>
+        <param name="snmp#baseoid" value="${SNMP_OID_PREFIX}.${SNMP_OID_HttpCRG}.2"/>
+        <param name="snmp#serverip" value="${SNMP_Server_Default}"/>
+        <param name="snmp#community" value="${SNMP_COMMUNITY}"/>
+      </page>
+
+      <page name="C2ClientTransfers" uri="ClientsPage.c2loc.tswl" layoutId="clients">
+        <param name="ep" value="${C2LocEp}"/>
+      </page>
+      <page name="C2TransferPorts" uri="PortsPage.c2loc.tswl" layoutId="ports">
+        <param name="ep" value="${C2LocEp}"/>
+      </page>
+      <page name="C2TransferSessions" uri="SessionsPage.c2loc.tswl" layoutId="sessions">
+        <param name="ep" value="${C2LocEp}"/>
+      </page>
+
+      <page name="C2Locator.log" uri="LogPage.tswl" layoutId="c2log">
+        <param name="#datasource" value="${BIN_DIR}/LogPage"/>
+        <param name="log#filename" value="${LOG_DIR}/CRM_C2Locator.log"/>
+        <param name="log#filetype" value="filelog"/>
+        <param name="log#pagesize" value="${LOG_PAGESIZE}"/>
+        <param name="log#pageidx" value="-1"/>
+      </page>
+    </service>
+  </local>
+  <site name="Site Scope" defaultpage="1">
+    <page name="Participant" uri="neighbors.sysinvoke" template="SITE_NEIGHBORS">
+      <param name="linkstyle" value="_top" />
+    </page>
+  </site>
+</layout>

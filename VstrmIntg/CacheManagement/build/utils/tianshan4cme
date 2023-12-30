@@ -1,0 +1,77 @@
+#!/bin/bash
+#
+
+. /etc/init.d/functions
+
+shell=/opt/CMEV2/bin/SystemShell
+
+[ -f ${shell} ] || exit 0
+
+#prog=$(echo ${service} | tr [:lower:] [:upper:])
+prog=${service}
+
+ret=0
+pid_file=/var/run/${prog}.pid
+
+start() {
+	echo -n $"starting ${prog}: "
+	ulimit -n 102400
+	${shell} ${prog} 
+	ret=$?
+	[ ${ret} -eq 0 ] && echo "     [OK]" || echo "     [FAILED]"
+	echo
+	return $ret
+}	
+stop() {
+	${shell} -s ${prog} -d ${delay:-30}
+	ret=$?
+	echo
+	return $ret
+}
+restart() {
+	stop
+	start
+}	
+
+status() {
+	local pid_file=
+
+	if [ "$1" = "-p" ]; then
+		pid_file=$2
+		shift 2
+	fi
+
+	local pid=$(pgrep -fx "${shell} ${prog}")
+	if [ -n "${pid}" ]; then
+		echo "(TianShan) ${prog}:${pid} is running..."
+		return 0
+	fi
+
+	__pids_var_run "$1" "$pid_file"
+	case "$?" in
+	0)
+		echo "(TianShan) ${prog}:${pid} is running..."
+		return 0
+		;;
+	1)
+		echo "(TianShan) ${prog} dead but pid file exists"
+		return 1
+		;;
+	esac
+
+	echo $"(TianShan) ${prog} is stopped"
+	return 3
+}
+
+case "$1" in
+  start)  start ;;
+  stop)   stop  ;;
+  status) status -p ${pid_file} ${prog}; ;;
+  restart)restart ;;
+  *) echo $"Usage: $0 {start|stop|status|restart}"; exit 1
+esac
+
+exit $?
+
+# vim: sw=4 ts=4 bg=dark
+

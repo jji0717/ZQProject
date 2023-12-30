@@ -1,0 +1,391 @@
+
+(object Petal
+    version    	47
+    _written   	"Rose 8.0.0303.1400"
+    charSet    	134)
+
+(object SubSystem "MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    attributes 	(list Attribute_Set
+	(object Attribute
+	    tool       	"sc"
+	    name       	"SourceControlSpec"
+	    value      	
+|"$/ZQProjs/MediaProcessFramework/doc/module", CYIAAAAA
+	    ))
+    quid       	"41C153A702DD"
+    visible_modules 	(list dependency_list
+	(object Module_Visibility_Relationship
+	    quid       	"41C153A7035E"
+	    supplier   	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)"
+	    quidu      	"41C153A7034A"
+	    supplier_is_subsystem 	TRUE))
+    physical_models 	(list unit_reference_list
+	(object module "MSVidCtlLib" "NotAModuleType" "NotAModulePart"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"library"
+		    value      	"MSVidCtlLib")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpstring"
+		    value      	"MS Video Control 1.0 Type Library")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"B0EDF154-910A-11D2-B632-00C04F79498E")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"1.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"lcid"
+		    value      	"0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"filename"
+		    value      	"D:\\temp\\Msvidctl.tlb")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"1"))
+	    quid       	"41C153A702DE"
+	    stereotype 	"COM"
+	    visible_modules 	(list dependency_list
+		(object Module_Visibility_Relationship
+		    quid       	"41C153A7035F"
+		    stereotype 	"imports"
+		    supplier   	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+		    quidu      	"41C153A7034B"
+		    supplier_is_spec 	TRUE)
+		(object Module_Visibility_Relationship
+		    quid       	"41C28C1301D7"
+		    supplier   	"Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::IUnknown"
+		    quidu      	"41C153B50188"
+		    supplier_is_interface 	TRUE))
+	    realized_interfaces 	(list realize_rel_list
+		(object Realize_Relationship
+		    quid       	"41C153A80048"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::_IMSVidCtlEvents"
+		    quidu      	"41C153A70394")
+		(object Realize_Relationship
+		    quid       	"41C153A80107"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidAnalogTuner"
+		    quidu      	"41C153A80099")
+		(object Realize_Relationship
+		    quid       	"41C153A80143"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidTuner"
+		    quidu      	"41C153A80106")
+		(object Realize_Relationship
+		    quid       	"41C153A80157"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidVideoInputDevice"
+		    quidu      	"41C153A80142")
+		(object Realize_Relationship
+		    quid       	"41C153A8017F"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidInputDevice"
+		    quidu      	"41C153A80156")
+		(object Realize_Relationship
+		    quid       	"41C153A801EE"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidDevice"
+		    quidu      	"41C153A80177")
+		(object Realize_Relationship
+		    quid       	"41C153A80234"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::ITuneRequest"
+		    quidu      	"41C153A801ED")
+		(object Realize_Relationship
+		    quid       	"41C153A80343"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::ITuningSpace"
+		    quidu      	"41C153A80233")
+		(object Realize_Relationship
+		    quid       	"41C153A80387"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IEnumGUID"
+		    quidu      	"41C153A80342")
+		(object Realize_Relationship
+		    quid       	"41C153A803C3"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IEnumMoniker"
+		    quidu      	"41C153A8037E")
+		(object Realize_Relationship
+		    quid       	"41C153A900CD"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMoniker"
+		    quidu      	"41C153A803BA")
+		(object Realize_Relationship
+		    quid       	"41C153A900FF"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IPersistStream"
+		    quidu      	"41C153A900CC")
+		(object Realize_Relationship
+		    quid       	"41C153A9011C"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IPersist"
+		    quidu      	"41C153A900FE")
+		(object Realize_Relationship
+		    quid       	"41C153A90194"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IStream"
+		    quidu      	"41C153A90113")
+		(object Realize_Relationship
+		    quid       	"41C153A901BD"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::ISequentialStream"
+		    quidu      	"41C153A9018B")
+		(object Realize_Relationship
+		    quid       	"41C153A902FE"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IBindCtx"
+		    quidu      	"41C153A9027A")
+		(object Realize_Relationship
+		    quid       	"41C153AA00B0"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IRunningObjectTable"
+		    quidu      	"41C153AA004C")
+		(object Realize_Relationship
+		    quid       	"41C153AA00EB"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IEnumString"
+		    quidu      	"41C153AA00AF")
+		(object Realize_Relationship
+		    quid       	"41C153AA015A"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IComponentTypes"
+		    quidu      	"41C153AA00E2")
+		(object Realize_Relationship
+		    quid       	"41C153AA0195"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IEnumComponentTypes"
+		    quidu      	"41C153AA0159")
+		(object Realize_Relationship
+		    quid       	"41C153AA0272"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IComponentType"
+		    quidu      	"41C153AA018C")
+		(object Realize_Relationship
+		    quid       	"41C153AB0010"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::ILocator"
+		    quidu      	"41C153AA0326")
+		(object Realize_Relationship
+		    quid       	"41C153AB02A6"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IComponents"
+		    quidu      	"41C153AB0237")
+		(object Realize_Relationship
+		    quid       	"41C153AB02F6"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IEnumComponents"
+		    quidu      	"41C153AB02A5")
+		(object Realize_Relationship
+		    quid       	"41C153AB036F"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IComponent"
+		    quidu      	"41C153AB02F5")
+		(object Realize_Relationship
+		    quid       	"41C153AB03C9"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidAnalogTunerEvent"
+		    quidu      	"41C153AB03B4")
+		(object Realize_Relationship
+		    quid       	"41C153AB03E7"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidTunerEvent"
+		    quidu      	"41C153AB03C8")
+		(object Realize_Relationship
+		    quid       	"41C153AC0013"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidInputDeviceEvent"
+		    quidu      	"41C153AB03E6")
+		(object Realize_Relationship
+		    quid       	"41C153AC00A8"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidGraphSegment"
+		    quidu      	"41C153AC0012")
+		(object Realize_Relationship
+		    quid       	"41C153AC00DB"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IEnumFilters"
+		    quidu      	"41C153AC009E")
+		(object Realize_Relationship
+		    quid       	"41C153AC0120"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IBaseFilter"
+		    quidu      	"41C153AC00DA")
+		(object Realize_Relationship
+		    quid       	"41C153AC0166"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMediaFilter"
+		    quidu      	"41C153AC0118")
+		(object Realize_Relationship
+		    quid       	"41C153AC01D5"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IReferenceClock"
+		    quidu      	"41C153AC018E")
+		(object Realize_Relationship
+		    quid       	"41C153AC0225"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IEnumPins"
+		    quidu      	"41C153AC01E8")
+		(object Realize_Relationship
+		    quid       	"41C153AC02E3"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IPin"
+		    quidu      	"41C153AC021C")
+		(object Realize_Relationship
+		    quid       	"41C153AC0365"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IEnumMediaTypes"
+		    quidu      	"41C153AC0329")
+		(object Realize_Relationship
+		    quid       	"41C153AC03E8"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IFilterGraph"
+		    quidu      	"41C153AC0383")
+		(object Realize_Relationship
+		    quid       	"41C153AD0082"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidGraphSegmentContainer"
+		    quidu      	"41C153AC03E7")
+		(object Realize_Relationship
+		    quid       	"41C153AD00DB"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IGraphBuilder"
+		    quidu      	"41C153AD0081")
+		(object Realize_Relationship
+		    quid       	"41C153AD010F"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IEnumMSVidGraphSegment"
+		    quidu      	"41C153AD00D1")
+		(object Realize_Relationship
+		    quid       	"41C153AD01A5"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidFilePlayback"
+		    quidu      	"41C153AD0173")
+		(object Realize_Relationship
+		    quid       	"41C153AD0245"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidPlayback"
+		    quidu      	"41C153AD01A4")
+		(object Realize_Relationship
+		    quid       	"41C153AD02A9"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidFilePlaybackEvent"
+		    quidu      	"41C153AD028A")
+		(object Realize_Relationship
+		    quid       	"41C153AD02D0"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidPlaybackEvent"
+		    quidu      	"41C153AD02A8")
+		(object Realize_Relationship
+		    quid       	"41C153AE0386"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidWebDVD"
+		    quidu      	"41C153AD02EE")
+		(object Realize_Relationship
+		    quid       	"41C153AF0284"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidRect"
+		    quidu      	"41C153AF01ED")
+		(object Realize_Relationship
+		    quid       	"41C153B0002D"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidWebDVDEvent"
+		    quidu      	"41C153AF02FB")
+		(object Realize_Relationship
+		    quid       	"41C153B00108"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidWebDVDAdm"
+		    quidu      	"41C153B00040")
+		(object Realize_Relationship
+		    quid       	"41C153B00180"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidVideoRenderer2"
+		    quidu      	"41C153B0011C")
+		(object Realize_Relationship
+		    quid       	"41C153B00311"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidVideoRenderer"
+		    quidu      	"41C153B00177")
+		(object Realize_Relationship
+		    quid       	"41C153B0032F"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidOutputDevice"
+		    quidu      	"41C153B00307")
+		(object Realize_Relationship
+		    quid       	"41C153B00394"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IVMRImageCompositor"
+		    quidu      	"41C153B00326")
+		(object Realize_Relationship
+		    quid       	"41C153B100B9"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IVMRMixerBitmap"
+		    quidu      	"41C153B1007D")
+		(object Realize_Relationship
+		    quid       	"41C153B10204"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IVMRSurfaceAllocator"
+		    quidu      	"41C153B101AA")
+		(object Realize_Relationship
+		    quid       	"41C153B10312"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IVMRSurfaceAllocatorNotify"
+		    quidu      	"41C153B10290")
+		(object Realize_Relationship
+		    quid       	"41C153B1033A"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidVideoRendererEvent"
+		    quidu      	"41C153B10309")
+		(object Realize_Relationship
+		    quid       	"41C153B10358"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidOutputDeviceEvent"
+		    quidu      	"41C153B10330")
+		(object Realize_Relationship
+		    quid       	"41C153B10381"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidDeviceEvent"
+		    quidu      	"41C153B1034E")
+		(object Realize_Relationship
+		    quid       	"41C153B103E4"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidAudioRenderer"
+		    quidu      	"41C153B10395")
+		(object Realize_Relationship
+		    quid       	"41C153B20011"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidAudioRendererEvent"
+		    quidu      	"41C153B103DA")
+		(object Realize_Relationship
+		    quid       	"41C153B20089"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidStreamBufferSink"
+		    quidu      	"41C153B20024")
+		(object Realize_Relationship
+		    quid       	"41C153B200F8"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidStreamBufferRecordingControl"
+		    quidu      	"41C153B20080")
+		(object Realize_Relationship
+		    quid       	"41C153B20166"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidStreamBufferSinkEvent"
+		    quidu      	"41C153B20133")
+		(object Realize_Relationship
+		    quid       	"41C153B201F1"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidStreamBufferSource"
+		    quidu      	"41C153B20179")
+		(object Realize_Relationship
+		    quid       	"41C153B203AA"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidStreamBufferSourceEvent"
+		    quidu      	"41C153B20328")
+		(object Realize_Relationship
+		    quid       	"41C153B203D3"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidDataServices"
+		    quidu      	"41C153B203B5")
+		(object Realize_Relationship
+		    quid       	"41C153B30009"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidFeature"
+		    quidu      	"41C153B203D2")
+		(object Realize_Relationship
+		    quid       	"41C153B3004E"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidEncoder"
+		    quidu      	"41C153B3001D")
+		(object Realize_Relationship
+		    quid       	"41C153B30080"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidXDS"
+		    quidu      	"41C153B30062")
+		(object Realize_Relationship
+		    quid       	"41C153B300C6"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidClosedCaptioning2"
+		    quidu      	"41C153B30094")
+		(object Realize_Relationship
+		    quid       	"41C153B300F8"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidClosedCaptioning"
+		    quidu      	"41C153B300BD")
+		(object Realize_Relationship
+		    quid       	"41C153B3036F"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidCtl"
+		    quidu      	"41C153B30170")
+		(object Realize_Relationship
+		    quid       	"41C153B40046"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidInputDevices"
+		    quidu      	"41C153B303E7")
+		(object Realize_Relationship
+		    quid       	"41C153B40096"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidOutputDevices"
+		    quidu      	"41C153B40045")
+		(object Realize_Relationship
+		    quid       	"41C153B400E6"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidVideoRendererDevices"
+		    quidu      	"41C153B40095")
+		(object Realize_Relationship
+		    quid       	"41C153B40136"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidAudioRendererDevices"
+		    quidu      	"41C153B400DD")
+		(object Realize_Relationship
+		    quid       	"41C153B40186"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidFeatures"
+		    quidu      	"41C153B4012D")
+		(object Realize_Relationship
+		    quid       	"41C153B4024E"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSVidCompositionSegment"
+		    quidu      	"41C153B40209")
+		(object Realize_Relationship
+		    quid       	"41C153B5008D"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IMSEventBinder"
+		    quidu      	"41C153B50051"))
+	    language   	"COM"))
+    physical_presentations 	(list unit_reference_list))

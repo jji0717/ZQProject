@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TianShan>
+
+  <Definitions src="TianShanDef.xml">
+  </Definitions> 
+  <default>
+
+  <!--Additional Ice properties if there is any, <prop /> is its sub element
+			attrib of <prop />:
+				name: the name of the Ice property
+				value: the value of the Ice property
+  -->
+    <IceProperties>
+      <!-- 
+  the following are performance tuning parameters, please don't modify if you are not an expert at them 
+  -->
+      <prop name="Ice.Trace.Network" value="1" />
+      <prop name="Ice.Trace.Protocol" value="0" />
+      <prop name="Ice.Trace.Retry" value="1" />
+      <prop name="Ice.Warn.Connections" value="1" />
+      <prop name="Ice.Warn.Endpoints" value="1" />
+      <prop name="Freeze.Warn.Deadlocks" value="1" />
+      <prop name="Freeze.Trace.Map" value="0" />
+      <prop name="Freeze.Trace.DbEnv" value="2" />
+      <prop name="Freeze.Trace.Evictor" value="0" />
+      <prop name="Ice.Override.Timeout" value="15000" />
+      <prop name="Ice.Override.ConnectTimeout" value="2000" />
+      <prop name="Ice.ThreadPool.Server.Size" value="20" />
+      <prop name="Ice.ThreadPool.Server.SizeMax" value="50" />
+      <prop name="Ice.ThreadPool.Client.Size" value="10" />
+      <prop name="Ice.ThreadPool.Client.SizeMax" value="20" />
+    </IceProperties>
+
+  </default>
+  <OpenVBO3dServer netId="TestNetId" volume="$" contentNameWithProviderId="0" defaultProviderId="">
+  
+	   <!-- CRM_3dServer.dll:
+			       plugIn  logfile information-->
+	  <Log logfilename="CRM_3dServer.log" level="7" size="40960000" count="5" buffer="204800" flushtimeout="2" />
+
+	  <IceTrace logfilename="CRM_3dServerIce.log" level= "7" size="40960000" count="5" buffer="204800" flushtimeout="2" />
+	  <!-- The local bind endpoint that the ContentProvisionEngine service is serving on
+		    	 attributes:
+		     	 endpoint      - the endpoint of ContentProvisionEngine service
+	  --> 
+    <CPE endpoint="tcp -h ${CPENetIf} -p 10500"/>
+    
+    <!-- ContentStore
+		       id      -  contentstore net id, must config
+		       volume  -  volume name, must config
+
+    <ContentStore id="TestNetId" volume="$" />
+   	-->
+   	 
+   <!-- Configuration on AquaServer.
+	    	rootUrl	-	Aqua Server URL,include username and password
+	    	container	-	folder Name under the root URL path
+	    	sourceFolder -  npvr source folder
+	    	contentFolder - npvr content folder
+	      flags - flag Dump MsgBody ,HexDump ,curlclient send ,info ,recviver log etc
+	    	maxThreadPoolSize	- curl client threadpool size
+			  timeZoneOfFileName: the time zone of file name under sourceFolder/bitrateN
+      			1: local time zone
+     				0: standard GMT time zone
+     		connectTimeout - Connect Aqua Server timeout (default 5000ms)
+     		timeout - Aqua request timeout (default 10000ms)
+-->
+   <AquaServer rootUrl="http://user:password@ip:port/aqua/rest/cdmi" connectTimeout="5000" timeout="10000" homeContainer="" sourceFolder="/default/npvr/sources/" contentFolder="/default/npvr/contents/" flags="0" maxThreadPoolSize="5" timeZoneOfFileName = "1"/>
+ 
+   <!--
+   <TestMode enable = "1" duration = "14400" delay = "30" />
+   -->
+  </OpenVBO3dServer>
+  
+</TianShan>

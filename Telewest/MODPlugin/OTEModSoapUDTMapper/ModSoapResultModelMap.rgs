@@ -1,0 +1,26 @@
+HKCR
+{
+	OTEModSoapUDTMapper.ModSoapResultModelMap.1 = s 'ModSoapResultModelMap Class'
+	{
+		CLSID = s '{4FF3482F-8B58-4450-B21E-CCE477FA5A3E}'
+	}
+	OTEModSoapUDTMapper.ModSoapResultModelMap = s 'ModSoapResultModelMap Class'
+	{
+		CLSID = s '{4FF3482F-8B58-4450-B21E-CCE477FA5A3E}'
+		CurVer = s 'OTEModSoapUDTMapper.ModSoapResultModelMap.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {4FF3482F-8B58-4450-B21E-CCE477FA5A3E} = s 'ModSoapResultModelMap Class'
+		{
+			ProgID = s 'OTEModSoapUDTMapper.ModSoapResultModelMap.1'
+			VersionIndependentProgID = s 'OTEModSoapUDTMapper.ModSoapResultModelMap'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			'TypeLib' = s '{E76A2B2F-205F-432B-B2B0-B748F59BF2EE}'
+		}
+	}
+}

@@ -1,0 +1,686 @@
+diff -r -uN Ice-3.2.1\include\IceUtil\OutputUtil.h Ice-3.2.1.3\include\IceUtil\OutputUtil.h
+--- Ice-3.2.1\include\IceUtil\OutputUtil.h	Fri Nov 27 17:14:52 2009
++++ Ice-3.2.1.3\include\IceUtil\OutputUtil.h	Sun Nov 08 20:37:58 2009
+@@ -103,8 +103,8 @@
+     void sb(); // Start a block.
+     void eb(); // End a block.
+ 
+-    void spar(); // Start a parameter list.
+-    void epar(); // End a parameter list.
++    void spar(); // Start a paramater list.
++    void epar(); // End a paramater list.
+ 
+ private:
+ 
+diff -r -uN Ice-3.2.1\src\Freeze\EvictorI.cpp Ice-3.2.1.3\src\Freeze\EvictorI.cpp
+--- Ice-3.2.1\src\Freeze\EvictorI.cpp	Wed Aug 08 16:30:54 2007
++++ Ice-3.2.1.3\src\Freeze\EvictorI.cpp	Thu Aug 18 18:05:01 2011
+@@ -1564,6 +1564,7 @@
+                     }
+                     catch(const DbException& dx)
+                     {
++						suicide();
+                         DatabaseException ex(__FILE__, __LINE__);
+                         ex.message = dx.what();
+                         throw ex;
+diff -r -uN Ice-3.2.1\src\Freeze\IndexI.cpp Ice-3.2.1.3\src\Freeze\IndexI.cpp
+--- Ice-3.2.1\src\Freeze\IndexI.cpp	Wed Aug 08 16:30:54 2007
++++ Ice-3.2.1.3\src\Freeze\IndexI.cpp	Wed Jan 06 23:24:03 2010
+@@ -295,6 +295,34 @@
+     _db->set_flags(DB_DUP | DB_DUPSORT);
+     _db->set_app_private(this);
+ 
++	//merge from Ice3.3.1
++	_dbName = EvictorI::indexPrefix + store->dbName() + "." + _index.name();
++
++    Ice::PropertiesPtr properties = store->communicator()->getProperties();
++    string propPrefix = "Freeze.Evictor." + store->evictor()->filename() + ".";
++
++    int btreeMinKey = properties->getPropertyAsInt(propPrefix + _dbName + ".BtreeMinKey");
++    if(btreeMinKey > 2)
++    {
++        if(store->evictor()->trace() >= 1)
++        {
++            Trace out(store->evictor()->communicator()->getLogger(), "Freeze.Evictor");
++            out << "Setting \"" << store->evictor()->filename() + "." + _dbName << "\"'s btree minkey to " << btreeMinKey;
++        }
++        _db->set_bt_minkey(btreeMinKey);
++    }
++        
++    bool checksum = properties->getPropertyAsInt(propPrefix + "Checksum") > 0;
++    if(checksum)
++    {
++        //
++        // No tracing on purpose
++        //
++
++        _db->set_flags(DB_CHKSUM);
++    }
++    //end of merge
++    
+     u_int32_t flags = 0;
+     if(createDb)
+     {
+diff -r -uN Ice-3.2.1\src\Freeze\ObjectStore.cpp Ice-3.2.1.3\src\Freeze\ObjectStore.cpp
+--- Ice-3.2.1\src\Freeze\ObjectStore.cpp	Wed Aug 08 16:30:54 2007
++++ Ice-3.2.1.3\src\Freeze\ObjectStore.cpp	Thu Aug 18 18:01:46 2011
+@@ -56,6 +56,47 @@
+     try
+     {
+         _db.reset(new Db(dbEnv, 0));
++        
++        //merge from Ice3.3.1
++        Ice::PropertiesPtr properties = evictor->communicator()->getProperties();
++        string propPrefix = "Freeze.Evictor." + evictor->filename() + ".";
++
++        int btreeMinKey = properties->getPropertyAsInt(propPrefix + _dbName + ".BtreeMinKey");
++        if(btreeMinKey > 2)
++        {
++            if(evictor->trace() >= 1)
++            {
++                Trace out(evictor->communicator()->getLogger(), "Freeze.Evictor");
++                out << "Setting \"" << evictor->filename() + "." + _dbName << "\"'s btree minkey to " << btreeMinKey;
++            }
++
++            _db->set_bt_minkey(btreeMinKey);
++        }
++        
++        bool checksum = properties->getPropertyAsInt(propPrefix + "Checksum") > 0;
++        if(checksum)
++        {
++            if(evictor->trace() >= 1)
++            {
++                Trace out(evictor->communicator()->getLogger(), "Freeze.Evictor");
++                out << "Turning checksum on for \"" << evictor->filename() << "\"";
++            }
++
++            _db->set_flags(DB_CHKSUM);
++        }
++        
++        int pageSize = properties->getPropertyAsInt(propPrefix + "PageSize");
++        if(pageSize > 0)
++        {
++            if(evictor->trace() >= 1)
++            {
++                Trace out(evictor->communicator()->getLogger(), "Freeze.Evictor");
++                out << "Setting \"" << evictor->filename() << "\"'s pagesize to " << pageSize;
++            }
++
++            _db->set_pagesize(pageSize);
++        }
++        //end of merge
+ 
+         TransactionPtr tx = catalogConnection->beginTransaction();
+         DbTxn* txn = getTxn(tx);
+@@ -185,6 +226,7 @@
+             }
+             else
+             {
++				suicide();
+                 assert(0);
+                 throw DatabaseException(__FILE__, __LINE__);
+             }
+@@ -204,6 +246,7 @@
+         }
+         catch(const DbException& dx)
+         {
++			suicide();
+             DatabaseException ex(__FILE__, __LINE__);
+             ex.message = dx.what();
+             throw ex;
+@@ -228,6 +271,7 @@
+             int err = _db->put(tx, &dbKey, &dbValue, flags);
+             if(err != 0)
+             {
++				suicide();
+                 throw DatabaseException(__FILE__, __LINE__);
+             }
+             break;
+@@ -240,6 +284,7 @@
+             int err = _db->del(tx, &dbKey, 0);
+             if(err != 0)
+             {
++				suicide();
+                 throw DatabaseException(__FILE__, __LINE__);
+             }
+             break;
+@@ -331,6 +376,7 @@
+             }
+             else if(rs != 0)
+             {
++				suicide();
+                 assert(0);
+                 throw DatabaseException(__FILE__, __LINE__);
+             }
+@@ -350,6 +396,7 @@
+         }
+         catch(const DbException& dx)
+         {
++			suicide();
+             handleDbException(dx, value, dbValue, __FILE__, __LINE__);
+         }
+     }
+diff -r -uN Ice-3.2.1\src\Freeze\Util.cpp Ice-3.2.1.3\src\Freeze\Util.cpp
+--- Ice-3.2.1\src\Freeze\Util.cpp	Wed Aug 08 16:30:54 2007
++++ Ice-3.2.1.3\src\Freeze\Util.cpp	Thu Aug 18 17:31:36 2011
+@@ -88,3 +88,8 @@
+         handleDbException(dx, file, line);
+     }
+ }
++
++void suicide()
++{
++	RaiseException( EXCEPTION_ACCESS_VIOLATION , EXCEPTION_NONCONTINUABLE , 0 , 0 );
++}
+\ No newline at end of file
+diff -r -uN Ice-3.2.1\src\Freeze\Util.h Ice-3.2.1.3\src\Freeze\Util.h
+--- Ice-3.2.1\src\Freeze\Util.h	Wed Aug 08 16:30:54 2007
++++ Ice-3.2.1.3\src\Freeze\Util.h	Thu Aug 18 17:30:04 2011
+@@ -69,6 +69,7 @@
+ 
+ }
+ 
++void suicide();
+ 
+ #endif
+ 
+diff -r -uN Ice-3.2.1\src\FreezeScript\data.cpp Ice-3.2.1.3\src\FreezeScript\Data.cpp
+--- Ice-3.2.1\src\FreezeScript\data.cpp	Fri Nov 27 17:19:50 2009
++++ Ice-3.2.1.3\src\FreezeScript\Data.cpp	Wed Aug 08 16:30:54 2007
+@@ -1885,14 +1885,7 @@
+         while(i > 0)
+         {
+             ++p;
+-            //assert(p != l.end());
+-			if( p == l.end())
+-			{
+-				char buf[128];
+-				sprintf(buf,"UnInitialized Data");
+-				const_cast<string&>(_name) = buf;
+-				return _name;
+-			}
++            assert(p != l.end());
+             --i;
+         }
+         const_cast<string&>(_name) = (*p)->name();
+diff -r -uN Ice-3.2.1\src\Ice\ConnectionI.cpp Ice-3.2.1.3\src\Ice\ConnectionI.cpp
+--- Ice-3.2.1\src\Ice\ConnectionI.cpp	Wed Aug 08 16:30:54 2007
++++ Ice-3.2.1.3\src\Ice\ConnectionI.cpp	Fri Nov 27 11:45:21 2009
+@@ -461,48 +461,93 @@
+ void
+ Ice::ConnectionI::monitor()
+ {
+-    IceUtil::Monitor<IceUtil::Mutex>::TryLock sync(*this);
+-    
+-    if(!sync.acquired())
+-    {
+-        return;
+-    }
+-    
+-    if(_state != StateActive)
+-    {
+-        return;
+-    }
+-    
+-    //
+-    // Check for timed out async requests.
+-    //
+-    for(map<Int, AsyncRequest>::iterator p = _asyncRequests.begin(); p != _asyncRequests.end(); ++p)
+-    {
+-        if(p->second.t > IceUtil::Time() && p->second.t <= IceUtil::Time::now())
+-        {
+-            setState(StateClosed, TimeoutException(__FILE__, __LINE__));
+-            return;
+-        }
+-    }
+-    
+-    //
+-    // Active connection management for idle connections.
+-    //
+-    if(_acmTimeout > 0 &&
+-       _requests.empty() && _asyncRequests.empty() &&
+-       !_batchStreamInUse && _batchStream.b.empty() &&
+-       _dispatchCount == 0)
+-    {
+-        if(IceUtil::Time::now() >= _acmAbsoluteTimeout)
+-        {
+-            setState(StateClosing, ConnectionTimeoutException(__FILE__, __LINE__));
+-            return;
+-        }
+-    }
++	//Hongquan: because IceUtil::Mutex do not allow recursively invoke
++	//we need to make a map copy of timedout request
++	map<Int, AsyncRequest> timedoutRequests;
++
++	{
++		IceUtil::Monitor<IceUtil::Mutex>::TryLock sync(*this);
++
++		if(!sync.acquired())
++		{
++			return;
++		}
++
++		if(_state != StateActive)
++		{
++			return;
++		}
++
++		//
++		// Check for timed out async requests.
++		//
++
++		//Hongquan: make a copy of _asyncRequests, so that we will not corrupt this map
++		map<Int, AsyncRequest> tmpRequests = _asyncRequests;
++		for(map<Int, AsyncRequest>::iterator p = tmpRequests.begin(); p != tmpRequests.end(); ++p)
++		{
++			if(p->second.t > IceUtil::Time() && p->second.t <= IceUtil::Time::now())
++			{
++				//Hongquan: do not close the connection, this is only an invoke timeout,
++				//setState(StateClosed, TimeoutException(__FILE__, __LINE__));
++				
++				
++				//Hongquan: remove the request from request map	because we need to issue a TimeoutException
++				//NOTE: delete the request directly because Connection derived from a non-recursive locker
++				//This is not a good idea to delete the request directly but I have to
++				{
++					_asyncRequests.erase( p->first );
++					_asyncRequestsHint = _asyncRequests.begin();
++				}
++
++				timedoutRequests.insert( map<Int, AsyncRequest>::value_type( p->first , p->second) );
++			}
++		}
++
++		//
++		// Active connection management for idle connections.
++		//
++		if(_acmTimeout > 0 &&
++			_requests.empty() && _asyncRequests.empty() &&
++			!_batchStreamInUse && _batchStream.b.empty() &&
++			_dispatchCount == 0)
++		{
++			if(IceUtil::Time::now() >= _acmAbsoluteTimeout)
++			{
++				setState(StateClosing, ConnectionTimeoutException(__FILE__, __LINE__));
++				return;
++			}
++		}
++	}
++
++	//Hongquan: some requests have been timedout, finish it
++	for(map<Int, AsyncRequest>::iterator p = timedoutRequests.begin(); p != timedoutRequests.end(); ++p)
++	{		
++		//Hongquan: notify that the request is timed out
++		TimeoutException timedout(__FILE__,__LINE__);
++		p->second.p->__finished( timedout ); 
++	}
++}
++
++void Ice::ConnectionI::removeRequest( Ice::Int requestId ,bool bSync )
++{
++	//Hongquan: add a new function to remove the request
++	IceUtil::Monitor<IceUtil::Mutex>::Lock sync(*this);	
++	if( bSync )
++	{
++		_requests.erase( requestId );
++		_requestsHint = _requests.begin();//What is the _requestsHint for?
++	}
++	else
++	{
++		_asyncRequests.erase( requestId );
++		_asyncRequestsHint = _asyncRequests.begin();
++	}
++
+ }
+ 
+ void
+-Ice::ConnectionI::sendRequest(BasicStream* os, Outgoing* out, bool compress)
++Ice::ConnectionI::sendRequest(BasicStream* os, Outgoing* out, bool compress, Ice::Int* iceRequestId )
+ {
+     Int requestId;
+ 
+@@ -664,10 +709,14 @@
+             _exception->ice_throw();
+         }
+     }
++	if( iceRequestId )
++	{
++		*iceRequestId = requestId;
++	}
+ }
+ 
+ void
+-Ice::ConnectionI::sendAsyncRequest(BasicStream* os, const OutgoingAsyncPtr& out, bool compress)
++Ice::ConnectionI::sendAsyncRequest(BasicStream* os, const OutgoingAsyncPtr& out, bool compress, Ice::Int* iceRequestId )
+ {
+     Int requestId;
+ 
+@@ -823,6 +872,10 @@
+             _exception->ice_throw();
+         }
+     }
++	if( iceRequestId )
++	{
++		*iceRequestId = requestId;
++	}
+ }
+ 
+ void
+@@ -2309,11 +2362,13 @@
+                 {
+                     q = _asyncRequests.find(requestId);
+                 }
++
++				//Hongquan: do not throw UnknownRequestIdException because we may remove the request id from _requests if there is a TimeoutException occurred
+             
+-                if(p == _requests.end() && q == _asyncRequests.end())
+-                {
+-                    throw UnknownRequestIdException(__FILE__, __LINE__);
+-                }
++//                 if(p == _requests.end() && q == _asyncRequests.end())
++//                 {
++//                     throw UnknownRequestIdException(__FILE__, __LINE__);
++//                 }
+             
+                 if(p != _requests.end())
+                 {
+@@ -2331,19 +2386,22 @@
+                 }
+                 else
+                 {
+-                    assert(q != _asyncRequests.end());
+-                
+-                    outAsync = q->second.p;
+-                
+-                    if(q == _asyncRequestsHint)
+-                    {
+-                        _asyncRequests.erase(q++);
+-                        _asyncRequestsHint = q;
+-                    }
+-                    else
+-                    {
+-                        _asyncRequests.erase(q);
+-                    }
++					//Hongquan: test if this async request is still here
++                    //assert(q != _asyncRequests.end());
++					if( q != _asyncRequests.end() )
++					{
++						outAsync = q->second.p;
++
++						if(q == _asyncRequestsHint)
++						{
++							_asyncRequests.erase(q++);
++							_asyncRequestsHint = q;
++						}
++						else
++						{
++							_asyncRequests.erase(q);
++						}
++					}
+                 }
+             
+                 break;
+diff -r -uN Ice-3.2.1\src\Ice\ConnectionI.h Ice-3.2.1.3\src\Ice\ConnectionI.h
+--- Ice-3.2.1\src\Ice\ConnectionI.h	Wed Aug 08 16:30:54 2007
++++ Ice-3.2.1.3\src\Ice\ConnectionI.h	Mon Nov 09 14:37:41 2009
+@@ -65,8 +65,8 @@
+ 
+     void monitor();
+ 
+-    void sendRequest(IceInternal::BasicStream*, IceInternal::Outgoing*, bool);
+-    void sendAsyncRequest(IceInternal::BasicStream*, const IceInternal::OutgoingAsyncPtr&, bool);
++	void sendRequest(IceInternal::BasicStream*, IceInternal::Outgoing*, bool, Ice::Int* iceRequestId = NULL );
++	void sendAsyncRequest(IceInternal::BasicStream*, const IceInternal::OutgoingAsyncPtr&, bool, Ice::Int* iceRequestId = NULL );
+ 
+     void prepareBatchRequest(IceInternal::BasicStream*);
+     void finishBatchRequest(IceInternal::BasicStream*, bool);
+@@ -100,6 +100,9 @@
+     // SSL plug-in needs to be able to get the transceiver.
+     IceInternal::TransceiverPtr getTransceiver() const;
+ 
++
++	//Hongquan: remove request with requestId
++	void		removeRequest( Ice::Int requestId , bool bSync = true );
+ private:
+ 
+     ConnectionI(const IceInternal::InstancePtr&, const IceInternal::TransceiverPtr&, 
+diff -r -uN Ice-3.2.1\src\Ice\Outgoing.cpp Ice-3.2.1.3\src\Ice\Outgoing.cpp
+--- Ice-3.2.1\src\Ice\Outgoing.cpp	Wed Aug 08 16:30:54 2007
++++ Ice-3.2.1.3\src\Ice\Outgoing.cpp	Mon Nov 09 12:07:40 2009
+@@ -140,6 +140,9 @@
+ 
+     _os.endWriteEncaps();
+     
++	//Hongquan: record ice request Id, this can help us if we want to remove the request in the future
++	//
++	Ice::Int requestId = -1;
+     switch(_reference->getMode())
+     {
+         case Reference::ModeTwoway:
+@@ -152,7 +155,7 @@
+             // this object, so we don't need to lock the mutex, keep
+             // track of state, or save exceptions.
+             //
+-            _connection->sendRequest(&_os, this, _compress);
++            _connection->sendRequest(&_os, this, _compress,&requestId);
+             
+             //
+             // Wait until the request has completed, or until the
+@@ -200,12 +203,16 @@
+                 // Must be called outside the synchronization of this
+                 // object.
+                 //
+-                _connection->exception(TimeoutException(__FILE__, __LINE__));
+ 
++				//Hongquan: do not notify connection that there is a timeout exception, this can prevent connection to be closed
++                //_connection->exception(TimeoutException(__FILE__, __LINE__));
++
++				//Hongquan: We do not closed the connection, so comment code below 
+                 //
+                 // We must wait until the exception set above has
+                 // propagated to this Outgoing object.
+                 //
++				/*
+                 {
+                     IceUtil::Monitor<IceUtil::Mutex>::Lock sync(_monitor);
+                     
+@@ -214,6 +221,16 @@
+                         _monitor.wait();
+                     }
+                 }
++				*/
++
++				//Hongquan: create a TimeoutException				
++				_exception.reset( new TimeoutException(__FILE__, __LINE__) );
++
++				//Hongquan: remove request
++				if( requestId > 0 )
++				{
++					_connection->removeRequest( requestId );
++				}
+             }
+ 
+             if(_exception.get())
+diff -r -uN Ice-3.2.1\src\Ice\PropertyNames.cpp Ice-3.2.1.3\src\Ice\PropertyNames.cpp
+--- Ice-3.2.1\src\Ice\PropertyNames.cpp	Wed Aug 08 16:30:54 2007
++++ Ice-3.2.1.3\src\Ice\PropertyNames.cpp	Fri Jul 08 09:52:10 2011
+@@ -512,6 +512,8 @@
+     "Freeze.Evictor.*.SaveSizeTrigger",
+     "Freeze.Evictor.*.StreamTimeout",
+     "Freeze.Evictor.*.PopulateEmptyIndices",
++	"Freeze.Evictor.*.PageSize",
++	"Freeze.Evictor.*.BtreeMinKey",
+     "Freeze.Evictor.UseNonmutating",
+     "Freeze.Trace.DbEnv",
+     "Freeze.Trace.Evictor",
+diff -r -uN Ice-3.2.1\src\Ice\ThreadPool.cpp Ice-3.2.1.3\src\Ice\ThreadPool.cpp
+--- Ice-3.2.1\src\Ice\ThreadPool.cpp	Wed Aug 08 16:30:54 2007
++++ Ice-3.2.1.3\src\Ice\ThreadPool.cpp	Mon Dec 27 10:15:51 2010
+@@ -19,6 +19,8 @@
+ #include <Ice/ObjectAdapterFactory.h>
+ #include <Ice/Properties.h>
+ 
++//#define HONGQUAN_DEBUG
++
+ using namespace std;
+ using namespace Ice;
+ using namespace IceInternal;
+@@ -29,6 +31,29 @@
+ #endif
+ void IceInternal::decRef(ThreadPool* p) { p->__decRef(); }
+ 
++void IceInternal::ThreadPool::rebuildPipe( )
++{
++	if( _fdIntrWrite != INVALID_SOCKET )
++	{
++		try{closeSocket(_fdIntrWrite);} catch( const Ice::LocalException&){}
++		_fdIntrWrite = INVALID_SOCKET;
++	}
++	if( _fdIntrRead != INVALID_SOCKET )
++	{
++		try{closeSocket(_fdIntrRead); } catch( const Ice::LocalException&){}
++		_fdIntrRead = INVALID_SOCKET;
++	}
++	SOCKET fds[2];
++	createPipe(fds);
++	_fdIntrRead = fds[0];
++	_fdIntrWrite = fds[1];
++
++	 setBlock(_fdIntrRead, false);
++
++	_maxFd = max(_maxFd, _fdIntrRead);
++	_minFd = min(_minFd, _fdIntrRead);
++
++}
+ IceInternal::ThreadPool::ThreadPool(const InstancePtr& instance, const string& prefix, int timeout) :
+     _instance(instance),
+     _destroyed(false),
+@@ -45,14 +70,11 @@
+     _promote(true),
+     _warnUdp(_instance->initializationData().properties->getPropertyAsInt("Ice.Warn.Datagrams") > 0)
+ {
+-    SOCKET fds[2];
+-    createPipe(fds);
+-    _fdIntrRead = fds[0];
+-    _fdIntrWrite = fds[1];
+-    setBlock(_fdIntrRead, false);
+-    _maxFd = _fdIntrRead;
+-    _minFd = _fdIntrRead;
+-
++	_maxFd = 0;
++	_minFd = 0x7FFFFFFF;
++	_fdIntrRead = _fdIntrWrite = INVALID_SOCKET;
++	rebuildPipe();
++    
+ #if defined(_WIN32)
+     _fdsInUse = 1; // _fdIntrRead is always in use.
+     FD_ZERO(&_fdSet);
+@@ -359,6 +381,22 @@
+ void
+ IceInternal::ThreadPool::clearInterrupt()
+ {
++#ifdef HONGQUAN_DEBUG
++	static int x = 0;
++	if( (x++ % 10 ) == 0  )
++	{
++		Warning out(_instance->initializationData().logger);
++		out << "thread pool `" << _prefix << ": HONGQUAN TEST, make internal pipe broken";
++		//just rebuild the internal pipe thing if error occurred		
++		FD_CLR(_fdIntrRead,&_fdSet);
++		rebuildPipe();
++		FD_SET(_fdIntrRead,&_fdSet);
++
++		return ;
++	}
++	if( x> 1000000) x = 0;
++#endif//HONGQUAN_DEBUG
++
+     char c;
+ 
+ repeat:
+@@ -370,10 +408,23 @@
+         {
+             goto repeat;
+         }
+-
+-        SocketException ex(__FILE__, __LINE__);
+-        ex.error = getSocketErrno();
+-        throw ex;
++#ifdef HONGQUAN_DEBUG
++		return;
++#endif//HONGQUAN_DEBUG
++		
++		Warning out(_instance->initializationData().logger);
++		out << "thread pool `" << _prefix << ": caught exeception "<< errorToString( getSocketErrno() ) << " in internal pipe, trying to rebuild it";
++
++		//just rebuild the internal pipe thing if error occurred
++		SOCKET temp = _fdIntrRead;
++		rebuildPipe();
++		FD_CLR(temp,&_fdSet);
++		FD_SET(_fdIntrRead,&_fdSet);
++
++// 		// error occurred
++//         SocketException ex(__FILE__, __LINE__);
++//         ex.error = getSocketErrno();
++//         throw ex;
+     }
+ #else
+     if(::read(_fdIntrRead, &c, 1) == -1)
+@@ -427,6 +478,10 @@
+ bool
+ IceInternal::ThreadPool::run()
+ {
++#ifdef HONGQUAN_DEBUG
++	static int x = 0;
++#endif//HONGQUAN_DEBUG
++
+     ThreadPoolPtr self = this;
+ 
+     if(_sizeMax > 1)
+@@ -509,6 +564,10 @@
+                 bool interrupted = false;
+ #if defined(_WIN32)
+                 interrupted = FD_ISSET(_fdIntrRead, &fdSet);
++		#ifdef HONGQUAN_DEBUG
++				interrupted |= (x++%5 == 0) ;
++		#endif//HONGQUAN_DEBUG
++
+ #elif defined(ICE_USE_EPOLL)
+                 for(int i = 0; i < ret; ++i)
+                 {
+@@ -554,7 +613,9 @@
+                     }
+                     
+                     clearInterrupt();
+-                    
++                    if( _changes.empty() )
++						continue;// contine to get next event if no changes 
++
+                     //
+                     // An event handler must have been registered or
+                     // unregistered.
+diff -r -uN Ice-3.2.1\src\Ice\ThreadPool.h Ice-3.2.1.3\src\Ice\ThreadPool.h
+--- Ice-3.2.1\src\Ice\ThreadPool.h	Wed Aug 08 16:30:54 2007
++++ Ice-3.2.1.3\src\Ice\ThreadPool.h	Tue Dec 21 14:40:02 2010
+@@ -68,6 +68,7 @@
+ 
+     void clearInterrupt();
+     void setInterrupt();
++	void rebuildPipe( );
+ 
+     bool run(); // Returns true if a follower should be promoted.
+     void read(const EventHandlerPtr&);
+diff -r -uN Ice-3.2.1\src\Makefile.mak Ice-3.2.1.3\src\Makefile.mak
+--- Ice-3.2.1\src\Makefile.mak	Wed Jan 20 13:53:40 2010
++++ Ice-3.2.1.3\src\Makefile.mak	Thu Jun 30 16:28:41 2011
+@@ -18,8 +18,8 @@
+ #SUBDIRS		= $(SUBDIRS) IceUtil Slice slice2cpp slice2cs slice2vb slice2freeze slice2freezej slice2docbook slice2java \
+ #		  slice2py slice2cppe slice2javae slice2rb slice2html Ice IceXML IceSSL IceBox IcePatch2 Glacier2 Freeze \
+ #		  FreezeScript IceStorm IceGrid ca
+-SUBDIRS		= $(SUBDIRS) IceUtil Slice slice2cpp slice2freeze Ice IceXML IceSSL IceBox IcePatch2 Glacier2 Freeze \
+-		  FreezeScript IceStorm IceGrid ca
++SUBDIRS		= $(SUBDIRS) IceUtil Slice slice2cpp slice2freeze  \
++		  slice2py Ice IceBox IceXML Freeze FreezeScript IceStorm
+ 		  
+ 
+ $(EVERYTHING)::

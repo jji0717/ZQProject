@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageDefinition>
+	<Locale language="en"/>
+	<DOD_200001>DCA Port Configuration</DOD_200001>
+	<DOD_200002>DOD Port</DOD_200002>
+	<DOD_200003>PMT PID</DOD_200003>
+	<DOD_200004>Total Bit Rate</DOD_200004>
+	<DOD_200005>Node Group ID</DOD_200005>
+	<DOD_200006>IP Port</DOD_200006>
+	<DOD_200007>DOD Channel</DOD_200007>
+	<DOD_200008>IP Address</DOD_200008>
+	<DOD_200009>Send Port</DOD_200009>
+	<DOD_200010>Send Type</DOD_200010>
+	<DOD_200011>Queue Name</DOD_200011>
+	<DOD_200012>Channel Type</DOD_200012>
+	<DOD_200013>Data Type</DOD_200013>
+	<DOD_200014>Stream ID</DOD_200014>
+	<DOD_200015>Stream Type</DOD_200015>
+	<DOD_200016>Channel Bit Rate(bps)</DOD_200016>
+	<DOD_200017>Tag</DOD_200017>
+	<DOD_200018>ILP Support</DOD_200018>
+	<DOD_200019>Queue Name</DOD_200019>
+	<DOD_200020>Data Exchange Type</DOD_200020>
+	<DOD_200021>Stream Count</DOD_200021>
+	<DOD_200022>Send Index Table</DOD_200022>
+	<DOD_200023>JMS Message Code</DOD_200023>	
+	<DOD_200024>Send Message Data Type</DOD_200024>
+	<DOD_200025>Send Message Expired Time</DOD_200025>
+	<DOD_200026>Minimal Send Interval</DOD_200026>
+	<DOD_200027>DataType with Initial</DOD_200027>
+	<DOD_200028>DODQueue</DOD_200028>
+	<DOD_200029>Priority</DOD_200029>
+	<DOD_200030>Name</DOD_200030>
+	<DOD_200031>Channel List</DOD_200031>
+</LanguageDefinition>
+

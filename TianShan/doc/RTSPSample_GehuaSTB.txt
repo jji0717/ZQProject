@@ -1,0 +1,327 @@
+点播：
+SETUP rtsp://172.16.88.5:554/60010001?asset=10048#GTIT0120151203200219&folderId=GCNN7137 RTSP/1.0
+CSeq: 1
+User-Agent: Enseo HD-1000
+Transport: MP2T/DVBC/QAM;unicast
+Tianshan-Version: 1.0
+TianShan-ServiceGroup: 102
+TianShan-AppData: smartcard-id=1370495919;device-id=1370495919;home-id=35355793;purchase-id=7204763;
+
+
+RTSP/1.0 200 OK
+CSeq: 1
+Method-Code: SETUP
+Server: TianShan Component RtspProxy Service 1.16; ssm_tianshan_s1 1.16
+Session: 781034304
+TianShan-ClientTimeout: 1200
+TianShan-NoticeParam: primaryItemNPT=17.000;primaryEndNPT=3028.000;
+TianShan-Transport: MP2T/DVBC/QAM;program-number=12;frequency=810000000;qam-mode=64;symbol-rate=6875000
+Transport: MP2T/DVBC/QAM;unicast;
+Date: 08 Dec 2015 05:52:27.221 GMT
+
+
+PLAY rtsp://172.16.88.5:554/60010001?asset=10048#GTIT0120151203200219&folderId=GCNN7137 RTSP/1.0
+CSeq: 2
+Session: 781034304
+User-Agent: Enseo HD-1000
+Range: npt=0-
+Scale: 1.0
+
+
+RTSP/1.0 200 OK
+CSeq: 2
+Method-Code: PLAY
+Range: npt=0.000-2793.032
+Scale: 1.000000
+Server: TianShan Component RtspProxy Service 1.16; ssm_tianshan_s1 1.16
+Session: 781034304
+Date: 08 Dec 2015 05:52:27.643 GMT
+
+
+ANNOUNCE rtsp://172.16.88.5:554/60010001?asset=10048#GTIT0120151203200219&folderId=GCNN7137 RTSP/1.0
+CSeq: 1
+Server: TianShan Component RtspProxy Service 1.16; ssm_tianshan_s1 1.16
+Session: 781034304
+TianShan-Notice: 0001::0003 State Changed
+TianShan-NoticeParam: npt=0.000;presentation_state=play;primaryItemNPT=17.000
+Date: 08 Dec 2015 05:52:27.768 GMT
+
+
+PAUSE rtsp://172.16.88.5:554/60010001?asset=10048#GTIT0120151203200219&folderId=GCNN7137 RTSP/1.0
+CSeq: 3
+Session: 781034304
+User-Agent: Enseo HD-1000
+
+
+RTSP/1.0 200 OK
+CSeq: 3..Method-Code: PAUSE
+Range: npt=138.059-2776.032
+Server: TianShan Component RtspProxy Service 1.16; ssm_tianshan_s1 1.16
+Session: 781034304
+Date: 08 Dec 2015 05:55:03.388 GMT
+
+
+ANNOUNCE rtsp://172.16.88.5:554/60010001?asset=10048#GTIT0120151203200219&folderId=GCNN7137 RTSP/1.0
+CSeq: 2
+Server: TianShan Component RtspProxy Service 1.16; ssm_tianshan_s1 1.16
+Session: 781034304
+TianShan-Notice: 0001::0003 State Changed
+TianShan-NoticeParam: npt=138.059;presentation_state=pause;primaryItemNPT=17.000
+Date: 08 Dec 2015 05:55:03.560 GMT
+
+
+TEARDOWN rtsp://172.16.88.5:554/60010001?asset=10048#GTIT0120151203200219&folderId=GCNN7137 RTSP/1.0
+CSeq: 6
+Session: 781034304
+
+
+RTSP/1.0 200 OK
+CSeq: 6
+Method-Code: TEARDOWN
+Server: TianShan Component RtspProxy Service 1.16; ssm_tianshan_s1 1.16
+Session: 781034304
+Date: 08 Dec 2015 05:56:52.843 GMT
+
+
+-------------------------------------------------------------------------------------------------------------------
+时移：
+SETUP rtsp://172.16.88.6:554/60010012?asset=Gehua.com#GEHU1291512081300000 RTSP/1.0
+CSeq: 1
+User-Agent: Enseo HD-1000
+Transport: MP2T/DVBC/QAM;unicast
+Tianshan-Version: 1.0
+TianShan-ServiceGroup: 102
+TianShan-AppData: smartcard-id=1370495919;device-id=1370495919;home-id=35355793;
+
+
+RTSP/1.0 200 OK
+CSeq: 1
+Method-Code: SETUP
+Server: TianShan Component RtspProxy Service 1.16; ssm_tianshan_s1 1.16
+Session: 765206833
+TianShan-ClientTimeout: 1200
+TianShan-Transport: MP2T/DVBC/QAM;program-number=12;frequency=818000000;qam-mode=64;symbol-rate=6875000
+Transport: MP2T/DVBC/QAM;unicast;
+Date: 08 Dec 2015 05:44:57.293 GMT
+
+
+PLAY rtsp://172.16.88.6:554/60010012?asset=Gehua.com#GEHU1291512081300000 RTSP/1.0
+CSeq: 2
+Session: 765206833
+User-Agent: Enseo HD-1000
+Range: npt=2693-
+Scale: 1.0
+
+
+RTSP/1.0 200 OK
+CSeq: 2
+Method-Code: PLAY
+Range: npt=2691.466-
+Scale: 1.000000
+Server: TianShan Component RtspProxy Service 1.16; ssm_tianshan_s1 1.16
+Session: 765206833
+Date: 08 Dec 2015 05:44:58.496 GMT
+
+
+ANNOUNCE rtsp://172.16.88.6:554/60010012?asset=Gehua.com#GEHU1291512081300000 RTSP/1.0
+CSeq: 1
+Server: TianShan Component RtspProxy Service 1.16; ssm_tianshan_s1 1.16
+Session: 765206833
+TianShan-Notice: 0001::0003 State Changed
+TianShan-NoticeParam: npt=2691.466;presentation_state=play
+Date: 08 Dec 2015 05:44:58.668 GMT
+
+
+PAUSE rtsp://172.16.88.6:554/60010012?asset=Gehua.com#GEHU1291512081300000 RTSP/1.0
+CSeq: 3
+Session: 765206833
+User-Agent: Enseo HD-1000
+
+
+RTSP/1.0 200 OK
+CSeq: 3
+Method-Code: PAUSE
+Range: npt=2695.121-
+Server: TianShan Component RtspProxy Service 1.16; ssm_tianshan_s1 1.16
+Session: 765206833
+Date: 08 Dec 2015 05:45:02.028 GMT
+
+
+ANNOUNCE rtsp://172.16.88.6:554/60010012?asset=Gehua.com#GEHU1291512081300000 RTSP/1.0
+CSeq: 2
+Server: TianShan Component RtspProxy Service 1.16; ssm_tianshan_s1 1.16
+Session: 765206833
+TianShan-Notice: 0001::0003 State Changed
+TianShan-NoticeParam: npt=2695.121;presentation_state=pause
+Date: 08 Dec 2015 05:45:02.199 GMT
+
+
+PLAY rtsp://172.16.88.6:554/60010012?asset=Gehua.com#GEHU1291512081300000 RTSP/1.0
+CSeq: 5
+Session: 765206833
+User-Agent: Enseo HD-1000
+Scale: -7.0
+
+
+RTSP/1.0 200 OK
+CSeq: 5
+Method-Code: PLAY
+Range: npt=2670.087-
+Scale: -12.000000
+Server: TianShan Component RtspProxy Service 1.16; ssm_tianshan_s1 1.16
+Session: 765206833
+Date: 08 Dec 2015 05:45:03.324 GMT
+
+
+ANNOUNCE rtsp://172.16.88.6:554/60010012?asset=Gehua.com#GEHU1291512081300000 RTSP/1.0
+CSeq: 4
+Server: TianShan Component RtspProxy Service 1.16; ssm_tianshan_s1 1.16
+Session: 765206833
+TianShan-Notice: 0001::0004 Scale Changed
+TianShan-NoticeParam: npt=2670.087;Scale=-12.000000
+Date: 08 Dec 2015 05:45:03.496 GMT
+
+
+GET_PARAMETER rtsp://172.16.88.6:554/60010012?asset=Gehua.com#GEHU1291512081300000 RTSP/1.0
+CSeq: 6
+Session: 765206833
+Content-Type: text/parameter
+Content-Length: 33
+
+presentation_state Position Scale
+
+
+RTSP/1.0 200 OK
+CSeq: 6
+Method-Code: GET_PARAMETER
+Server: TianShan Component RtspProxy Service 1.16; ssm_tianshan_s1 1.16
+Session: 765206833
+Date: 08 Dec 2015 05:45:03.653 GMT
+Content-Length: 59
+
+Position: 2670.087-
+Scale: -12
+presentation_state: play
+
+
+TEARDOWN rtsp://172.16.88.6:554/60010012?asset=Gehua.com#GEHU1291512081300000 RTSP/1.0
+CSeq: 13
+Session: 765206833
+
+
+RTSP/1.0 200 OK
+CSeq: 13
+Method-Code: TEARDOWN
+Server: TianShan Component RtspProxy Service 1.16; ssm_tianshan_s1 1.16
+Session: 765206833
+Date: 08 Dec 2015 05:51:40.373 GMT
+
+
+------------------------------------------------------------------------------------------------------------------
+回看：
+SETUP rtsp://172.16.88.6:554/60010011?asset=Gehua.com#GEHU8271512061037350 RTSP/1.0
+CSeq: 1
+User-Agent: Enseo HD-1000
+Transport: MP2T/DVBC/QAM;unicast
+Tianshan-Version: 1.0
+TianShan-ServiceGroup: 783
+TianShan-AppData: smartcard-id=1372579696;device-id=1372579696;home-id=30246119;
+
+
+RTSP/1.0 200 OK
+CSeq: 1
+Method-Code: SETUP
+Server: TianShan Component RtspProxy Service 1.16; ssm_tianshan_s1 1.16
+Session: 739189611
+TianShan-ClientTimeout: 1200..TianShan-NoticeParam: primaryItemNPT=17.000;primaryEndNPT=597.000;
+TianShan-Transport: MP2T/DVBC/QAM;program-number=249;frequency=842000000;qam-mode=64;symbol-rate=6875000
+Transport: MP2T/DVBC/QAM;unicast;
+Date: 08 Dec 2015 05:32:30.777 GMT
+
+
+PLAY rtsp://172.16.88.6:554/60010011?asset=Gehua.com#GEHU8271512061037350 RTSP/1.0
+CSeq: 2
+Session: 739189611
+User-Agent: Enseo HD-1000
+Range: npt=0-
+Scale: 1.0
+
+
+RTSP/1.0 200 OK
+CSeq: 2
+Method-Code: PLAY
+Range: npt=0.001-597.000
+Scale: 1.000000
+Server: TianShan Component RtspProxy Service 1.16; ssm_tianshan_s1 1.16
+Session: 739189611
+Date: 08 Dec 2015 05:32:30.871 GMT
+
+
+ANNOUNCE rtsp://172.16.88.6:554/60010011?asset=Gehua.com#GEHU8271512061037350 RTSP/1.0
+CSeq: 1
+Server: TianShan Component RtspProxy Service 1.16; ssm_tianshan_s1 1.16
+Session: 739189611
+TianShan-Notice: 0001::0003 State Changed
+TianShan-NoticeParam: npt=0.001;presentation_state=play;primaryItemNPT=17.000
+Date: 08 Dec 2015 05:32:31.027 GMT
+
+
+PLAY rtsp://172.16.88.6:554/60010011?asset=Gehua.com#GEHU8271512061037350 RTSP/1.0
+CSeq: 3
+Session: 739189611
+User-Agent: Enseo HD-1000
+Scale: 7.0
+
+
+RTSP/1.0 200 OK
+CSeq: 3
+Method-Code: PLAY
+Range: npt=2.436-580.000
+Scale: 12.000000
+Server: TianShan Component RtspProxy Service 1.16; ssm_tianshan_s1 1.16
+Session: 739189611
+Date: 08 Dec 2015 05:32:50.090 GMT
+
+
+ANNOUNCE rtsp://172.16.88.6:554/60010011?asset=Gehua.com#GEHU8271512061037350 RTSP/1.0
+CSeq: 2
+Server: TianShan Component RtspProxy Service 1.16; ssm_tianshan_s1 1.16
+Session: 739189611
+TianShan-Notice: 0001::0004 Scale Changed
+TianShan-NoticeParam: npt=0.000;Scale=12.000000;primaryItemNPT=17.000
+Date: 08 Dec 2015 05:32:50.308 GMT
+
+
+GET_PARAMETER rtsp://172.16.88.6:554/60010011?asset=Gehua.com#GEHU8271512061037350 RTSP/1.0
+CSeq: 5
+Session: 739189611
+Content-Type: text/parameter
+Content-Length: 33
+
+presentation_state Position Scale
+
+
+RTSP/1.0 200 OK
+CSeq: 5
+Method-Code: GET_PARAMETER
+Server: TianShan Component RtspProxy Service 1.16; ssm_tianshan_s1 1.16
+Session: 739189611
+Date: 08 Dec 2015 05:37:52.808 GMT
+Content-Length: 56
+
+Position: 332.870-
+Scale: 1
+presentation_state: play
+
+
+TEARDOWN rtsp://172.16.88.6:554/60010011?asset=Gehua.com#GEHU8271512061037350 RTSP/1.0
+CSeq: 8
+Session: 739189611
+
+
+RTSP/1.0 200 OK
+CSeq: 8
+Method-Code: TEARDOWN
+Server: TianShan Component RtspProxy Service 1.16; ssm_tianshan_s1 1.16
+Session: 739189611
+Date: 08 Dec 2015 05:42:05.807 GMT

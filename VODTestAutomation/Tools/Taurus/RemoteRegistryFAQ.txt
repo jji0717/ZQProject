@@ -1,0 +1,82 @@
+Remote Registry FAQ
+
+
+Registry Export
+	Exports a key (and any sub keys) along with values
+USAGE:
+	RemoteRegistry $0 $1 $2 $3
+	$0 = "-RE"
+	$1 = IP Address of Target Machine
+	$2 = Path to Registry Key
+	$3 = Location of where the Registry backup should be created
+Example Output:
+	D:\PerlTools\RemoteRegistry>remoteregistry -RE 192.168.23.185 SOFTWARE\ActiveState D:\test.reg
+	connected to 192.168.23.185
+	Exported a reg file...Connection Closed
+
+
+Registry Import
+	Import a key (and any sub keys) along with values
+USAGE:
+	RemoteRegistry $0 $1 $2
+	$0 = "-RI"
+	$1 = IP Address of Target Machine
+	$2 = Location of where the Registry file to be imported is
+Example Output:
+	D:\PerlTools\RemoteRegistry>remoteregistry -RI 192.168.23.185 D:\test.reg
+	connected to 192.168.23.185
+	Importing a reg file...Connection Closed
+
+Delete Key
+	Deletes a key (and any sub keys) along with values
+USAGE:
+	RemoteRegistry $0 $1 $2
+	$0 = "-DK"
+	$1 = IP Address of Target Machine
+	$2 = Path to Registry Key to delete
+Example Output:
+	D:\PerlTools\RemoteRegistry>remoteregistry -DK 192.168.23.185 SOFTWARE\Jeff
+	TRUE
+
+
+Create Key
+	Creates a Registry Key
+USAGE:
+	RemoteRegistry $0 $1 $2 $3
+	$0 = "-DK"
+	$1 = IP Address of Target Machine
+	$2 = Path to Where Registry key should be created
+	$3 = Registry Key Name
+Example Output:
+	D:\PerlTools\RemoteRegistry>remoteregistry -CK 192.168.23.185 SOFTWARE Jeff
+	TRUE
+
+
+Delete Value
+	Deletes a Registry Value
+USAGE:
+	RemoteRegistry $0 $1 $2 $3
+	$0 = "-DV"
+	$1 = IP Address of Target Machine
+	$2 = Path to Registry Key
+	$3 = Registry Value Name to delete
+Example Output:
+	D:\PerlTools\RemoteRegistry>remoteregistry -DV 192.168.23.185 SOFTWARE\Perl Test
+	TRUE
+
+
+Create Value
+	Creates a Registry Value
+USAGE:
+	RemoteRegistry $0 $1 $2 $3 $4 $5
+	$0 = "-DV"
+	$1 = IP Address of Target Machine
+	$2 = Path to Registry Key
+	$3 = Registry Value Name to Create
+	$4 = Registry Value Type to Create ("1"=REG_SZ, "2"=REG_DWORD, "3"=REG_EXPAND_SZ)
+	$5 = Registry value data
+Example Output:
+	D:\PerlTools\RemoteRegistry>remoteregistry -CV 192.168.23.185 SOFTWARE\Perl Test 1 Yo
+	TRUE
+
+

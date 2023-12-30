@@ -1,0 +1,89 @@
+
+(object Petal
+    version    	47
+    _written   	"Rose 8.0.0303.1400"
+    charSet    	134)
+
+(object SubSystem "stdole Ver 2.0 (OLE Automation)"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    attributes 	(list Attribute_Set
+	(object Attribute
+	    tool       	"sc"
+	    name       	"SourceControlSpec"
+	    value      	
+|"$/ZQProjs/MediaProcessFramework/doc/module", CYIAAAAA
+	    ))
+    quid       	"41C153A7034A"
+    physical_models 	(list unit_reference_list
+	(object module "stdole" "NotAModuleType" "NotAModulePart"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"library"
+		    value      	"stdole")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpstring"
+		    value      	"OLE Automation")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"00020430-0000-0000-C000-000000000046")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"2.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"lcid"
+		    value      	"0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"filename"
+		    value      	"C:\\WINDOWS\\System32\\stdole2.tlb")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153A7034B"
+	    stereotype 	"COM"
+	    realized_interfaces 	(list realize_rel_list
+		(object Realize_Relationship
+		    quid       	"41C153B501A5"
+		    supplier   	"Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::IUnknown"
+		    quidu      	"41C153B50188")
+		(object Realize_Relationship
+		    quid       	"41C153B501B9"
+		    supplier   	"Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::IDispatch"
+		    quidu      	"41C153B5019C")
+		(object Realize_Relationship
+		    quid       	"41C153B501CD"
+		    supplier   	"Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::IEnumVARIANT"
+		    quidu      	"41C153B501B0")
+		(object Realize_Relationship
+		    quid       	"41C153B503CD"
+		    supplier   	"Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::IFont"
+		    quidu      	"41C153B503B8")
+		(object Realize_Relationship
+		    quid       	"41C153B503E1"
+		    supplier   	"Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::Font"
+		    quidu      	"41C153B503CC")
+		(object Realize_Relationship
+		    quid       	"41C153B60035"
+		    supplier   	"Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::IPicture"
+		    quidu      	"41C153B60020")
+		(object Realize_Relationship
+		    quid       	"41C153B60049"
+		    supplier   	"Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::Picture"
+		    quidu      	"41C153B60034")
+		(object Realize_Relationship
+		    quid       	"41C153B600AC"
+		    supplier   	"Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::FontEvents"
+		    quidu      	"41C153B6008F"))
+	    language   	"COM"))
+    physical_presentations 	(list unit_reference_list))

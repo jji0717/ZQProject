@@ -1,0 +1,105 @@
+<ConfResponse State="1" Format="2">
+
+   <ListOfNode>
+
+      <DCAPortConfiguration QueueName="queue_DOD">
+
+         <Port>
+
+            <TELCOF PMTPID="201" GroupID="0" TotalRate="20">
+
+               <Channel>
+
+                  <Configuration Encrypted="1" StreamCount="0" StreamType="249" SendWithDestination="0" DataExchangeType="0" StreamID="101" Tag="CFG" ChannelRate="15" MessageCode="1523" DataType="16" ChannelType="0" QueueName="queue_STBCF"/>
+
+                  <Portal Encrypted="1" StreamCount="0" StreamType="246" SendWithDestination="0" DataExchangeType="2" StreamID="240" Tag="POR" ChannelRate="40" MessageCode="99" DataType="111" ChannelType="0" QueueName="d:\DODserver\navigation\portalILP"/>
+
+               </Channel>
+
+               <IPPort>
+
+                  <NSG SendType="1" IPAddress="10.30.4.100" IPPort="505"/>
+
+               </IPPort>
+
+            </TELCOF>
+
+            <TELMSG PMTPID="261" GroupID="4" TotalRate="60">
+
+               <Channel>
+
+                  <Message Encrypted="1" StreamCount="0" StreamType="248" SendWithDestination="1" DataExchangeType="1" StreamID="161" Tag="MSG" ChannelRate="20" MessageCode="1911" DataType="24" ChannelType="0" QueueName="queue_TICP"/>
+
+                  <TicketListMessage Encrypted="1" StreamCount="0" StreamType="247" SendWithDestination="1" DataExchangeType="1" StreamID="201" Tag="TMS" ChannelRate="20" MessageCode="1331" DataType="27" ChannelType="0" QueueName="queue_OTE"/>
+
+               </Channel>
+
+               <IPPort>
+
+                  <Multicast SendType="2" IPAddress="225.7.7.7" IPPort="1501"/>
+
+                  <NSG SendType="1" IPAddress="10.30.4.100" IPPort="508"/>
+
+                  <NSG2 SendType="1" IPAddress="10.30.4.100" IPPort="764"/>
+
+               </IPPort>
+
+            </TELMSG>
+
+            <TELNAV PMTPID="221" GroupID="0" TotalRate="210">
+
+               <Channel>
+
+                  <Navigation Encrypted="1" StreamCount="5" StreamType="144" SendWithDestination="0" DataExchangeType="2" StreamID="121" Tag="NAV" ChannelRate="200" MessageCode="1411" DataType="11" ChannelType="1" QueueName="d:\DODserver\navigation\ne"/>
+
+               </Channel>
+
+               <IPPort>
+
+                  <NSG SendType="1" IPAddress="10.30.4.100" IPPort="506"/>
+
+               </IPPort>
+
+            </TELNAV>
+
+            <TELPOS PMTPID="241" GroupID="0" TotalRate="510">
+
+               <Channel>
+
+                  <Poster Encrypted="0" StreamCount="5" StreamType="160" SendWithDestination="0" DataExchangeType="2" StreamID="141" Tag="POS" ChannelRate="500" MessageCode="0" DataType="141" ChannelType="1" QueueName="d:\DODserver\navigation\Poster"/>
+
+               </Channel>
+
+               <IPPort>
+
+                  <NSG SendType="1" IPAddress="10.30.4.100" IPPort="507"/>
+
+               </IPPort>
+
+            </TELPOS>
+
+            <TicketListFolder PMTPID="281" GroupID="0" TotalRate="60">
+
+               <Channel>
+
+                  <sharefolder Encrypted="2" StreamCount="0" StreamType="242" SendWithDestination="1" DataExchangeType="2" StreamID="167" Tag="TKL" ChannelRate="50" MessageCode="1331" DataType="17" ChannelType="0" QueueName="d:\DODserver\navigation\ticketlist"/>
+
+                  <transactionlist Encrypted="2" StreamCount="0" StreamType="241" SendWithDestination="1" DataExchangeType="2" StreamID="231" Tag="TST" ChannelRate="50" MessageCode="1111" DataType="23" ChannelType="0" QueueName="d:\DODServer\navigation\transactionlist"/>
+
+               </Channel>
+
+               <IPPort>
+
+                  <NSG SendType="1" IPAddress="10.30.4.100" IPPort="509"/>
+
+               </IPPort>
+
+            </TicketListFolder>
+
+         </Port>
+
+      </DCAPortConfiguration>
+
+   </ListOfNode>
+
+</ConfResponse>

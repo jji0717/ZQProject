@@ -1,0 +1,16 @@
+{
+	"log.dir": "." ,
+	"log.level": 6 ,
+	"log.size": 1048576 ,
+	"log.count": 10,
+	"client.flags": 15,
+	"cache.enable": 1,
+	"cache.block.size": 2097152 , 
+	"cache.block.count.read": 50 ,
+	"cache.block.count.write": 50 ,
+	"cache.block.count.readahead": 2 ,
+	"cache.block.ttl.read": 5000 ,
+	"cache.block.ttl.write":1000 ,
+	"cache.log.flags": 10,
+	"cache.threads.flush": 10
+}

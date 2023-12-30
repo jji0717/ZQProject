@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Notice: TianShanDef.xml has been preloaded when this configuration file is being parsed, please
+     refer to TianShanDef.xml for the common properties
+-->
+
+<TianShan>	
+	 <Definitions src="TianShanDef.xml">
+	 </Definitions>
+	<default>	
+		<!-- The EventChannel service where the services of this TianShan deployment will deliver events to.
+		     attributes:
+		       endpoint - the ICE endpoint to the EventChannel service
+		-->
+		<EventChannel endpoint="" />
+		
+					
+		<!--CrashDump can help devoloper diagnose the program when it crashed
+			if you set enable to "1" you must make sure that the path is accessible
+			path   - crashdump path
+			enabled - 1 to enable crashDump
+		 -->
+		<CrashDump path="${TianShanCrashDumpDir}" enabled="1"/>
+
+		<!-- The Ice trace log setting for all the services of this TianShan deployment.
+		     attributes:
+		       enabled       - 1 if the Ice trace is enabled, default "0"
+		       logfileSuffix - a suffix of the log filename, i.e. the service Weiwoo's main log file will
+		                       be "Weiwoo.log". With a suffix "_ice.log", the ICE trace will be in a
+		                       separate logfile "Weiwoo_ice.log" in the same directory
+		       level         - the log level of the ice trace log
+		       size          - the size that this trace log must roll
+		-->
+		
+		<IceTrace enabled="1" level="7" size="10240000" />
+
+		<!-- Additional Ice properties if there is any, <prop /> is its sub element
+		     attrib of <prop />:
+		        name         - the name of the Ice property
+		        value        - the value of the Ice property
+		-->
+		<IceProperties>
+			<!--  the following are performance tuning parameters, please don't modify if you are not an expert at them 
+			--> 
+			<prop name="Ice.Trace.Network"                    value="1" />
+			<prop name="Ice.Trace.Protocol"                   value="0" />
+			<prop name="Ice.Trace.Retry"                      value="1" />
+			<prop name="Ice.Warn.Connections"                 value="1" />
+			<prop name="Ice.Warn.Endpoints"                   value="1" />
+			<prop name="Ice.Logger.Timestamp"                 value="1" />
+			<prop name="Freeze.Warn.Deadlocks"                value="1" />
+			<prop name="Freeze.Trace.Map"                     value="0" />
+			<prop name="Freeze.Trace.DbEnv"                   value="2" />
+			<prop name="Freeze.Trace.Evictor"                 value="0" />
+			<prop name="Ice.Override.Timeout"                 value="20000"/>
+			<prop name="Ice.Override.ConnectTimeout"          value="2000"/>
+			<prop name="Ice.ThreadPool.Server.Size"           value="30"/>
+			<prop name="Ice.ThreadPool.Server.SizeMax"        value="60"/>
+			<prop name="Ice.ThreadPool.Client.Size"           value="10"/>
+			<prop name="Ice.ThreadPool.Client.SizeMax"        value="30"/>
+			<prop name="Freeze.Evictor.UseNonmutating"	  value="1"/>
+		</IceProperties>
+		
+		<!-- The default folder where the services of this TianShan deployment accesses their local
+		     databases if it is not defined by their individual configurations
+		     attributes:
+		       path          - path to the location of database directory, default "../data/"
+		       runtimePath   - path to keep the runtime data, default as the value of path
+		-->
+		<Database path="${TianShanDatabaseDir}" runtimePath="${TianShanDatabaseDir}\" />
+
+		<!-- Log files to publish thru SentryService
+		-->
+		<PublishedLogs>
+			<!-- Log file to publish thru SentryService
+		     	     attributes:
+		       		path    - full path of the log file
+		       		syntax  - the file defines the syntax of the events via the regular expressions
+			-->
+			<Log path="${TianShanLogDir}\Weiwoo.log" syntax="${TianShanHomeDir}\etc\syntax.xml" key="Weiwoo"/>
+        </PublishedLogs>				
+	</default>
+	
+	<!-- configurations of the Weiwoo service -->
+	<Weiwoo>
+		<!-- The local bind endpoint that the Weiwoo service is serving on
+		     attributes:
+		       endpoint      - the bind endpoint of this Weiwoo service
+		       dispatchSize  - the initial thread pool size to dispatch client requests, acceptable range [4, 40]
+		       dispatchMax   - the max thread pool size to dispatch client requests
+		-->
+		<Bind endpoint="tcp -h ${ServerNetIf} -p 10100" dispatchSize="20" dispatchMax="80"/>
+
+		<!-- The core processing thread pool
+		     attributes:
+		       size      - the size of the thread pool
+		-->
+		<ThreadPool size="200" maxPendingSize="160" />
+		
+		<!-- The pathSelection logic configuration to tune the application performance
+		and this configuration can affect the select logic
+			maxTickectCount: streamlink or storagelink selection limit
+			maxPenalty : if there is anything wrong when creating stream on a streammer , maxPenaltyValue will
+						 be added onto the streamer , and the streamer can't be evaluated until its penalty value is 0
+		-->
+		<PathSelection maxTicketCount="3" maxPenalty="10"/>
+		
+		<!-- 
+		-->
+		<PeformanceTune>
+			<!-- CheckpointPeriod :	Every Berkeley DB environment created by Freeze has an associated thread that
+									checkpoints this environment every num seconds. If num is less than 0, no checkpoint
+									is performed. The default is 120 seconds.
+				 DbRecoverFatal	:	If num is set to a value larger than zero, fatal recovery is performed when the environment
+									is opened. The default value is 0.
+			-->
+			<IceFreezeEnviroment 	CheckpointPeriod="240" DbRecoverFatal="1" />
+			
+			<!-- SavePeriod :		Freeze uses a background thread to save updates to the database. After num milliseconds
+									without saving, if any facet is created, modified, or destroyed, this background
+									thread wakes up to save these facets. When num is 0, there is no periodic
+									saving. The default is 60000.
+			SaveSizeTrigger		:	Freeze uses a background thread to save updates to the database. When num is 0
+									or positive, as soon as num or more facets have been created, modified, or
+									destroyed, this background thread wakes up to save them. When num is negative,
+									there is no size trigger. The default is 10.
+			-->
+			<session 				SavePeriod="240" SaveSizeTrigger="1000" />
+		</PeformanceTune>
+		
+		
+		<!-- client side to connect to BusinessRouter,so the endpoint should be siteAdminSvc's service 
+		     attributes:
+		       endpoint      - the endpoint to connect to the BusinessRouter, should equal to siteAdminSvc's
+		       mixedTeardownReason  - force to merge the teardown reasons with the reasons terminated by server-side if this is 1
+		-->
+		<BusinessRouter endpoint="BusinessRouter:${SiteAdminEndpoint}" mixedTeardownReason = "0" />
+
+		<!-- The database cache
+		     attributes:
+		       sessionSize  - the cache size of session records, acceptable range: [500, 5000]
+		-->
+		<DatabaseCache sessionSize="3000"/>
+
+	</Weiwoo>
+	
+	<!-- configurations for the PathManager service,it's a component embeded in weiwoo service	     
+	-->
+	<PathManager>
+		
+		<!-- The local bind endpoint that the PathManager is serving on
+		     attributes:
+		       endpoint      - the bind endpoint of this PathManager
+		       dispatchSize  - the initial thread pool size to dispatch client requests, acceptable range [4, 40]
+		       dispatchMax   - the max thread pool size to dispatch client requests
+		-->
+		<Bind endpoint="tcp -h ${ServerNetIf} -p 10300" dispatchSize="20" dispatchMax="30"/>
+
+		
+		<!-- The main logfile of this PathManager service
+		     attributes:
+		       level         - the log level of this main log
+		       size          - the size that this trace log must roll
+		       flushTimeout  - timeout in second that the logfile must flush
+		-->
+		<log level ="7" size="10240000" buffer="204800" flushTimeout="2"/>	
+		
+		<PeformanceTune>
+			<!-- CheckpointPeriod :	Every Berkeley DB environment created by Freeze has an associated thread that
+									checkpoints this environment every num seconds. If num is less than 0, no checkpoint
+									is performed. The default is 120 seconds.
+				 DbRecoverFatal	:	If num is set to a value larger than zero, fatal recovery is performed when the environment
+									is opened. The default value is 0.
+			-->
+			<IceFreezeEnviroment 	CheckpointPeriod="240" DbRecoverFatal="1" />
+			
+			<!-- SavePeriod :		Freeze uses a background thread to save updates to the database. After num milliseconds
+									without saving, if any facet is created, modified, or destroyed, this background
+									thread wakes up to save these facets. When num is 0, there is no periodic
+									saving. The default is 60000.
+			SaveSizeTrigger		:	Freeze uses a background thread to save updates to the database. When num is 0
+									or positive, as soon as num or more facets have been created, modified, or
+									destroyed, this background thread wakes up to save them. When num is negative,
+									there is no size trigger. The default is 10.
+			-->
+			<storagelink 				SavePeriod="240" SaveSizeTrigger="1000" />
+			<streamlink 				SavePeriod="240" SaveSizeTrigger="1000" />
+			<pathticket 				SavePeriod="240" SaveSizeTrigger="1000" />
+		</PeformanceTune>
+		
+		<!-- The database cache
+		     attributes:
+		       storagelinkSize  - the cache size of storage links, acceptable range: [100, 1000]
+		       streamlinkSize   - the cache size of stream links, acceptable range: [100, 2000]
+		       pathticketSize  - the cache size of tickets, acceptable range: [200, 3000]
+		-->
+		<DatabaseCache storagelinkSize="100" streamlinkSize="3000" pathticketSize="5000"/>
+		
+		<!-- 
+		ReplicaSubscriber : this is used to receive streamer replica's information
+		enable : 1 for enable ,0 for disable
+		updateInterval : the interval in milliseconds for streamer replica to update its information
+		-->
+		<ReplicaSubscriber enable="1" updateInterval="600000" />
+		
+	</PathManager>
+	<PHO>
+		<!-- pho's log attribute
+		-->
+		<log level = "7" size="10240000" buffer="204800" flushtimeout="2"/>
+	</PHO>
+</TianShan>

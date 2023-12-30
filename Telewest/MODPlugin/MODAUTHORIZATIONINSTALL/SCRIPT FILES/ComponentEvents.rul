@@ -1,0 +1,83 @@
+ #include "Auth.rul"
+ 
+ #define MOD1 "Movies On Demand"
+ #define MOD2 "Movies On Demand2"
+ NUMBER nMod1Status;
+ NUMBER nMod2Status;
+
+//---------------------------------------------------------------------------
+// The Installing event is sent just before the component 
+// ModAuth is installed.
+//---------------------------------------------------------------------------
+ 
+export prototype ModAuth_Installing();
+function ModAuth_Installing()
+begin        
+	nMod1Status = StopModService(MOD1);
+	nMod2Status = StopModService(MOD2);
+//	SprintfBox(INFORMATION, "", "nMod1Status: %d", nMod1Status);
+//  SprintfBox(INFORMATION, "", "nMod2Status: %d", nMod2Status);
+end;
+ 
+//---------------------------------------------------------------------------
+// The Installing event is sent after the component ModAuth
+// is installed.
+//---------------------------------------------------------------------------
+ 
+export prototype ModAuth_Installed();
+function ModAuth_Installed()     
+	STRING szKey, szName, szValue;
+	NUMBER nSize;
+begin                                
+	// set registry for "Movies On Demand"
+	SetModRegistry(MOD1, 1);   
+	
+	// set registry for "Movies On Demand2"
+	SetModRegistry(MOD2, 2);     
+
+	// restart "Movies On Demand" if necessary              
+	if(nMod1Status==1)then
+		StartModService(MOD1);
+	endif;
+
+	// restart "Movies On Demand2" if necessary
+	if(nMod2Status==1)then
+		StartModService(MOD2);
+	endif;
+
+end;
+//---------------------------------------------------------------------------
+// The UnInstalling event is sent just before the component 
+// ModAuth is uninstalled.
+//---------------------------------------------------------------------------
+ 
+export prototype ModAuth_UnInstalling();
+function ModAuth_UnInstalling()
+begin
+	nMod1Status = StopModService(MOD1);
+	nMod2Status = StopModService(MOD2);
+end;
+//---------------------------------------------------------------------------
+// The UnInstalling event is sent after the component ModAuth
+// is uninstalled.
+//---------------------------------------------------------------------------
+ 
+export prototype ModAuth_UnInstalled();
+function ModAuth_UnInstalled()
+STRING szKey, szValue;
+begin    
+	RemoveModRegistry(MOD1);
+	RemoveModRegistry(MOD2);
+	
+	// restart "Movies On Demand" if necessary
+
+	if(nMod1Status==1)then
+		StartModService(MOD1);
+	endif;
+
+	// restart "Movies On Demand2" if necessary
+	if(nMod2Status==1)then
+		StartModService(MOD2);
+	endif;
+
+end;

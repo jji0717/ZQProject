@@ -1,0 +1,114 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: PlaylistAS - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\Bernard\LOCALS~1\Temp\RSP188.bat" with contents
+[
+@echo off
+.\soapcpp2.exe -p SoapImpl ".\SoapInterface.h"
+]
+Creating command line "C:\DOCUME~1\Bernard\LOCALS~1\Temp\RSP188.bat"
+Creating command line "rc.exe /l 0x804 /fo"Release/PlaylistAS.res" /i "E:\WorkPath\Tech-Support\gsoap-win32-2.7" /i "E:\WorkPath\ZQProjs/build" /i "E:\WorkPath\Tech-Data\ITVSDK-v2.5.INTERNAL" /d "NDEBUG" "E:\WorkPath\ZQProjs\Telewest\PlaylistAS_gSoap\PlaylistAS.rc"" 
+Performing Custom Build Step on .\SoapInterface.h
+
+**  The gSOAP Stub and Skeleton Compiler for C and C++ 2.7.2
+**  Copyright (C) 2000-2005, Robert van Engelen, Genivia Inc.
+**  All Rights Reserved. This product is provided "as is", without any warranty.
+**  The gSOAP compiler is released under one of the following three licenses:
+**  GPL, the gSOAP public license, or the commercial license by Genivia Inc.
+
+Saving SoapImplStub.h
+Saving SoapImplH.h
+Saving SoapImplC.cpp
+Saving SoapImplClient.cpp
+Saving SoapImplServer.cpp
+Saving SoapImplClientLib.cpp
+Saving SoapImplServerLib.cpp
+Using ns2 service name: SoapWrap
+Using ns2 service style: document
+Using ns2 service encoding: literal
+Using ns2 service location: http://10.7.0.41:90/services/PlaylistSoapInterface
+Using ns2 schema namespace: http://service.playlist.izq.com
+Saving SoapImplSoapWrapProxy.h client proxy
+Saving SoapImplSoapWrapObject.h server object
+Saving SoapWrap.getPlaylistDetailInformation.req.xml sample SOAP/XML request
+Saving SoapWrap.getPlaylistDetailInformation.res.xml sample SOAP/XML response
+Saving SoapWrap.teardownPlaylist.req.xml sample SOAP/XML request
+Saving SoapWrap.teardownPlaylist.res.xml sample SOAP/XML response
+Saving SoapWrap.playPlaylist.req.xml sample SOAP/XML request
+Saving SoapWrap.playPlaylist.res.xml sample SOAP/XML response
+Saving SoapWrap.nsmap namespace mapping table
+Compliance warning: array 'ArrayOf_USCORExsd_USCOREstring' is not compliant with WS-I Basic Profile 1.0a, reason: SOAP encoded array
+
+Compilation successful 
+
+Creating temporary file "C:\DOCUME~1\Bernard\LOCALS~1\Temp\RSP189.tmp" with contents
+[
+/nologo /MD /W3 /GX /O2 /I "E:\WorkPath\ZQProjs\Common" /I "E:\WorkPath\Tech-Data\ITVSDK-v2.5.INTERNAL\include" /I "E:\WorkPath\Tech-Support\gsoap-win32-2.7" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_UNICODE" /D "UNICODE" /D "_AFXDLL" /FR"Release/" /Fo"Release/" /Fd"Release/" /FD /c 
+"E:\WorkPath\ZQProjs\Telewest\PlaylistAS_gSoap\PlaylistAppServ.cpp"
+"E:\WorkPath\ZQProjs\Telewest\PlaylistAS_gSoap\StreamData.cpp"
+"E:\WorkPath\ZQProjs\Telewest\PlaylistAS_gSoap\StreamSession.cpp"
+"E:\WorkPath\ZQProjs\Common\Log.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\Bernard\LOCALS~1\Temp\RSP189.tmp" 
+Creating temporary file "C:\DOCUME~1\Bernard\LOCALS~1\Temp\RSP18A.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes /pdb:"Release/PlaylistAS.pdb" /map:"Release/PlaylistAS.map" /machine:I386 /out:"Release/PlaylistAS.exe" /libpath:"E:\WorkPath\Tech-Data\ITVSDK-v2.5.INTERNAL\lib\debug" /libpath:"E:\WorkPath\Tech-Data\ITVSDK-v2.5.INTERNAL\lib\release" /libpath:"C:\Program Files\Common Files\MSSoap\Binaries" 
+.\Release\PlaylistAppServ.obj
+.\Release\PlaylistSoapProxy.obj
+.\Release\SoapImplC.obj
+.\Release\SoapImplClient.obj
+.\Release\StreamData.obj
+.\Release\StreamOpCtrl.obj
+.\Release\StreamSession.obj
+.\Release\BaseSchangeServiceApplication.obj
+.\Release\Exception.obj
+.\Release\Log.obj
+.\Release\SchangeServiceAppMain.obj
+.\Release\ScLog.obj
+.\Release\ScReporter.obj
+.\Release\PlaylistAS.res
+.\Release\stdsoap2.obj
+]
+Creating command line "link.exe @C:\DOCUME~1\Bernard\LOCALS~1\Temp\RSP18A.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+PlaylistAppServ.cpp
+StreamData.cpp
+StreamSession.cpp
+Log.cpp
+Generating Code...
+Linking...
+Creating temporary file "C:\DOCUME~1\Bernard\LOCALS~1\Temp\RSP18B.tmp" with contents
+[
+/nologo /o"Release/PlaylistAS.bsc" 
+.\Release\PlaylistAppServ.sbr
+.\Release\PlaylistSoapProxy.sbr
+.\Release\SoapImplC.sbr
+.\Release\SoapImplClient.sbr
+.\Release\StreamData.sbr
+.\Release\StreamOpCtrl.sbr
+.\Release\StreamSession.sbr
+.\Release\BaseSchangeServiceApplication.sbr
+.\Release\Exception.sbr
+.\Release\Log.sbr
+.\Release\SchangeServiceAppMain.sbr
+.\Release\ScLog.sbr
+.\Release\ScReporter.sbr
+.\Release\stdsoap2.sbr]
+Creating command line "bscmake.exe @C:\DOCUME~1\Bernard\LOCALS~1\Temp\RSP18B.tmp"
+Creating browse info file...
+<h3>Output Window</h3>
+
+
+
+<h3>Results</h3>
+PlaylistAS.exe - 0 error(s), 1 warning(s)
+</pre>
+</body>
+</html>

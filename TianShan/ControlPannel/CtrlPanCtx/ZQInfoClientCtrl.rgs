@@ -1,0 +1,39 @@
+HKCR
+{
+	ZQInfoClientControl.ZQInfoClientCtrl.1 = s 'ZQInfoClientCtrl Class'
+	{
+		CLSID = s '{D90C9F15-C266-4B36-81C6-29D624991162}'
+		'Insertable'
+	}
+	ZQInfoClientControl.ZQInfoClientCtrl = s 'ZQInfoClientCtrl Class'
+	{
+		CLSID = s '{D90C9F15-C266-4B36-81C6-29D624991162}'
+		CurVer = s 'ZQInfoClientControl.ZQInfoClientCtrl.1'
+	}
+
+
+
+
+	NoRemove CLSID
+	{
+		ForceRemove {D90C9F15-C266-4B36-81C6-29D624991162} = s 'ZQInfoClientCtrl Class'
+		{
+			ProgID = s 'ZQInfoClientControl.ZQInfoClientCtrl.1'
+			VersionIndependentProgID = s 'ZQInfoClientControl.ZQInfoClientCtrl'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			ForceRemove 'Control'
+			ForceRemove 'Insertable'
+			ForceRemove 'ToolboxBitmap32' = s '%MODULE%, 101'
+			'MiscStatus' = s '0'
+			{
+			    '1' = s '131473'
+			}
+			'TypeLib' = s '{765804A9-A268-450A-8676-1BC63F3A52F0}'
+			'Version' = s '1.0'
+		}
+	}
+}

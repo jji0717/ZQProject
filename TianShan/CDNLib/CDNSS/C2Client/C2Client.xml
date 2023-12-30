@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<C2Client client="100" file="1" loop="10" interval="100" eventloop="4">
+    <LogFile dir="/opt/TianShan/logs" size="50000000" level="7" maxCount="10" bufferSize="8192" />
+
+    <Statistic printInterval="1000" />
+    <!-- Params of C2Client
+        UpStreamIP        - IP of nic to bind on
+        url               - type of cdnss
+        httpCRGAddr       - address of HttpCRG
+        httpCRGPort       - port of HttpCRG
+        defaultGetPort    - default port of get request 
+
+        clientTransfer    - this element is used to inform the CDN that the client architecture uses different addresses for content locate and content transfer requests. If no Client Transfer element is included in a request, then the CDN will use the source address of the IP packet
+        transferRate      - requested rate of transfer in bits per second.  May be 0, which indicates best-effort.
+        ingressCapacity   - hidden parameter, aggregate capacity guaranteed by the client for all content transfer requests from its content transfer address, default to "16512000000"
+        exclusionList     - hidden parameter, this element is used to inform the CDN of Transfer Ports that are unacceptable to the client for content transfer resulting from the current content locate request, default to ""
+        transferDelay     - hidden parameter, transfer delay in milliseconds from the transfer request time to the time the first byte should be sent to the client.  default to "-2000"
+
+        indexTimeout      - maximum waiting time for index file when send request, 5s by default
+        indexRetry        - maximum retry times when get index file
+        mainfileTimeout   - maximum waiting time for main file when send request, 15s by default
+        mainfileRetry     - maximum retry times when get main file
+    -->
+    <RequestParams UpStreamIP="192.168.81.107" url="/cacheserver" clientTransfer="192.168.81.107" httpCRGAddr="172.16.20.190" httpCRGPort="10080" defaultGetPort="12000" transferRate="3750000" range="0-" indexTimeout="1000" indexRetry="2" mainfileTimeout="3000" mainfileRetry="2" enableTransferDelete="0" />
+    <Files>
+        <Item name="8005ABCD302131112172sctv.com.0X0000" />
+        <!-- <Item name="8006ABCD302131112172sctv.com.0X0000" /> -->
+        <!-- <Item name="8007ABCD302131112172sctv.com.0X0000" /> -->
+    </Files>
+</C2Client>

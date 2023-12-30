@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<servicemapping name='PlaylistSoapInterfaceService'>
+  <service name='PlaylistSoapInterfaceService'>
+    <using PROGID='PlaylistSoapUDTMapper.PlaylistModelMap' cachable='0' ID='PlaylistModelMap' />
+    <types>
+      <type name='SimplePlaylistModel' targetNamespace='http://model.playlist.izq.com' uses='PlaylistModelMap'/>
+    </types>
+  </service>
+</servicemapping>
+ 

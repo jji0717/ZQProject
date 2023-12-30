@@ -1,0 +1,19 @@
+<Syntax>
+	<!-- type is the log file type that this syntax to match ,value is "filelog" or "sclog" -->	
+	<EventSource type="sclog">
+	    <!--Event is the basic info of every event .contain event name,event category,event id,stampUTc(the timestam of event that is the match result substring use syntax),SourceNetId(the network id where the event is fired. hostname is recommended if no network id),
+	    enabled(is or not use this event set ,value "1" is use,"0" is not) -->
+	 
+	    <Event name="UserInitiatedShutdown" category="RTSPProxy" eventId="0011" stampUTC="$1" sourceNetId="${SourceNetId}" enabled="1">
+	       <Syntax value="([\d]{2}/[\d]{2} [\d]{2}:[\d]{2}:[\d]{2}.[\d]{3}).*Requested to stop the service.*" />
+			<!-- User Initiated shutdown -->
+			<Param name="#syslog.msg"    value="&lt;GeneralEvent type=&quot;Shutdown&quot; msgSeq=&quot;${SEQ}&quot; reason=&quot;200&quot;/&gt;"/>
+	    </Event>
+
+	    <Event name="SystemShutdown" category="RTSPProxy" eventId="0012" stampUTC="$1" sourceNetId="${SourceNetId}" enabled="1">
+	       <Syntax value="([\d]{2}/[\d]{2} [\d]{2}:[\d]{2}:[\d]{2}.[\d]{3}).*System is shutting down...*" />
+			<!-- System shutdown -->
+			<Param name="#syslog.msg"    value="&lt;GeneralEvent type=&quot;Shutdown&quot; msgSeq=&quot;${SEQ}&quot; reason=&quot;201&quot;/&gt;"/>
+	    </Event>
+	</EventSource>
+</Syntax>

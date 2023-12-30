@@ -1,0 +1,296 @@
+<TianShan>
+
+	<!-- SNMP extension agent -->
+	<SNMP loggingMask="6" logPath="/opt/TianShan/logs" SnmpAgentPendTimeOut="500">
+		<CPESvc oid="700" />
+		<CDNCS oid="2000" />
+		<RtspProxy oid="1000" />
+		<Sentry oid="1100" />
+		<CDNSS oid="2100" />
+		<C2FE oid="2500"/>
+		<StreamSegmenter oid="2400"/>
+		<EventChannel oid="1300" />
+		<EventGateway oid="1200" />
+		<HttpCRG oid="2200" />
+		<EventRuleEngine oid="2500" />
+		<ContentLib oid="2400" />
+		<Weiwoo oid="200" />
+		<SiteAdmin oid="300" />
+		<MODSvc oid="900" />
+		<xmlshd oid="2500" />
+		<EdgeRM oid="2300" />
+		<NSS oid="1400" />
+		<TSPump oid="2600" />
+		<DsmccCRG oid="2700" />
+		<GBMODApp oid="2800" />
+		<GBVSS oid="2900" />
+		<GBCS oid="3100" />
+		<MediaClusterCS oid="1500" />
+		<BcastChannel oid="1900" />
+		<DummySvc oid="3200" />
+		<C2SS oid="3300" />
+		<EdgeFE oid="3400" />
+	</SNMP>
+
+	<CDNSS>
+		<log path="/opt/TianShan/logs" snmpLoggingMask="6" size="40000000" count="10" level="6" bufferSize="2048" timeout="10" />
+		<config path="/opt/TianShan/etc" />
+	</CDNSS>
+	<CDNSS_Shell>
+		<log loggingMask="1" snmpLoggingMask="6" path="/opt/TianShan/logs" size="500000" level="6" />
+		<service restartInterval="120" restartTries="3" aliveTimeout="900" appAliveWait="25" imagePath="/opt/TianShan/bin/CDNSS" />
+	</CDNSS_Shell>
+
+	<StreamSegmenter>
+		<log path="/opt/TianShan/logs" snmpLoggingMask="6" size="40000000" count="10" level="6" bufferSize="2048" timeout="10" />
+		<config path="/opt/TianShan/etc" />
+	</StreamSegmenter>
+	<StreamSegmenter_Shell>
+		<log loggingMask="1" snmpLoggingMask="6" path="/opt/TianShan/logs" size="500000" level="6" />
+		<service restartInterval="120" restartTries="3" aliveTimeout="900" appAliveWait="25" imagePath="/opt/TianShan/bin/StreamSegmenter" />
+	</StreamSegmenter_Shell>
+	
+	<C2FE>
+		<log path="/opt/TianShan/logs" snmpLoggingMask="6" size="40000000" count="10" level="6" bufferSize="2048" timeout="10" />
+		<config path="/opt/TianShan/etc" />
+	</C2FE>
+	<C2FE_Shell>
+		<log loggingMask="1" snmpLoggingMask="6" path="/opt/TianShan/logs" size="500000" level="6" />
+		<service restartInterval="120" restartTries="3" aliveTimeout="900" appAliveWait="25" imagePath="/opt/TianShan/bin/C2FE" />
+	</C2FE_Shell>
+	
+	<Sentry>
+		<log path="/opt/TianShan/logs" snmpLoggingMask="6" size="40000000" count="5" level="6" bufferSize="2048" timeout="10" />
+		<config path="/opt/TianShan/etc" />
+		<server AdapterCollectorPort="11999" />
+	</Sentry>
+	<Sentry_Shell>
+		<log loggingMask="1" snmpLoggingMask="6" path="/opt/TianShan/logs" size="500000" level="6" />
+		<service restartInterval="120" restartTries="3" aliveTimeout="90" appAliveWait="25" imagePath="/opt/TianShan/bin/Sentry" />
+	</Sentry_Shell>
+
+	<CPESvc>
+		<log path="/opt/TianShan/logs" snmpLoggingMask="6" size="40000000" count="10" level="6" bufferSize="2048" timeout="10" />
+		<config path="/opt/TianShan/etc" />
+	</CPESvc>
+	<CPESvc_Shell>
+		<log loggingMask="1" snmpLoggingMask="6" path="/opt/TianShan/logs" size="500000" level="6" />
+		<!--
+			restartInterval: max interval allowed for restart retries (SystemShell)
+			restartTries:    how many restarts allowed within restartInterval (SystemShell) 
+			aliveTimeout:    shutdown child when timed out (SystemShell)
+			appAliveWait:    heartbeat interval from ServiceShell (ServiceShell)
+			imagePath:       path to the service executable (SystemShell)
+		-->
+		<service restartInterval="120" restartTries="3" aliveTimeout="90" appAliveWait="25" imagePath="/opt/TianShan/bin/CPESvc" />
+	</CPESvc_Shell>
+
+	<RtspProxy>
+		<log path="/opt/TianShan/logs" snmpLoggingMask="6" size="40000000" count="10" level="6" bufferSize="2048" timeout="10" />
+		<config path="/opt/TianShan/etc" />
+	</RtspProxy>
+	<RtspProxy_Shell>
+		<log loggingMask="1" snmpLoggingMask="6" path="/opt/TianShan/logs" size="500000" level="6" />
+		<service restartInterval="100" restartTries="4" aliveTimeout="30" appAliveWait="25" imagePath="/opt/TianShan/bin/RtspProxy" />
+	</RtspProxy_Shell>
+
+	<EventGateway>
+		<log path="/opt/TianShan/logs" snmpLoggingMask="6" size="40000000" count="5" level="6" />
+		<config path="/opt/TianShan/etc" />	
+	</EventGateway>
+	<EventGateway_Shell>
+		<log loggingMask="1" snmpLoggingMask="6" path="/opt/TianShan/logs" size="500000" level="6" />
+		<service restartInterval="120" restartTries="3" aliveTimeout="90" appAliveWait="25" imagePath="/opt/TianShan/bin/EventGateway" />
+	</EventGateway_Shell>
+
+	<EventChannel>
+		<log path="/opt/TianShan/logs" snmpLoggingMask="6" size="40000000" count="5" level="6" bufferSize="2048" timeout="10" />
+		<config path="/opt/TianShan/etc" />
+	</EventChannel>
+	<EventChannel_Shell>
+		<log loggingMask="1" snmpLoggingMask="6" path="/opt/TianShan/logs" size="500000" level="6" />
+		<service restartInterval="120" restartTries="3" aliveTimeout="90" appAliveWait="25" imagePath="/opt/TianShan/bin/EventChannel" />
+	</EventChannel_Shell>
+
+	<HttpCRG>
+		<log path="/opt/TianShan/logs" snmpLoggingMask="6" size="40000000" count="10" level="6" bufferSize="2048" timeout="10" />
+		<config path="/opt/TianShan/etc" />
+		<server AdapterCollectorPort="11999" />
+	</HttpCRG>
+	<HttpCRG_Shell>
+		<log loggingMask="1" snmpLoggingMask="6" path="/opt/TianShan/logs" size="500000" level="6" />
+		<service restartInterval="120" restartTries="3" aliveTimeout="90" appAliveWait="25" imagePath="/opt/TianShan/bin/HttpCRG" />
+	</HttpCRG_Shell>
+
+	<CDNCS>
+		<log path="/opt/TianShan/logs" snmpLoggingMask="6" size="40000000" count="10" level="6" bufferSize="2048" timeout="10" />
+		<config path="/opt/TianShan/etc" />
+	</CDNCS>
+	<CDNCS_Shell>
+		<log loggingMask="1" snmpLoggingMask="6" path="/opt/TianShan/logs" size="500000" level="6" />
+		<service restartInterval="120" restartTries="3" aliveTimeout="900" appAliveWait="25" imagePath="/opt/TianShan/bin/CDNCS" />
+	</CDNCS_Shell>
+
+	<EventRuleEngine>
+		<log path="/opt/TianShan/logs" snmpLoggingMask="6" size="40000000" count="5" level="6" bufferSize="2048" timeout="10" />
+		<config path="/opt/TianShan/etc" />
+	</EventRuleEngine>
+	<EventRuleEngine_Shell>
+		<log loggingMask="1" snmpLoggingMask="6" path="/opt/TianShan/logs" size="500000" level="6" />
+		<service restartInterval="120" restartTries="3" aliveTimeout="900" appAliveWait="25" imagePath="/opt/TianShan/bin/EventRuleEngine" />
+	</EventRuleEngine_Shell>
+
+	<ContentLib>
+		<log path="/opt/TianShan/logs" snmpLoggingMask="6" size="40000000" count="5" level="6" bufferSize="2048" timeout="10" />
+		<config path="/opt/TianShan/etc" />
+	</ContentLib>
+	<ContentLib_Shell>
+		<log loggingMask="1" snmpLoggingMask="6" path="/opt/TianShan/logs" size="500000" level="6" />
+	<service restartInterval="120" restartTries="3" aliveTimeout="900" appAliveWait="25" imagePath="/opt/TianShan/bin/ContentLib" />
+	</ContentLib_Shell>
+	
+	<Weiwoo>
+		<log path="/opt/TianShan/logs" snmpLoggingMask="6" size="40000000" count="10" level="6" bufferSize="2048" timeout="10"/>
+		<config path="/opt/TianShan/etc"/>
+	</Weiwoo>
+	<Weiwoo_Shell>
+		<log loggingMask="1" snmpLoggingMask="6" path="/opt/TianShan/logs" size="500000" level="6" />
+		<service restartInterval="120" restartTries="3" aliveTimeout="900" appAliveWait="25" imagePath="/opt/TianShan/bin/Weiwoo" />
+	</Weiwoo_Shell>
+	
+	<SiteAdmin>
+		<log path="/opt/TianShan/logs" snmpLoggingMask="6" size="40000000" count="10" level="6" bufferSize="2048" timeout="10"/>
+		<config path="/opt/TianShan/etc"/>
+	</SiteAdmin>
+	<SiteAdmin_Shell>
+		<log loggingMask="1" snmpLoggingMask="6" path="/opt/TianShan/logs" size="500000" level="6" />
+		<service restartInterval="120" restartTries="3" aliveTimeout="900" appAliveWait="25" imagePath="/opt/TianShan/bin/SiteAdmin" />
+	</SiteAdmin_Shell>
+	
+	<MODSvc>
+		<log path="/opt/TianShan/logs" snmpLoggingMask="6" size="40000000" count="10" level="6" bufferSize="2048" timeout="10"/>
+		<config path="/opt/TianShan/etc"/>
+	</MODSvc>
+	<MODSvc_Shell>
+		<log loggingMask="1" snmpLoggingMask="6" path="/opt/TianShan/logs" size="500000" level="6" />
+		<service restartInterval="120" restartTries="3" aliveTimeout="900" appAliveWait="25" imagePath="/opt/TianShan/bin/MODSvc" />
+	</MODSvc_Shell>
+	
+	<xmlshd>
+		<log path="/opt/TianShan/logs" snmpLoggingMask="6" size="40000000" count="5" level="6" bufferSize="2048" timeout="10" />
+		<config path="/opt/TianShan/etc" />
+	</xmlshd>
+	<xmlshd_Shell>
+		<log loggingMask="1" snmpLoggingMask="6" path="/opt/TianShan/logs" size="500000" level="6" />
+		<service restartInterval="120" restartTries="3" aliveTimeout="900" appAliveWait="25" imagePath="/opt/TianShan/bin/xmlshd" />
+	</xmlshd_Shell>
+	
+	<EdgeRM>
+		<log path="/opt/TianShan/logs" snmpLoggingMask="6" size="40000000" count="10" level="6" bufferSize="2048" timeout="10" />
+		<config path="/opt/TianShan/etc" />
+	</EdgeRM>
+	<EdgeRM_Shell>
+		<log loggingMask="1" snmpLoggingMask="6" path="/opt/TianShan/logs" size="500000" level="6" />
+		<service restartInterval="120" restartTries="3" aliveTimeout="900" appAliveWait="25" imagePath="/opt/TianShan/bin/EdgeRM" />
+	</EdgeRM_Shell>
+	
+	<NSS>
+		<log path="/opt/TianShan/logs" snmpLoggingMask="6" size="40000000" count="10" level="6" bufferSize="2048" timeout="10" />
+		<config path="/opt/TianShan/etc" />
+	</NSS>
+	<NSS_Shell>
+		<log loggingMask="1" snmpLoggingMask="6" path="/opt/TianShan/logs" size="500000" level="6" />
+		<service restartInterval="120" restartTries="3" aliveTimeout="900" appAliveWait="25" imagePath="/opt/TianShan/bin/NSS" />
+	</NSS_Shell>
+	
+	<TSPump>
+		<log path="/opt/TianShan/logs" snmpLoggingMask="6" size="40000000" count="5" level="6" bufferSize="2048" timeout="10" />
+		<config path="/opt/TianShan/etc" />
+	</TSPump>
+	<TSPump_Shell>
+		<log loggingMask="1" snmpLoggingMask="6" path="/opt/TianShan/logs" size="500000" level="6" />
+		<service restartInterval="120" restartTries="3" aliveTimeout="900" appAliveWait="25" imagePath="/opt/TianShan/bin/TSPump" />
+	</TSPump_Shell>
+	
+	<DsmccCRG>
+		<log path="/opt/TianShan/logs" snmpLoggingMask="6" size="40000000" count="10" level="6" bufferSize="2048" timeout="10" />
+		<config path="/opt/TianShan/etc" />
+	</DsmccCRG>
+	<DsmccCRG_Shell>
+		<log loggingMask="1" snmpLoggingMask="6" path="/opt/TianShan/logs" size="500000" level="6" />
+		<service restartInterval="120" restartTries="3" aliveTimeout="900" appAliveWait="25" imagePath="/opt/TianShan/bin/DsmccCRG" />
+	</DsmccCRG_Shell>
+	
+	<GBMODApp>
+		<log path="/opt/TianShan/logs" snmpLoggingMask="6" size="40000000" count="10" level="6" bufferSize="2048" timeout="10" />
+		<config path="/opt/TianShan/etc" />
+	</GBMODApp>
+	<GBMODApp_Shell>
+		<log loggingMask="1" snmpLoggingMask="6" path="/opt/TianShan/logs" size="500000" level="6" />
+		<service restartInterval="120" restartTries="3" aliveTimeout="900" appAliveWait="25" imagePath="/opt/TianShan/bin/GBMODApp" />
+	</GBMODApp_Shell>
+	
+	<GBVSS>
+		<log path="/opt/TianShan/logs" snmpLoggingMask="6" size="40000000" count="10" level="6" bufferSize="2048" timeout="10" />
+		<config path="/opt/TianShan/etc" />
+	</GBVSS>
+	<GBVSS_Shell>
+		<log loggingMask="1" snmpLoggingMask="6" path="/opt/TianShan/logs" size="500000" level="6" />
+		<service restartInterval="120" restartTries="3" aliveTimeout="900" appAliveWait="25" imagePath="/opt/TianShan/bin/GBVSS" />
+	</GBVSS_Shell>
+	
+	<GBCS>
+		<log path="/opt/TianShan/logs" snmpLoggingMask="6" size="40000000" count="10" level="6" bufferSize="2048" timeout="10" />
+		<config path="/opt/TianShan/etc" />
+	</GBCS>
+	<GBCS_Shell>
+		<log loggingMask="1" snmpLoggingMask="6" path="/opt/TianShan/logs" size="500000" level="6" />
+		<service restartInterval="120" restartTries="3" aliveTimeout="900" appAliveWait="25" imagePath="/opt/TianShan/bin/GBCS" />
+	</GBCS_Shell>
+	
+	<MediaClusterCS>
+		<log path="/opt/TianShan/logs" snmpLoggingMask="6" size="40000000" count="10" level="6" bufferSize="2048" timeout="10" />
+		<config path="/opt/TianShan/etc" />
+	</MediaClusterCS>
+	<MediaClusterCS_Shell>
+		<log loggingMask="1" snmpLoggingMask="6" path="/opt/TianShan/logs" size="500000" level="6" />
+		<service restartInterval="120" restartTries="3" aliveTimeout="900" appAliveWait="25" imagePath="/opt/TianShan/bin/MediaClusterCS" />
+	</MediaClusterCS_Shell>
+	
+	<C2SS>
+		<log path="/opt/TianShan/logs" snmpLoggingMask="6" size="40000000" count="10" level="6" bufferSize="2048" timeout="10" />
+		<config path="/opt/TianShan/etc" />
+	</C2SS>
+	<C2SS_Shell>
+		<log loggingMask="1" snmpLoggingMask="6" path="/opt/TianShan/logs" size="500000" level="6" />
+		<service restartInterval="120" restartTries="3" aliveTimeout="900" appAliveWait="25" imagePath="/opt/TianShan/bin/C2SS" />
+	</C2SS_Shell>
+	
+	<DummySvc>
+		<log path="/opt/TianShan/logs" snmpLoggingMask="6" size="40000000" count="10" level="6" bufferSize="2048" timeout="10" />
+		<config path="/opt/TianShan/etc" />
+	</DummySvc>
+	<DummySvc_Shell>
+		<log loggingMask="1" snmpLoggingMask="6" path="/opt/TianShan/logs" size="500000" level="6" />
+		<service restartInterval="120" restartTries="3" aliveTimeout="900" appAliveWait="25" imagePath="/opt/TianShan/bin/DummySvc" />
+	</DummySvc_Shell>
+	
+	<BcastChannel>
+		<log path="/opt/TianShan/logs" snmpLoggingMask="6" size="40000000" count="10" level="6" bufferSize="2048" timeout="10" />
+		<config path="/opt/TianShan/etc" />
+	</BcastChannel>
+	<BcastChannel_Shell>
+		<log loggingMask="1" snmpLoggingMask="6" path="/opt/TianShan/logs" size="500000" level="6" />
+		<service restartInterval="120" restartTries="3" aliveTimeout="900" appAliveWait="25" imagePath="/opt/TianShan/bin/BcastChannel" />
+	</BcastChannel_Shell>
+	
+	<EdgeFE>
+		<log path="/opt/TianShan/logs" snmpLoggingMask="6" size="40000000" count="10" level="6" bufferSize="2048" timeout="10" />
+		<config path="/opt/TianShan/etc" />
+	</EdgeFE>
+	<EdgeFE_Shell>
+		<log loggingMask="1" snmpLoggingMask="6" path="/opt/TianShan/logs" size="500000" level="6" />
+		<service restartInterval="120" restartTries="3" aliveTimeout="900" appAliveWait="25" imagePath="/opt/TianShan/bin/EdgeFE" />
+	</EdgeFE_Shell>
+
+</TianShan>

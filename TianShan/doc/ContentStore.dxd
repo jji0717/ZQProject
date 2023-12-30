@@ -1,0 +1,201 @@
+// ===========================================================================
+// Copyright (c) 2006 by
+// ZQ Interactive, Inc., Shanghai, PRC.,
+// All Rights Reserved.  Unpublished rights reserved under the copyright
+// laws of the United States.
+// 
+// The software contained  on  this media is proprietary to and embodies the
+// confidential technology of ZQ Interactive, Inc. Possession, use,
+// duplication or dissemination of the software and media is authorized only
+// pursuant to a valid written license from ZQ Interactive, Inc.
+// 
+// This software is furnished under a  license  and  may  be used and copied
+// only in accordance with the terms of  such license and with the inclusion
+// of the above copyright notice.  This software or any other copies thereof
+// may not be provided or otherwise made available to  any other person.  No
+// title to and ownership of the software is hereby transferred.
+//
+// The information in this software is subject to change without notice and
+// should not be construed as a commitment by ZQ Interactive, Inc.
+//
+// Ident : $Id: ContentStore.dxd $
+// Branch: $Name:  $
+// Author: Hui Shao
+// Desc  : 
+//
+// Revision History: 
+// ---------------------------------------------------------------------------
+// see section of "Revision History" in manpage
+// ===========================================================================
+/*!
+
+@page page_tscstore Content Stores
+
+@author  Hui Shao
+@date    2006-8-30
+@version 0.1
+
+@section sec_ssrevision Revision History
+$Log: /ZQProjs/TianShan/doc/ContentStore.dxd $
+  
+  1     10-11-12 16:05 Admin
+  Created.
+  
+  1     10-11-12 15:39 Admin
+  Created.
+  
+  3     09-04-08 12:07 Hui.shao
+  added page Content Events
+  
+  2     07-09-03 14:13 Mei.zhang
+  
+  1     07-08-23 18:19 Hui.shao
+
+@section sec_cscontents Contents
+- @subpage page_csoverview "Overview"
+- @subpage page_cscfg "Configuration"
+- @subpage page_csevt "Events"
+
+*/
+
+////////////////////////////////////////////////////////////////////////////////////////////
+/*!
+
+@page page_csoverview Overview
+@section sec_csintro Introduction
+
+@section sec_csarch Architectual Overview
+
+*/
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
+/*!
+
+@page page_csevt Content Events
+This section lists the major events that a ported ContentStore can provide
+
+@section sec_csevent Events and Delivery
+The events of ContentStore are collected by the Sentry service and the latter will publish the events to TianShan EventChannel,
+see Sentry Service for more details about the event collection and publish.
+
+To an external subscriber, such as the LAM, TianShan will have its EventGateway to redirect the needed TianShan events to it.
+
+Because latencies would be introduced in the event delivering and receiving, the event may arrive at the subscribers' sides
+a while later. If the subscriber cares about the true occur time, it must check the parameter timestamp carried by every event.
+
+As a standard TianShan Event, each event will minimally include the following parameters: 
+<table>
+<tr><th align=left>Parameter</th><th align=left>Description</th></tr>
+<tr><td>category</td><td>The name of the event category</td></tr>
+<tr><td>eventName</td><td>The string name of the event</td></tr>
+<tr><td>eventId</td><td>The integer ID of the event, unique within the category</td></tr>
+<tr><td>netId</td><td>the unique string network ID of the ContentStore where the event was raised from</td></tr>
+<tr><td>timestamp</td><td>The timestamp, formatted in ISO8601, to reflect when the event occurred.</td></tr>
+</table>
+
+@section sec_csev Volume
+This category lists the events about the content volumes
+
+@subsection sec_csevc Volume::Created(0)
+The event will be triggered when a sub volume is newly created.
+<table>
+<tr><th align=left>Parameter</th><th align=left>Description</th></tr>
+<tr><td>volume</td><td>the name of the parent volume where the new volume is based on</td></tr>
+<tr><td>sub-volume</td><td>the name of the new volume that has been created under the above parent volume</td></tr>
+<tr><td>mountPath </td><td>the path name based on the filesystem where the new volume is mapped to</td></tr>
+<tr><td>quotaSpaceMB</td><td>the assigned space quota, in MegaBytes, of the new volume</td></tr>
+</table>
+
+@subsection sec_csevd Volume::Destroyed(1)
+The event is triggered when a volume has been destroyed.
+<table>
+<tr><th align=left>Parameter</th><th align=left>Description</th></tr>
+<tr><td>volume</td><td>the name of the volume that has been destroyed</td></tr>
+</table>
+
+@subsection sec_csevm Volume::Mounted(3)
+The event is triggered when a volume has been mounted refer to a path of the filesystem.
+<table>
+<tr><th align=left>Parameter</th><th align=left>Description</th></tr>
+<tr><td>volume</td><td>the name of the volume</td></tr>
+<tr><td>mountPath</td><td>the full path name of the filesystem</td></tr>
+</table>
+
+@section sec_csecont Content
+This category lists the events about the content entities
+
+@subsection ssec_csecc Content::Created(0)
+The event is triggered when the content entity object is created in the ContentStore
+<table>
+<tr><th align=left>Parameter</th><th align=left>Description</th></tr>
+<tr><td>content</td><td>the full name of the content</td></tr>
+<tr><td>volume</td><td>the volume name that the content belongs to</td></tr>
+<tr><td>name</td><td>the content short name related to the volume</td></tr>
+</table>
+
+@subsection ssec_csecd Content::Destroyed(1)
+The event is triggered when the content entity object is deleted from the ContentStore
+<table>
+<tr><th align=left>Parameter</th><th align=left>Description</th></tr>
+<tr><td>content</td><td>the full name of the content</td></tr>
+<tr><td>volume</td><td>the volume name that the content belongs to</td></tr>
+<tr><td>name</td><td>the content short name related to the volume</td></tr>
+</table>
+
+@subsection ssec_csecs Content::StateChanged(2)
+The event is triggered when the state of the content has been changed
+<table>
+<tr><th align=left>Parameter</th><th align=left>Description</th></tr>
+<tr><td>content</td><td>the full name of the content</td></tr>
+<tr><td>volume</td><td>the volume name that the content belongs to</td></tr>
+<tr><td>name</td><td>the content short name related to the volume</td></tr>
+<tr><td>oldState</td><td>the old state of content what was changed from, it is formatted as <StateString>(<StateCode>)</td></tr>
+<tr><td>newState</td><td>the new state of content what has been changed to, it is formatted as <StateString>(<StateCode>)</td></tr>
+</table>
+
+@section sec_csecp Content Provision
+This category lists the events about the content provisioning sessions
+
+@subsection ssec_csecps Content::ProvisionStarted(20)
+The event is triggered when a content provisioning session has been started
+<table>
+<tr><th align=left>Parameter</th><th align=left>Description</th></tr>
+<tr><td>content</td><td>the full name of the content</td></tr>
+<tr><td>volume</td><td>the volume name that the content belongs to</td></tr>
+<tr><td>name</td><td>the content short name related to the volume</td></tr>
+</table>
+
+@subsection ssec_csecpt Content::ProvisionStopped(21)
+The event is triggered when a content provisioning session has stopped due to completion or errors
+<table>
+<tr><th align=left>Parameter</th><th align=left>Description</th></tr>
+<tr><td>content</td><td>the full name of the content</td></tr>
+<tr><td>volume</td><td>the volume name that the content belongs to</td></tr>
+<tr><td>name</td><td>the content short name related to the volume</td></tr>
+<tr><td>lastError</td><td>the integer code of last error</td></tr>
+<tr><td>lastErrMsg</td><td>the string description about the last error</td></tr>
+</table>
+
+@subsection ssec_csecpp Content::ProvisionProgress(22)
+The event is triggered when a content provisioning session has significant progress according to percentage or time
+<table>
+<tr><th align=left>Parameter</th><th align=left>Description</th></tr>
+<tr><td>content</td><td>the full name of the content</td></tr>
+<tr><td>volume</td><td>path name of the filesystem</td></tr>
+<tr><td>name</td><td>the content short name related to the volume</td></tr>
+<tr><td>processed</td><td>the byte that the provisioning has processed</td></tr>
+<tr><td>total</td><td>the known total size in byte to be processed, may be negative if the system doesn't know how big the total will be</td></tr>
+</table>
+
+@subsection ssec_csecpm Content::ProvisionStreamable(23)
+The event is triggered once a content provisioning session realizes the processed part can be streamed off
+<table>
+<tr><th align=left>Parameter</th><th align=left>Description</th></tr>
+<tr><td>content</td><td>the full name of the content</td></tr>
+<tr><td>volume</td><td>path name of the filesystem</td></tr>
+<tr><td>name</td><td>the content short name related to the volume</td></tr>
+</table>
+
+*/
+

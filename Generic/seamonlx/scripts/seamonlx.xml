@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Component>
+<Version>1.0</Version>
+<Name>SeaMon LX</Name>
+<Desc>SeaMon LX components</Desc>
+<Cmd>/usr/local/seamonlx/seamonlx-seastats.sh</Cmd>
+<Archive>/tmp/seamonlx-seastats.zip</Archive>
+</Component>
+

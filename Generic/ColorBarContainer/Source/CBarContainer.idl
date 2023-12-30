@@ -1,0 +1,54 @@
+// CBarContainer.idl : IDL source for CBarContainer.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (CBarContainer.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+#include "olectl.h"
+	
+
+	[
+		object,
+		uuid(84D23036-3881-4C75-B62A-A5621E457D3C),
+		dual,
+		helpstring("IColorBarContainerControl Interface"),
+		pointer_default(unique)
+	]
+	interface IColorBarContainerControl : IDispatch
+	{
+		[id(1), helpstring("method SetStreamIPAddress")] HRESULT SetStreamIPAddress([in] BSTR bstrIpAddress, [in] BSTR bstrPort);
+		[id(2), helpstring("method SetChanelIpAddress")] HRESULT SetChanelIpAddress([in] BSTR bstrIpAddress, [in] BSTR bstrPort);
+	};
+
+[
+	uuid(C17D3AC8-EAE6-4787-BFD1-5269816E90F8),
+	version(1.0),
+	helpstring("CBarContainer 1.0 Type Library")
+]
+library CBARCONTAINERLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	[
+		uuid(3B45F4E5-5315-4580-B94B-833897C1C29D),
+		helpstring("_IColorBarContainerControlEvents Interface")
+	]
+	dispinterface _IColorBarContainerControlEvents
+	{
+		properties:
+		methods:
+	};
+
+	[
+		uuid(E0B8A5E4-5EF3-4C02-B86C-62E7A44FC40F),
+		helpstring("ColorBarContainerControl Class")
+	]
+	coclass ColorBarContainerControl
+	{
+		[default] interface IColorBarContainerControl;
+		[default, source] dispinterface _IColorBarContainerControlEvents;
+	};
+};

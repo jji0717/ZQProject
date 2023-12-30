@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DBSAMessage>
+	<DBSAMessageHeader SystemTime="2005-11-09 00:00:00">
+		<Addin IPAddress="192.168.80.72" Version="0.1.0"/>
+		<DBSync IPAddress="192.168.80.72" Version="3.4.0"/>
+		<ITVDS IPAddress="192.168.80.22" Version="1.0"/>
+	</DBSAMessageHeader>
+	<DBSAMessageBody TopicID="1">
+		<Initialize Instance="1" SupportNavigation="1" SyncDirectory="\" TimeWindowThreshold="600"/>
+	</DBSAMessageBody>
+	<DBSAMessageBody TopicID="9">
+		<TriggerState EntryType="1" EntryUID="524289" LocalEntryUID="A1000000001" State="1"/>
+	</DBSAMessageBody>
+</DBSAMessage>

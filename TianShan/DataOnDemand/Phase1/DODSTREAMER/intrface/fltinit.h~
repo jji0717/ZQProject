@@ -1,0 +1,13 @@
+// {AF7986C4-593E-47db-93E2-6C477A18992B}
+DEFINE_GUID(IFilterInit, 
+	0xaf7986c4, 0x593e, 0x47db, 0x93, 0xe2, 0x6c, 0x47, 0x7a, 0x18, 0x99, 0x2b);
+
+class IServiceLog {
+public:
+	virtual log(int level, char* fmt, ...) = 0;
+}
+
+class IFilterInit {
+public:
+	virtual init		
+};

@@ -1,0 +1,1130 @@
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.1.66
+	RELEASE DATE:	 2007-11-02
+	RELEASER:        Jason Zhang
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+		a. Running TianShanSetup.pl from command line as following:
+                       perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+                   * if not specify  [--copy | --uncopy], default is copy
+                       --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                       The purpose is to just update the registry in slave server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                       perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+                
+         - NEW FEATURE LIST
+	    1. Service should quit if its initialization fails, especially due to DB opening failure.
+	    2. multiple parsing threads for rtsp incomming message, thread count can configure
+	    3. pre-allocate big memory for the big session list for GET_PARAMETER request if require session list, and optimized some string operations.
+
+         - FIXED BUG LIST
+   
+         - CONFIGURATION AND PARAMETERS CHECKING 
+	    1. In <Tianshan> <RtspProxy> <Service>, a new configuration "RtspParserThreadPoolSize":
+		<RtspParserThreadPoolSize value="6"/>
+	    2. In <Tianshan> <RtspProxy> <ServiceFrame>, a new configuration "recvBufSize", this is for the max buffer size for receiving rtsp message
+		<recvBufSize value="4096"/>
+
+         - REMARK
+
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.1.65
+	RELEASE DATE:	 2007-11-02
+	RELEASER:        Ken Qian
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+		a. Running TianShanSetup.pl from command line as following:
+                       perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+                   * if not specify  [--copy | --uncopy], default is copy
+                       --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                       The purpose is to just update the registry in slave server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                       perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+                
+         - NEW FEATURE LIST
+
+         - FIXED BUG LIST
+            1. NGOD68 -  RtfCpNode wedged on FMS node 0 
+                         (RTFCPNode Adapter object was released when logoff from Windows console desktop)
+            2. NGOD-69 - StreamSmith logic incorrect leaving PAUSE state
+                         (VSTRM will automatically set stream to play status after the setspeed on pause status, StreamSmith was changed in the same manner)
+   
+         - CONFIGURATION AND PARAMETERS CHECKING 
+
+
+         - REMARK
+
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.1.64
+	RELEASE DATE:	 2007-10-31
+	RELEASER:        Ken Qian
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+		a. Running TianShanSetup.pl from command line as following:
+                       perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+                   * if not specify  [--copy | --uncopy], default is copy
+                       --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                       The purpose is to just update the registry in slave server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                       perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+                
+         - NEW FEATURE LIST
+
+         - FIXED BUG LIST
+            1. NGOD66 - ClusterContentStore stuck on safestore reading
+	                    The fix is by seperate "StateChange" and "Destroy" message safestore to different folder
+            2. NGOD67 - RTSPProxy/ssm_NGOD2 did not release the allocated resource/bandwith while teardown after used bandwith exceeded the max bandwith
+   
+         - CONFIGURATION AND PARAMETERS CHECKING 
+
+
+         - REMARK
+            1. Rename ClusterContentStore safestore folder names for JMS messages, instead of original "ProvisionSS",
+               they are located at data folder as following list
+               Message Type     Folder Name           
+               ------------     ----------- 
+               StateChange      StateChangeMsg
+               Destroy          DestroyMsg
+               Progress         ProgressMsg
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.1.63
+	RELEASE DATE:	 2007-10-30
+	RELEASER:        Ken Qian
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+		a. Running TianShanSetup.pl from command line as following:
+                       perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+                   * if not specify  [--copy | --uncopy], default is copy
+                       --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                       The purpose is to just update the registry in slave server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                       perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+                
+         - NEW FEATURE LIST
+           1.added a configuration for ssm_ngod2 plugin to enable/disable including ¡°clientsessionid¡± in failure setup response.
+		Configuration:
+		<ssm_NGOD2>
+	         ¡­
+                <Response setupFailureWithSessId="0"/>
+                 ¡­
+	        </ssm_NGOD2>
+
+
+         - FIXED BUG LIST
+
+               
+         - CONFIGURATION AND PARAMETERS CHECKING 
+
+
+         - REMARK
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.1.61
+	RELEASE DATE:	 2007-10-23
+	RELEASER:        Ken Qian
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+		a. Running TianShanSetup.pl from command line as following:
+                       perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+                   * if not specify  [--copy | --uncopy], default is copy
+                       --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                       The purpose is to just update the registry in slave server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                       perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+                
+         - NEW FEATURE LIST
+           1. Make RTFCPNode buffer size configurable, and change the default source(FTP/FSI) data read size 
+              to be 64K instead of 16K. And change the default configuration of bufferPoolSize and minAvailBuffCount. 
+              Currently, bufferPoolSize = 256, minAvailBuffCount = 10
+
+         - FIXED BUG LIST
+
+               
+         - CONFIGURATION AND PARAMETERS CHECKING 
+
+
+         - REMARK
+           1. If previous configuration of minAvailBuffCount more than 10, it is recommended to change it to be 10, 
+              or remove the configuration item.
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.1.60
+	RELEASE DATE:	 2007-10-19
+	RELEASER:        Ken Qian
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+		a. Running TianShanSetup.pl from command line as following:
+                       perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+                   * if not specify  [--copy | --uncopy], default is copy
+                       --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                       The purpose is to just update the registry in slave server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                       perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+                
+         - NEW FEATURE LIST
+
+         - FIXED BUG LIST
+		   1. Fix NGOD-62 Ingest stuck in "Transfer" at Comcast Philadelphia lab
+
+               
+         - CONFIGURATION AND PARAMETERS CHECKING 
+
+
+         - REMARK
+
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.1.59
+	RELEASE DATE:	 2007-10-12
+	RELEASER:        Ken Qian
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+		a. Running TianShanSetup.pl from command line as following:
+                       perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+                   * if not specify  [--copy | --uncopy], default is copy
+                       --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                       The purpose is to just update the registry in slave server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                       perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+                
+         - NEW FEATURE LIST
+
+         - FIXED BUG LIST
+		   1. Fix NGOD-62 Ingest stuck in "Transfer" at Comcast Philadelphia lab
+
+               
+         - CONFIGURATION AND PARAMETERS CHECKING 
+
+
+         - REMARK
+           1. RTFLib 1.6 source codes was merged into this version, to replace old RTFLib1.1 version
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.1.56
+	RELEASE DATE:	 2007-10-12
+	RELEASER:        Hongquan Zhang, Ken Qian
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+		a. Running TianShanSetup.pl from command line as following:
+                       perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+                   * if not specify  [--copy | --uncopy], default is copy
+                       --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                       The purpose is to just update the registry in slave server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                       perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+                
+         - NEW FEATURE LIST
+
+         - FIXED BUG LIST
+		   1. Enhance RTSPProxy load balacne for multiple StreamSmith instances when they were in a logic SOP.
+               
+         - CONFIGURATION AND PARAMETERS CHECKING 
+
+
+         - REMARK
+
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.1.55
+	RELEASE DATE:	 2007-10-11
+	RELEASER:        Hongquan Zhang, Ken Qian
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+		a. Running TianShanSetup.pl from command line as following:
+                       perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+                   * if not specify  [--copy | --uncopy], default is copy
+                       --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                       The purpose is to just update the registry in slave server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                       perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+                
+         - NEW FEATURE LIST
+
+         - FIXED BUG LIST
+           1. RTFCPNode: Add configuration to enable/disable TrickKeyFrame to switch the index option parameter 
+                         passed to rtfOpenSession(). 
+           2. RTFCPNode: Reduce the loging frequency of buffer processing threads to remove the high CPU consumption.
+           3. RTSPRProxy plugin - ssm_NGOD2: Change the logic of selecting Streamer in different StreamSmith for better load balance if there are in a GOP. 
+		
+               
+         - CONFIGURATION AND PARAMETERS CHECKING 
+			1. RTFCPNode - RTFCPNodeCfg.xml 
+               In section of <service>, trickKeyFrame is to switch the index option in rtfOpenSession().
+               In case of trickKeyFrame = 1, index option = RTF_INDEX_OPTION_VVX_7_3, defult if no such configuraiton item. 
+               In case of trickKeyFrame = 0, index option = RTF_INDEX_OPTION_VVX_7_2
+                    <trickKeyFrame value = "1" />
+
+
+         - REMARK
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.1.54
+	RELEASE DATE:	 2007-10-09
+	RELEASER:        Hongquan Zhang, Ken Qian
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+		a. Running TianShanSetup.pl from command line as following:
+                       perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+                   * if not specify  [--copy | --uncopy], default is copy
+                       --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                       The purpose is to just update the registry in slave server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                       perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+                
+         - NEW FEATURE LIST
+           1. RTFCPNode use "BIN" mode to send raw "SIZE" command, instead of original "ASCII" mode
+           2. RTFCPNode add a new configuration(ftpFileFakeSize) to set the fake file size if the size what RTFCPNode got
+              is less than 1M. This is only avaliable when use "LIST" command to get file size. 
+              It can co-operates with LAM ver2.0.17.1hotfix8 if the fake size is 0, LAM will not have "percentComplete" field
+              in TransferStatus response to APM. 
+           3. RTSPProxy had enhancement of remove lock in the session connection to improve the performance.
+
+         - FIXED BUG LIST
+		
+               
+         - CONFIGURATION AND PARAMETERS CHECKING 
+			1. RTFCPNode - RTFCPNodeCfg.xml 
+               In section of <service>, the unit of ftpFileFakeSize is Giga. If no such configuration, default value is 10.
+                    <ftpFileFakeSize value = "10" />
+
+
+         - REMARK
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.1.53
+	RELEASE DATE:	 2007-10-08
+	RELEASER:        Hongquan Zhang
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+		a. Running TianShanSetup.pl from command line as following:
+                       perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+                   * if not specify  [--copy | --uncopy], default is copy
+                       --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                       The purpose is to just update the registry in slave server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                       perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+                
+         - NEW FEATURE LIST
+
+         - FIXED BUG LIST
+           1. Fix RTSPProxy rtsp parser issue
+           2. Change rtsp receving buffer size from 1K to 16K
+           3. Add ssm_NGOD2 log with more detail information
+               
+         - CONFIGURATION AND PARAMETERS CHECKING 
+
+         - REMARK
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.1.51
+	RELEASE DATE:	 2007-09-28
+	RELEASER:        Ken Qian
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+		a. Running TianShanSetup.pl from command line as following:
+                       perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+                   * if not specify  [--copy | --uncopy], default is copy
+                       --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                       The purpose is to just update the registry in slave server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                       perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+                
+         - NEW FEATURE LIST
+
+         - FIXED BUG LIST
+           1. If file size larger than 4G or if FTP URL is a shortcut, the size what RTFCPNode got is not right.
+              Change this to use "SIZE" to get the right file size. 
+               
+         - CONFIGURATION AND PARAMETERS CHECKING 
+
+         - REMARK
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.1.47
+	RELEASE DATE:	 2007-09-25
+	RELEASER:        HongQuan Zhang
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+		a. Running TianShanSetup.pl from command line as following:
+                       perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+                   * if not specify  [--copy | --uncopy], default is copy
+                       --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                       The purpose is to just update the registry in slave server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                       perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+                
+         - NEW FEATURE LIST
+	1. StreamSmith lower the CPU usage by decreasing the freq of VstreamSess scanning. Default interval will be round(stream-count / 500 +1) * 33msec. This default value
+                  lead StreamSmith use 8% CPU at 1488 streams when there are no peak SETUP requests
+
+         - FIXED BUG LIST
+	1. RTSPProxy will not send the header tag when the value is empty 
+               
+         - CONFIGURATION AND PARAMETERS CHECKING 
+
+         - REMARK
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.1.46
+	RELEASE DATE:	 2007-09-24
+	RELEASER:        HongQuan Zhang
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+		a. Running TianShanSetup.pl from command line as following:
+                       perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+                   * if not specify  [--copy | --uncopy], default is copy
+                       --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                       The purpose is to just update the registry in slave server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                       perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+                
+         - NEW FEATURE LIST
+	1. ssm_NGOD_r2c1 has moved the session expiration renewing to a backgrond thread to speed up PLAY/PAUSE operations
+
+         - FIXED BUG LIST
+	1. ssm_NGOD_r2c1 fixed not to include the session id in the response of SET_PARAMETER(session group)
+               
+         - CONFIGURATION AND PARAMETERS CHECKING 
+
+         - REMARK
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.1.44
+	RELEASE DATE:	 2007-09-20
+	RELEASER:        Ken Qian
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+		a. Running TianShanSetup.pl from command line as following:
+                       perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+                   * if not specify  [--copy | --uncopy], default is copy
+                       --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                       The purpose is to just update the registry in slave server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                       perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+                
+         - NEW FEATURE LIST
+
+         - FIXED BUG LIST
+                1. Fix the possible crash when RTFCPNode is stopping.
+               
+         - CONFIGURATION AND PARAMETERS CHECKING 
+
+         - REMARK
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.1.42
+	RELEASE DATE:	 2007-09-17
+	RELEASER:        Ken Qian
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+		a. Running TianShanSetup.pl from command line as following:
+                       perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+                   * if not specify  [--copy | --uncopy], default is copy
+                       --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                       The purpose is to just update the registry in slave server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                       perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+                
+         - NEW FEATURE LIST
+	 1) Significent performance enhancement on session setup on Weiwoo, ssm_NGOD_r2c1, StreamSmith
+	 2) Support of multiple service group definition to speed up patch evaluation. 
+	 3) Be able to sparate the DB folder for the persistent data or runtime safestore data in Weiwoo
+
+         - FIXED BUG LIST
+               1. Fix NGOD-12  Need to validate NGOD streaming for pre-encrypted content  
+               2. Fix some RTFLib "memory access violation" to avoid RTFLib thread exit unexceptedly.
+               
+         - CONFIGURATION AND PARAMETERS CHECKING 
+         	   1. ClusterContentStore
+                  1. In ClusterContentStore.xml, add topic for "destroy" message under <JMS> section as following
+                     <destroyTopic value="topic/TianShan\Provision\Destroy" />
+                  2  In CSJMSHeaderPropertyCfg.xml, add <ProvisionDestroy> section under <JMSHeaderProperty> as following
+                     <ProvisionDestroy>
+                         <Property type="string" key="MESSAGECLASS" value="STATUS"/>
+                         <Property type="int" key="MESSAGECODE" value="1111"/>
+                     </ProvisionDestroy>
+                  3. Follow LAM ver2.0.17.1hotfix7 release notes file to add "topic/TianShan\Provision\Destroy" in JBOSS
+                  4. Follow LAM ver2.0.17.1hotfix7 release notes file to add "topic/TianShan\Provision\Destroy" in LAM
+	    5. ssm_NGOD_r2c1.xml has OPTIONAL configuration to define SOPRestriction, with which ssm_NGOD_r2c1
+	       can restrict the path evaluation by a given servicegroup or a specified set of streamer.
+		<TianShan>
+		     <SOPRestriction>
+			 <sop name="CL70001N0SL0" serviceGroup="30">
+			 	<streamer netId="10.15.10.250/BoardNumber0" /> 
+			  </sop>
+			 <sop name="CL70001N0SL1" serviceGroup="31">
+				  <streamer netId="10.15.10.250/BoardNumber1" /> 
+			  </sop>
+		    </SOPRestriction>
+              	</TianShan>
+	    6. in WeiwooService.xml, added a new config item to sperate the runtime safestore data with the persistent data. If the attribute
+	        runtimePath is not specified or empty, it will use the same folder of the persistent data
+		<DatabaseFolder path="xxx" runtimePath="xxx"/>
+
+         - REMARK
+               1. To seperate "destory" meesage from "stateChange" topic is depends on LAM ver2.0.17.1hotfix7
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.1.41
+	RELEASE DATE:	 2007-09-13
+	RELEASER:        Ken Qian
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+		a. Running TianShanSetup.pl from command line as following:
+                       perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+                   * if not specify  [--copy | --uncopy], default is copy
+                       --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                       The purpose is to just update the registry in slave server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                       perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+                
+         - NEW FEATURE LIST
+              
+         - FIXED BUG LIST
+               1. NGOD-24 RTFCPNode loses communication with CPManager on restart 
+               2. NGOD-45 A3 TransferStatus message is inconsistent with "percentComplete" field 
+
+
+         - CONFIGURATION AND PARAMETERS CHECKING 
+         	   1. RTFCPNode.exe - RTFCPNodeCfg.xml
+                  Reset one wrong configuration in RTFCPNode in <IceProperties> section, 
+                  change original value -1 to 5000 as following:
+                  <prop name="Ice.Override.ConnectTimeout" value="5000" />
+         		
+
+         - REMARK
+               1. Delete RTFCPNode safestore files in  C:\TianShan\Data\RtfCPNodeStatSS from each node
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.1.37
+	RELEASE DATE:	 2007-09-11
+	RELEASER:      Hongquan Zhang, Ken Qian
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+		a. Running TianShanSetup.pl from command line as following:
+                       perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+                   * if not specify  [--copy | --uncopy], default is copy
+                       --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                       The purpose is to just update the registry in slave server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                       perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+                
+         - NEW FEATURE LIST
+               1. make vstrm session scan interval as configurable,and reduce the session scan interval to lower CPU load
+               2. add some logs to detect the process duration
+              
+         - FIXED BUG LIST
+               1. Fix a new introduced issue in TianShan1.6.1.35, a mistake cause RTFCPNode did not register(send heartbeat) to ClusterContentStore.
+               2. Fix the possible RTFCPNode crash during stopping. 
+
+
+         - CONFIGURATION AND PARAMETERS CHECKING 
+         	1.	for streamsmithservice.xml please add a property with name 'progressScanInterval' under 
+         			tianshan/streamsmith/service/playlist
+         			This configuration is treated as the session scan interval it should be greater than 1000(ms)
+         			example:
+         			<playlist timeoutInterval="100000" timeoutOnPause="1" progressScanInterval="5000"/>
+         		
+
+         - REMARK
+
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.1.35
+	RELEASE DATE:	 2007-09-10
+	RELEASER:      ken qian
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+		a. Running TianShanSetup.pl from command line as following:
+                       perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+                   * if not specify  [--copy | --uncopy], default is copy
+                       --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                       The purpose is to just update the registry in slave server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                       perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+                
+         - NEW FEATURE LIST
+               1. Weiwoo speeds up on load balancing for SETUP
+              
+         - FIXED BUG LIST
+               1. NGOD-25  TianShan intermittently fails to move content from "Pending" to "Transfer" state
+                           Fixing by add additional JMS topic/queue at ContentStore side, but LAM is not avaliable at this moment, this function will be open until LAM is ready by change configuration.
+               2. NGOD-49  deadlock in Teardown when the connection was dropped during request process, which may be a fix of NGOD-43
+
+
+         - CONFIGURATION AND PARAMETERS CHECKING 
+
+         - REMARK
+
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.1.33
+	RELEASE DATE:	 2007-09-07
+	RELEASER:      ken qian
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+		a. Running TianShanSetup.pl from command line as following:
+                       perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+                   * if not specify  [--copy | --uncopy], default is copy
+                       --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                       The purpose is to just update the registry in slave server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                       perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+                
+         - NEW FEATURE LIST
+               1. ssm_NGOD_r2c1: add two new configuration in playcontrol "needSleep" and "sleepMilliSeconds"
+               2. ssm_NGOD_r2c1 enhanced the object indexing to speed up stream control operations such as PLAY, PAUSE, TEARDOWN
+               4. RTFCPNode: detail logging information of thread id
+               5. Weiwoo: optimize thread pool to contribute more power on performance.
+              
+         - FIXED BUG LIST
+               1. NGOD-46  Some "Play"/"Pause" request processed very slowly in ssm_NGOD_r2c1 plug-in during the 4200 streams load test
+
+         - CONFIGURATION AND PARAMETERS CHECKING 
+               1.  RTSPProxy plugin - ssm_NGOD_r2c1.dll - ssm_NGOD_r2c1.xml
+                   New configuration items are added to section under <ssm_NGOD_r2c1> as followed, if not configured, just use default value
+
+                   <!-- params:
+                     needSleep: 0 or 1. default value is 0. If 1, followed the play command, plug-in will sleep "sleepMilliSeconds" ms before getting streaming scale,
+                     to avoid the fetched scale does not match the real scale
+                     if "sleepMilliSeconds" <= 0, plugin regards there is no sleeping. 
+                   -->                    
+                   <PlayControl needSleep="0" sleepMilliSeconds="0"/> 
+
+         - REMARK
+               1. Delete saftsotre files under C:\TianShan\Data\ssm_NGOD_r2c1 in RTSPServer
+
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.1.32
+	RELEASE DATE:	 2007-09-05
+	RELEASER:      ken qian
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+		a. Running TianShanSetup.pl from command line as following:
+                       perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+                   * if not specify  [--copy | --uncopy], default is copy
+                       --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                       The purpose is to just update the registry in slave server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                       perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+                
+         - NEW FEATURE LIST
+              
+         - FIXED BUG LIST
+               1. NGOD-40  Ingest broken, transferStatus to IPS always has state of "Pending"
+                  (This issue is new introduced in 1.6.1.31)
+
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.1.31
+	RELEASE DATE:	 2007-09-04
+	RELEASER:      ken qian
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+                 a. Running TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+                   * if not specify  [--copy | --uncopy], default is copy
+                     --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                       The purpose is to just update the registry in slave server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+ 
+         - NEW FEATURE LIST
+               1. RtspProxy will monitor the load, response ¡°503 service unavailable¡± when the server is overloaded. This feature is configurable to turn on with setting ¡°PendingRequestSize¡± to non-zero 
+               2. Per Esther¡¯s request, ANNOUNCE cseq can be in a global numbering with configuration to switch: configuration ¡°<Announce useGlobalSequence=¡±1¡±>¡± 
+              
+         - FIXED BUG LIST
+               1. NGOD-22  ZQ Ingests not failed when cluster nodes crash 
+               2. NGOD-40  Ingest broken, transferStatus to IPS always has state of "Pending"
+               3. (NO JIRA ID) ContentStore has a fix if its connection to JMS blocks
+               
+         - CONFIGURATION AND PARAMETERS CHECKING 
+               1. ClusterContentStore - ClusterContentStore.xml
+                  To fix NGOD-22, invalidateDuration was added in ClusterContentStore.xml located at CPManager's <Service> section:
+
+                     <!--
+                         invalidateDuration: a session will be considiered failed when it does not report its activity to ClusterContentStore within invalidateDuration
+                     -->
+							    
+                     <invalidateDuration value="3600"/> 
+                     Need to manually add this and set it to minutes based, 
+                     eg: 300, means if one ingestion session in RTFCPNode did not report progress to ClusterContentStore with 5 minutes, 
+                     it will regard the session was dead, and report ¡°Fail¡± status to LAM(LAM to APM). 
+                     The default value is 3600 if not configured. 
+                     This configured value must be several times lager than progressRptInterval (in RTFCPNodeCfg.xml) 
+                     to avoid the message latency cause the ingestion been deleted as none activity. 
+
+                2. RTSPProxy - rtspProxyServices.xml
+                     It is under <service> section, the default value is 0 if no such item
+                     <!--
+                          pendingRequestSize:how many pending request is acceptable for server core
+                          if this value is 0,pending request is unlimited.
+                          or else if current pending request is bigger than the configuration value,
+                          client request will be rejected with code 503
+                     -->
+                     <pendingRequestSize count="0"/>
+
+                3. RTSPProxy plugin - ssm_NGOD_r2c1.dll - ssm_NGOD_r2c1.xml
+                      It is under section <ssm_NGOD_r2c1>
+                      <!-- params: only on param is configurable now.
+                           globalSeqNumber: 0 or 1. default value is 0.
+												
+                      -->		
+                      <Announce useGlobalSequence="0"/>				 
+							 
+				 
+***************************************************************************************************************
+* RELEASE NOTES
+	PRODUCTION NAME: TianShan Components
+	VERSION NO.: 	 1.6.1.16
+	RELEASE DATE:	 2007-08-09
+	RELEASER:      ken qian
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE/UN
+
+	- OPERATION STEPS
+          If The version is under 1.5.0.1,remove all TianShan components and reinstall it
+            Remove service:
+                   instserv <servicename> remove
+          
+          1 For new Installation
+
+		a. Running TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --install  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in slave server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                b. Follow the iteractive command to complete the installation.
+
+          2 For upgrade from 1.5
+
+                a. Manually record down the site/app/mount settings. (Auto DB upgrade is not avalaible at this build)
+                
+                b. shut down all the TianShan service on the same machine.
+  
+                c. backup the existing databases. (default under c:\TianShan\data)
+                
+		d. Run TianShanSetup.pl from command line as following:
+                        perl.exe TianShanSetup.pl --service=<servicename> --upgrade  [--copy | --uncopy] --installroot=<path> --svcaccount=<osaccount> --svcpassword=<password>
+                
+		   * if not specify  [--copy | --uncopy], default is copy
+                   --uncopy option is to DO NOT copy the binary files to target folder. Just update the registry information.
+                     The purpose is to just update the registry in salve server of a Legato pair.
+                   
+                   * if not specify --installroot, default is C:\TianShan
+                   
+                   * if not specify --svcaccount, default is LocalSystem
+                   
+                   * if not specify --svcpassword, default is NULL
+                   
+                   If you want to know the service which can be installed by the scrip, run:
+                        perl.exe TianShanSetup.pl --list
+                        
+                   For more detail, please run "Perl.exe TianShanSetup.pl --help"
+
+                e. Follow the iteractive command to complete the installation.
+
+                f. copy the backup database expect "Sites" to the new installation location
+                
+                g. restart the services.
+                
+         - NEW FEATURE LIST
+               1. Adding the status synchronization betwen ClusterContentStore and NodeContentStore
+               2. RTFCPNode add the safestore for the status and property updating to ClusterContentStore
+               
+         - FIXED BUG LIST
+               1. NGOD-24  RTFCPNode loses communication with CPManager on restart
+               2. NGOD-18  Cluster Content Store  ZQ RTFCPNode.exe crashed, referencing bad pointer (fixed in previous version)
+               3. NGOD-16  Cluster Content Store  ZQ Ingests Failing caused by ingestion task lost in CPManager (fixed in previous version)
+
+
+
+

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope
+ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+ xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+ xmlns:ns1="http://www.i-zq.com/services/LAMServiceForCME"
+ xmlns:ns2="http://cme.integration.am.izq.com">
+ <SOAP-ENV:Body SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+  <ns2:getExportURLResponse>
+   <returnCode>0</returnCode>
+   <contentType></contentType>
+   <contentSubtype></contentSubtype>
+   <sourceURL></sourceURL>
+   <userName></userName>
+   <password></password>
+   <bitrate>0</bitrate>
+   <windowStart></windowStart>
+   <windowEnd></windowEnd>
+  </ns2:getExportURLResponse>
+ </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

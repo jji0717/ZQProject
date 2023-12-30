@@ -1,0 +1,111 @@
+<TianShan>
+	<!--
+		Notice: TianShanDef.xml has been preloaded when this configuration file is being parsed, please refer to
+        	  TianShanDef.xml for the common properties
+	-->
+	<Definitions src="TianShanDef.xml">
+	</Definitions>
+	
+	<!-- default configurations for the services of this TianShan deployment -->
+	<default>
+	  <!-- CrashDump can help devoloper diagnose the program when it crashed
+			   if you set enable to "1" you must make sure that the path is accessible
+			   path: crashdump path
+			   enabled: 1 to enable crashDump
+    --> 
+    <CrashDump path="${TianShanCrashDumpDir}" enabled="1"/>
+    
+    <!--The Ice trace log setting for all the services of this TianShan deployment.
+			attributes:
+				enabled: 1 if the Ice trace is enabled, default "0";
+				logfileSuffix: a suffix of the log filename, if the log service log file is test.log, then the ice trace log will be named test_ice.log by default until specify this fild;
+				level: the log level of the ice trace log;
+				size: the size that this trace log must roll.
+	  --> 
+		<IceTrace enabled="1" level="7" size="10240000" maxCount="10"/>
+  
+	  <!-- example:
+	       params: only one param is supported now
+			   endPoint: should be in format of "name:tcp -h ip -p port".
+		-->
+		<EventChannel endPoint="${PrimeEventChannelEndpoint}" />
+		<IceProperties>
+			<!-- 
+  	  	the following are performance tuning parameters, please don't modify if you are not an expert at them 
+  		--> 
+	  	<prop name="Ice.Trace.Network" value="1" /> 
+	  	<prop name="Ice.Trace.Protocol" value="0" /> 
+	  	<prop name="Ice.Trace.Retry" value="1" /> 
+	  	<prop name="Ice.Warn.Connections" value="1" /> 
+	  	<prop name="Ice.Warn.Endpoints" value="1" /> 
+	  	<prop name="Ice.Logger.TimeStamp" value="1" /> 
+	  	<prop name="Freeze.Warn.Deadlocks" value="1" /> 
+	  	<prop name="Freeze.Trace.Map" value="0" /> 
+	  	<prop name="Freeze.Trace.DbEnv" value="2" /> 
+	  	<prop name="Freeze.Trace.Evictor" value="0" /> 
+	  	<!--prop name="Ice.Override.Timeout" value="20000" /--> 
+	  	<prop name="Ice.ThreadPool.Server.Size" value="15" /> 
+	  	<prop name="Ice.ThreadPool.Server.SizeMax" value="20" /> 
+	  	<prop name="Ice.ThreadPool.Client.Size" value="15" /> 
+	  	<prop name="Ice.ThreadPool.Client.SizeMax" value="20" /> 
+  	</IceProperties>
+  
+  	<!-- Log file to publish thru SentryService
+		     	    attributes:
+		       		path    - full path of the log file
+		       		syntax  - the file defines the syntax of the events via the regular expressions
+		-->
+  	<PublishedLogs>
+  		<Log path="${TianShanLogDir}\CRM_A3Server.log" syntax="${TianShanHomeDir}\etc\syntax.xml" key="CRMA3ServerEvents" type=""/>
+  	</PublishedLogs>
+
+		<!--The default folder where the services of this TianShan deployment accesses their local databases if it is not defined by their individual configurations
+			attributes:
+				path: path to the location of database directory, default "../data/"
+				runtimePath: path to keep the runtime data, default as the value of path
+  	--> 
+  	<Database path="${TianShanDatabaseDir}" runtimePath="${TianShanDatabaseDir}\runtime" /> 
+	</default>
+	<Http_A3Server>
+		<!--The main logfile of this VLCVSS service
+		     attributes:
+		     	 path: full path of the log file
+		       level: the log level of this main log
+		       logNum: the max log file numbers
+		       size: the size that this trace log must roll
+		       flushTimeout: timeout in second that the logfile must flush
+  	-->
+    <LogFile level="7" maxCount="10" size="50000000" bufferSize="8192" flushTimeout="1"/>
+
+    <!-- Configuration on the ContentStores that this A3 server manages
+    	 -->
+    <ContentStoreList>
+	<!-- Configuration on each ContentStore that this A3 server manages
+	     attributes:
+	        endpoint - the endpoint connect to the target ContentStore interface
+	     note: One A3 server may agent multiple ContentStore instances and the volumes of them
+	           the exportName of Volume(s) should be unique amoung all the child elements of <ContentStores>
+    	-->
+        <ContentStore endpoint="ContentStore:tcp -h ${ClusterCSNetIf} -p 10400" >
+		<!-- Configuration on the volumes export thru the A3 interface
+	     		attributes:
+	        		name - a true volume name in the managed ContentStore instance, unique within the ContentStore instance
+	        		exportName - the volume name exported thru this A3 interface, must be unique within this <ContentStores> definition
+	        		accessCtrl - reserved for future versions: read-only, delete-forbiden and so on
+	        	note: any A3 access via the volume name of exportName would redirect to the true name on the target ContentStore
+	        	      This A3 server may export some or all the volumes available on the asscociated ContentStore
+    		-->
+        	<Volume name="$" exportName="SEAC1007" />
+        	
+        </ContentStore>
+<!--        
+        <ContentStore endpoint="ContentStore:tcp -h ${ClusterCSNetIf} -p 10402" />
+-->
+    </ContentStoreList>
+    
+    <!--A3 Facede bind endpoint and evictor size in memroy-->
+    <Bind serviceName="A3Facede" endpoint="tcp -h ${ServerNetIf} -p 11900" evictorSize="5"/>
+    
+	</Http_A3Server>
+</TianShan>
+

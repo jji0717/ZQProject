@@ -1,0 +1,225 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "AlarmApi"=.\AlarmApi.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/Generic/Alarm", SEKAAAAA
+    .
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ISAAlarmApp"=.\ISAALARM\ISAAlarmApp.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/Generic/Alarm", SEKAAAAA
+    .
+    end source code control
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name AlarmApi
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ISAAlarmImpl
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ISAAlarmImpl"=.\ISAALARM\ISAALARMIMPL\ISAAlarmImpl.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/Generic/Alarm", SEKAAAAA
+    .
+    end source code control
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name corbalib
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ISAAlarmService"=.\ISAALARM\ISAAlarmService.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name AlarmApi
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ISAAlarmImpl
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "SNMPAlarm"=.\SNMPALARM\SNMPAlarm.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/Generic/Alarm", SEKAAAAA
+    .
+    end source code control
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name AlarmApi
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name SNMPAlarmImpl
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "SNMPAlarmImpl"=.\SNMPALARM\SNMPALARMIMPL\SNMPAlarmImpl.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/Generic/Alarm", SEKAAAAA
+    .
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "SNMPAlarmService"=.\SNMPALARM\SNMPAlarmService.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name AlarmApi
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name SNMPAlarmImpl
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "corbalib"=.\ISAALARM\ISAALARMIMPL\corbalib\corbalib.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/Generic/Alarm", SEKAAAAA
+    .
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "snap"=.\snap\snap.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/Generic/Alarm", SEKAAAAA
+    .
+    end source code control
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name AlarmApi
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "test"=.\TEST\test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/Generic/Alarm", SEKAAAAA
+    .
+    end source code control
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name AlarmApi
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name testImpl
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "testImpl"=.\TEST\testImpl.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/Generic/Alarm", SEKAAAAA
+    .
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZQProjs/Generic/Alarm", SEKAAAAA
+    .
+    end source code control
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

@@ -1,0 +1,13 @@
+; JMS_DBSyncAddIn.def : Declares the module parameters for the DLL.
+
+LIBRARY      "JMS_DBSyncAddIn"
+DESCRIPTION  'DBAddin Windows Dynamic Link Library'
+
+EXPORTS
+    ; Explicit exports can go here
+
+DBSA_Initialize
+DBSA_Uninitialize
+DBSA_SyncBegin
+DBSA_SyncEnd
+DBSA_TriggerState

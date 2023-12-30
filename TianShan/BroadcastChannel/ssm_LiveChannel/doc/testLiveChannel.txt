@@ -1,0 +1,77 @@
+/*******************************************************************************
+*  ssm_LiveChannel 支持的 URL 格式如下：
+*
+*    SETUP rtsp://<virtual-site>[:<port>]/LiveChannel[?<parameters>] RTSP/1.0
+*
+********************************************************************************/
+
+测试时有以下问题要注意：
+
+1. 如果RtspProxy 同时加载多个 Plugin, 一定要在 RtspProxy.xml 中把 ssm_tianshan_s1 放到最后，ssm_LiveChannel 要放到ssm_tianshan_s1 之前
+
+2. URL 中的 AppPath 部分要和 ssm_LiveChannel.xml 中 <ssm_LiveChannel path="LiveChannel"> path 的值一致
+
+3. serviceGroup 值的问题，有以下几种情况：
+
+    a. setup 消息中有 TianShan-ServiceGroup 且值不为空时，serviceGroup 等于TianShan-ServiceGroup 的值
+
+    b. setup中没有 TianShan-ServiceGroup时，此时如果 setup 消息中有 Require: com.comcast.ngod.s1，则继续查找 Transport 中的 qam_name
+        1) 如果 Transport 中有 qam_name，则用 qam_name 的值在 ssm_LiveChannel.xml 中查找对应的 serviceGroup, 如果没有找到，则判断配置项中 defaultServiceGroup 是否大于0，如果大于0，则 serviceGroup 按默认值处理，否则返回 "676 Qam Name Not Found"
+        2) 如果Transport 中没有 qam_name, 则直接判断配置项中 defaultServiceGroup 是否大于0，如果大于0，则 serviceGroup 按默认值处理，否则返回 "676 Qam Name Not Found"
+
+    c. setup中没有 TianShan-ServiceGroup,且没有 Require:com.comcast.ngod.s1，此时也直接判断配置项中 defaultServiceGroup 是否大于0，如果大于0，则 serviceGroup 按默认值处理，否则返回 "676 Qam Name Not Found"
+
+
+// 根据上述判断 ServiceGroup 的方法，SETUP 消息可以有带不带 TianShan-ServiceGroup 和带不带 Require: com.comcast.ngod.s1 几种情况
+
+SETUP rtsp://CatvOfChangNing/LiveChannel?assetUID=TestBcastAsset8 RTSP/1.0
+CSeq: 1
+Require: com.comcast.ngod.s1
+Transport: MP2T/DVBC/QAM;unicast;client=00AF123456DE;qam_name=Chicago.Southbend.1
+User-Agent: ITVLibrary 1.0; amino
+TianShan-Version: 1
+TianShan-AppData: smartcard-id=0000000001;device-id=000000000000;home-id=1234567890;bandwidth=2000;
+TianShan-ServiceGroup: 9999
+
+SETUP rtsp://CatvOfChangNing/LiveChannel?assetUID=TestBcastAsset8 RTSP/1.0
+CSeq: 1
+Transport: MP2T/DVBC/QAM;unicast
+User-Agent: ITVLibrary 1.0; amino
+TianShan-Version: 1
+TianShan-ServiceGroup: 1004
+Require: com.comcast.ngod.s1
+TianShan-AppData: smartcard-id=0000000001;device-id=000000000000;home-id=1234567890;bandwidth=2000;
+
+
+PLAY * RTSP/1.0
+Session: 1158041604
+Scale: 1.000000
+CSeq: 2
+User-Agent: ITVLibrary 1.0; amino
+Range: npt=10.000-
+
+
+PAUSE * RTSP/1.0
+CSeq: 14
+User-Agent: ITVLibrary 1.0; amino
+Session: 1158041604
+x-reason: User Requested Pause
+
+
+PING * RTSP/1.0
+CSeq: 16
+Session: 1158041604
+User-Agent: ITVLibrary 1.0; amino
+
+
+GET_PARAMETER * RTSP/1.0
+CSeq: 23
+Session: 1158041604
+User-Agent: ITVLibrary 1.0; amino
+Content-Type: text/parameter 
+Content-Length: 0
+
+TEARDOWN * RTSP/1.0
+Session: 1158041604
+CSeq: 16
+User-Agent: ITVLibrary 1.0; amino

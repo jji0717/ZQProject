@@ -1,0 +1,8 @@
+#ifndef _weiwoo_service_common_definition_header_file_h__
+#define _weiwoo_service_common_definition_header_file_h__
+
+#define WEIWOO_SESS_IDENT_NAME	"sys.SessionIdentName"
+#define WEIWOO_SESS_IDENT_CATE	"sys.SessionIdentCategory"
+
+
+#endif//_weiwoo_service_common_definition_header_file_h__

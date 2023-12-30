@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TianShan>
+	<Definitions src="TianShanDef.xml">
+	</Definitions>
+	
+	<!-- Configuration on RTI provision helper. It captures IP streaming traffic, performs RTF trick genenration and index
+	     pacing then save the results into Vstream file system
+	     attributes:
+	-->
+	<CPH_NasCopy>
+	
+		<!-- Configuration on the ingestion session
+		     attributes:
+		       disableBitrateLimit - 1 for disable bitrate limit for copying file from NAS to Vstrm, default is 0; Note that "1" is just for test, we should use "0" for original case.
+		-->
+		<Session disableBitrateLimit="0" />	
+	
+	<!-- ProvisionMethod propertis configuration
+          attributes:
+              maxSessions - the maximal concurrent sessions that this instance can host
+              maxBandwidth - the maximal bandwidth in Kbps that this instance can host
+     -->
+		<ProvisionMethod>
+		   <Method name="SeaChange.MediaCluster.NASCOPY"  maxSessions="30" maxBandwidth="115200"/>
+    </ProvisionMethod>
+    
+		<!-- Configuration on the Vstream API
+		     attributes:
+		       BWMgrClientId  - the client Id of Vstream Bandwidth Management. Default 773220, 0 to disable bandwidth management
+		-->
+		<Vstream BWMgrClientId="773220" />
+
+		<!-- Configuration on the process events
+		-->
+		<Event>
+			<!-- Configuration on the progress events
+			     attributes:
+			       enable  - 1 to enable sending progress events
+			-->
+			<Progress enable="1"/>
+			
+			<!-- Configuration on the streamable events
+			     attributes:
+			       enable  - 1 to enable sending streamable events
+			       lagAfterStart  - the time lag in second after the provision starts to notify streamable
+			-->
+			<Streamable enable="1" lagAfterStart="0" />
+		</Event>
+		
+	 </CPH_NasCopy>
+</TianShan>

@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TianShan>
+	<Definitions src="TianShanDef.xml">
+	</Definitions>
+	<!-- default configurations for the services of this TianShan deployment -->
+	<default>
+
+		<!-- The EventChannel service where the services of this TianShan deployment will deliver events to.
+		     attributes:
+		       endpoint - the ICE endpoint to the EventChannel service
+		-->
+		<EventChannel endpoint="${PrimeEventChannelEndpoint}" />
+
+
+		<!--CrashDump can help devoloper diagnose the program when it crashed
+			if you set enable to "1" you must make sure that the path is accessible
+			path   - crashdump path
+			enabled - 1 to enable crashDump
+		 -->
+		<CrashDump path="${TianShanCrashDumpDir}" enabled="1"/>
+
+		<!-- The Ice trace log setting for all the services of this TianShan deployment.
+		     attributes:
+		       enabled       - 1 if the Ice trace is enabled, default "0"
+		       logfileSuffix - a suffix of the log filename, i.e. the service Weiwoo's main log file will
+		                       be "Weiwoo.log". With a suffix "_ice.log", the ICE trace will be in a
+		                       separate logfile "Weiwoo_ice.log" in the same directory
+		       level         - the log level of the ice trace log
+		       size          - the size that this trace log must roll
+		-->
+		<IceTrace enabled="1" level="7" size="10240000" />
+
+		<!-- Additional Ice properties if there is any, <prop /> is its sub element
+		     attrib of <prop />:
+		        name         == the name of the Ice property
+		        value        == the value of the Ice property
+		-->
+		<IceProperties>
+			<!-- the following are performance tuning parameters, please don't modify if you are not an expert at them
+			-->
+			<serviceProperty name="Ice.Trace.Network"                value="1" />
+			<serviceProperty name="Ice.Trace.Protocol"               value="0" />
+      <serviceProperty name="Ice.Trace.Retry"                  value="1" />
+			<serviceProperty name="Ice.Trace.Slicing"                value="0" />
+			<serviceProperty name="Ice.Warn.Connections"             value="1" />
+			<serviceProperty name="Ice.Warn.Endpoints"               value="1" />
+			<serviceProperty name="Ice.ACM.Client"                   value="0" />
+			<serviceProperty name="Ice.Override.ConnectTimeout"      value="5000" />
+			<serviceProperty name="Ice.Override.Timeout"             value="20000" />
+			<serviceProperty name="Freeze.Warn.Deadlocks"            value="1" />
+			<serviceProperty name="Freeze.Trace.Map"                 value="0" />
+			<serviceProperty name="Freeze.Trace.DbEnv"               value="2" />
+			<serviceProperty name="Freeze.Trace.Evictor"             value="0" />
+			<serviceProperty name="Freeze.Evictor.UseNonmutating" 	 value="1"/>
+			<serviceProperty name="Ice.ThreadPool.Server.Size" 	 	   value="20"/>
+			<serviceProperty name="Ice.ThreadPool.Client.Size" 	  	 value="20"/>
+		</IceProperties>
+
+		<!-- The default folder where the services of this TianShan deployment accesses their local
+		     databases if it is not defined by their individual configurations
+		     attributes:
+		       path          - path to the location of database directory, default "../data/"
+		-->
+		<Database path="${TianShanDatabaseDir}" />
+
+	</default>
+
+	<CdnSS netId ="${HostNetID}" >
+
+		<!-- The local bind endpoint that the ContentStore service is serving on
+		     attributes:
+		       endpoint      - the bind endpoint of this ContentStore service
+		       dispatchSize  - the initial thread pool size to dispatch client requests, values in the range 4-20 are acceptable
+		       dispatchMax   - the max thread pool size to dispatch client requests
+		-->
+		<Bind endpoint="tcp -h ${ServerNetIf} -p 10700" dispatchSize="30" dispatchMax="100" />
+
+		<!-- Configuration on how the requests are processed
+		     attributes:
+		       threads   - the size of the thread pool
+		-->
+		<RequestProcess threads="10" />
+
+		<!-- Configuration of C2 TransferPorts
+		     attributes:
+		        HttpBindIp - the local address to bind, must be ANY_ADDRESS "0.0.0.0" if there are multiple TransferPorts
+		        HttpBindIp - port to serve C2 transfering sessions
+		        httpThreadCount -
+		        servicethreadCount -
+		        bufferCount - the buffer to read disk would be multiples of page size every time, this defines the multipler
+		        clientType:
+		        					0   Aio
+		        					1   C2Client
+									2   HttpClient
+									3   AquaClient
+									4   HttpFetcher replease C2Client
+
+		-->
+		<C2Streamer HttpBindIp="0.0.0.0" httpBindPort="12000" httpThreadCount="20" servicethreadCount="200" locatethreadCount="20" bufferCount="32" clientType="2" serverType="1" cpuCores="">
+			  <!-- StreamingPort: use if you want to re-assign a speed to a port
+					     name: port name, case-sensitive
+					     speed: port speed in kbps
+			  -->
+        <StreamingPort name="eth0" speed="600000" natPortBase="9527" natPortCount="1"/>
+		
+		<DiskCache  diskCacheEnabled="0">
+			<!--CacheDir homePath="" totalSize="0" readThreads="2" writeThrads="2" pendingsYield="2"/-->
+	    </DiskCache>
+        <!-- PerfTune
+               packetPayload : byte count of a single chunk data
+			         packetsPerSend: logically, data will be flushed to client after packetsPerSend packets copied to kernel.
+        -->
+        	<PerfTune packetPayload="1460" packetsPerSend="100" maxRoundPerRun="3" fsReadThreshold="200" socketThreshHold="20" timerThreshold="30" cacheBufferSize="524288" cacheBufferCount="800" cacheReadAheadCount="1"/>
+
+            <!-- Configuration of C2Client
+                 only clientType=1 this config Valid
+                    attributes:
+                    UpStreamIP  -   IP of nic to bind on
+                    url - type of cdnss
+                    clientTransfer - transfer ip in locate request body
+                    httpCRGAddr    - address of HttpCRG
+                    httpCRGPort    - port of HttpCRG
+                    defaultGetPort - default port of get request
+                    timeout        - max time could be used when send request, unit is a millisecond
+                    waitBufferTime - wait times when no buffer for use, unit is a millisecond
+             -->
+            <C2Client UpStreamIP="" url="/cacheserver" clientTransfer="${ServerNetIf}" httpCRGAddr="10.15.10.74" httpCRGPort="10080" defaultGetPort="12000" transferRate="3750000" timeout="30000" waitBufferTime="10000"/>
+            <SegmentFetcher ProxyUrl="http://10.15.10.50:3128/" SegmentUrl="http://10.15.10.74:12000/scs/getfile/" HttpTimeOut="10000" HttpRetry="0"/>
+   					<!--  Configure of the times when remove Cache buffer
+                  attributes:
+   									DefaultTimeout         -time of regular buffer remove from the buffers list, default 1d
+   									FioErrTimeOut          -time of fio err buffer remove from the buffers list, default 10m
+   									HttpErrTimeOut         -time of http err buffer remove from the buffers list, default 1m
+   									SocketErrTimeOut       -time of socket err buffer remove from the buffers list, default 2s
+   									OtherErrTimeout        -time of other err buffer remove from the buffers list, default 5s
+   					-->
+   					<BufferRemove  DefaultTimeout="86400000" FioErrTimeOut="600000" HttpErrTimeOut="60000" SocketErrTimeOut="2000" OtherErrTimeout="5000" />
+
+   		</C2Streamer>
+
+   		<!--
+   		configure HLSServer Only when CDNSS is used as a HLS server
+   		-->
+   		<HLSServer hostUrl=""  keyfile="" aquaRooturl="" homecontainer="" logFlag="0">
+   			<!--name2bitrate name="" bitrate=""/-->
+   		</HLSServer>
+
+
+
+		<!-- Log files to publish thru SentryService
+		-->
+		<PublishedLogs>
+        <!-- Log file to publish thru SentryService
+		     	    attributes:
+               path    - full path of the log file
+               syntax  - the file defines the syntax of the events via the regular expressions
+        -->
+        <Log path="${TianShanLogDir}\CDNSS.log" syntax="${TianShanHomeDir}\etc\syntax.xml" key="CDNSS" type="FileLog"/>
+		</PublishedLogs>
+
+		<!-- Configuration about the StreamSession
+		     attributes:
+		     	timeout - timeout in millseconds when a playlist is unattended at any state other than streaming
+		-->
+		<StreamSession 	timeout="500" sessionScanInterval="5000" resourceScanInterval="100000"/>
+
+		<!-- Replica :
+			    groupId : the replica group identifier
+			    category: for streamsmith, this should be Streamer, DO NOT CHANGE IT
+			    subscriber/endpoint: the streamer replica listener endpoint. if it's not path manager, DO include servant
+			                          name in the endpoint string
+			    subscriber/updateInterval: default interval in milliseconds, for update replica information to listened
+									 If listener do not advise a value for update , this value will be used
+		-->
+		<Replica groupId="${ServerNetIf}" category="Streamer" >
+			<subscriber endpoint="C2Locator:${CdnSsSubscriberEndpoint}" updateInterval="6000" />
+		</Replica>
+
+		<PeformanceTune>
+			<!-- CheckpointPeriod :	Every Berkeley DB environment created by Freeze has an associated thread that
+									checkpoints this environment every num seconds. If num is less than 0, no checkpoint
+									is performed. The default is 120 seconds.
+				    DbRecoverFatal	:	If num is set to a value larger than zero, fatal recovery is performed when the environment
+									is opened. The default value is 0.
+			-->
+			<IceFreezeEnviroment 	CheckpointPeriod="0" DbRecoverFatal="1" />
+
+			<!-- SavePeriod 	:	Freeze uses a background thread to save updates to the database. After num milliseconds
+									without saving, if any facet is created, modified, or destroyed, this background
+									thread wakes up to save these facets. When num is 0, there is no periodic
+									saving. The default is 60000.
+			SaveSizeTrigger		:	Freeze uses a background thread to save updates to the database. When num is 0
+									or positive, as soon as num or more facets have been created, modified, or
+									destroyed, this background thread wakes up to save them. When num is negative,
+									there is no size trigger. The default is 10.
+			sessionSize 		:	the size of session records to cache, 200 ~ 2000 is acceptable
+			-->
+			<session 				sessionSize ="2000" SavePeriod="-1" SaveSizeTrigger="500" />
+		</PeformanceTune>
+
+		<AssistantLog>
+			<SessionLog level="7" fileSize="12040000" buffer="10240" flushTimeout="2" />
+			<HttpLog level="7" fileSize="12040000" buffer="10240" flushTimeout="2" />
+		</AssistantLog>
+	</CdnSS>
+
+	<!--
+		embeded node conetent store :
+		netId	: content store's netId
+		autoFileSync	:set 1 to automatism sync file system adn database
+		note: the netId of ContentStore shares the same value of that of <CdnSS />
+	-->
+	<ContentStore cacheMode="0" cacheLevel="1" autoFileSync="0" >
+		<!-- ContentStore's log attribute
+		-->
+		<Log>
+			<MainLog level="7" fileSize="102400000" count="5" />
+			<EventLog level="7" fileSize="102400000" count="5" />
+		</Log>
+
+		<!-- The database cache
+		     attributes:
+		       volumeSize  - the size of volume records to cache, 20 ~ 200 are acceptable
+		       contentSize  - the size of content records to cache, 400 ~ 4000 are acceptable
+		-->
+		<DatabaseCache volumeSize="40" contentSize="2000"/>
+
+        <!-- Configuration of Content Provision
+            defaultBandwidth: default provision bandwidth while called with 0 transfer bitrate (bps)
+            trickSpeeds:      speed collection required for trick generation represented as float numbers,
+                              multiple speeds are separated by space. eg: "7.5 12.5 15.0"
+        -->
+        <Provision defaultBandwidth="5000000" trickSpeeds="7.5" timeoutIdleProvisioning="172800000" timeoutNotProvisioned="600000"/>
+
+		<!-- CDNSS use multicast to let master-CDNSS and slave-CDNSS to sync the content state
+		-->
+		<FileEvent enableMulticast="0" groupAddress="${TianShanGroupAddr}" groupPort="65002" groupBind="${ServerNetIf}"/>
+
+		<Volumes>
+			<Volume name="$" path="/mnt/bwfs/c2files" fstype="enfs" default="1" />
+		</Volumes>
+
+
+		<!-- ContentStore replica information:
+				groupId			: contentstore replica group identifier
+				replicaId		: hidden, shares the same value of netId of <CdnSS /> by default
+				ReplicaPriority	: replica priority
+				timeout			: default timeout interval in milliseconds
+				MasterReplica:
+					endpoint	: content store replica listener endpoint ,  DO NOT include servant name ,  streammith will do it for you
+		-->
+		<StoreReplica groupId="${ReplicaGroupId}" replicaPriority="2" timeout="60000" >
+			<MasterReplica endpoint="tcp -h ${ClusterCSNetIf} -p 10400" />
+		</StoreReplica>
+
+		<CPC endpoint="tcp -h ${ServerNetIf} -p 11500" >
+			<ContentProvision defaultProvisionBandwidth="37500" />
+			<Sessions registerInterval="15000"  DefaultIndexType="VVC"/>
+		</CPC>
+
+	</ContentStore>
+
+	<!-- CacheStore configuration
+		    enabled - 1 to enable CacheStore layer
+		    sessionInterface - url of the headend interface exported to the client to setup content fetching sessions
+		    tempFilePath - the path to place some temporary files during runtime
+		    heatbeatInterval - intervals in msec between two heartbeats to announce the run status of this cachestore instance
+	 -->
+	<CacheStore heatbeatInterval="10000" enable="1" flags="" sessionInterface="http://10.15.10.78:10080/vodadi.cgi" tempFilePath="" >
+        <!-- CacheFactor
+              maxCandidates - max count of CacheStore candidates in the farm to forward to
+              maxUnpopular  - max count of in-memory content names of a cache folder
+              pwrRanking  - reserved
+              prevLoadThreshold  - reserved
+              successorLoadThreshold  - reserved
+        -->
+        <CacheFactor maxCandidates="3" pwrRanking="1100" prevLoadThreshold="8000" successorLoadThreshold="2000" maxUnpopular="100" />
+        <!-- ContentPopularity
+              timeWindow - the time window in msec to measure the popularity
+              countOfPopular - exceed how many request within the recent time window would be considered the content as a popular
+              hotWindow  - reserved
+        -->
+        <ContentPopularity timeWindow="300000" countOfPopular="4" hotWindow="30000" />
+
+        <!-- CachePenalty
+              forwardFail - penalty value to charge the foreign CacheStore for each logical failure
+              max - penalty value to charge the foreign CacheStore for each communication failure
+        -->
+        <CachePenalty forwardFail="1" max="60" />
+
+        <!-- Configuration on the interface to backend persistent/source storage
+              bindIP - IP of nic to bind on
+              totalProvisionBWKbps - the total BW of this upstream interface reserved for the purpose of content provision/cache from the source storage
+              defaultTransferServerPort - the default transfer port on source storage to connect to if it doesn't indicate the port number, see NGOD C2 spec
+              defaultProvSessionBitrateKbps - the default/minimal birate in Kbps for every provision session to start with
+              minBitratePercent - the percentage of the the default/minimal birate in Kbps for every provision session to start with
+        -->
+        <UpStream bindIP="" defaultProvSessionBitrateKbps="4000" defaultTransferServerPort="12000" minBitratePercent="5" totalProvisionBWKbps="1000000" />
+
+        <!-- Configuration on the interface to content users
+              bindIP - IP of nic to bind on
+        -->
+        <DownStream bindIP="" />
+
+        <!-- ContentDomains configuration about source storage
+              paidLength - fixed length of the provider's asset ID
+              defaultSessionInterface - the default interface to locate a content transfer if none of the listed providers matches
+
+              Provider/name - the provider Id to search for
+              Provider/sessionInterface - the interface to locate the contents of this provider
+        -->
+        <ContentDomains paidLength="20" defaultSessionInterface="c2http://172.12.23.54:8099/vodadi.cgi">
+		    <Provider name="hbo.com" sessionInterface="c2http://10.122.5.34:8080/vodadi.cgi" />
+		    <Provider name="news[1-3].cnn.com" sessionInterface="c2http://172.12.23.54:8080/vodadi.cgi" />
+		    <Provider name="news[4-9].cnn.com" sessionInterface="c2http://172.12.23.55:8080/vodadi.cgi" />
+        </ContentDomains>
+	</CacheStore>
+</TianShan>

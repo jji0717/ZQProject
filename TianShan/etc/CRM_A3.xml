@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TianShan>
+
+  <Definitions src="TianShanDef.xml">
+  </Definitions> 
+  <default>
+
+  <!--Additional Ice properties if there is any, <prop /> is its sub element
+			attrib of <prop />:
+				name: the name of the Ice property
+				value: the value of the Ice property
+  -->
+    <IceProperties>
+      <!-- 
+  the following are performance tuning parameters, please don't modify if you are not an expert at them 
+  -->
+      <prop name="Ice.Trace.Network" value="1" />
+      <prop name="Ice.Trace.Protocol" value="0" />
+      <prop name="Ice.Trace.Retry" value="1" />
+      <prop name="Ice.Warn.Connections" value="1" />
+      <prop name="Ice.Warn.Endpoints" value="1" />
+      <prop name="Freeze.Warn.Deadlocks" value="1" />
+      <prop name="Freeze.Trace.Map" value="0" />
+      <prop name="Freeze.Trace.DbEnv" value="2" />
+      <prop name="Freeze.Trace.Evictor" value="0" />
+      <prop name="Ice.Override.Timeout" value="15000" />
+      <prop name="Ice.Override.ConnectTimeout" value="2000" />
+      <prop name="Ice.ThreadPool.Server.Size" value="20" />
+      <prop name="Ice.ThreadPool.Server.SizeMax" value="50" />
+      <prop name="Ice.ThreadPool.Client.Size" value="10" />
+      <prop name="Ice.ThreadPool.Client.SizeMax" value="20" />
+    </IceProperties>
+
+  </default>
+  
+  <!-- A3Message:
+	backStoreType:  0-ContentLib   1-CacheStore  2-AquaServer 
+	             if backStoreType = 0, please confige ContentLib node
+	             if backStoreType = 1, please confige CacheStore node
+	             if backStoreType = 2, please confige AquaServer node-->
+  <A3Message backStoreType="1">
+  
+	<!-- CRM_A3Message.dll:
+		plugIn  logfile information-->
+	<Log logfilename= "CRM_A3.log" level= "7" size="40960000" count="5" buffer="204800" flushtimeout="2" />
+
+	<IceTrace logfilename= "CRM_A3Ice.log" level= "7" size="40960000" count="5" buffer="204800" flushtimeout="2" />
+	<!--
+		EventChannelEndPoint: the EventChannel service's endpoint, format: "tcp -h x.x.x.x -p 11000"
+		listenEndpoint: the local ip and port to receive event from EventChannel, format: "tcp -h x.x.x.x -p 10000"-->
+	<TianShanEvents  EventChannelEndPoint="${Domain.eventChannel}" listenEndpoint="tcp -h ${ServerNetIf} -p 11401" />
+
+	<!-- ContentLib: backStoreType = 0
+		endpoint: ContentLib service ice endpoint, format: "tcp -h x.x.x.x -p 11900", empty if disabled
+	-->
+	<ContentLib endpoint="">
+		<!-- ContentStoreMount
+			exportname: the mount name for the contentstore server volume name
+			netid:      contentstore server net id
+			volumename: contentstore server volume name
+		--> 
+	-  	<ContentStoreMount>
+		 <param exportname="AAA" netid="SEA0001" volumename="/V1" /> 
+	      	 <param exportname="BBB" netid="SEA0001" volumename="/V2" /> 
+	    	 <param exportname="CCC" netid="SEA0002" volumename="/V1" /> 
+	   	</ContentStoreMount>
+    	</ContentLib>
+	  
+	<!-- CacheStore:      backStoreType = 1
+			      endpoint: CacheStore service ice endpoint, format: "tcp -h x.x.x.x -p 10700", empty if disabled
+			      note: the content specified will be distributed among the CacheFarm, but the queries about Volume will be
+			            limited on the local attached ContentStore
+			      optimize: if the optimize is 1, choose ContentEdge server excepted List volume method, default is 0
+	-->
+	<CacheStore endpoint="tcp -h x.x.x.x -p 10700" optimize="1"/>
+	  
+	  
+        <!-- Configuration on AquaServer: backStoreType = 2
+	    	rootUrl	-	Aqua Server URL,include username and password
+	    	container	-	folder Name under the root URL path
+	        flags - flag Dump MsgBody ,HexDump ,curlclient send ,info ,recviver log etc
+	    	maxThreadPoolSize	- curl client threadpool size
+     		connectTimeout - Connect Aqua Server timeout (default 5000ms)
+     		timeout - Aqua request timeout (default 10000ms)
+     		deleteMainFile -for deleteContent request, whether or not delete mainfile, if url = aqua://host:port/filename, set deleteMainFile = 0; else deleteMainFile=1; default 1;	
+     		enableRaw- if enableRaw=1, protocol is udp, use cpe CPH_Raw Plugin, method = "xor-media.raw.pcap"
+	-->
+	<AquaServer rootUrl="http://user:password@ip:port/aqua/rest/cdmi" connectTimeout="5000" timeout="10000" homeContainer="" userDomain="/cdmi_domains/default/" 
+		    flags="0" maxThreadPoolSize="5" mainFileExtension="${MainFileExtension}" mainFilePath="" DefaultIndexType="VVC" volumeName=""
+		     contentNameFormat="${PAID}_${PID}" deleteMainFile="0" exposeURL="ftp://username:password@10.10.10.1/home/" bindIp="" >
+		<!--
+	            registerInterval - heartbeat freq in milliseconds
+	        -->
+		<CPC>
+	          <Bind endpoint="tcp -h ${ServerNetIf} -p 11500" />
+	          <Sessions registerInterval="15000" />
+	        </CPC>
+	        <!-- 
+	            defaultBandwidth: default provision bandwidth while called with 0 transfer bitrate (bps) 
+	            trickSpeeds:      speed collection required for trick generation represented as float numbers,
+	                              multiple speeds are separated by space. eg: "7.5 12.5 15.0"
+	        -->
+	        <Provision defaultBandwidth="5000000" trickSpeeds="7.5" />
+	    
+        </AquaServer>
+
+  </A3Message>
+  
+</TianShan>

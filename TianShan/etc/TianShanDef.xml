@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TianShan>
+	<!-- global property definition.		
+		usage: ${<property>} will be replaced with the property value.
+		For example, define the global property "TianShanHomeDir" and value here, then we could use ${TianShanHomeDir} in the xml 
+		that included this file instead of directly inputing the value there.
+	-->
+	<Definitions>
+	
+		<!-- HostNetID: to identify the instance of node, hostname is recommend -->
+		<property name="HostNetID" value="" />
+		<property name="DefaultLogLevel" value="6" />
+
+		<!-- ##########################################
+		     # Section NICs
+		     ##########################################
+			 ServerNetIf:       The local Server to Server IP 
+			 ServerNetIf_NC:    The physical card ip address of the server (distinguish from a Legato one).
+		     IngestNetIf:       The local ingestion network interface, usually use the propagation IP, used in CPESvc
+		     ClusterCSNetIf:    MediaClusterCS service IP, used in CPESvc and StreamSmith
+		     CPENetIf:          CPE Service IP, used in CRM_3dServer
+		-->
+		<property name="ServerNetIf" value="" />
+		<property name="IngestNetIf" value="" />
+		<property name="ClusterCSNetIf" value="" />
+		<property name="CPENetIf" value="" />
+		<property name="ServerNetIf_NC" value="" />
+
+		<!-- ##########################################
+		     # Section Directories
+		     ##########################################
+		-->
+		<property name="TianShanHomeDir" value="C:\TianShan"/>
+		<property name="TianShanLogDir" value="${TianShanHomeDir}\logs"/>
+		<property name="TianShanConfDir" value="${TianShanHomeDir}\etc"/>
+		<property name="TianShanUtilDir" value="${TianShanHomeDir}\utils"/>
+		<property name="TianShanCrashDumpDir" value="${TianShanLogDir}\crashdump"/>
+		<property name="TianShanRtRecDir" value="${TianShanLogDir}\rtrec"/> <!-- the directory where the programs may drop their temporary runtime records in -->
+
+		<property name="TianShanDatabaseDir" value="${TianShanHomeDir}\data"/>
+
+		<!-- ##########################################
+		     # Section Domain
+		     ##########################################
+			 Domain.name:           The unique name of the domain
+			 Domain.groupAddr:      TianShan components may advertise to each other in a same deployment via multicast messaging
+			 Domain.timeServer:     The IP of the server that hosts NTP service
+			 Domain.sessionMgr:     The endpoint to the session manager of the domain
+			 Domain.siteAdmin:      The endpoint to the site admin service of the domain
+			 Domain.pathMgr:        The endpoint to the path manager service of the domain
+		     Domain.eventChannel:   The endpoint to the event channel of the domain
+		-->
+		<property name="Domain.name" value="SEAC00000" />
+		<property name="Domain.groupAddr" value="239.200.200.1" />
+		<property name="Domain.timeServer" value="" />
+		<property name="Domain.sessionMgr" value="SessionManager:tcp -h ${ServerNetIf} -p 10100" />
+		<property name="Domain.siteAdmin" value="tcp -h ${ServerNetIf} -p 10200" />
+		<property name="Domain.pathMgr" value="tcp -h ${ServerNetIf} -p 10300" />
+		<property name="Domain.eventChannel" value="tcp -h ${ServerNetIf} -p 11000 -t 3000" />
+		
+		<!-- about upper layer source CDN if this domain itself doesn't act as a CDN-Storage -->
+		<property name="Domain.srcCDN.C2Server" value="192.168.88.73" />
+		<property name="Domain.srcCDN.LocatePort" value="10080" />
+		<property name="Domain.srcCDN.TransferPort" value="12000" />
+
+		<!-- ##########################################
+		     # Section ServerLoad variables
+		     ##########################################
+		-->
+		<property name="RtspProxyIP" value="" />
+		<property name="RtspProxyPort" value="" />
+		<property name="snapshotTemplate" value="\\10.50.12.4\e$\serverload.tmpl.xml" />
+		<property name="snapshotTarget" value="C:\serverload.snapshot.xml" />
+		
+		<!-- ##########################################
+		     # Section Other variables of Services
+		     ##########################################
+		-->
+		<property name="CdnSsSubscriberEndpoint" value="tcp -h ${ServerNetIf} -p 6789" />
+		<property name="CacheStoreEndpoint" value="tcp -h ${ServerNetIf} -p 10700" />
+		
+		<!-- used for A3_message-->
+		<property name="MainFileExtension" value=".0X0000" />
+	</Definitions>
+	
+</TianShan>

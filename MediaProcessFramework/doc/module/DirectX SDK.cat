@@ -1,0 +1,30 @@
+
+(object Petal
+    version    	47
+    _written   	"Rose 8.0.0303.1400"
+    charSet    	134)
+
+(object Class_Category "DirectX SDK"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    attributes 	(list Attribute_Set
+	(object Attribute
+	    tool       	"sc"
+	    name       	"SourceControlSpec"
+	    value      	(value Text 
+|"$/ZQProjs/MediaProcessFramework/doc/module", CYIAAAAA
+	    )))
+    quid       	"41C153A70386"
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class_Category "MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)"
+	    is_unit    	TRUE
+	    is_loaded  	FALSE
+	    file_name  	"$ZQProjsPath\\MediaProcessFramework\\doc\\module\\MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library).cat"
+	    quid       	"41C153A70391")
+	(object Class_Category "stdole Ver 2.0 (OLE Automation)"
+	    is_unit    	TRUE
+	    is_loaded  	FALSE
+	    file_name  	"$ZQProjsPath\\MediaProcessFramework\\doc\\module\\stdole Ver 2.0 (OLE Automation).cat"
+	    quid       	"41C153B50155"))
+    logical_presentations 	(list unit_reference_list))

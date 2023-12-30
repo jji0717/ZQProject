@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Notice: TianShanDef.xml has been preloaded when this configuration file is being parsed, please
+     refer to TianShanDef.xml for the common properties
+-->
+<TianShan>	
+	 <Definitions src="TianShanDef.xml">
+	 </Definitions>
+	<default>	
+		<!-- Additional Ice properties if there is any, <prop /> is its sub element
+		     attrib of <prop />:
+		        name         - the name of the Ice property
+		        value        - the value of the Ice property
+		-->
+		<IceProperties>
+			<!--  the following are performance tuning parameters, please don't modify if you are not an expert at them 
+			--> 
+			<prop name="Ice.Trace.Network"                    value="1" />
+			<prop name="Ice.Trace.Protocol"                   value="0" />
+			<prop name="Ice.Trace.Retry"                      value="1" />
+			<prop name="Ice.Warn.Connections"                 value="1" />
+			<prop name="Ice.Warn.Endpoints"                   value="1" />
+			<prop name="Ice.Logger.Timestamp"                 value="1" />
+			<prop name="Freeze.Warn.Deadlocks"                value="1" />
+			<prop name="Freeze.Trace.Map"                     value="0" />
+			<prop name="Freeze.Trace.DbEnv"                   value="2" />
+			<prop name="Freeze.Trace.Evictor"                 value="0" />
+			<prop name="Ice.Override.Timeout"                 value="20000"/>
+			<prop name="Ice.Override.ConnectTimeout"          value="2000"/>
+			<prop name="Ice.ThreadPool.Server.Size"           value="30"/>
+			<prop name="Ice.ThreadPool.Server.SizeMax"        value="60"/>
+			<prop name="Ice.ThreadPool.Client.Size"           value="10"/>
+			<prop name="Ice.ThreadPool.Client.SizeMax"        value="30"/>
+			<prop name="Freeze.Evictor.UseNonmutating"	  value="1"/>
+		</IceProperties>
+		
+		<!-- The default folder where the services of this TianShan deployment accesses their local
+		     databases if it is not defined by their individual configurations
+		     attributes:
+		       path          - path to the location of database directory, default "../data/"
+		       runtimePath   - path to keep the runtime data, default as the value of path
+		-->
+		<Database path="${TianShanDatabaseDir}" runtimePath="${TianShanDatabaseDir}\runtime" />
+	</default>
+	
+	<PHOERM>
+		<!-- Log : pho's log attribute
+           level         - the log level of this main log
+		       size          - the size that this trace log must roll
+		       flushTimeout  - timeout in second that the logfile must flush
+		-->
+		<Log level = "7" size="40960000" count="5" buffer="204800" flushtimeout="2"/>
+		
+	 <!-- Allocation : 
+           maxCandidates     - max Candidate of allocation
+		       allocationLease   - lease of allocation(msec)
+		       cacheSize         - define the size of the evictor's active queue which storing PhoAllocation
+		       interval          - onrestore interval time(second)
+		-->
+		<Allocation maxCandidates="5" allocationLease="600000" evictorSize="1000" interval="7200"/>
+		<!--
+	    <Bind endpoint="tcp -h *.*.*.* -p 10301"/>
+     	   endpoint   -the local endPoint for Allocation Owner, the ip address must be local machine's
+   	-->
+		<Bind endpoint="tcp -h ${ServerNetIf} -p 10301"/>
+		
+		<!-- ThreadPoolSize, default: 50 -->
+	  <ThreadPool size="50"/>
+	  
+ <!-- S6Session: 
+           sessionTimeOut       - s6 session timeout interval, default vlaue=600000(ms)
+           requestTimeout       - S6 messaging timeout(in msec)
+           connectTimeout       - connect to S6 server timeout
+		-->
+	  <S6Session  sessionTimeOut="600000" requestTimeout="5000" connectTimeout="3000"/>
+	  
+	  <!-- SessionGroup: 
+	         netId                -SessionGroup name prefix
+		       defaultMaxSessionGroups   - default sessionGroup count
+		       maxSessionsPerGroup      - max sessionCount  of per sessionGroup
+		       GroupSyncInterval    - sessionGroup sync sessions with ERM server interval
+		       bindAddress          - the local ip by s6client bind
+		       disconnectAtTimeout  - to specify the amount of continuous messaging timeout that lead to give up the current connection and reconnect
+		-->
+	  <SessionGroup netId="${HostNetID}" defaultMaxSessionGroups= "1" groupSyncInterval="600000" maxSessionsPerGroup="300" bindAddress="" disconnectAtTimeout="10"> 
+	     <S6Server ipport="*.*.*.*:10554"    maxSessionGroups="10"/>
+	  </SessionGroup>
+	</PHOERM>
+</TianShan>

@@ -1,0 +1,34 @@
+HKCR
+{
+	ATL_INFO.listSample.1 = s 'listSample Class'
+	{
+		CLSID = s '{1B9BD4AA-4B40-4C87-8CF0-5350BFE50854}'
+	}
+	ATL_INFO.listSample = s 'listSample Class'
+	{
+		CLSID = s '{1B9BD4AA-4B40-4C87-8CF0-5350BFE50854}'
+		CurVer = s 'ATL_INFO.listSample.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {1B9BD4AA-4B40-4C87-8CF0-5350BFE50854} = s 'listSample Class'
+		{
+			ProgID = s 'ATL_INFO.listSample.1'
+			VersionIndependentProgID = s 'ATL_INFO.listSample'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			ForceRemove 'Control'
+			ForceRemove 'Insertable'
+			ForceRemove 'ToolboxBitmap32' = s '%MODULE%, 101'
+			'MiscStatus' = s '0'
+			{
+			    '1' = s '131473'
+			}
+			'TypeLib' = s '{1E617F1B-5BED-44FE-BD48-8C842BEA63E0}'
+			'Version' = s '1.0'
+		}
+	}
+}

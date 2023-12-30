@@ -1,0 +1,48 @@
+1. Cache for Read and ReadAhead
+the cache is operated buffer by buffer, maps to the concept "sector" in disk
+cache_buffersize - defines the buffer size in bytes, normally 4K in a Linux system to match the page size
+cache_buffers    - specifies the total amount of read buffers, the total reserved buffer size in bytes 
+                   therefore equals cache_buffersize*cache_buffers
+curl_threads     - the read-threads borrows this configuration, which is shared with those to do the CDMI
+                   interactions other than write
+cache_readAheadTrigger - specifies how sensitive the read-ahead will be triggered, if the count of
+                   accessing a certain range (see cache_readAhead_recognitions) of data exceeded this
+				   configuration, read-ahead will be triggered
+cache_readAhead_recognitions - defines how to measure a cache-hit, the data-range by
+				  (cache_buffersize*cache_readAhead_recognitions) each will be take as a segment to encounter
+                  cache-hits				  
+cache_readAhead_powerBase - used to determine the size how bigger read-ahead should be performed
+cache_readAheadMax - the max buf count in a read-ahead GET request
+				   The buffers of a read-ahead GET would be based the following forum:
+				     min(cache_readAheadMax, cache_readAhead_powerBase^(accessCount -cache_readAheadTrigger))
+
+2. Cache for Delayed Write
+cache_buffersize_forwrite - defines the buffer size in bytes, normally 4K in a Linux system to match the page size
+cache_buffers_forwrite - specifies the total amount of write buffers, the total reserved buffer size in bytes 
+                   therefore equals cache_buffersize_forwrite*cache_buffers_forwrite
+cache_flushThreads - specifies the threads that perform simultimous submitting to the CDMI server-side
+cache_forceFlushInterval - specifies the timeout to write the buf no matter if it has not yet been full 
+cache_writeLength_min - specifies the minimal content-length in bytes that a single PUT shall carry, if it is not
+                    a flush and the collected bytes to write is less that this configuration, the outgoing PUT will
+					be delayed and wait for the next round
+cache_writeLength_max - specifies the maximal content-length in bytes that a single PUT can carry. Data more than
+					this configuration will be broken into multiple PUT requests
+cache_writeSegments_max - when a singal PUT aggerated discontinous segements by delimated ranges, this specifies
+					maximal amount of such discontinous segements in a PUT request
+cache_writeYieldWinSize - when FUSE receives Linux write as a slow stream, this configuration intend to lean the
+					slow bitrate to affect the outgoing CDMI submitting. This configuration in bytes specifies the
+					resolution on how to measure the received bitrate from Linux
+cache_writeYieldMin - PUT will be instantly submitted if the calculated yield time less than this configuration
+					in millisec
+cache_writeYieldMax - specifies the maximal yield time in millisec if the calculated yield is greater
+					
+3. Cache of File/Dir Attributes
+attrCache_size - specifies the size of cache to keep the file/dir attributes, which is a LRU based
+attrCache_TTL - specifies the time-to-live in millisec of the cached attributes of files or directories
+attrCache_childrenTTL - specifies the time-to-time in msec on how long the children list of a container can be valid
+
+3. Others
+curl_connectTimeout - specifies timeout in msec on establishing TCP connection to the server-side
+curl_operationTimeout - specifies timeout in msec on executing a CDMI operation, covers connecting/sending request/
+                    waiting for response, also covers mutiple retries if there is any
+aqua_del_before_mv  - when 1, issue a file-delete command prior to renaming

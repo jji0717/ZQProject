@@ -1,0 +1,112 @@
+--
+--    MIB for ZQ Server-side Traps
+--
+
+ZQserver-Trap-MIB DEFINITIONS ::= BEGIN
+    
+    IMPORTS
+        enterprises 
+            FROM RFC1155-SMI
+        OBJECT-TYPE
+            FROM RFC-1212
+        DisplayString
+            FROM RFC-1213;
+
+    ZQInteractive           OBJECT IDENTIFIER 
+	-- DESCRIPTION "ZQ Interactive Inc."
+       	::= {enterprises  60000}
+       	
+    
+    Application		    OBJECT IDENTIFIER 
+    	-- DESCRIPTION "ZQ developped applications"
+    	::= {ZQInteractive 1}
+    	
+    ITVExtensionService	    OBJECT IDENTIFIER 
+    	-- DESCRIPTION "ZQ developped services as extension of ITV system"
+    	::= {ZQInteractive 2}
+    	
+    StandAloneService       OBJECT IDENTIFIER 
+    	-- DESCRIPTION "ZQ developped services not integrated within ITV system"
+    	::= {ZQInteractive 3}
+   	
+--*********************************************************************** 
+--*********************************************************************** 
+	
+   zqServerTrap		    OBJECT IDENTIFIER
+   	::= {StandAloneService 5}
+   	
+--***********************************************************************   	
+
+   zqServerTrapSeqNo OBJECT-TYPE
+
+       SYNTAX Counter
+
+       ACCESS read-only   -- cannot perform Set function
+
+       STATUS mandatory
+
+       DESCRIPTION
+
+          "ZQ Server Side Trap Sequence number. "
+
+       ::= {zqServerTrap 1}
+
+
+   zqServerTrapId OBJECT-TYPE
+
+       SYNTAX INTEGER
+
+       ACCESS read-only   -- cannot perform Set function
+
+       STATUS mandatory
+
+       DESCRIPTION
+
+          "ZQ Server Side Trap ID. "
+
+       ::= {zqServerTrap 2}
+
+
+    zqServerTrapTime OBJECT-TYPE
+
+       SYNTAX INTEGER
+
+       ACCESS read-only   -- cannot perform Set function
+
+       STATUS mandatory
+
+       DESCRIPTION
+
+          "The time when the Trap occured. "
+
+       ::= {zqServerTrap 3}
+
+
+    zqServerTrapTroubleSource OBJECT-TYPE
+
+      SYNTAX DisplayString
+      ACCESS read-only
+
+      STATUS mandatory
+
+      DESCRIPTION
+
+          "The hostname of the original trap sender."
+
+      ::= {zqServerTrap 4}
+
+
+   zqServerTrapText OBJECT-TYPE
+
+      SYNTAX DisplayString
+      ACCESS read-only
+
+      STATUS mandatory
+
+      DESCRIPTION
+
+          "Message in the Trap"
+
+      ::= {zqServerTrap 5}
+
+ END

@@ -1,0 +1,20 @@
+// BufPoolLock.cpp: implementation of the CBufPoolLock class.
+//
+//////////////////////////////////////////////////////////////////////
+
+#include "stdafx.h"
+#include "BufPoolLock.h"
+
+//////////////////////////////////////////////////////////////////////
+// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
+
+CBufPoolLock::CBufPoolLock(CRITICAL_SECTION&cri):m_Cri(cri)
+{
+	EnterCriticalSection(&m_Cri);
+}
+
+CBufPoolLock::~CBufPoolLock()
+{
+	LeaveCriticalSection(&m_Cri);
+}

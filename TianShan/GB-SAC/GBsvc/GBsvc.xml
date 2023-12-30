@@ -1,0 +1,21 @@
+<TianShan>
+
+<Definitions src="TianShanDef.xml">
+</Definitions>
+	
+<default>
+
+	<!-- CrashDump can help devoloper diagnose the program when it crashed
+			if you set enable to "1" you must make sure that the path is accessible
+			path: crashdump path
+			enabled: 1 to enable crashDump
+  --> 
+  <CrashDump path="${TianShanCrashDumpDir}" enabled="1"/> 
+</default>
+
+<!--  configurations of the GBsvc service 
+  -->
+<GBsvc  localIp="127.0.0.1"  localPort="8080"  releaseThreadSize="11"  processThreadSize="11"  dispatchThreadSize="11" enableFileDebug="1"  filesDirectory="D:\ZQProjs\TianShan\GB-SAC\GBsvc\testfile_rep_bak" >
+</GBsvc>
+  
+</TianShan>

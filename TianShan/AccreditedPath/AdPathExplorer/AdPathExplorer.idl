@@ -1,0 +1,52 @@
+// AdPathExplorer.idl : IDL source for AdPathExplorer.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (AdPathExplorer.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+#include "olectl.h"
+	
+
+	[
+		object,
+		uuid(6E740A68-EFA1-4CD8-A4DA-A641B25B8C65),
+		dual,
+		helpstring("IAdPathUI Interface"),
+		pointer_default(unique)
+	]
+	interface IAdPathUI : IDispatch
+	{
+	};
+
+[
+	uuid(4D670F4B-2D2E-4055-95CE-0C5D34D8A2D5),
+	version(1.0),
+	helpstring("AdPathExplorer 1.0 Type Library")
+]
+library ADPATHEXPLORERLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	[
+		uuid(97DEA8DF-06C5-4E0C-B39A-AFA428667729),
+		helpstring("_IAdPathUIEvents Interface")
+	]
+	dispinterface _IAdPathUIEvents
+	{
+		properties:
+		methods:
+	};
+
+	[
+		uuid(8BDA1D2F-58DE-4737-B935-3E3794D4DAC4),
+		helpstring("AdPathUI Class")
+	]
+	coclass AdPathUI
+	{
+		[default] interface IAdPathUI;
+		[default, source] dispinterface _IAdPathUIEvents;
+	};
+};

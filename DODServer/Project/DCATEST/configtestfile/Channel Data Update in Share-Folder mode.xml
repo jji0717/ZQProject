@@ -1,0 +1,8 @@
+<DODMessage>
+	<DODMessageHeader Time="13:20:00-05:00" MessageCode="3006"/>
+	<DODMessageBody DataType="11" GroupID="0">
+		<FileOperation Root="\\192.168.80.137\NAV\" UpdateMode="2">
+			<File Path=" \a\b\" />
+		</FileOperation>
+	</DODMessageBody>
+</DODMessage>

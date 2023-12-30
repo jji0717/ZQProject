@@ -1,0 +1,26 @@
+HKCR
+{
+	PlaylistSoapUDTMapper.PlaylistModel.1 = s 'PlaylistModel Class'
+	{
+		CLSID = s '{490193B4-2815-4467-920B-950B818B65E8}'
+	}
+	PlaylistSoapUDTMapper.PlaylistModel = s 'PlaylistModel Class'
+	{
+		CLSID = s '{490193B4-2815-4467-920B-950B818B65E8}'
+		CurVer = s 'PlaylistSoapUDTMapper.PlaylistModel.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {490193B4-2815-4467-920B-950B818B65E8} = s 'PlaylistModel Class'
+		{
+			ProgID = s 'PlaylistSoapUDTMapper.PlaylistModel.1'
+			VersionIndependentProgID = s 'PlaylistSoapUDTMapper.PlaylistModel'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			'TypeLib' = s '{65D12B3D-915F-4A6C-A34E-B72482BBD792}'
+		}
+	}
+}

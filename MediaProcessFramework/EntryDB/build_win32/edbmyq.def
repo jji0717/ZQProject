@@ -1,0 +1,7 @@
+LIBRARY edbmyq
+DESCRIPTION	'Entry Database, MySQL edition'
+VERSION		0.1
+
+EXPORTS
+	about
+

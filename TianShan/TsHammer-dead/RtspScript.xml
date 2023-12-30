@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--NOTICE : all time configuration's unit is ms -->
+
+<!-- the configuration of hammer test
+   attributes:
+     client:   the simultaneous client-side the test is running with, each client may represent a TCP connection to the server
+     iterationPerClient: the iterations that shares one client
+     loop:     the times that every iteration would loop sequentially, the total sessions of the test would be 
+     interval: the time interval, in millisecond, between one iteration and its next
+     timeout:  the max time wait for resonse
+     @note:    the configuration would lead the test to:
+                   maximal number of simultaneous sessions equals the total iterations, which is (client * iterationPerClient)
+                   total sessions equals (client * iterationPerClient) * loop
+-->
+<HammerTest client="3" clientType="RTSPClient" iterationPerClient="50" loop="2" interval="50" messageTimeout="5000" hammerThreads="3" clientThreads="4" clientIdleTimeout="600000">
+  <Log level="7" filename="TsHammer.log" size="50000000" count="10" hexdumpSentMsg="0" hexDumpRcvdMsg="0" traceTcpThreadPool="1" traceUserThreadPool="1" />
+
+  <!-- the configuration of the server-side that the test is connects to
+   	  attributes:
+     	     url:   url to the server-side
+	-->
+	<Server url="rtsp://10.15.10.35"/>
+	
+	<!-- the configuration of a pool that respond to the script macro $POOLALLOC(PoolName), $POOLFIND(PoolName, name, paramName)
+   	  attributes:
+   	     name:  the unique name of the pool
+   	     spin:  1- spin, the item would not be taken twice until the full sequence had been walked over, 0- non-spin
+     	     sequencePrepare: 0 - keep the original sequence; 1- random suffle, every time after the sequence had been
+     	                      walked over by POOLALLOC(), the pool must initialize the sequence for next use by randomSuffling them
+	-->
+	<Pool name="AssetPool" spin="1" sequencePrepare="random">
+		<Item name="Asset00" >
+			<param key ="bitrate" value="3750000" />
+			<param key ="pidpaid" value="schange.com SEAC000000000038E4A1" />
+		</Item>
+		<Item name="Asset01" >
+			<param key ="bitrate" value="3750000" />
+			<param key ="pidpaid" value="schange.com SEAC000000000038E4A2" />
+		</Item>
+		<Item name="Asset03" >
+			<param key ="bitrate" value="3750000" />
+			<param key ="pidpaid" value="schange.com SEAC000000000038E4A3" />
+		</Item>
+	</Pool>
+	
+	<!-- the definition of global environment variables along with initial values -->
+	<SessCtx name="destPort" value="49156" global="0"/>
+	<SessCtx name="LatestODSessId" value="49156" global="0"/>
+
+	
+	<!-- the script of every session run
+   	  attributes:
+   	     name:  the unique name of the pool
+   	     spin:  1- spin, the item would not be taken twice until the full sequence had been walked over, 0- non-spin
+     	     sequencePrepare: 0 - keep the original sequence; 1- random suffle, every time after the sequence had been
+     	                      walked over by POOLALLOC(), the pool must initialize the sequence for next use by randomSuffling them
+	-->
+	<Session>
+		<!-- the initial context variables of each session
+   	  	  attributes:
+   	             name:  the name of the variable
+   	     	     value: the value or expression to initialize the default value of the variable
+   	     	     global: 1- exported as a global variable,  0- valid only within the session, default 0
+   	     	     note: some reserved macros are:
+   	     	       ${CLS} - new line \r\n
+   	     	       ${SERVERURL} - what in the above <Server url="" />
+   	     	       $(SessCSeq)  - an automatically increased cseq number offered by the hammer core
+   	     	       $(ClientId)  - the client instance id assigned by the hammer core
+		-->
+		<SessCtx name="asset1" value="$POOLALLOC(AssetPool)" global="0"/>
+		<SessCtx name="URL" value="${ServerURL}/${asset1}" global="0" />
+		<SessCtx name="dest" value="192.168.81.97" />
+		<SessCtx name="destPort" value="$INC(${destPort})" global="1"/>
+		<SessCtx name="thisOdSessId" value="$INC(${LatestODSessId})" global="0"/>
+		<SessCtx name="LatestODSessId" value="$INC(${LatestODSessId})" global="1"/>
+		
+		<!-- each out-going request in the sequence of the session
+   	  	  attributes:
+   	             skipable: 0- this request can not be skipped even if the session had error
+   	                       1- this request can be skipped, continue with the next request if this one has error
+		-->
+		<Request operation="SETUP" skip="0"  >
+			<!-- the header to overwrite -->
+			<Header name="Transport" value="Transport: MP2T/DVBC/UDP;unicast;client=01005e000001;bandwidth=3750;destination=${dest};client_port=${destPort};sop_name=NGODTEST" />
+			<Header name="OnDemandSessionId" value="${thisOdSessId}" />
+			<Header name="Require" value="com.comcast.ngod.r2" />
+			<Header name="StreamControlProto" value="rtsp" />
+			<Header name="SessionGroup" value="70001-${ClientId}" />
+			<Header name="Volume" value="SEAC70001-$" />
+
+			<!-- the ContentBody/SDP to overwrite -->
+			<Body value="v=0${CLS}o=- c2dcb90100000040800001005e000302 0 IN IP4 10.11.0.22:2931${CLS}s=${CLS}t=0 0${CLS}a=X-playlist-item: $POOLFIND(AssetPool, ${asset1}, pidpaid)${CLS}a=X-motorola-ecm: $POOLFIND(AssetPool, ${asset1}, pidpaid) 190 8 3 5 40001100000000f98f30020400f0ffff00000000 5 40001100000000f98f31020400f0ffff00000000 7 41407e0001000000000101f98f30000040a21a80679b034b1d00100b0800000101030a015c2b0ee4cca8bbd300d9c3e72cd2b43b9c00f22f796f4808050400d106feee52954d68001d8396de2be4c3ce001f96979b10a1abfd003ab5288a5341b5ef00227f35928cab629e00c95fbfe577cb963e01945e8f7459884e5900000000${CLS}c=IN IP4 0.0.0.0${CLS}m=video 0 udp MP2T${CLS}" />
+			
+		</Request>
+
+		<!-- the handling of the response.
+		     this hammer utility take regular expression to parse/match each line of the incoming response
+		     Header/name: the header name of the response to match
+		     Header/syntax: the regular expression if the header value of the response matchs, also parse out the field as variables
+		     .../SessCtx/name:  the session variable name to update per the response
+		     .../SessCtx/value: the session variable value to update per the response
+		     .../SessCtx/type:  "local"- to update only the session context, otherwise export to global
+		-->
+		<Response>
+			<Header name="Session" syntax="[0-9]+" >
+				<SessCtx key="SessId" value="${1}" global="0"/>
+			</Header>
+		</Response>
+
+		<!-- the sleep time to yield between two operation/requests in the sequence of the session -->
+		<Sleep wait="1000" />
+		
+		<!-- some further request samples in the sequence-->
+		<Request operation="PLAY" skip="1"  >
+			<Header name="OnDemandSessionId" value="${thisOdSessId}" />
+			<Header name="Require" value="com.comcast.ngod.c1" />
+			<Header name="SessionGroup" value="HAMMERTEST-${ClientId}" />
+			<Header name="Scale" value="1" />
+		</Request>
+		<Response/>
+		<Sleep wait="5000" />
+		
+		<Request operation="TEARDOWN" skip="0">
+			<Header name="OnDemandSessionId" value="${thisOdSessId}" />
+			<Header name="Require" value="com.comcast.ngod.c1" />
+			<Header name="x-reason" value="User Requested Teardown" />
+		</Request>
+		<Response/>
+		
+	</Session>
+	
+</HammerTest>

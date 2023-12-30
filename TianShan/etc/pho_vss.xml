@@ -1,0 +1,34 @@
+<!-- Notice: TianShanDef.xml has been preloaded when this configuration file is being parsed, please
+     refer to TianShanDef.xml for the common properties
+-->
+
+<TianShan>	
+	 <Definitions src="TianShanDef.xml">
+	 </Definitions>
+	<default>
+		<!-- Additional Ice properties if there is any, <prop /> is its sub element
+		     attrib of <prop />:
+		        name         - the name of the Ice property
+		        value        - the value of the Ice property
+		-->
+		<IceProperties>
+			<!--  the following are performance tuning parameters, please don't modify if you are not an expert at them 
+			--> 
+			<prop name="Ice.Trace.Network"                    value="1" />
+			<prop name="Ice.Trace.Protocol"                   value="0" />
+			<prop name="Ice.Trace.Retry"                      value="1" />
+			<prop name="Ice.Warn.Connections"                 value="1" />
+			<prop name="Ice.Warn.Endpoints"                   value="1" />			
+			<prop name="Ice.Override.Timeout"                 value="5000"/>
+			<prop name="Ice.Override.ConnectTimeout"          value="2000"/>
+		</IceProperties>						
+	</default>	
+	<PHO>
+		<!--
+			subscriberBind: subscriber bind endpoint
+			updateInterval: replica information update interval in milliseconds
+			warmup:			if this is set to 1 , streamer will be checked when pho is started up. or else no action will be taken during startup
+		-->
+		<HsnTree subscriberBind="tcp -h ${ServerNetIf}" updateInterval="60000" warmup="0"/>		
+	</PHO>
+</TianShan>

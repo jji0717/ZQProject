@@ -1,0 +1,1026 @@
+// ===========================================================================
+// Copyright (c) 2006 by
+// ZQ Interactive, Inc., Shanghai, PRC.,
+// All Rights Reserved.  Unpublished rights reserved under the copyright
+// laws of the United States.
+// 
+// The software contained  on  this media is proprietary to and embodies the
+// confidential technology of ZQ Interactive, Inc. Possession, use,
+// duplication or dissemination of the software and media is authorized only
+// pursuant to a valid written license from ZQ Interactive, Inc.
+// 
+// This software is furnished under a  license  and  may  be used and copied
+// only in accordance with the terms of  such license and with the inclusion
+// of the above copyright notice.  This software or any other copies thereof
+// may not be provided or otherwise made available to  any other person.  No
+// title to and ownership of the software is hereby transferred.
+//
+// The information in this software is subject to change without notice and
+// should not be construed as a commitment by ZQ Interactive, Inc.
+//
+// Ident : $Id: RtspSpec.dxd $
+// Branch: $Name:  $
+// Author: Hui Shao
+// Desc  : 
+//
+// Revision History: 
+// ---------------------------------------------------------------------------
+// see section of "Revision History" in manpage
+// ===========================================================================
+/*!
+
+@page page_tsrtsp TianShan RTSP Specifications
+- @subpage tsrtspsec_rtsp_ov "Overview"
+- @subpage tsrtsppage_rtsp_tcp "TCP Connection & Session Timeout"
+- @subpage tsrtsppage_rtsp_sc "Status Codes"
+- @subpage tsrtsppg_rtsp_setup "SETUP"
+- @subpage tsrtsppg_rtsp_play "PLAY"
+- @subpage tsrtsppg_rtsp_pause "PAUSE"
+- @subpage tsrtsppg_rtsp_teardown "TEARDOWN"
+- @subpage tsrtsppg_rtsp_gp "GET_PARAMETER"
+- @subpage tsrtsppg_rtsp_announce "ANNOUNCE"
+- @subpage tsrtsppg_rtsp_seac_fixup "Fixups for SeaChange RTSP Spec"
+- @subpage tsrtsppg_rtsp_seac_app "Known Application Services"
+
+@page tsrtspsec_rtsp_ov  TianShan RTSP Specification
+@author  Hui Shao
+@date    2007-12-19
+@version 0.3
+
+@section tsrtspsec_revision Revision History
+$Log: /ZQProjs/TianShan/doc/RtspSpec.dxd $
+  
+  1     10-11-12 16:05 Admin
+  Created.
+  
+  1     10-11-12 15:39 Admin
+  Created.
+  
+  9     08-02-04 14:16 Hui.shao
+  
+  8     07-12-19 20:16 Hui.shao
+  detailed status codes
+  
+  7     07-12-06 12:54 Hui.shao
+  added TianShan-Transport extension for NAT penetrating
+  
+  6     07-11-07 18:19 Hui.shao
+  corrected some mis-spelling
+  
+  5     07-07-04 20:04 Hui.shao
+  
+  4     07-06-27 20:19 Hui.shao
+  added chapter "Known Application" and section category id remapping
+  
+  3     07-06-12 17:39 Hui.shao
+  added tcp connection & session timeout, DoS protection
+  
+  2     07-05-16 17:21 Hui.shao
+  added the fixes up for SeaChange RTSP spec
+  
+  1     07-04-19 18:57 Hui.shao
+
+@section tsrtspsec_rtsp_ovv  Overview
+@subsection tsrtspsec_rtsp_scope Scope
+The following information will be included in this document:
+@li RTSP syntax across interfaces
+@li RTSP behavior across interfaces
+
+Each respective interface document will include the following:
+@li Specific constraints and requirements of that interface
+@li Definition of socket-level transport (TCP only)
+@li Examples of each message supported
+
+@subsection tsrtspsec_rtsp_ref References
+The following documents may be of use in understanding this interface.
+@li [N-1] H. Schulzrinne; et al, Real Time Streaming Protocol (RTSP), RFC 2326, April 1998
+@li [N-2] Nancy Wimberg, Gregory Holbrow, Jim Baratz; SeaChange Interactive Television Real Time Streaming Protocol, Client Interface Specification; 2.0.8, July 2006
+
+
+
+@section tsrtspsec_rtsp_methods RTSP Methods
+This section defines the RTSP methods supported.
+@subsection tsrtspsec_rtsp_mt_ref RFC 2326
+The method types supported are the same as RFC 2326 with the exception of the PING method, which is described below.
+
+@subsection tsrtspsec_rtsp_mt_ping PING
+The syntax and usage of the PING method will be as described the "draft-ietf-mmusic-rfc2326bis-07" draft of the RTSP specification.
+The following is an example use of the PING method.
+Client to Server request:
+@code
+PING rtsp://CatvOfChangNing/PauseTV?channelId=1 RTSP/1.0
+CSeq: 123
+Session:0000000000021A5
+@endcode
+
+Server to Client response:
+@code
+RTSP/1.0 200 OK
+CSeq: 123
+Session:0000000000021A5
+@endcode
+
+@subsection tsrtspsec_rtsp_mt_required Required Support of Methods
+The minimal subset of RTSP methods required is as follows.
+@li ANNOUNCE
+@li GET_PARAMETER
+@li PING
+@li OPTIONS
+
+@section tsrtspsec_rtsp_url RTSP URL Extension
+@subsection tsrtspsec_rtsp_url_apath ABS_PATH
+The RSTP URL can be extended to include an <abs_path> component. This can be used for a client to request a particular resource.
+@code
+rtsp://<virtual-site>:<port>/<application-mount>?[application-params] RTSP/1.0
+@endcode
+
+@section tsrtspsec_rtsp_headers RTSP Headers
+Each respective RTSP method specification will include the following:
+@li Required and optional headers that are required for each method
+@li The definition of each extension header, including purpose and syntax
+@li Clarification on each modified header
+
+@subsection tsrtspsec_rtsp_hl  Highlights
+@li All of the RTSP headers shall be case insensitive
+@li Every request from the RTSP client should include the <i>User-Agent</i> header field
+@li Every request or response sent from the RTSP server will include the <i>Server</i> header field. i.e "Server: StreamSmith 1.0"
+@li Since TianShan 1.7, every response sent from the RTSP server will include the <i>Date</i> header field to indicate the server-side clock in the following format.
+i.e "Date: 23 Jan 1997 15:35:06.123 GMT". Be aware that no weekday will be included according to RFC2326
+@code
+Date: DD MMM YYYY hh:mm:ss[.msec] GMT
+@endcode
+
+
+@subsection tsrtspsec_rtsp_ext TianShan Header Extensions
+<table><tr><th align=left>Header</th><th align=left>Description</th></tr>
+<tr><td>TianShan-Version</th><td>indicates the preferred version number of TianShan RTSP specification. See @ref tsrtsppg_rtsp_setup "SETUP" for more details</td></tr>
+<tr><td>TianShan-ServiceGroup</th><td>indicates the Service Group ID for the On-Demand order. See @ref stsrtspsec_rtsp_setup_req "SETUP Request" for more details</td></tr>
+<tr><td>TianShan-AppData</th><td>contains the additional application oriented parameters. See @ref stsrtspsec_rtsp_appdata "TianShan-AppData Header" for more details</td></tr>
+<tr><td>TianShan-Transport</th><td>contains the additional transport parameters. See @ref stsrtspsec_rtsp_setup_rsp "SETUP Response" for more details</td></tr>
+<tr><td>TianShan-ClientTimeout</th><td>indicates the RTSP session timeout, the client must send heartbeat before it expires. . See @ref stsrtspsec_rtsp_setup_rsp "SETUP Response" and @ref stsrtspsec_rtsp_gp_hb "RTSP Heartbeat" for more details.</td></tr>
+<tr><td>TianShan-Notice</th><td>provide the notice identification. See @ref stsrtspsec_rtsp_sc_500 "500 Internal Server Error" and @ref stsrtspsec_rtsp_an_evt "TianShan-Notice Header" for more details</td></tr>
+<tr><td>TianShan-NoticeParam</th><td>provide the notice parameters. See @ref stsrtspsec_rtsp_sc_500 "500 Internal Server Error" and @ref stsrtspsec_rtsp_an_epm "TianShan-NoticeParam Header" for more details</td></tr>
+</table>
+
+@section tsrtspsec_rtsp_mtcont See Also
+@li @ref tsrtsppage_rtsp_tcp "TCP Connection & Session Timeout"
+@li @ref tsrtsppage_rtsp_sc "Status Codes"
+@li @ref tsrtsppg_rtsp_setup "SETUP"
+@li @ref tsrtsppg_rtsp_play "PLAY"
+@li @ref tsrtsppg_rtsp_pause "PAUSE"
+@li @ref tsrtsppg_rtsp_teardown "TEARDOWN"
+@li @ref tsrtsppg_rtsp_gp "GET_PARAMETER"
+@li @ref tsrtsppg_rtsp_announce "ANNOUNCE"
+@li @ref tsrtsppg_rtsp_seac_fixup "Fixups for SeaChange RTSP Spec"
+
+*/
+
+////////////////////// TCP Connection & Session Timeout ///////////////////////
+/*!
+
+@page tsrtsppage_rtsp_tcp TCP Connection & Session Timeout
+This section defines the required behavior of components with respect to TCP connections.
+@section tsrtspsec_rtsp_tcp_socket Establishing the socket
+It will be the requirement of the RTSP client to establish the TCP socket and to re-establish it if the socket is ever
+disconnected. The RTSP client and server will use that socket for messages regarding multiple sessions with no need to
+establish a separate socket per session.
+
+@section tsrtspsec_rtsp_tcp_timeout Connection timeout
+In TCP mode it is required that upon establishing the socket connection a RTSP client send a GET_PARAMETER of
+connection_timeout to understand the connection timeout value. \n
+The RTSP server keeps track of the time of last communication with each client. The RTSP server will start a timer
+that expires at <timeout> seconds from the last communications time.  ANY messages received from the client will update
+the last communications time with that client, effectively restating the connection timer. If the connection timer expires,
+the RTSP server SHOULD close the connection.
+
+ 
+@section tsrtspsec_rtsp_tcp_stimeout Session Timeout
+This section defines behavior with respect to session timeouts. Unless otherwise specified the session timeout mechanism is as defined in RFC 2326.
+
+PING or GET_PARAMETER without specifying parameters will be recognized as a pure heartbeat to renew the timer of the session.
+
+The RTSP client MAY or MAY NOT send a Ping message at any time to extend the session timeout.
+In the event that an RTSP server detects a session timeout, the following will occur:
+@li The RTSP server detects the session timeout
+@li The RTSP server destroys the server session
+@li The RTSP server MAY send an announce of "end of stream"
+
+@section tsrtspsec_rtsp_dos DoS Protection
+This section describes the DoS (Death of Service) protection in the server
+
+@subsection tsrtspsec_rtsp_dos_detect Measure and Detect DoS Attack
+The server has configurable options to define a measuring time window and maximal request count. Once the count of the requests
+within such a measuring time windows exceeds the maximal count, some of the following request will be rejected by the server.
+
+@subsection tsrtspsec_rtsp_dos_recv Recover from the DoS refusions
+The measuring time window keeps moving forward by clock time so that the previous counted requests will expire if the measuring window moves away.
+Once count is decreased to less than the maximal limitation, the requests from the client will be accepted by the server again.
+
+*/
+
+////////////////////// PAGE Status Codes ///////////////////////
+/*!
+
+@page tsrtsppage_rtsp_sc Status Codes
+
+@subsection stsrtspsec_rtsp_sc_200 200 OK
+Success
+
+@section stsrtspsec_rtsp_sc_client Client Error 4xx
+
+@subsection stsrtspsec_rtsp_sc_404 404 Not Found
+The request on-demand asset can not be found
+
+@subsection stsrtspsec_rtsp_sc_405 405 Method Not Allowed
+The method specified in the request is not allowed for the resource identified by the request URI. The response MUST include an Allow
+header containing a list of valid methods for the requested resource. This status code is also to be used if a request attempts to use a
+method not indicated during SETUP, e.g., if a RECORD request is issued even though the mode parameter in the Transport header only specified PLAY.
+@subsection stsrtspsec_rtsp_sc_451 451 Parameter Not Understood
+The recipient of the request does not support one or more parameters contained in the request.
+@subsection stsrtspsec_rtsp_sc_453 453 Not Enough Bandwidth
+The request was refused because there was insufficient bandwidth. This may, for example, be the result of a resource reservation failure.
+@subsection stsrtspsec_rtsp_sc_454 454 Session Not Found
+The RTSP session identifier in the Session header is missing, invalid, or has timed out.
+@subsection stsrtspsec_rtsp_sc_455 455 Method Not Valid in This State
+The client or server cannot process this request in its current state.
+@subsection stsrtspsec_rtsp_sc_457 457 Invalid Range
+The Range value given is out of bounds
+@subsection stsrtspsec_rtsp_sc_458 458 Parameter Is Read-Only
+The parameter to be set by SET_PARAMETER can be read but not modified.
+@subsection stsrtspsec_rtsp_sc_461 461 Unsupported Transport
+The Transport field did not contain a supported transport specification.
+
+@section stsrtspsec_rtsp_sc_server Server Error 5xx
+Response status codes beginning with the digit "5" indicate cases in which the server is aware that it has erred or is incapable of performing the request. 
+Except when responding to a HEAD request, the server SHOULD include an entity containing an explanation of the error situation, and whether it is a temporary
+or permanent condition. User agents SHOULD display any included entity to the user. These response codes are applicable to any request method. 
+@subsection stsrtspsec_rtsp_sc_500 500 Internal Server Error
+The server encountered an unexpected condition which prevented it from fulfilling the request, the
+error details will be in the header field "TianShan-Notice", please refer to @ref stsrtspsec_rtsp_an_evt "TianShan-Notice Header" and
+@ref stsrtspsec_rtsp_an_epm "TianShan-NoticeParam Header".
+@subsection stsrtspsec_rtsp_sc_501 501 Not Implemented
+The server does not support the functionality required to fulfill the request. This is the appropriate response when the server does not recognize the request
+method and is not capable of supporting it for any resource
+@subsection stsrtspsec_rtsp_sc_503 503 Service Unavailable
+The server is currently unable to handle the request due to a temporary overloading or maintenance of the server. The implication is that this is a temporary
+condition which will be alleviated after some delay. If known, the length of the delay MAY be indicated in a Retry-After header. If no Retry-After is given,
+the client SHOULD handle the response as it would for a 500 response. 
+@note The existence of the 503 status code does not imply that a server must use it when becoming overloaded. Some servers may wish to simply refuse the connection.
+@subsection stsrtspsec_rtsp_sc_505 505 Version Not Supported
+The server does not support, or refuses to support, the RTSP protocol version that was used in the request message.
+
+@section stsrtspsec_rtsp_sc_eliminated Eliminated Status Codes
+This TianShan RTSP specification is designed for On-Demand application, some status codes are known would not be used.
+@subsection stsrtspsec_rtsp_sc_452 452 Conference Not Found
+<i>Eliminated due to this specification will not support conference and presentation</i> 
+@subsection stsrtspsec_rtsp_sc_459 459 Aggregate Operation Not Allowed
+<i>Eliminated due to this specification will not support conference and presentation</i> 
+@subsection stsrtspsec_rtsp_sc_460 460 Only Aggregate Operation Allowed
+<i>Eliminated due to this specification will not support conference and presentation</i> 
+@subsection stsrtspsec_rtsp_sc_456 456 Header Field Not Valid for Resource
+<i>Any unrecognized fields will be ignored in TianShan RTSP specifications</i>
+@subsection stsrtspsec_rtsp_sc_551 551 Option not supported
+<i>Any unrecognized options will be ignored in TianShan RTSP specifications</i>
+@subsection stsrtspsec_rtsp_sc_462 462 Destination Unreachable
+<i>This specification is designed to work on an streaming architecture that the stream pumper may not be the same module of the RTSP server, determine if destination
+is reachable will be processed by the modules other than RTSP server-side</i>
+
+
+*/
+
+////////////////////// PAGE SETUP ///////////////////////
+/*!
+
+@page tsrtsppg_rtsp_setup SETUP
+
+@section stsrtspsec_rtsp_setup_rscode Applicable Status Codes
+@li @ref stsrtspsec_rtsp_sc_200 "200 OK"
+@li @ref stsrtspsec_rtsp_sc_404 "404 Not Found" if ordered application service or media doesn't exist
+@li @ref stsrtspsec_rtsp_sc_455 "455 Method Not Valid in This State" TianShan doesn't support changing transport parameters for an existing session so a SETUP with a session
+id will be refused
+@li @ref stsrtspsec_rtsp_sc_451 "451 Parameter Not Understood"
+@li @ref stsrtspsec_rtsp_sc_453 "453 Not Enough Bandwidth"
+@li @ref stsrtspsec_rtsp_sc_461 "461 Unsupported Transport"
+@li @ref stsrtspsec_rtsp_sc_500 "500 Internal Server Error" any undefined server-side exceptions, please refer to TianShan-Notice for the details
+@li @ref stsrtspsec_rtsp_sc_503 "503 Service Unavailable"
+@li @ref stsrtspsec_rtsp_sc_505 "505 Version Not Supported"
+
+@section stsrtspsec_rtsp_setup_req Request
+The following are required header fields in RTSP SETUP requests:
+@li <i>CSeq</i>
+@li <i>User-Agent</i> to indicate the type of RTSP client
+@li <i>Transport</i> to indicate the transport parameters acceptable to the client for data transmission.
+@li <i>TianShan-ServiceGroup</i> to indicate the destination service group id
+
+The following may be presented the SETUP request as well:
+@li <i>TianShan-Version</i> to indicate the preferred TianShan RTSP specification version
+@li <i>TianShan-AppData</i> to pass the additional data to the application service
+
+@subsection stsrtspsec_rtsp_setup_cmd Command Line
+the command line shall have the following syntax
+@code
+SETUP rtsp://<virtual-site>[:<port>]/<application-path>[?<parameters>] RTSP/1.0
+@endcode
+where
+@li <i>virtual-site</i> is the virtual site name configured in BusinessRouter, it can be the DNS name or IP address. When virtual site is defined, DNS name is recommended
+@li <i>port</i> is the server port that the RTSP server listens
+@li <i>application-path</i> is the application mount path defined in BusinessRouter maps to a specific VOD application service
+@li <i>parameters</i> is a set of \<key\>=\<value\> expressions with "&" as delimiter. i.e. asset of the order can be defined thru the parameter
+
+@note The full url will be passed to the application service, the latter will be responsive for translating the parameters of the order
+
+@subsection stsrtspsec_rtsp_transport Transport Header
+The <i>Transport</i> header defines the transport parameters acceptable to the client for data transmission.
+The syntax of the Transport header is as follows. 
+@code
+Transport: {MP2T/DVBC/QAM|MP2T/AVP/UDP};{unicast|multicast}[;destination=<destination>][;client_port=<client_port>][;bandwidth=<bandwidth>]
+@endcode
+Where
+@li <i>MP2T/DVBC/QAM</i> indicates that it is using DVBC transport, and
+@li <i>MP2T/AVP/UDP</i> indicates that it is using IP transport
+@li <i>destination</i> indicates the destination DNS name or IP address where the data should transmitted to, required in IP transport mode
+@li <i>client_port</i> indicates the destination port number that the data should transmitted to, required in IP transport mode
+@li <i>bandwidth</i> indicates the bandwidth that should be reserved for the session, optional
+
+@subsection stsrtspsec_rtsp_tstransport TianShan-Transport Header
+The <i>TianShan-Transport</i> header defines the additional transport parameters extends the definition of RTSP RFC data transmission.
+The syntax of the TianShan-Transport header is as follows. 
+@code
+TianShan-Transport: {MP2T/DVBC/QAM|MP2T/AVP/UDP}[;{unicast|multicast}][;nat_penetrating={1|0}][;pokehole_session=<pokehole_sessId>][;source=<server_ip>][;server_port=<server_port>]
+@endcode
+Where
+@li <i>MP2T/DVBC/QAM</i> indicates that it is using DVBC transport, and
+@li <i>MP2T/AVP/UDP</i> indicates that it is using IP transport
+@li <i>nat_penetrating</i> indicates that need enable NAT penetrating to transmit to the destination
+@li <i>pokehole_session</i> only exists in SETUP response, indicates the poke session id reserved for the client session, it is required when the client application enable NAT penetrating
+@li <i>source</i> indicates the server source IP address that the data will be transmitted from, required in the SETUP response when the client application needs to enable NAT penetrating
+@li <i>server_port</i> indicates the server port number that the server will transmit from, required in the SETUP response when the client application needs to enable NAT penetrating
+
+@subsection stsrtspsec_rtsp_appdata TianShan-AppData Header
+The header is designed to pass additional application oriented parameters, it will be passed to the application service as well as the URL parameter.
+The syntax of the TianShan-AppData is as follows:
+@code
+TianShan-AppData: <key>=<value>[;<key>=<value>]
+@endcode
+@note Unlike the URL uses "&" as delimiter to separate parameters, TianShan-AppData uses ";" as delimiter
+
+@section stsrtspsec_rtsp_setup_rsp Response
+The following headers will be provided in RTSP SETUP response:
+@li <i>Session</i> a hex string to confirm the RTSP session created for this SETUP request
+@li <i>CSeq</i> to confirm which request this response is for
+@li <i>Server</i> to indicate the type of TianShan RTSP server side
+@li <i>Transport</i> to confirm the transport parameters for data transmission.
+@li <i>TianShan-Transport</i> to indicate the additional transport parameters for data transmission.
+@li <i>TianShan-Version</i> to indicate the TianShan RTSP specification version of the server-side
+
+The following may present in the SETUP request as well:
+@li <i>TianShan-ClientTimeout</i> to indicate client session timeout in seconds
+
+@section stsrtspsec_rtsp_setup_example Examples
+
+@subsection stsrtspsec_rtsp_setup_dvbc DVBC transport
+
+The following is a request example:
+@code
+SETUP rtsp://CatvOfChangNing/PauseTV?channelId=1 RTSP/1.0
+CSeq: 1
+User-Agent: ITVLibrary 1.0; amino
+Transport: MP2T/DVBC/QAM;unicast
+TianShan-Version: 1.0
+TianShan-ServiceGroup: 1
+TianShan-AppData: smartcard-id=0000000001;device-id=000000000000;home-id=1234567890
+
+@endcode
+
+A response message may be sent by the RTSP server as below:
+@code
+RTSP/1.0 200 OK
+CSeq: 1
+Server: StreamSmith 1.0; ssm_tianshan_s1 1.0
+Session: 0000000000021A5
+Transport: MP2T/DVBC/QAM;unicast
+TianShan-ClientTimeout: 600000
+TianShan-Transport: MP2T/DVBC/QAM;program-number=3;frequency=573;qam-mode=64
+
+@endcode
+
+@subsection stsrtspsec_rtsp_setup_ip IP transport
+
+The following is a request example:
+@code
+SETUP rtsp://CatvOfChangNing/PauseTV?channelId=1 RTSP/1.0
+CSeq: 1
+User-Agent: ITVLibrary 1.0; amino
+Transport: MP2T/AVP/UDP;unicast;destination=10.11.22.33;client_port=10000
+TianShan-Version: 1.0
+TianShan-ServiceGroup: 1
+TianShan-AppData: smartcard-id=0000000001;device-id=000000000000;home-id=1234567890
+
+@endcode
+
+A response message may be sent by the RTSP server as below:
+@code
+RTSP/1.0 200 OK
+CSeq: 1
+Server: StreamSmith 1.0; ssm_tianshan_s1 1.0
+Session: 0000000000021A5;timeout=600000
+Transport: MP2T/AVP/UDP;unicast;destination=10.11.22.33;client_port=10000
+TianShan-ClientTimeout: 600000
+TianShan-Transport: MP2T/AVP/UDP;source=10.50.10.122;server_port=12234
+
+@endcode
+
+
+*/
+
+////////////////////// PAGE PLAY ///////////////////////
+/*!
+
+@page tsrtsppg_rtsp_play PLAY
+
+@section stsrtspsec_rtsp_play_rscode Applicable Status Codes
+
+@li @ref stsrtspsec_rtsp_sc_200 "200 OK"
+@li @ref stsrtspsec_rtsp_sc_451 "451 Parameter Not Understood"
+@li @ref stsrtspsec_rtsp_sc_454 "454 Session Not Found"
+@li @ref stsrtspsec_rtsp_sc_455 "455 Method Not Valid in This State" also covers the case that the server refuses to change speed or scale
+@li @ref stsrtspsec_rtsp_sc_457 "457 Invalid Range"
+@note When the system is configured to fit the seek-to position to the most suitable location, this status code may be muted
+@li @ref stsrtspsec_rtsp_sc_500 "500 Internal Server Error"
+@li @ref stsrtspsec_rtsp_sc_503 "503 Service Unavailable"
+@li @ref stsrtspsec_rtsp_sc_505 "505 Version Not Supported"
+
+@section stsrtspsec_rtsp_play_req Request
+
+The PLAY request is also used to change speed and seek content location in RTSP.
+
+The following are required header fields in RTSP PLAY requests:
+@li <i>Session</i> the id to indicate the RTSP session, created in the previous SETUP request
+@li <i>CSeq</i>
+@li <i>User-Agent</i> to indicate the type of RTSP client
+
+The following may be presented the PLAY request as well:
+@li <i>TianShan-Version</i> to indicate the preferred TianShan RTSP specification version
+@li <i>Range</i> to indicate the location of the streaming where should be repositioned to
+@li <i>Scale</i> a float to indicate the new streaming speed
+
+@subsection stsrtspsec_rtsp_setup_cmd Command Line
+the command line shall have the following syntax
+@code
+PLAY {*|rtsp://<virtual-site>[:<port>]/<application-path>[?<parameters>]} RTSP/1.0
+@endcode
+
+@note Although the server will use the <i>Session</i> header as the key to identify the session, the URL in PLAY request is recommended to be same as that in SETUP.
+Or, use "*" in the URL field to use the default value. It is forbidden to provide a URL has conflict to the one in SETUP.
+
+@subsection stsrtspsec_rtsp_play_range Range Header
+
+The <i>Range</i> header is used to reposition within the stream. The new location can be representas the following methods:
+@li absolute clock if the asset has absolute clock reference:
+@code
+Range: clock=<UTC-time>[-<UTC-time>]
+@endcode
+where the <i>UTC-time</i> is as defined as YYYYMMDDTHHMMSS[.frame]
+@li time offset:
+@code
+Range: npt=<sec>
+@endcode
+where the <i>sec</i> is the time offset from the beginning in seconds
+@li "now":
+@code
+Range: now
+@endcode
+If the asset has absolute clock reference, "now" will lead to the position that is nearest to the current clock time.
+@li any empty values will be ignored without repositioning, i.e.
+@code
+Range:
+Range: npt=
+Range: clock=
+@endcode
+
+When the server failed to reposition to the required location, a @ref stsrtspsec_rtsp_sc_457 "457 Invalid Range" message will be responded.
+
+@subsection stsrtspsec_rtsp_play_scale Scale Header
+
+The <i>Scale</i> header is used to change the speed of the stream. The new speed is expected as a float:
+@code
+Scale: <new-speed>
+@endcode
+
+@note The new speed will be confirmed in the PLAY response, it may be not exactly same as the one required. It is required for the RTSP client the parse the final scale confirmed by the server
+
+@section stsrtspsec_rtsp_play_rsp Response
+
+The following headers will be provided in RTSP SETUP response:
+@li <i>Session</i> a hex string to confirm the RTSP session created for this SETUP request
+@li <i>CSeq</i> to confirm which request this response is for
+@li <i>Server</i> to indicate the type of TianShan RTSP server side
+
+The following may be presented the SETUP request as well:
+@li <i>Range</i> to confirm the new location after positioning
+@li <i>Scale</i> to confirm the new speed after speed changing
+
+@note The new speed will be confirmed in the PLAY response, it may be not exactly same as the one required. It is required for the RTSP client the parse the final scale confirmed by the server
+@note If the specified trick speed is not available on the stream service, it will use the first speed that greater than the specified one at the same direction.
+@note If the specified speed is greater than the available maximal speed, the stream will always take the maximal speed at the same direction.
+@note The new position will be confirmed in the PLAY response, it may be not exactly same as the one required. It is required for the RTSP client the parse the final location confirmed by the server
+
+
+@section stsrtspsec_rtsp_play_example Examples
+
+The following is a request example:
+@code
+PLAY * RTSP/1.0
+CSeq: 2
+Session: 0000000000021A5
+User-Agent: ITVLibrary 1.0; amino
+Range: clock=20060801T123411Z-
+Scale: 1.000000
+
+@endcode
+
+A response message may be sent by the RTSP server as below:
+@code
+RTSP/1.0 200 OK
+CSeq: 2
+Session: 0000000000021A5
+Server: StreamSmith 1.0; ssm_tianshan_s1 1.0
+Scale: 1.0
+Range: clock=20060801T123407Z-
+
+@endcode
+
+*/
+
+////////////////////// PAGE PAUSE ///////////////////////
+/*!
+
+@page tsrtsppg_rtsp_pause PAUSE
+@section stsrtspsec_rtsp_pause_rscode Applicable Status Codes
+@li @ref stsrtspsec_rtsp_sc_200 "200 OK"
+@li @ref stsrtspsec_rtsp_sc_451 "451 Parameter Not Understood"
+@li @ref stsrtspsec_rtsp_sc_454 "454 Session Not Found"
+@li @ref stsrtspsec_rtsp_sc_455 "455 Method Not Valid in This State" also covers the case that the server refuses to pause
+@li @ref stsrtspsec_rtsp_sc_457 "457 Invalid Range"
+@li @ref stsrtspsec_rtsp_sc_500 "500 Internal Server Error"
+@li @ref stsrtspsec_rtsp_sc_503 "503 Service Unavailable"
+@li @ref stsrtspsec_rtsp_sc_505 "505 Version Not Supported"
+
+
+@section stsrtspsec_rtsp_pause_req Request
+
+The following are required header fields in RTSP PAUSE requests:
+@li <i>Session</i> the id to indicate the RTSP session, created in the previous SETUP request
+@li <i>CSeq</i>
+@li <i>User-Agent</i> to indicate the type of RTSP client
+
+@subsection stsrtspsec_rtsp_pause_cmd Command Line
+the command line shall have the following syntax
+@code
+PAUSE {*|rtsp://<virtual-site>[:<port>]/<application-path>[?<parameters>]} RTSP/1.0
+@endcode
+
+@note Although the server will use the <i>Session</i> header as the key to identify the session, the URL in PAUSE request is recommended to be same as that in SETUP.
+Or, use "*" in the URL field to use the default value. It is forbiddento provide a URL has conflict to the one in SETUP.
+
+@section stsrtspsec_rtsp_pause_rsp Response
+
+The following headers will be provided in RTSP PAUSE response:
+@li <i>Session</i> a hex string to confirm the RTSP session created for this SETUP request
+@li <i>CSeq</i> to confirm which request this response is for
+@li <i>Server</i> to indicate the type of TianShan RTSP server side
+
+@section stsrtspsec_rtsp_pause_example Examples
+
+The following is a request example:
+@code
+PAUSE * RTSP/1.0
+Session: 0000000000021A5
+CSeq: 12
+User-Agent: ITVLibrary 1.0; amino
+@endcode
+
+A response message may be sent by the RTSP server as below:
+@code
+RTSP/1.0 200 OK
+Session: 0000000000021A5
+CSeq: 12
+Server: StreamSmith 1.0; ssm_tianshan_s1 1.0
+
+@endcode
+
+*/
+
+////////////////////// PAGE TEARDOWN ///////////////////////
+/*!
+
+@page tsrtsppg_rtsp_teardown TEARDOWN
+
+@section stsrtspsec_rtsp_teardown_rscode Applicable Status Codes
+@li @ref stsrtspsec_rtsp_sc_200 "200 OK"
+@li @ref stsrtspsec_rtsp_sc_454 "454 Session Not Found"
+@li @ref stsrtspsec_rtsp_sc_500 "500 Internal Server Error"
+@li @ref stsrtspsec_rtsp_sc_503 "503 Service Unavailable"
+@li @ref stsrtspsec_rtsp_sc_505 "505 Version Not Supported"
+
+@section stsrtspsec_rtsp_teardown_req Request
+
+The following are required header fields in RTSP TEARDOWN
+requests:
+@li <i>Session</i> the id to indicate the RTSP session, created in the previous SETUP request
+@li <i>CSeq</i>
+@li <i>User-Agent</i> to indicate the type of RTSP client
+
+The following may be presented the TEARDOWN request as well:
+@li <i>x-Reason</i> a string message to tell the reason why the client try to tear down the session
+
+@subsection stsrtspsec_rtsp_teardown_cmd Command Line
+the command line shall have the following syntax
+@code
+TEARDOWN {*|rtsp://<virtual-site>[:<port>]/<application-path>[?<parameters>]} RTSP/1.0
+@endcode
+
+@note Although the server will use the <i>Session</i> header as the key to identify the session, the URL in TEARDOWN request is recommended to be same as that in SETUP.
+Or, use "*" in the URL field to use the default value. It is forbiddento provide a URL has conflict to the one in SETUP.
+
+@section stsrtspsec_rtsp_teardown_rsp Response
+
+The following headers will be provided in RTSP TEARDOWN response:
+@li <i>Session</i> a hex string to confirm the RTSP session created for this SETUP request
+@li <i>CSeq</i> to confirm which request this response is for
+@li <i>Server</i> to indicate the type of TianShan RTSP server side
+
+@note For those single RTSP session per connection usages, the server may not be able to send the response before the connection is dropped
+
+@section stsrtspsec_rtsp_teardown_example Examples
+
+The following is a request example:
+@code
+TEARDOWN * RTSP/1.0
+Session: 0000000000021A5
+CSeq: 16
+User-Agent: ITVLibrary 1.0; amino
+x-reason: User Requested Teardown
+@endcode
+
+A response message may be sent by the RTSP server as below:
+@code
+RTSP/1.0 200 OK
+Session: 0000000000021A5
+CSeq: 16
+Server: StreamSmith 1.0; ssm_tianshan_s1 1.0
+
+@endcode
+
+*/
+
+////////////////////// PAGE GET_PARAMETER ///////////////////////
+/*!
+
+@page tsrtsppg_rtsp_gp GET_PARAMETER
+
+@section stsrtspsec_rtsp_gp_rscode Applicable Status Codes
+@li @ref stsrtspsec_rtsp_sc_200 "200 OK"
+@li @ref stsrtspsec_rtsp_sc_404 "404 Not Found" if the global parameters queried doen't exist
+@li @ref stsrtspsec_rtsp_sc_451 "451 Parameter Not Understood"
+@li @ref stsrtspsec_rtsp_sc_454 "454 Session Not Found"
+@li @ref stsrtspsec_rtsp_sc_500 "500 Internal Server Error"
+@li @ref stsrtspsec_rtsp_sc_503 "503 Service Unavailable"
+@li @ref stsrtspsec_rtsp_sc_505 "505 Version Not Supported"
+
+
+@section stsrtspsec_rtsp_gp_req Request
+
+The following are required header fields in RTSP GET_PARAMETER requests:
+@li <i>Session</i> the id to indicate the RTSP session, created in the previous SETUP request
+@li <i>CSeq</i>
+@li <i>User-Agent</i> to indicate the type of RTSP client
+@li <i>Content-Type</i> must be "text/parameter"
+@li <i>Content-Length</i> to indicate the size of request body in bytes
+
+@subsection stsrtspsec_rtsp_gp_cmd Command Line
+the command line shall have the following syntax
+@code
+GET_PARAMETER {*|rtsp://<virtual-site>[:<port>]/<application-path>[?<parameters>]} RTSP/1.0
+@endcode
+
+@note Although the server will use the <i>Session</i> header as the key to identify the session, the URL in TEARDOWN request is recommended to be same as that in SETUP.
+Or, use "*" in the URL field to use the default value. It is forbidden to provide a URL has conflict to the one in SETUP.
+
+@subsection stsrtspsec_rtsp_gp_pmtrs Parameter Names
+The parameter names that try to query are be presented the request body. They should be formatted as the following syntax with a whitespace as the delimiter:
+@code
+<parameter-name>[ <parameter-name>]
+@endcode
+
+@note <i>Content-Length</i> must be provided if the request body is not empty
+
+@section stsrtspsec_rtsp_gp_rsp Response
+
+The following headers will be provided in RTSP GET_PARAMETER response:
+@li <i>Session</i> a hex string to confirm the RTSP session created for this SETUP request
+@li <i>CSeq</i> to confirm which request this response is for
+@li <i>Server</i> to indicate the type of TianShan RTSP server side
+
+The <i>Content-Length</i> will be provided if the response body is not empty.
+
+The parameter values will be confirmed in the response body line by line in the following syntax:
+@code
+<parameter-name>: <parameter-value>
+@endcode
+
+@section stsrtspsec_rtsp_gp_hb RTSP Heartbeat
+
+The GET_PARAMETER request without specifing any parameters to query will be treated as RTSP heartbeat.
+
+@section stsrtspsec_rtsp_gp_pv Parameter Values
+
+The server reserved the following case-insensitive parameters:
+@li <i>Scale</i> the current scale of stream
+@li <i>Position</i> the current position in NPT of the stream
+
+@note For those parameters that the RTSP server could not recognize, the server will pass the querying to the associated application service.
+All such parameters will be handled case-sensitively
+
+@section stsrtspsec_rtsp_pg_example Examples
+
+The following is a request example:
+@code
+GET_PARAMETER * RTSP/1.0
+CSeq: 2
+Session: 0000000000021A5 
+User-Agent: ITVLibrary 1.0; amino
+Content-Type: text/parameter 
+Content-Length: 17
+
+Position Scale
+@endcode
+
+A response message may be sent by the RTSP server as below:
+@code
+RTSP/1.0 200 OK
+CSeq: 2 
+Session: 0000000000021A5
+Server: StreamSmith 1.0; ssm_tianshan_s1 1.0
+Content-Length: 43
+
+Scale: 1.0
+Position: 12334
+@endcode
+
+*/
+
+////////////////////// PAGE ANNOUNCE ///////////////////////
+/*!
+
+@page tsrtsppg_rtsp_announce ANNOUNCE
+
+The RTSP ANNOUNCE messages are one-way messaging from the server-side to the client, no responses are expected from the client side
+
+@section stsrtspsec_rtsp_an_msg ANNOUNCE Message
+
+The following are required header fields in RTSP ANNOUNCE messages:
+@li <i>Session</i> the id to indicate the RTSP session, created in the previous SETUP request
+@li <i>CSeq</i>
+@li <i>Server</i> to indicate the type of TianShan RTSP server side
+@li <i>TianShan-Notice</i> the source category of this announce and the numeric Id
+
+The following may be presented the ANNOUNCE message as well:
+@li <i>TianShan-NoticeParam</i> The formatted event parameters
+
+@subsection stsrtspsec_rtsp_an_cmd Command Line
+the command line shall have the following syntax
+@code
+ANNOUNCE rtsp://<virtual-site>[:<port>]/<application-path>[?<parameters>] RTSP/1.0
+@endcode
+
+The URL will be an echo of that given during RTSP SETUP
+
+@subsection stsrtspsec_rtsp_an_evt TianShan-Notice Header
+
+The <i>TianShan-Notice</i> header indicates the announce, it has the following syntax:
+@code
+TianShan-Notice: <category>::<event-id> <event-string>
+@endcode
+Where:
+@li <i>category</i> to indicate the category of the event. It usually will be the name of the TianShan service or module who post the event onto TianShan Notifiction Channel
+@li <i>event-id</i> a 4-decimal-digit id to indicate event within the category. It normally is defined by each category
+@li <i>event-string</i> A short string description.
+
+@subsection stsrtspsec_rtsp_an_epm TianShan-NoticeParam Header
+
+The syntax of the TianShan-NoticeParam is as follows:
+@code
+TianShan-NoticeParam: <key>=<value>[;<key>=<value>]
+@endcode
+
+@section stsrtspsec_rtsp_an_known Known Announce Samples
+
+@subsection stsrtspsec_rtsp_announce_eos end-of-stream
+When a stream reaches the end of last item, session will immediately destroyed by server
+@code
+ANNOUNCE rtsp://CatvOfChangNing/PauseTV?channelId=1 RTSP/1.0
+CSeq: 4
+Session: 0000000000021A5
+Server: StreamSmith 1.0; ssm_tianshan_s1 1.0
+TianShan-Notice: Stream::0001 End-of-Stream Reached
+TianShan-NoticeParam: BcastPos=20060801T150707Z
+@endcode
+
+@subsection stsrtspsec_rtsp_announce_bos beginning-of-stream
+When a rewind reaches the beginning of the stream, stream will be held until timeout or a further PLAY request 
+@code
+ANNOUNCE rtsp://CatvOfChangNing/PauseTV?channelId=1 RTSP/1.0
+CSeq: 6
+Session: 0000000000021A5
+Server: StreamSmith 1.0; ssm_tianshan_s1 1.0
+TianShan-Notice: Stream::0002 Beginning-of-Stream Reached
+TianShan-NoticeParam: BcastPos=20060801T090000Z
+@endcode
+
+@subsection stsrtspsec_rtsp_announce_state state changed
+fired when the state of the streaming is changed
+@code
+ANNOUNCE rtsp://CatvOfChangNing/PauseTV?channelId=1 RTSP/1.0
+CSeq: 7
+Session:0000000000021A5
+Server: StreamSmith 1.0; ssm_tianshan_s1 1.0
+TianShan-Notice: Stream::0003 State Changed
+TianShan-NoticeParam: BcastPos=20060801T090000Z;presentation_state=play
+@endcode
+
+@subsection stsrtspsec_rtsp_announce_scale scale changed
+when the speed is changed by client's request, or by server automatically (i.e. FF meet the last frame, then turn to normal speed)
+@code
+ANNOUNCE rtsp://CatvOfChangNing/PauseTV?channelId=1 RTSP/1.0
+CSeq: 7
+Session:0000000000021A5
+Server: StreamSmith 1.0; ssm_tianshan_s1 1.0
+TianShan-Notice: Stream::0004 Scale Changed
+TianShan-NoticeParam: BcastPos=20060801T090000Z;Scale=1.0
+@endcode
+
+@subsection stsrtspsec_rtsp_announce_is item stepped
+When a streaming reaches the end of an item in the channel, session will switch to next item in the list automatically
+@code
+ANNOUNCE rtsp://CatvOfChangNing/PauseTV?channelId=1 RTSP/1.0
+CSeq: 5
+Session: 0000000000021A5
+Server: StreamSmith 1.0; ssm_tianshan_s1 1.0
+TianShan-Notice: Playlist::0001 Item Stepped
+TianShan-NoticeParam: BcastPos=20060801T090000Z;prev_item=xxxx;current_item=xxxcc
+@endcode
+
+@subsection stsrtspsec_rtsp_announce_roi current-item-removed
+when the current playing item is removed by channel management
+@code
+ANNOUNCE rtsp://CatvOfChangNing/PauseTV?channelId=1 RTSP/1.0
+CSeq: 7
+Session:0000000000021A5
+TianShan-Notice: ChannelOnDemand::0001 Current Item Removed
+TianShan-NoticeParam: BcastPos=20060801T090000Z;removed_item=xxxx;playing_item=xxxcc
+@endcode
+
+@subsection stsrtspsec_rtsp_announce_sto client-session-time-out
+When client failed to send requests or heartbeats in time, the RTSP client seesion gets timeout
+@code
+ANNOUNCE rtsp://CatvOfChangNing/PauseTV?channelId=1 RTSP/1.0
+CSeq: 4
+Session: 0000000000021A5
+Server: StreamSmith 1.0; ssm_tianshan_s1 1.0
+TianShan-Notice: Session::0001 Session Timeout
+TianShan-NoticeParam:
+@endcode
+
+@section stsrtspsec_rtsp_an_catId Category Re-mapping
+
+In practice of STB RTSP implementation on a low-end CPU, comparing string may introduce difficult. ssm_tianshan_s1 defines a table
+to remap the category to 4-decimal numeric IDs. The remapping is only applicable in this RTSP specification, please refer to the specification
+if you are working on other components.
+@note This table may be appended without notification
+
+<table>
+<tr><th align=left>category</th><th align=left>cateId</th></tr>
+<tr><td>Stream</td>          <td>0001</td></tr>
+<tr><td>Playlist</td>        <td>0002</td></tr>
+<tr><td>Session</td>         <td>0100</td></tr>
+<tr><td>MovieOnDemand</td>   <td>1001</td></tr>
+<tr><td>ChannelOnDemand</td> <td>1002</td></tr>
+</table>
+
+A sample announce will be as below after numeric cateId remapping:
+@code
+ANNOUNCE rtsp://CatvOfChangNing/PauseTV?channelId=1 RTSP/1.0
+CSeq: 7
+Session:0000000000021A5
+Server: StreamSmith 1.0; ssm_tianshan_s1 1.0
+TianShan-Notice: 0001::0004 Scale Changed
+TianShan-NoticeParam: BcastPos=20060801T090000Z;Scale=1.0
+@endcode
+
+*/
+
+////////////////////// PAGE Fixups for SeaChange RTSP Spec ///////////////////////
+/*!
+@page tsrtsppg_rtsp_seac_fixup Fixups for SeaChange RTSP Specification
+In order to be compatible with SeaChange Axiom RTSP Specification, the TianShan RTSP plugin fixes up the requests before it is being handled and fixes up
+the response before it is sent to the client.
+
+@section tsrtsppg_rtsp_seac_fixup_bg Background
+Please refer to the section <i>Client Request Life Cycle</i> of <i>Writing StreamSmith Modules - A Guide to StreamSmith Module API</i> for the details on the
+RTSP module development. 
+
+Once a session setup request is detected that has SeaChange header fields, the session set up for this request will be treasted as SeaChange RTSP sessions.
+All the RTSP messaging for this session will be handled by following SeaChange RTSP spec
+
+@section tsrtsppg_rtsp_seac_fixup_req Request Fixup
+For the SETUP command, this fixup procedure must test if the request has SeaChange header definition or not. If yes, the RTSP session will be marked as SeaChange RTSP session.
+
+All SeaChange headers and defintions will be converted to TianShan specification by fixing up the request context:
+
+@subsection stsrtspsec_seac_fixup_req_sd SeaChange-Server-Data
+@li node-group-id will go to TianShan-ServiceGroup
+@li smartcard-id=, device-id, home-id will be grouped into TianShan-AppData
+
+@subsection stsrtspsec_seac_fixup_req_noapp Non-appliable SeaChange definitions
+@li SeaChange-Version
+@li SeaChange-MayNotify
+
+@section tsrtsppg_rtsp_seac_fixup_resp Response Fixup
+For each detected SeaChange RTSP session, the response will be fixed up from TianShan response before it is sent to the client
+
+@subsection stsrtspsec_seac_fixup_req_st SeaChange-Transport
+@li program-number, frequency, qam-mode, symbolrate will be copied from TianShan-Transport
+@li node-group-id will be copied from TianShan-ServiceGroup
+
+@subsection stsrtspsec_seac_fixup_req_to timeout
+The timeout value follows the session id will be copied from TianShan-ClientTimeout
+
+@section tsrtsppg_rtsp_seac_fixup_sreq Server Request (or Announce) Fixup
+The announce for each detected SeaChange RTSP session will be fixed up before it is sent to the client
+
+<table>
+<tr><th align=left>From/TianShanCode</th><th align=left>To/SeaChangeCode</th><th align=left><i>OldTianShanCode</i></th><th align=left>Event</th></tr>
+<tr><td>Stream::0001</td>          <td>2101</td><td><i>2101</i></td> <td>End-of-Stream Reached</td></tr>
+<tr><td>Stream::0002</td>          <td>2104</td><td><i>2102</i></td> <td>Beginning-of-Stream Reached</td></tr>
+<tr><td>Stream::0003</td>          <td>-</td>   <td><i>-</i></td>    <td>State Changed</td></tr>
+<tr><td>Stream::0004</td>          <td>8801</td><td><i>2104</i></td> <td>Scale Changed</td></tr>
+<tr><td>Playlist::0001</td>        <td>8803</td><td><i>2103</i></td> <td>Playlist Item Stepped</td></tr>
+<tr><td>ChannelOnDemand::0001</td> <td>8804</td><td><i>2105</i></td> <td>Current Item Removed</td></tr>
+<tr><td>Session::0001</td>         <td>-</td>   <td><i>-</i></td>    <td>client-session-timeout</td></tr>
+</table>
+
+*/
+
+////////////////////// Known Application Services ///////////////////////
+/*!
+@page tsrtsppg_rtsp_seac_app Known Application Services
+
+This chapter lists some known TianShan application services from ZQ. The following are some highlights of them.
+Please refer to the application service specifications for more details
+
+@section tsrtsppg_rtsp_seac_mod MovieOnDemand application
+@subsection stsrtspsec_rtsp_mod_url URL
+The command line shall have the following syntax
+@code
+SETUP rtsp://<virtual-site>[:<port>]/<application-path>?{asset=<providerId>#<providerAssetId>|assetUid=<assetUid>} RTSP/1.0
+@endcode
+Please refer to @ref tsrtsppg_rtsp_setup "SETUP" for details of the command line definition.\n
+The appliable parameters for the MovieOnDemand application service can be in two ways:
+@li <i>asset=<providerId>#<providerAssetId></i> indicates the asset of the order by providerId and providerAssetId
+@li <i>assetUid=<assetUid></i> indicates the asset of the order by asset Uid, reserved for SeaChange Axiom compatbile order. This should be formatted as 8-charactor hex string with left-filled zeros, no 0x prefix is allowed
+
+@subsection stsrtspsec_rtsp_mod_data Application Data
+The following is a reference syntax of header <i>TianShan-AppData</i>, it is up to the integration module to define the
+field, please refer to the documents on the integration modules for more exact definition:
+@code
+TianShan-AppData: smartcard-id=<smartcard-id>;device-id=<device-id>;home-id=<home-id>;operating-mode={nPVR|MOD}
+@endcode
+Where:
+@li <i>operating-mode={nPVR|MOD}</i> indicates the business operating mode wrapped on the MovieOnDemand application service
+
+
+<hr>
+@section tsrtsppg_rtsp_seac_app_cod ChannelOnDemand application
+ChannelOnDemand application service is described in @ref page_tschod "ChannelOnDemand Application Service". The following
+are some highlights of its RTSP designed for PauseTV, you may find more details in @ref spage_ptv_rtsp "RTSP Specifications for PauseTV"
+@subsection stsrtspsec_rtsp_cod_url URL
+The command line shall have the following syntax
+@code
+SETUP rtsp://<virtual-site>[:<port>]/<application-path>?channelId=<channelId> RTSP/1.0
+@endcode
+Please refer to @ref tsrtsppg_rtsp_setup "SETUP" for details of the command line definition.\n
+The appliable parameters for the ChannelOnDemand application is:
+@li <i>channelId=<channelId></i> indicates the channel id of the order
+
+@subsection stsrtspsec_rtsp_cod_data Application Data
+The following is a reference syntax of header <i>TianShan-AppData</i>, it is up to the integration module to define the
+field, please refer to the documents on the integration modules for more exact definition:
+@code
+TianShan-AppData: smartcard-id=<smartcard-id>;device-id=<device-id>;home-id=<home-id>;operating-mode={StartOver|PauseTv}
+@endcode
+Where:
+@li <i>operating-mode={StartOver|PauseTv}</i> indicates the business operating mode wrapped on the ChannelOnDemand application service
+
+
+*/

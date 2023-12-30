@@ -1,0 +1,273 @@
+connect "CacheStore: tcp -h 10.15.10.74 -p 10700"
+open volume $
+open CDNTEST1234567891020xor.com true
+set startTime=+0
+set endTime=+600
+set bitrate=3750000
+provision ftp://aa:aa@192.168.81.97/testrest
+up
+up
+up
+sleep 10000
+open CDNTEST1234567891021xor.com true
+set startTime=+0
+set endTime=+600
+set bitrate=3750000
+provision ftp://aa:aa@192.168.81.97/testrest
+up
+up
+up
+sleep 10000
+open CDNTEST1234567891022xor.com true
+set startTime=+0
+set endTime=+600
+set bitrate=3750000
+provision ftp://aa:aa@192.168.81.97/testrest
+up
+up
+up
+sleep 10000
+open CDNTEST1234567891023xor.com true
+set startTime=+0
+set endTime=+600
+set bitrate=3750000
+provision ftp://aa:aa@192.168.81.97/testrest
+up
+up
+up
+sleep 10000
+open CDNTEST1234567891024xor.com true
+set startTime=+0
+set endTime=+600
+set bitrate=3750000
+provision ftp://aa:aa@192.168.81.97/testrest
+up
+up
+up
+sleep 10000
+open CDNTEST1234567891025xor.com true
+set startTime=+0
+set endTime=+600
+set bitrate=3750000
+provision ftp://aa:aa@192.168.81.97/testrest
+up
+up
+up
+sleep 10000
+open CDNTEST1234567891026xor.com true
+set startTime=+0
+set endTime=+600
+set bitrate=3750000
+provision ftp://aa:aa@192.168.81.97/testrest
+up
+up
+up
+sleep 10000
+open CDNTEST1234567891027xor.com true
+set startTime=+0
+set endTime=+600
+set bitrate=3750000
+provision ftp://aa:aa@192.168.81.97/testrest
+up
+up
+up
+sleep 10000
+open CDNTEST1234567891028xor.com true
+set startTime=+0
+set endTime=+600
+set bitrate=3750000
+provision ftp://aa:aa@192.168.81.97/testrest
+up
+up
+up
+sleep 10000
+open CDNTEST1234567891029xor.com true
+set startTime=+0
+set endTime=+600
+set bitrate=3750000
+provision ftp://aa:aa@192.168.81.97/testrest
+up
+up
+up
+sleep 10000
+open CDNTEST1234567891030xor.com true
+set startTime=+0
+set endTime=+600
+set bitrate=3750000
+provision ftp://aa:aa@192.168.81.97/testrest
+up
+up
+up
+sleep 10000
+open CDNTEST1234567891031xor.com true
+set startTime=+0
+set endTime=+600
+set bitrate=3750000
+provision ftp://aa:aa@192.168.81.97/testrest
+up
+up
+up
+sleep 10000
+open CDNTEST1234567891032xor.com true
+set startTime=+0
+set endTime=+600
+set bitrate=3750000
+provision ftp://aa:aa@192.168.81.97/testrest
+up
+up
+up
+sleep 10000
+open CDNTEST1234567891033xor.com true
+set startTime=+0
+set endTime=+600
+set bitrate=3750000
+provision ftp://aa:aa@192.168.81.97/testrest
+up
+up
+up
+sleep 10000
+open CDNTEST1234567891034xor.com true
+set startTime=+0
+set endTime=+600
+set bitrate=3750000
+provision ftp://aa:aa@192.168.81.97/testrest
+up
+up
+up
+sleep 10000
+open CDNTEST1234567891035xor.com true
+set startTime=+0
+set endTime=+600
+set bitrate=3750000
+provision ftp://aa:aa@192.168.81.97/testrest
+up
+up
+up
+sleep 10000
+open CDNTEST1234567891036xor.com true
+set startTime=+0
+set endTime=+600
+set bitrate=3750000
+provision ftp://aa:aa@192.168.81.97/testrest
+up
+up
+up
+sleep 10000
+open CDNTEST1234567891037xor.com true
+set startTime=+0
+set endTime=+600
+set bitrate=3750000
+provision ftp://aa:aa@192.168.81.97/testrest
+up
+up
+up
+sleep 10000
+open CDNTEST1234567891038xor.com true
+set startTime=+0
+set endTime=+600
+set bitrate=3750000
+provision ftp://aa:aa@192.168.81.97/testrest
+up
+up
+up
+sleep 10000
+open CDNTEST1234567891039xor.com true
+set startTime=+0
+set endTime=+600
+set bitrate=3750000
+provision ftp://aa:aa@192.168.81.97/testrest
+up
+up
+up
+sleep 10000
+open CDNTEST1234567891040xor.com true
+set startTime=+0
+set endTime=+600
+set bitrate=3750000
+provision ftp://aa:aa@192.168.81.97/testrest
+up
+up
+up
+sleep 10000
+open CDNTEST1234567891041xor.com true
+set startTime=+0
+set endTime=+600
+set bitrate=3750000
+provision ftp://aa:aa@192.168.81.97/testrest
+up
+up
+up
+sleep 10000
+open CDNTEST1234567891042xor.com true
+set startTime=+0
+set endTime=+600
+set bitrate=3750000
+provision ftp://aa:aa@192.168.81.97/testrest
+up
+up
+up
+sleep 10000
+open CDNTEST1234567891043xor.com true
+set startTime=+0
+set endTime=+600
+set bitrate=3750000
+provision ftp://aa:aa@192.168.81.97/testrest
+up
+up
+up
+sleep 10000
+open CDNTEST1234567891044xor.com true
+set startTime=+0
+set endTime=+600
+set bitrate=3750000
+provision ftp://aa:aa@192.168.81.97/testrest
+up
+up
+up
+sleep 10000
+open CDNTEST1234567891045xor.com true
+set startTime=+0
+set endTime=+600
+set bitrate=3750000
+provision ftp://aa:aa@192.168.81.97/testrest
+up
+up
+up
+sleep 10000
+open CDNTEST1234567891046xor.com true
+set startTime=+0
+set endTime=+600
+set bitrate=3750000
+provision ftp://aa:aa@192.168.81.97/testrest
+up
+up
+up
+sleep 10000
+open CDNTEST1234567891047xor.com true
+set startTime=+0
+set endTime=+600
+set bitrate=3750000
+provision ftp://aa:aa@192.168.81.97/testrest
+up
+up
+up
+sleep 10000
+open CDNTEST1234567891048xor.com true
+set startTime=+0
+set endTime=+600
+set bitrate=3750000
+provision ftp://aa:aa@192.168.81.97/testrest
+up
+up
+up
+sleep 10000
+open CDNTEST1234567891049xor.com true
+set startTime=+0
+set endTime=+600
+set bitrate=3750000
+provision ftp://aa:aa@192.168.81.97/testrest
+up
+up
+up
+sleep 10000
+quit

@@ -1,0 +1,310 @@
+      9163
+08/19 17:38:16 CDODClientAgent::Initialize().
+08/19 17:38:17 CDODClientAgent::DevKit star.
+08/19 17:38:17 CDODClientAgent::m_jms.Initialize
+08/19 17:38:18 Connect JBOSS sucessful.
+08/19 17:38:18 CDODClientAgent::m_jms.AddOneSendQueue
+08/19 17:38:19 CJMSParser::SendGetConfig
+08/19 17:38:24 CDODClientAgent::SyncSend config messagene
+08/19 17:38:24 CDODClientAgent::Initialize() Parse megServer error.
+
+08/19 17:39:37 CDODClientAgent UnInitialize
+08/19 17:39:59 CDODClientAgent::Initialize().
+08/19 17:39:59 CDODClientAgent::DevKit star.
+08/19 17:39:59 CDODClientAgent::m_jms.Initialize
+08/19 17:40:00 Connect JBOSS sucessful.
+08/19 17:40:00 CDODClientAgent::m_jms.AddOneSendQueue
+08/19 17:40:01 CJMSParser::SendGetConfig
+08/19 17:40:06 CDODClientAgent::SyncSend config messagene
+08/19 17:40:11 CDODClientAgent::Initialize() Parse megServer error.
+
+08/19 17:42:24 CDODClientAgent UnInitialize
+08/19 17:42:46 CDODClientAgent::Initialize().
+08/19 17:42:46 CDODClientAgent::DevKit star.
+08/19 17:42:46 CDODClientAgent::m_jms.Initialize
+08/19 17:42:47 Connect JBOSS sucessful.
+08/19 17:42:47 CDODClientAgent::m_jms.AddOneSendQueue
+08/19 17:42:48 CJMSParser::SendGetConfig
+
+08/19 17:42:55 CJMSMessage parseNotification
+08/19 17:42:55 <ConfResponse State="1" Format="2">
+
+   <ListOfNode>
+
+      <DCAPortConfiguration QueueName="queue_DOD">
+
+         <Port>
+
+            <aaa PMTPID="132" GroupID="12" TotalRate="700">
+
+               <Channel>
+
+                  <a1 Encrypted="0" StreamType="155" StreamID="141" Tag="chn" ChannelRate="200" DataType="11" ChannelType="1" QueueName="queue_NAV"/>
+
+               </Channel>
+
+               <IPPort>
+
+                  <aa SendType="1" IPAddress="10.30.4.100" IPPort="905"/>
+
+               </IPPort>
+
+            </aaa>
+
+         </Port>
+
+      </DCAPortConfiguration>
+
+   </ListOfNode>
+
+</ConfResponse>
+08/19 17:42:55 ReceiverMsg Parser- FindElem(CONTENTCONFRESPONSE).
+08/19 17:42:55 CJMSParser::ReceiverPortConfigMsg
+08/19 17:42:55 CJMSParser::get all portconfigs
+08/19 17:42:55 CJMSParser::ReceiverPortConfigMsg parse end
+08/19 17:42:55 CDODClientAgent::SyncSend config messagene
+08/19 17:42:58 CDODClientAgent::AddOneSendQueue ,each channel->queuename
+08/19 17:43:01 CPortManager ApplyParameter star
+08/19 17:43:01 CDODPort::CreateChannelProcess .
+08/19 17:43:06 CDODPort::CreateChannelProcess .end
+08/19 17:43:11 CPortManager ApplyParameter end
+08/19 17:43:11 CJMSParser::SendGetFullDateMsg
+
+08/19 17:43:50 CDODClientAgent m_jms.PtopSend :each channel sendfulldata
+08/19 17:43:50 CJMSMessage parseNotification
+08/19 17:43:50 <DODMessage>
+
+   <DODMessageHeader MessageCode="3004"/>
+
+   <DODMessageBody DataType="11" GroupID="12">
+
+      <FileOpertaion Root="\\192.168.80.95\forDOD" UpdateMode="0">
+
+         <File Path="\1124429597812"/>
+
+      </FileOpertaion>
+
+   </DODMessageBody>
+
+</DODMessage>
+
+08/19 17:43:59 ReceiverMsg  : full data with shared folders
+
+08/19 17:44:16 CJMSParser::ReceiverDataFolder
+08/19 17:44:16 <DODMessage>
+
+   <DODMessageHeader MessageCode="3004"/>
+
+   <DODMessageBody DataType="11" GroupID="12">
+
+      <FileOpertaion Root="\\192.168.80.95\forDOD" UpdateMode="0">
+
+         <File Path="\1124429597812"/>
+
+      </FileOpertaion>
+
+   </DODMessageBody>
+
+</DODMessage>
+08/19 17:46:42 CDODClientAgent::Initialize().
+08/19 17:46:42 CDODClientAgent::DevKit star.
+08/19 17:46:42 CDODClientAgent::m_jms.Initialize
+08/19 17:46:43 Connect JBOSS sucessful.
+08/19 17:46:43 CDODClientAgent::m_jms.AddOneSendQueue
+08/19 17:46:43 CJMSParser::SendGetConfig
+08/19 17:46:44 CJMSMessage parseNotification
+08/19 17:46:44 <ConfResponse State="1" Format="2">
+
+   <ListOfNode>
+
+      <DCAPortConfiguration QueueName="queue_DOD">
+
+         <Port>
+
+            <aaa PMTPID="132" GroupID="12" TotalRate="700">
+
+               <Channel>
+
+                  <a1 Encrypted="0" StreamType="155" StreamID="141" Tag="chn" ChannelRate="200" DataType="11" ChannelType="1" QueueName="queue_NAV"/>
+
+               </Channel>
+
+               <IPPort>
+
+                  <aa SendType="1" IPAddress="10.30.4.100" IPPort="905"/>
+
+               </IPPort>
+
+            </aaa>
+
+         </Port>
+
+      </DCAPortConfiguration>
+
+   </ListOfNode>
+
+</ConfResponse>
+08/19 17:46:46 ReceiverMsg Parser- FindElem(CONTENTCONFRESPONSE).
+08/19 17:46:46 CJMSParser::ReceiverPortConfigMsg
+08/19 17:46:46 CJMSParser::get all portconfigs
+08/19 17:46:46 CJMSParser::ReceiverPortConfigMsg parse end
+08/19 17:46:46 CDODClientAgent::SyncSend config messagene
+08/19 17:46:50 CDODClientAgent::AddOneSendQueue ,each channel->queuename
+08/19 17:46:50 CPortManager ApplyParameter star
+08/19 17:46:50 CDODPort::CreateChannelProcess .
+08/19 17:46:50 CDODPort::CreateChannelProcess .end
+08/19 17:46:50 CPortManager ApplyParameter end
+08/19 17:46:50 CJMSParser::SendGetFullDateMsg
+08/19 17:46:53 CDODClientAgent m_jms.PtopSend :each channel sendfulldata
+
+08/19 17:48:45 CJMSMessage parseNotification
+08/19 17:48:45 <DODMessage>
+
+   <DODMessageHeader MessageCode="3004"/>
+
+   <DODMessageBody DataType="11" GroupID="12">
+
+      <FileOperation Root="\\192.168.80.95\forDOD\1124445153968" UpdateMode="0"/>
+
+   </DODMessageBody>
+
+</DODMessage>
+
+08/19 17:48:54 ReceiverMsg  : full data with shared folders
+08/19 17:48:54 CJMSParser::ReceiverDataFolder
+08/19 17:48:54 <DODMessage>
+
+   <DODMessageHeader MessageCode="3004"/>
+
+   <DODMessageBody DataType="11" GroupID="12">
+
+      <FileOperation Root="\\192.168.80.95\forDOD\1124445153968" UpdateMode="0"/>
+
+   </DODMessageBody>
+
+</DODMessage>
+
+08/19 17:50:22 CDODChannel::MoveAllFile
+
+08/19 18:00:43 CDODClientAgent UnInitialize
+08/19 18:00:44 CDODPort::~CDODPort().
+08/19 18:11:35 CDODClientAgent::Initialize().
+08/19 18:11:35 CDODClientAgent::DevKit star.
+08/19 18:11:35 CDODClientAgent::m_jms.Initialize
+08/19 18:11:36 Connect JBOSS sucessful.
+08/19 18:11:36 CDODClientAgent::m_jms.AddOneSendQueue
+08/19 18:11:37 CJMSParser::SendGetConfig
+08/19 18:11:38 CJMSMessage parseNotification
+08/19 18:11:38 <ConfResponse State="1" Format="2">
+
+   <ListOfNode>
+
+      <DCAPortConfiguration QueueName="queue_DOD">
+
+         <Port>
+
+            <aaa PMTPID="132" GroupID="12" TotalRate="700">
+
+               <Channel>
+
+                  <a1 Encrypted="0" StreamType="155" StreamID="141" Tag="chn" ChannelRate="200" DataType="11" ChannelType="1" QueueName="queue_NAV"/>
+
+               </Channel>
+
+               <IPPort>
+
+                  <aa SendType="1" IPAddress="10.30.4.100" IPPort="905"/>
+
+               </IPPort>
+
+            </aaa>
+
+         </Port>
+
+      </DCAPortConfiguration>
+
+   </ListOfNode>
+
+</ConfResponse>
+08/19 18:12:07 CDODClientAgent::Initialize().
+08/19 18:12:07 CDODClientAgent::DevKit star.
+08/19 18:12:07 CDODClientAgent::m_jms.Initialize
+08/19 18:12:09 Connect JBOSS sucessful.
+08/19 18:12:09 CDODClientAgent::m_jms.AddOneSendQueue
+08/19 18:12:09 CJMSParser::SendGetConfig
+08/19 18:12:10 CJMSMessage parseNotification
+08/19 18:12:10 <ConfResponse State="1" Format="2">
+
+   <ListOfNode>
+
+      <DCAPortConfiguration QueueName="queue_DOD">
+
+         <Port>
+
+            <aaa PMTPID="132" GroupID="12" TotalRate="700">
+
+               <Channel>
+
+                  <a1 Encrypted="0" StreamType="155" StreamID="141" Tag="chn" ChannelRate="200" DataType="11" ChannelType="1" QueueName="queue_NAV"/>
+
+               </Channel>
+
+               <IPPort>
+
+                  <aa SendType="1" IPAddress="10.30.4.100" IPPort="905"/>
+
+               </IPPort>
+
+            </aaa>
+
+         </Port>
+
+      </DCAPortConfiguration>
+
+   </ListOfNode>
+
+</ConfResponse>
+08/19 18:12:15 ReceiverMsg Parser- FindElem(CONTENTCONFRESPONSE).
+08/19 18:12:15 CJMSParser::ReceiverPortConfigMsg
+08/19 18:12:15 CJMSParser::get all portconfigs
+08/19 18:12:15 CJMSParser::ReceiverPortConfigMsg parse end
+08/19 18:12:15 CDODClientAgent::SyncSend config messagene
+08/19 18:12:17 CDODClientAgent::AddOneSendQueue ,each channel->queuename
+08/19 18:12:17 CPortManager ApplyParameter star
+08/19 18:12:17 CDODPort::CreateChannelProcess .
+08/19 18:12:17 CDODPort::CreateChannelProcess .end
+08/19 18:12:18 CPortManager ApplyParameter end
+08/19 18:12:18 CJMSParser::SendGetFullDateMsg
+
+08/19 18:12:34 CDODClientAgent m_jms.PtopSend :each channel sendfulldata
+08/19 18:12:34 CJMSMessage parseNotification
+08/19 18:12:34 <DODMessage>
+
+   <DODMessageHeader MessageCode="3004"/>
+
+   <DODMessageBody DataType="11" GroupID="12">
+
+      <FileOperation Root="\\192.168.80.95\forDOD\1124446579515" UpdateMode="0"/>
+
+   </DODMessageBody>
+
+</DODMessage>
+
+08/19 18:12:40 ReceiverMsg  : full data with shared folders
+08/19 18:12:40 CJMSParser::ReceiverDataFolder
+08/19 18:12:40 <DODMessage>
+
+   <DODMessageHeader MessageCode="3004"/>
+
+   <DODMessageBody DataType="11" GroupID="12">
+
+      <FileOperation Root="\\192.168.80.95\forDOD\1124446579515" UpdateMode="0"/>
+
+   </DODMessageBody>
+
+</DODMessage>
+
+08/19 18:12:59 CDODChannel::MoveAllFile
+
+08/19 18:20:17 CDODClientAgent UnInitialize
+08/19 18:20:17 CDODPort::~CDODPort().

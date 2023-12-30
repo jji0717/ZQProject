@@ -1,0 +1,143 @@
+*** db_hotbackup/db_hotbackup.c.orig	2006-09-07 14:31:57.000000000 -0700
+--- db_hotbackup/db_hotbackup.c	2007-03-09 09:55:43.000000000 -0800
+***************
+*** 21,27 ****
+  
+  enum which_open { OPEN_ORIGINAL, OPEN_HOT_BACKUP };
+  
+! int backup_dir_clean __P((DB_ENV *, char *, int *, int, int));
+  int data_copy __P((DB_ENV *, const char *, const char *, const char *, int));
+  int env_init __P((DB_ENV **,
+       char *, const char **, const char ***, char *, enum which_open));
+--- 21,27 ----
+  
+  enum which_open { OPEN_ORIGINAL, OPEN_HOT_BACKUP };
+  
+! int backup_dir_clean __P((DB_ENV *, char *, const char *, int *, int, int));
+  int data_copy __P((DB_ENV *, const char *, const char *, const char *, int));
+  int env_init __P((DB_ENV **,
+       char *, const char **, const char ***, char *, enum which_open));
+***************
+*** 232,239 ****
+  	 * if the -u option was not specified, all files in the target directory
+  	 * are removed.
+  	 */
+! 	if ((ret = backup_dir_clean(
+! 	    dbenv, backup_dir, &remove_max, update, verbose)) != 0)
+  		goto shutdown;
+  
+  	/*
+--- 232,240 ----
+  	 * if the -u option was not specified, all files in the target directory
+  	 * are removed.
+  	 */
+! 	if ((ret = backup_dir_clean(dbenv,
+! 	    backup_dir, (db_config && log_dir != home) ? log_dir : NULL,
+! 	    &remove_max, update, verbose)) != 0)
+  		goto shutdown;
+  
+  	/*
+***************
+*** 439,460 ****
+   *	Clean out the backup directory.
+   */
+  int
+! backup_dir_clean(dbenv, backup_dir, remove_maxp, update, verbose)
+  	DB_ENV *dbenv;
+  	char *backup_dir;
+  	int *remove_maxp, update, verbose;
+  {
+  	int cnt, fcnt, ret, v;
+! 	char **names, buf[DB_MAXPATHLEN];
+  
+  	/* Get a list of file names. */
+! 	if ((ret = __os_dirlist(dbenv, backup_dir, &names, &fcnt)) != 0) {
+! 		dbenv->err(dbenv, ret, "%s: directory read", backup_dir);
+! 		return (1);
+  	}
+  	for (cnt = fcnt; --cnt >= 0;) {
+  		/*
+! 		 * Skip log files (if update wasn't specified).
+  		 */
+  		if (strncmp(names[cnt], LFPREFIX, sizeof(LFPREFIX) - 1)) {
+  			if (update)
+--- 440,477 ----
+   *	Clean out the backup directory.
+   */
+  int
+! backup_dir_clean(dbenv, backup_dir, log_dir, remove_maxp, update, verbose)
+  	DB_ENV *dbenv;
+  	char *backup_dir;
++ 	const char *log_dir;
+  	int *remove_maxp, update, verbose;
+  {
+  	int cnt, fcnt, ret, v;
+! 	char *dir, **names, buf[DB_MAXPATHLEN];
+  
++ 	if (log_dir != NULL && update) {
++ do_ld:		if ((size_t)snprintf(buf, sizeof(buf),
++ 		    "%s/%s", backup_dir, log_dir) >= sizeof(buf)) {
++ 			dbenv->err(dbenv, ret,
++ 			    "%s/%s: path too long", backup_dir, log_dir);
++ 			return (1);
++ 		}
++ 		dir = strdup(buf);
++ 		log_dir = NULL;
++ 	} else
++ 		dir = backup_dir;
+  	/* Get a list of file names. */
+! 	if ((ret = __os_dirlist(dbenv, dir, &names, &fcnt)) != 0) {
+! 		if (!update && dir != backup_dir)
+! 			fcnt = 0;
+! 		else {
+! 			dbenv->err(dbenv, ret, "%s: directory read", dir);
+! 			return (1);
+! 		}
+  	}
+  	for (cnt = fcnt; --cnt >= 0;) {
+  		/*
+! 		 * Skip non-log files (if update was specified).
+  		 */
+  		if (strncmp(names[cnt], LFPREFIX, sizeof(LFPREFIX) - 1)) {
+  			if (update)
+***************
+*** 466,474 ****
+  				*remove_maxp = v;
+  		}
+  		if ((size_t)snprintf(buf, sizeof(buf),
+! 		    "%s/%s", backup_dir, names[cnt]) >= sizeof(buf)) {
+  			dbenv->err(dbenv, ret,
+! 			    "%s/%s: path too long", backup_dir, names[cnt]);
+  			return (1);
+  		}
+  		if (verbose)
+--- 483,491 ----
+  				*remove_maxp = v;
+  		}
+  		if ((size_t)snprintf(buf, sizeof(buf),
+! 		    "%s/%s", dir, names[cnt]) >= sizeof(buf)) {
+  			dbenv->err(dbenv, ret,
+! 			    "%s/%s: path too long", dir, names[cnt]);
+  			return (1);
+  		}
+  		if (verbose)
+***************
+*** 480,490 ****
+--- 497,512 ----
+  	}
+  
+  	__os_dirfree(dbenv, names, fcnt);
++ 	if (log_dir != NULL)
++ 		goto do_ld;
+  
+  	if (verbose && *remove_maxp != 0)
+  		printf("%s: highest numbered log file removed: %d\n",
+  		    progname, *remove_maxp);
+  
++ 	if (dir != backup_dir)
++ 		free(dir);
++
+  	return (0);
+  }
+  
+

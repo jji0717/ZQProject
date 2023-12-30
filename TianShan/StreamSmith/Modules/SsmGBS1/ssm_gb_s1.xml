@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TianShan>
+	<!--
+		Notice: TianShanDef.xml has been preloaded when this configuration file is being parsed, please refer to
+        	TianShanDef.xml for the common properties
+	-->
+	<Definitions src="TianShanDef.xml">
+	</Definitions>
+	
+	<!-- default configurations for the services of this TianShan deployment -->
+	<default>
+		<!-- The EventChannel service where the services of this TianShan deployment will deliver events to.
+		     attributes:
+		       endpoint - the ICE endpoint to the EventChannel service
+		-->
+		<EventChannel endpoint="${PrimeEventChannelEndpoint}" />
+
+		<!-- The Ice trace log setting for all the services of this TianShan deployment.
+		     attributes:
+		       enabled       - non-zero to enable
+		       level         - the log level of the ice trace log
+		       size          - the size that this trace log must roll
+		-->
+		<IceTrace enabled="1" level="7" size="50000000" maxCount="10" />
+
+		<!-- The default folder where the services of this TianShan deployment accesses their local
+		     databases if it is not defined by their individual configurations
+		     attributes:
+		       path          - path to the location of database directory, default "../data/"
+		       runtimePath   - path to keep the runtime data, default as the value of path
+		-->
+		<Database path="${TianShanDatabaseDir}" runtimePath="${TianShanDatabaseDir}\runtime" />
+		
+	</default>
+
+	<!-- Configurations of SSM plugin for TianShan RTSP specification -->
+	<ssm_GB_s1>
+		
+		<!-- Configuration of Log.
+		     attributes:
+		       size - log file's maxinum size.
+		       level - level of logging, form Fatal to Debug: 0 ~ 7
+		       number - config the max number of log files to roll
+		       path - the full pathname of the log file folder
+		-->
+		<LogFile size="50000000" level="7" maxCount="10" bufferSize="8192" />
+		
+		<!-- Configuration of SessionManager
+		     attributes:
+		       endpoint - proxy string to connect to the TianShan session manager
+		-->
+		<SessionManager endpoint="${PartitionServerEndpoint}" />
+		
+		<!-- example: <ListenEventAdapter> -->
+		<!-- params: endPoint: should be in format of "tcp -h ip -p port", notice that the ip address must be local machine's. -->
+		<!-- The local bind endpoint that this plugin binds
+		     attributes:
+		       endpoint      - the bind endpoint of this Weiwoo service
+		       dispatchSize  - the initial thread pool size to dispatch client requests, values in the range 4-20 are acceptable
+		       dispatchMax   - the max thread pool size to dispatch client requests
+		-->
+		<Bind endpoint="tcp -h ${ServerNetIf} -p 11300" dispatchSize="5" dispatchMax="30" />
+
+		<!-- configurations on RTSP sessions
+		     attributes:
+			timeout - timeout of an unattended RTSP session in seconds, minimal acceptable value 60, default 600s
+			cacheSize - the count of sessions to cache from the database, range [1000, 5000] are acceptable, default 1000
+			monitorThreads - the thread count to perform background maintenace, minimal 3, default 5
+		-->
+		<RTSPSession timeout="1200" cacheSize="1000" monitorThreads="5" />
+
+		<!-- some default values if the RTSP request failed to present
+		-->
+		<DefaultParameter>
+			<param name="Transport" value="MP2T/DVBC/QAM" />
+			<!-- send item-stepped event when value is non-zero, this is useful when you want
+			to receive the item-stepped event event the previous item name is empty.
+			-->
+			<param name="SendItemStepped" value="1" />
+			
+			<!-- convert Axiom format rtsp message into TianShan Format
+				defaultPath :	if request is newer axiom mesage format and no appname included ,
+							 	just use defaultPath as the appuid
+			 -->
+			<AxiomMsg defaultPath="60010000"/>
+		</DefaultParameter>
+
+		<!-- Configurations on RTSP Response
+		     attributes:
+			maxFieldLen - define how many the max bytes can be put into response header
+		-->		
+		<Response maxFieldLen="300" />
+
+		<!--
+		FixedSpeedSet: use to support multi trick files content streaming 
+			enabel : 1 for enable , 0 for disable
+			forward : forward speed set split with white space
+			backward: backword speed set split with white space
+		-->
+		<FixedSpeedSet enable="0" forward="15 30 60" backward="-15 -30 -60"/>
+
+
+
+		<!-- Configurations on the protection against death-of-service attack
+		     attributes:
+			timeWindow - the time window in second to measure the DoS attack
+			maxRequests - the allowed maximal request count allowed in the recent time window
+		-->		
+		<DoSProtection timeWindow="10" maxRequests="100" />
+
+		<IceProperties>
+			<!--  the following are performance tuning parameters, please don't modify if you are not an expert at them 
+			--> 
+			<prop name="Ice.Trace.Network"                    value="0" />
+			<prop name="Ice.Logger.Timestamp"                 value="1" />
+			<prop name="Ice.Override.Timeout"                 value="20000"/>
+			<prop name="Ice.Override.ConnectTimeout"          value="2000"/>
+			<prop name="Ice.ThreadPool.Server.Size"           value="5"/>
+			<prop name="Ice.ThreadPool.Server.SizeMax"        value="15"/>
+			<prop name="Ice.ThreadPool.Client.Size"           value="5"/>
+			<prop name="Ice.ThreadPool.Client.SizeMax"        value="15"/>
+			<prop name="Freeze.Evictor.UseNonmutating"        value="1" />
+		</IceProperties>
+
+		<PublishedLogs>
+				<!-- Log file to publish thru SentryService
+			     	     attributes:
+			       		path    - full path of the log file
+			       		syntax  - the file defines the syntax of the events via the regular expressions
+				-->
+			<Log path="${TianShanLogDir}\RtspProxy.log" syntax="${TianShanHomeDir}\etc\syntax.xml" key="RTSPProxy" />			
+	  </PublishedLogs>
+	  
+	  <!-- For VLC mode to sync service group with weiwoo
+	  		attributes:
+	  		group		- group id
+	  -->
+	  <VirtualServiceGroup group="1" />
+
+	  <NGODS1 defaultAppPath="60010001">
+				<!-- Log file to publish thru SentryService
+			     	     attributes:
+			       		path    - full path of the log file
+			       		syntax  - the file defines the syntax of the events via the regular expressions
+				-->
+			<SessionGroups >
+			   <qam expression="Chicago.Southbend.[0-9]" group="1" />
+			   <qam expression="Chicago.Southbend.1[0-5]" group="1" />
+			   <qam expression="Chicago.Westbend.[0-9]" group="2" />
+			   <qam expression="Chicago.Westbend.1[0-9]" group="3" />
+			</SessionGroups >
+	  </NGODS1>
+  
+	</ssm_GB_s1>
+
+</TianShan>

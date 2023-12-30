@@ -1,0 +1,393 @@
+#!/bin/bash
+
+#
+# helper functions
+#
+
+usage() {
+    echo 
+    echo "-b <path>  root path of the source tree"
+    echo "-o <path>  output path of the package, defaults to root path"
+    echo "-s         skip getting source"
+    echo "-t         test build with no publish"
+    echo "-f         fetch source only"
+    echo "-l <batch> use batch number to get specific version of source"
+    echo "-r         build release version"
+    echo "-u <user>  vss user name"
+    echo "-p <pass>  vss password"
+    echo "-h         show this help" 
+    echo
+}
+
+checkFolder() {
+	if [ -e ${1} ] && [ ! -d ${1} ]; then	
+		echo "can't save source to ${1}, file exists!"
+		exit 1	
+	fi	
+
+	res=$(ls -A ${1} 2>/dev/null)
+	if [ ! $? -eq 0 ]; then
+		return 0	
+	elif [[ -z ${res} ]]; then
+		return 0
+	else
+		var=
+		while [ -z ${var} ]; do
+			printf "will delete %s and all files under it, proceed anyway? (y/n)" ${1}
+			read var
+			if [ ${var} = "y" ]; then
+				return 0
+			elif [ ${var} = "n" ]; then
+				return 1
+			else
+				echo 'please enter y/n'
+				var=
+				continue
+			fi
+		done
+	fi
+}
+
+fixupPath() {
+    if [ -z "${1}" ]; then
+        echo "invalid path, exit..."; exit 1
+    fi
+    
+    local root="${1}"
+    [ ${1#${1%?}} = '/' ] && root="${1%?}"
+
+    local path=
+    if [[ (${root} = '.' || ${root} = './') || $(basename ${root}) = $(basename $(pwd)) ]]; then
+        echo "can not specify working directory as buildroot!"; exit 1
+    elif [ ${root:0:3} = '../' ]; then
+        path=$(dirname $(pwd))/${root#*/}
+    elif [ ${root:0:2} = './' ]; then
+        path="$(pwd)/${root#*/}"
+    elif [ ${root:0:1} = '/' ]; then
+        path="${root}"
+    else
+        path="$(pwd)/${root}"
+    fi
+
+    if [ "${2}" = "1" ]; then
+        buildroot=${path}
+    elif [ "${2}" = "2" ]; then
+        output=${path}
+    fi
+}
+
+fixupSDK()
+{
+	echo fixup SDK in ${1}/build/defines.mk
+	chmod ug+w ${1}/build/defines.mk
+
+	if [ -d /usr/include/net-snmp/ ] ; then
+		sed -i "s/_net-snmp_dir[ \t]*:=.*/_net-snmp_dir  := \/usr/g" ${1}/build/defines.mk
+	fi
+
+	if [ -d /usr/include/boost/ ] ; then
+		sed -i "s/_boost_dir[ \t]*:=.*/_boost_dir  := \/usr/g" ${1}/build/defines.mk
+	fi
+
+	if [ -d /usr/include/openssl/ ] ; then
+		sed -i "s/_openssl_dir[ \t]*:=.*/_openssl_dir  := \/usr/g" ${1}/build/defines.mk
+	fi
+}
+
+#
+# parse arguments
+#
+
+if [ -z "$*" ]; then
+    echo "please specify an argument"
+    usage
+    exit 1
+fi 
+
+buildroot=${CacheManagementPath}
+user=build
+password=nightly
+skip=0
+publish=1
+debug=1
+fetchonly=0
+label=
+output=
+
+
+while getopts ":b:o:stfl:ru:p:h" opt; do
+    case ${opt} in
+    b) buildroot=${OPTARG};;
+    o) output=${OPTARG};;
+    s) skip=1;;
+    t) publish=0;;
+    f) fetchonly=1;;
+    l) label=${OPTARG}; fetchonly=1;;
+    r) debug=0;;
+    u) user=${OPTARG};;
+    p) password=${OPTARG};;
+    h) usage; exit 0;;
+    \?) echo "invalid parameters"; usage; exit 1;;
+    esac
+done
+
+if [ -z "${buildroot}" ]; then
+    echo "please specify buildroot"; exit 1;
+fi
+
+if [ ${skip} -eq 0 ] && [ -z "${user}" -o -z "${password}" ]; then
+    echo "bad user name or password"; exit 1
+fi
+
+if [ ${skip} -eq 1 -a ${fetchonly} -eq 1 ]; then
+    echo "ambiguous argument"; exit 1
+fi
+
+if [ -z ${output} ];then
+	output=${buildroot}
+fi
+
+fixupPath "${buildroot}" "1"
+fixupPath "${output}" "2"
+
+#
+# get sources
+#
+
+declare -r _server="192.168.87.4:8080"
+declare -r _database="D:\VSS\vssmore\CacheManagement\srcsafe.ini"
+declare -r _options=-server\ ${_server}\ -database\ ${_database}\ -name\ ${user}\ -password\ ${password}\ -recursive\ -verbose
+
+_label=
+if [ -n "${label}" ]; then
+    _label="build batch# ${label}"
+fi
+
+projects="CacheManagement/build CacheManagement/common CacheManagement/CMEV2 CacheManagement/etc"
+
+if [ ${skip} -eq 0 ]; then
+
+    checkFolder ${buildroot}
+    if [ $? -eq 0 ]; then
+        rm -rvf ${buildroot}
+    else
+        exit 0
+    fi
+
+    for branch in ${projects}; do
+        workdir=${buildroot}/${branch#*/}
+        mkdir -pv ${workdir}
+        cd ${workdir}
+
+        if [ -n "${label}" ]; then
+            soscmd -command GetProject -label "${_label}" ${_options} -project ${branch} -workdir ${workdir} 
+        else
+            soscmd -command GetProject ${_options} -project ${branch} -workdir ${workdir} 
+        fi
+
+        if [ $? -ne 0 ]; then
+            echo "failed to get source"
+            exit 1
+        fi
+    done
+
+    if [ ${fetchonly} -eq 1 ]; then
+        echo "source tree is ready"
+        exit 0
+    fi
+    mv ${buildroot}/build/CacheManagement-63.spec ${buildroot}/build/CacheManagement.spec
+fi
+
+echo "source tree is ready"
+
+fixupSDK ${buildroot}
+
+declare -r _version=2.0.0
+declare -r _product=CMEV2
+
+# 
+# get verion number
+#
+
+verfile=${buildroot}/build/buildbatch.txt
+
+item1=LB_${_product}_V${_version}
+item2=LB_${_product}_x64_V${_version}
+
+result1=$(grep ${item1} ${verfile})
+result2=$(grep ${item2} ${verfile})
+
+_release=
+if [ -n "${result1}" ]; then 
+    _release=$(expr ${result1##*=} + 1)
+elif [ -n "${result2}" ]; then   
+    _release=$(expr ${result2##*=} + 1)
+else
+    _release=1
+fi
+
+#
+# ready to package
+#
+
+declare -r _buildarch=$(uname -m)
+
+rpmfile=${buildroot}/build/CacheManagement.spec
+
+chmod +w ${rpmfile}
+sed -i "s/\(Version:\).*/\1   ${_version}/"   ${rpmfile}
+sed -i "s/\(Release:\).*/\1   ${_release}/"   ${rpmfile}
+sed -i "s/\(Name:\).*/\1      ${_product}/"   ${rpmfile}
+sed -i "s/\(BuildArch:\).*/\1 ${_buildarch}/" ${rpmfile}
+
+
+export CacheManagement=${buildroot} 
+export OutputPath=${output}
+export Debug=${debug}
+export Package=${_product}-${_version}-${_release}.${_buildarch}.rpm
+export MonitorPKG=${_monitorpro}-${_version}-${_release}.${_buildarch}.rpm
+export Symbols=${_product}-symbols-${_version}-${_release}.${_buildarch}.zip
+
+rpmbuild -vv -bb ${rpmfile}
+
+
+if [ $? -ne 0 ]; then
+    echo "failed to build projects"
+    exit 1
+fi
+
+echo "build completed successfully"
+
+[ ${publish} -eq 0 ] && exit 0
+
+_build_usr=$(id -u build 2> /dev/null)
+if [[ $? -ne 0 || ${_build_usr} -ne $(id -r -u) ]]; then
+    echo
+    echo "skip publishing for user other than \"build\". exiting ..."
+    exit 0
+fi
+
+#
+# update buildbatch 
+#
+
+soscmd -command CheckOutFile ${_options} -project "CacheManagement/build" -file $(basename ${verfile}) -workdir $(dirname ${verfile}) 
+
+if [ $? -ne 0 ]; then
+    echo "failed to check out build batch file"
+    exit 1
+fi
+
+echo "updating build number ..."
+
+chmod +w ${verfile}
+if [ -z "${result1}" ]; then
+    echo "${item1} = ${_release}" >> ${verfile}
+else
+    sed -i "s/\(${item1}[[:space:]]*=\).*/\1 ${_release}/" ${verfile}
+fi
+
+if [ -z "${result2}" ]; then
+    echo "${item2} = ${_release}" >> ${verfile}
+else
+    sed -i "s/\(${item2}[[:space:]]*=\).*/\1 ${_release}/" ${verfile}
+fi
+
+echo "updating batch number ..."
+
+item3=LAST_BUILD_BATCH
+item4=LAST_BUILD_TIME
+
+result3=$(grep ${item3} ${verfile})
+batchnum=$(expr ${result3##*=} + 1)
+sed -i "s/\(${item3}[[:space:]]*=\).*/\1 ${batchnum}/" ${verfile}
+
+echo "updating build time ..."
+
+result4=$(grep ${item4} ${verfile})
+buildtime=$(date +"%Y-%m-%d %H:%M")
+sed -i "s/\(${item4}[[:space:]]*=\).*/\1 ${buildtime}/" ${verfile}
+
+soscmd -command CheckInFile ${_options} -project "CacheManagement/build" -file $(basename ${verfile}) -workdir $(dirname ${verfile}) 
+
+if [ $? -ne 0 ]; then
+    echo "failed to check in build batch file"
+    exit 1
+fi
+
+_SKIP_HAWKEYE_PUB="Yes"
+
+if [ _SKIP_HAWKEYE_PUB == "Yes" ]; then
+
+#
+# upload to hawkeye 
+#
+
+CMD=
+if [ $(id -u) -ne 0 ]; then
+    CMD=sudo
+fi
+
+#echo "uploading to hawkeye ..."
+
+declare -r _hawkeye=10.50.12.2
+declare -r _user=administrator
+declare -r _pass=53aChaNg3
+declare -r _group=users
+declare -r _target=/mnt/autobuild
+declare -r _src=\\\\${_hawkeye}\\e$ 
+
+if [ ! -d ${_target} ]; then
+	if [ ! -e ${_target} ]; then
+		echo "creating target directory ${_target}..."
+		${CMD} mkdir -pv ${_target}
+	else
+		echo "${_target} is not a directory, will be removed ..."
+		${CMD} rm -rvf ${_target}
+		${CMD} mkdir -pv ${_target}
+	fi	
+fi
+${CMD} mount -t cifs ${_src} -o username=${_user},password=${_pass},gid=${_group} ${_target}
+
+if [ $? -ne 0 ]; then
+    echo "failed to mount " ${_src} " to " ${_target}
+    exit 1
+fi
+
+${CMD} cp -vf ${output}/${Package} ${output}/${Symbols} ${output}/${MonitorPKG} ${_target}/build
+
+sleep 2
+echo "unmount target directory ${_target}..."
+${CMD} umount ${_target}
+
+echo "removing target directory ${_target}..."
+${CMD} rm -rvf ${_target}
+
+# end of if _SKIP_HAWKEYE_PUB == 
+fi
+
+#
+# label and comment
+#
+
+_label="build batch# ${batchnum}"
+_pkgname=
+if [ "${_buildarch}" = "x86_64" ]; then
+    _pkgname="${_product}_x64"
+else 
+    _pkgname="${_product}"
+fi
+
+_comment="${_pkgname}, ${_version}, build ${_release} for linux"
+for branch in ${projects}; do
+    echo "add label \"${_label}\" for \"${branch}\" comment: \"${_comment}\""
+    soscmd -command AddLabel ${_options} -project ${branch} -label "${_label}" -log "${_comment}" 
+
+    if [ $? -ne 0 ]; then
+        echo "failed to label project " ${branch}
+        exit 1
+    fi
+done
+
+
+# vim: ts=4 bg=dark sw=4 nu

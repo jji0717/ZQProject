@@ -1,0 +1,4 @@
+<hr size="1"><address style="align: right;"><small><b><a href="index.html"><img src="logo_tianshan.png" alt="TianShan" align="middle" border="0" width="50"></a>&nbsp;&nbsp; $projectname - $title</b>&nbsp;&nbsp;&nbsp; $datetime &nbsp;<br>
+</small></address>
+</body>
+</html>

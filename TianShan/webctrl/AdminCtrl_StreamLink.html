@@ -1,0 +1,450 @@
+<script type='text/javascript' src='AdminCtrl_Util.js'></script>
+<script type='text/javascript'>
+// typedef
+function TSStreamLink(ident, sgId, stmrId, type, status){
+    this.ident = ident;
+    this.sgId = sgId;
+    this.stmrId = stmrId;
+    this.type = type;
+    this.status = status;
+    this.privateData = new Object();
+}
+
+// globe var
+var _template = '';
+var _endpoint = '';
+var _sgs = new Array();
+var _stmrs = new Array();
+var _types = new Array();
+var _lnks = new Array();
+// func
+function linkStreamer(){
+    var sgNode = document.getElementById('lnk-sg');
+    var stmrNode = document.getElementById('lnk-stmr');
+    var typeNode = document.getElementById('lnk-type');
+    if((sgNode.selectedIndex == _sgs.length) ||
+       (stmrNode.selectedIndex == _stmrs.length) ||
+       (typeNode.selectedIndex == _types.length)){
+	lnkReset();
+	return;
+    }
+
+    var identNode = document.getElementById('lnk-ident');
+    if(identNode.value == ''){
+	//console.log("l");
+	document.getElementById('ctrl-action').value = 'l';
+    }else{
+	//console.log("p");
+	// update private data
+	identNode.name = 'path.lnk#ident';
+	document.getElementById('ctrl-action').value = 'p';
+    }
+
+    // check pd fields
+    var pdCellNode = document.getElementById('pd-cell');
+    var pdNode = pdCellNode.firstChild;
+    if(!pdNode){
+	alert('bad logic');
+	return;
+    }
+    var privateData = new Object();
+    var pdFieldNodes = pdNode.childNodes;
+    for(var iField = 0; iField < pdFieldNodes.length; ++iField){
+	var fieldValNodes = pdFieldNodes[iField].getElementsByTagName('input');
+	if(fieldValNodes.length != 2){
+	    alert('bad logic');
+	    return;
+	}
+	var keyNode = fieldValNodes[0];
+	if(keyNode.value == ''){
+	    keyNode.select();
+	    return;
+	}
+	var valNode = fieldValNodes[1];
+	if(valNode.value == ''){
+	    valNode.select();
+	    return;
+	}
+
+	var type = _types[typeNode.selectedIndex].variantTypeOf(keyNode.value);
+	var stdVarStr = standardizeVariantString(type, valNode.value);
+
+	privateData[keyNode.value] = stdVarStr;
+    }
+
+    sgNode.name = 'path.sg#id';
+    stmrNode.name = 'path.stmr#netid';
+    typeNode.name = 'path.lnk#type';
+    pdCellNode.appendChild(createMapNode(privateData, 'path.pd#'));
+
+    typeNode.form.submit();
+}
+function unlinkStreamer(){
+    var sgNode = document.getElementById('lnk-sg');
+    var stmrNode = document.getElementById('lnk-stmr');
+    var typeNode = document.getElementById('lnk-type');
+    var identNode = document.getElementById('lnk-ident');
+    if(identNode.value == ''){
+	identNode.select();
+	return;
+    }
+    if(!confirm("Delete " + identNode.value))
+        return;
+
+    
+    stmrNode.name = 'path.stmr#netid';
+    typeNode.name = 'path.lnk#type';
+    sgNode.name = 'path.sg#id';
+    identNode.name = 'path.lnk#ident';
+    document.getElementById('ctrl-action').value = 'u';
+    identNode.form.submit();
+}
+function indexOfLink(sgId, stmrId, type){
+    if(isNaN(parseInt(sgId.toString()))){
+	return _lnks.length;
+    }
+    for(var i in _lnks){
+	if((sgId == _lnks[i].sgId) &&
+	   (stmrId == _lnks[i].stmrId) &&
+	   (type == _lnks[i].type)){
+	    return i;
+	}
+    }
+    return _lnks.length;
+}
+function indexOfServiceGroup(sgId){
+    if(isNaN(parseInt(sgId.toString()))){
+	return _sgs.length;
+    }
+    for(var i in _sgs){
+        if(_sgs[i] == sgId)
+            return i;
+    }
+    return _sgs.length;
+}
+function indexOfStreamer(stmrId){
+    for(var i in _stmrs){
+        if(_stmrs[i] == stmrId)
+            return i;
+    }
+    return _stmrs.length;
+}
+function indexOfType(type){
+    for(var i in _types){
+        if(_types[i].name == type)
+            return i;
+    }
+    return _types.length;
+}
+function lnkDetail(idx){
+    var lnk = _lnks[idx];
+    document.getElementById('lnk-sg').selectedIndex = indexOfServiceGroup(lnk.sgId);
+    document.getElementById('lnk-stmr').selectedIndex = indexOfStreamer(lnk.stmrId);
+    document.getElementById('lnk-type').selectedIndex = indexOfType(lnk.type);
+
+    var pdCellNode = document.getElementById('pd-cell');
+    pdCellNode.innerHTML = '';
+    pdCellNode.appendChild(createPDNode(lnk.type, lnk.privateData));
+
+    document.getElementById('lnk-ident').value = lnk.ident;
+    document.getElementById('btn-submit').value = 'Update';
+    // back to top
+    document.getElementById('current').getElementsByTagName('a')[0].focus();
+}
+
+function lnkReset(){
+    if (document.getElementById("search-id").value == ""){
+    	document.getElementById('lnk-sg').selectedIndex = _sgs.length;
+    }else{
+    	document.getElementById('lnk-sg').value = document.getElementById("search-id").value;
+    }
+    document.getElementById('lnk-stmr').selectedIndex = _stmrs.length;
+    document.getElementById('lnk-type').selectedIndex = _types.length;
+    lnkApplyChange(true);
+}
+function lnkApplyChange(resetPD){
+    document.getElementById('lnk-ident').value='';
+    if(resetPD){
+	var pdCellNode = document.getElementById('pd-cell');
+	pdCellNode.innerHTML = '';
+	pdCellNode.appendChild(createPDNode(document.getElementById('lnk-type').value));
+    }
+    document.getElementById('btn-submit').value = 'Add';
+}
+
+function createPDNode(type, privateData){
+    var pdNode = document.createElement('div');
+    var iType = indexOfType(type);
+    if(iType != _types.length){
+	var pdSchema = _types[iType].schema;
+	for(var i in pdSchema){
+	    var pdElement = pdSchema[i];
+	    var key = pdElement.keyname;
+	    var val = '';
+	    if(privateData && (key in privateData)){
+		val = valueOfVariant(privateData[key]);
+	    }else{
+		val = valueOfVariant(pdElement.defaultvalue);
+	    }
+	    var kvNode = createKVNode(key, val, true);
+// 	    var variantType = typeOfVariant(pdElement.defaultvalue);
+// 	    kvNode.appendChild(document.createTextNode('(' + variantType + ')'));
+	    pdNode.appendChild(kvNode);
+	}
+    }
+    return pdNode;
+}
+
+function display(){
+    // ctrl form
+    // storage id
+    var sgNode = document.getElementById('lnk-sg');
+    for(var i in _sgs){
+        sgNode.appendChild(createOptionNode(_sgs[i]));
+    }
+    // append a empty option as default value
+    sgNode.appendChild(createOptionNode(''));
+    // streamer id
+    var stmrNode = document.getElementById('lnk-stmr');
+    for(var i in _stmrs){
+        stmrNode.appendChild(createOptionNode(_stmrs[i]));
+    }
+    // append a empty option as default value
+    stmrNode.appendChild(createOptionNode(''));
+    var typeNode = document.getElementById('lnk-type');
+    for(var i in _types){
+        typeNode.appendChild(createOptionNode(_types[i].name));
+    }
+    // append a empty option as default value
+    typeNode.appendChild(createOptionNode(''));
+
+    // setup page info
+    document.getElementById('page-tmpl').value = _template;
+    document.getElementById('page-endpoint').value = _endpoint;
+    lnkReset();
+}
+
+var _lnks_sorted = false; //sort
+function search(){
+	if (document.getElementById("search-id").value == "" && document.getElementById("search-value").value == ""){
+		alert("Please enter the search conditions.");
+		return;
+	}
+	sort(); //sort
+	var id = document.getElementById("search-id").value;
+	if (document.getElementById('lnk-ident').value == ""){
+		document.getElementById('lnk-sg').value = id;
+	}
+	var param = document.getElementById("search-param").value;
+	var value = document.getElementById("search-value").value;
+	var index = 0;
+	
+	var tblNode = document.getElementById("lnk-tbl");
+	var tbodyNode = document.getElementById("lnk-tbd");
+	if ( tbodyNode != null ) tblNode.removeChild(tbodyNode);
+	tbodyNode = document.createElement("tbody");
+	tbodyNode.setAttribute("id", "lnk-tbd");
+	
+	function addEl(i){
+		index ++;
+		var trNode = document.createElement("tr"), tdNode;
+		trNode.className = 'lnk';
+		trNode.style.textAlign = 'center';
+		if (_lnks[i].status == "1"){
+			trNode.style.backgroundColor = "";
+		}else{
+			trNode.style.backgroundColor = "#BFBFBF";
+		}
+		trNode.onclick = new Function("lnkDetail(" + i + ");");
+		
+		trNode.appendChild(createTableCell(index));		
+		trNode.appendChild(createTableCell(_lnks[i].sgId));
+		trNode.appendChild(createTableCell(_lnks[i].stmrId));
+		if (null != _lnks[i].privateData["Qam.IP"])
+				trNode.appendChild(createTableCell((_lnks[i].privateData["Qam.IP"]).replace("ES", "")));
+		else trNode.appendChild(createTableCell(""));
+		if (null != _lnks[i].privateData["Qam.frequency"])
+			trNode.appendChild(createTableCell(_lnks[i].privateData["Qam.frequency"].replace("EI", "") || ""));
+		else trNode.appendChild(createTableCell(""));
+		
+		tdNode = document.createElement('td');
+		tdNode.style.textAlign = "left";
+		tdNode.style.textIndent = "12px";
+		tdNode.innerHTML = "<input id='el-checkbox' name='el-checkbox' type='checkbox' value='" + _lnks[i].ident + "' style='width: 10px;' onclick='selectEl(this);' />"
+			+ "&nbsp;<span id='el-status' name='el-status'>" + ( _lnks[i].status == "1" ? "ON" : "OFF" ) + "</span>";
+		trNode.appendChild(tdNode);
+		
+		tdNode = document.createElement('td');
+		tdNode.innerHTML = "<img src='../img/delete.png' onclick='lnkDetail(" + i + "); unlinkStreamer();'/>";
+		trNode.appendChild(tdNode);
+		
+		tbodyNode.appendChild(trNode);
+	}
+
+	for ( var i = 0; i < _lnks.length; ++i ){
+	try
+	{
+		if ( id == "" && value == "" ){
+			addEl(i);
+		}
+		if( id == "" && value != "" ){
+			if (_lnks[i].privateData[param]&&_lnks[i].privateData[param].indexOf(value) != -1 ){ 
+				addEl(i);
+			}
+		}
+		if( id != "" && value == ""){
+			if ( _lnks[i].sgId == id ){ 
+				addEl(i);
+			}
+		}
+		if( id != "" && value != ""){
+			if ( _lnks[i].sgId == id && (_lnks[i].privateData[param]&&_lnks[i].privateData[param].indexOf(value) != -1 ) ){ 
+				addEl(i);
+			}
+		}
+	}
+	catch(ex){}
+	}
+	tblNode.appendChild(tbodyNode);
+}
+
+function turnOn(){
+	var span = document.getElementsByName("el-status");
+	var checkbox = document.getElementsByName("el-checkbox");
+	var idents = [];
+	for ( var i = 0; i < span.length; i ++ ){
+		if ( checkbox[i].checked == true ){
+			span[i].innerHTML = "ON";
+			checkbox[i].checked = false;
+			idents.push(checkbox[i].getAttribute("value"));
+		}
+	}
+	if(idents.length == 0)
+	{
+		alert("please select link");
+		return;
+	}
+	document.getElementById('page-tmpl').value = _template;
+	document.getElementById('page-endpoint').value = _endpoint;
+ 	document.getElementById('ctrl-action').value = 'e';
+ 	document.getElementById('lnk-idents').value = idents.join(",");
+	document.ctrl-form.submit();
+}
+
+function turnOff(){
+	var span = document.getElementsByName("el-status");
+	var checkbox = document.getElementsByName("el-checkbox");
+	var idents = [];
+	for ( var i = 0; i < span.length; i ++ ){
+		if ( checkbox[i].checked == true ){
+			span[i].innerHTML = "OFF";
+			checkbox[i].checked = false;
+			idents.push(checkbox[i].getAttribute("value"));
+		}
+	}
+	if(idents.length == 0)
+	{
+		alert("please select link");
+		return;
+	}
+	document.getElementById('page-tmpl').value = _template;
+	document.getElementById('page-endpoint').value = _endpoint;
+ 	document.getElementById('ctrl-action').value = 'd';
+ 	document.getElementById('lnk-idents').value = idents.join(",");
+	document.ctrl-form.submit();
+}
+
+function selectEl(obj){
+	var total = 0;
+	var selectBtn = document.getElementById("select-all");
+	var checkbox = document.getElementsByName("el-checkbox");
+	for ( var i = 0; i < checkbox.length; i ++ ){
+		if ( checkbox[i].checked == true ){
+			total ++;
+			selectBtn.indeterminate = true;
+		}
+	}
+	if ( total == checkbox.length ){
+		selectBtn.indeterminate = false;
+		selectBtn.checked = true;
+	}
+}
+
+function selectAll(obj){
+	var checkbox = document.getElementsByName("el-checkbox");
+	for ( var i = 0; i < checkbox.length; i ++ ){
+		checkbox[i].checked = obj.checked;
+	}
+}
+
+function sort(){ //sort
+    try{
+	    if (_lnks_sorted == false){
+	    	_lnks.sort(function(a,b){
+	    	    var ret = 0;
+	    	    if (typeof a.privateData["Qam.frequency"] == "undefined" || typeof b.privateData["Qam.frequency"] == "undefined"){
+	    	        if (typeof a.privateData["Qam.frequency"] == "undefined" && typeof b.privateData["Qam.frequency"] != "undefined") ret = -1;
+	    	        if (typeof a.privateData["Qam.frequency"] != "undefined" && typeof b.privateData["Qam.frequency"] == "undefined") ret = 1;
+	    	        if (typeof a.privateData["Qam.frequency"] == "undefined" && typeof b.privateData["Qam.frequency"] == "undefined") ret = 0;
+	    	    }else{
+	    	    	ret = a.privateData["Qam.frequency"].localeCompare(b.privateData["Qam.frequency"]);
+	    	    }
+	    	    return ret;
+	    	    });
+	    	_lnks.sort(function(a,b){
+	    	    if (typeof a.privateData["Qam.IP"] == "undefined" || typeof b.privateData["Qam.IP"] == "undefined"){
+	    	        if (typeof a.privateData["Qam.IP"] == "undefined" && typeof b.privateData["Qam.IP"] != "undefined") ret = -1;
+	    	        if (typeof a.privateData["Qam.IP"] != "undefined" && typeof b.privateData["Qam.IP"] == "undefined") ret = 1;
+	    	        if (typeof a.privateData["Qam.IP"] == "undefined" && typeof b.privateData["Qam.IP"] == "undefined") ret = 0;
+	    	    }else{
+	    	    	ret = a.privateData["Qam.IP"].localeCompare(b.privateData["Qam.IP"]);
+	    	    }
+	    	    return ret;
+	    	    });
+	    	_lnks_sorted == true;
+	    }
+    }catch(e){}
+}
+
+</script>
+<div id='display-area'>
+<h3>Stream Link</h3>
+Group ID: <input id='search-id' type='text' value='' size='10'/>&nbsp;&nbsp;
+<select id='search-param'><option value='Qam.IP' selected>QAM.IP</option><option value='Qam.frequency'>QAM.Frequency</option></select>: <input id='search-value' type='text' value='' size='20'/>
+<input id='search-action' type='button' value=' Search ' onclick='search();' />
+&nbsp;<input type='button' value=' enable ' onclick='turnOn();' />
+&nbsp;<input type='button' value=' disable ' onclick='turnOff();' />
+<hr>
+<table id='lnk-tbl' class='listTable'>
+<tr class='heading' style='text-align: center;'>
+	<th width='30px'>No.</th>
+	<th width='100px'>Service Group Id</th>
+	<th width='120px'>Streamer Id</th>
+	<th width='160px'>QAM.IP</th>
+	<th width='100px'>QAM.Frequency</th>
+	<th width='80px'><input id='select-all' type='checkbox' style='width: 10px;' onclick='selectAll(this);' name='selectStatus' />&nbsp;Status</th>
+	<th width='60px'>Action</th>
+</tr>
+</table>
+<form name='form' id='ctrl-form' method=post action="StreamLinkPage.ac.tswl">
+<input id='page-tmpl' type=hidden name='#template' value=''>
+<input id='page-endpoint' type=hidden name='#endpoint' value=''>
+<input id='ctrl-action' type=hidden name='#action' value=''>
+<input id='lnk-idents' type=hidden name='path.lnk#idents' value=''>
+<hr>
+<table>
+<colgroup><col span='2' class='heading'><col></colgroup>
+<tr><td>Ident</td><td>:</td><td>
+<input id='lnk-ident' type='text' readonly value='' size='60'></td></tr>
+<tr><td>Service Group Id</td><td>:</td><td>
+<select id='lnk-sg' onchange="lnkApplyChange();"></select></td></tr>
+<tr><td>Streamer Id</td><td>:</td><td>
+<select id='lnk-stmr' onchange="lnkApplyChange();"></select></td></tr>
+<tr><td>Type</td><td>:</td><td>
+<select id='lnk-type' onchange="lnkApplyChange(true);"></select></td></tr>
+<tr><td>Private Data</td><td>:</td><td id='pd-cell'></td></tr>
+</table>
+<input type=button value='New' onclick="lnkReset();">
+<input id='btn-submit' type='button' value='Add' onclick="linkStreamer();">
+</form>
+</div>

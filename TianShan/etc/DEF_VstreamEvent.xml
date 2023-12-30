@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EventDefinition component="VstreamEvent" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="monitoring_event_definition.xsd">
+	<EventList>
+		<Event category="Service Control Manager" code="VST_1001" severity="error">
+			<Translation>VStream: SeaFileVolume is write locked</Translation>
+			<Translation locale="zh">VStream: SeaFileVolume is write locked</Translation>
+		</Event>
+		<Event category="Service Control Manager" code="VST_1002" severity="error">
+			<Translation>VStream: Adapter has failed</Translation>
+			<Translation locale="zh">VStream: Adapter has failed</Translation>
+		</Event>
+		<Event category="Service Control Manager" code="VST_1003" severity="error">
+			<Translation>VStream: Controller error</Translation>
+			<Translation locale="zh">VStream: Controller error</Translation>
+		</Event>
+		<Event category="Service Control Manager" code="VST_1004" severity="error">
+			<Translation>VStream: StreamSmith timeout at OutOfService</Translation>
+			<Translation locale="zh">VStream: StreamSmith timeout at OutOfService</Translation>
+		</Event>
+	</EventList>
+</EventDefinition>

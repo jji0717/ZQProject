@@ -1,0 +1,68 @@
+#http://www.ibm.com/developerworks/cn/aix/library/1007_wuxh_libtool/index.html
+好处：  在不同的系统中建立动态链接库的方法有很大的差别，这主要是因为每个系统对动态链接库的看法和实现并不相同，以及编译器对动态链接库支持的选项也不太一样,对于我们开发人员，如果尝试将使用动态库的软件在这些系统间移植，需要参考苦涩难懂的系统手册，以及修改相应的Makefile，这一工作是乏味的，并且有一定的难度。
+	使用 GNU Libtool 可以容易的在不同的系统中建立动态链接库。它通过一个称为 Libtool 库的抽象，隐藏了不同系统之间的差异，给开发人员提供了一致的的接口。对于大部分情况，开发人员甚至不用去查看相应的系统手册，只需要掌握 GNU Libtool 的用法就可以了。并且，使用 Libtool 的 Makefile 也只需要编写一次就可以在多个系统上使用。
+	Libtool 库可以是一个静态链接库，可以是一个动态链接库，也可以同时包含两者。在这篇文档中，我们围绕 Libtool 库的建立和使用，只是在适当的说明 Libtool 库和系统动态或者静态链接库之间的映射关系。
+
+第一步:建立 Libtool 对象文件
+	使用 Libtool 则使用下面的命令 :
+	libtool --mode=compile gcc -c foo.c 
+	可以看到，使用 Libtool 只需要将“传统”的命令 (gcc -c foo.c) 作为参数传递给 Libtool 即可。在上面的命令中，libtool 使用 compile模式 (--mode=compile 选项 )，这是建立对象文件的模式，Libtool 还有其它的模式，后面将介绍。
+	上面的命令输出如下 :
+	 mkdir .libs 
+	 gcc -c compress.c  -fPIC -DPIC -o .libs/compress.o 
+	 gcc -c compress.c -o compress.o >/dev/null 2>&1 
+	 备注:它建立了两个文件，一个是 .libs/compress.o，在建立这个文件时，Libtool 自动插入了 -fPIC和 -DPIC选项，告诉编译器生成位置独立的代码，之后将用这个文件来建立动态链接库。生成第二个文件 compress.o没有添加额外的选项，它准备用来建立静态链接库.
+	它建立了两个文件，一个是 .libs/compress.o，在建立这个文件时，Libtool 自动插入了 -fPIC和 -DPIC选项，告诉编译器生成位置独立的代码，之后将用这个文件来建立动态链接库。生成第二个文件 compress.o没有添加额外的选项，它准备用来建立静态链接库.
+
+第二步:建立 Libtool 库
+	用下面的命令建立 Libtool 库 :
+	libtool --mode=link gcc -o libcompress.la compress.lo -rpath /tmp -lz 
+	注意这里使用 compress.lo 作为输入文件，并且告诉 Libtool 生成的目标文件为 libcompress.la，.la 是 Libtool 的库文件后缀。-rpath选项告诉 Libtool 这个库将被安装到什么地方，如果省略了 -rpath选项，那么不会生成动态链接库。因为我们的库中使用了 libz 提供的 compress 函数，所以也提供了 -lz 选项，Libtool 会记住这个依赖关系，后续在使用我们的库时自动的将依赖的库链接进来。
+
+第三步:安装 Libtool 库
+	libtool --mode=install install -c libcompress.la /tmp 
+	我们需要告诉 Libtool 使用的安装命令，Libtool 支持 install 和 cp，这里使用的是 install。
+	虽然前面我们在建立库时，通过 -rpath 选项指定了库准备安装的路径 (/tmp)，但是这里我们还得要提供安装路径。请确保它们一致
+
+	**在安装完成之后，可能还需要做一些配置才能正确使用，Libtool 的 finish 模式可以在这方面给我们一些提示 :
+	libtool -n --mode=finish /tmp 
+
+第四步:使用 Libtool 库
+	libtool --mode=compile gcc -c main.c 
+	使用安装的库
+	libtool --mode=link gcc -o main main.lo /tmp/libcompress.la 
+	使用未安装的库
+	libtool --mode=link gcc -o main main.lo ./libcompress.la 
+	 和使用安装的库不一样，这个时候建立的 main 程序只是一个封装脚本，如果你直接执行它不会有什么问题，但是如果你想调试它
+	应该这样调用: libtool --mode=execute gdb main 
+
+第五步:卸载 Libtool 库
+	libtool --mode=uninstall rm /tmp/libcompress.la 
+	
+Libtool 命令模式
+1)编译模式
+	libtool --mode=compile gcc -c src.c 
+2)链接模式
+	libtool --mode=link gcc -o library.la src.lo -rpath /usr/local/lib 
+3)安装模式
+	libtool --mode=install install -c library.la /usr/local/lib 
+4)完成模式
+	libtool --mode=finish /usr/local/lib 
+5)卸载模式
+	libtool --mode=uninstall rm /usr/local/lib/library.la
+6)执行模式
+	libtool --mode=execute gdb program 
+7)清除模式
+	清除模式和卸载模式差不多，只是它用来清除开发过程中的中间文件。
+	libtool --mode=clean rm library.la 
+
+库版本信息	
+    current: 表示当前库输出的接口的数量 ;
+    revision: 表示当前库输出接口的修改次数 ;
+    age: 表示当前库支持先前的库接口的数量，例如 age为 2，表示它可以和支持当前库接口的执行文件，或者支持前面两个库接口的执行文件进行链接。所以 age应该总是小于或者等于 current。
+    Libtool 的库版本通过参数 -version-info current:revision:age指定，例如下面的例子 :
+	libtool --mode=link gcc -l libcompress.la -version-info 0:1:0 
+
+
+
+

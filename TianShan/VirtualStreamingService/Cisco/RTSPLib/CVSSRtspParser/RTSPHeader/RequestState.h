@@ -1,0 +1,18 @@
+#ifndef __REQUESTSTATE_H__
+#define __REQUESTSTATE_H__
+
+typedef enum
+{
+	PREPARE		= 0,
+	SETUP		= 1,
+	PLAY		= 2,
+	TEARDOWN	= 3,
+	PAUSE		= 4,
+	ANNOUNCE	= 5,
+	GETPARAMETER= 6,
+	PING		= 7,
+	SETPARAMETER= 8,
+	UNKNOWNSTATE= 9
+}RTSPClientState;
+
+#endif __REQUESTSTATE_H__

@@ -1,0 +1,162 @@
+<!--
+Regular procedures of loading configurations:
+  1) When a service starts, read HKEY_LM\Softwares\ZQ Interactive\TianShan\Services\<ServiceName>\configDir, if the
+     TianShanService.xml is successfully opened, jump to 5)
+  2) tries HKEY_LM\Softwares\ZQ Interactive\TianShan\Services\configDir, if the TianShanService.xml is successfully
+     opened, jump to 5)
+  3) tries the dir ..\etc of where the executable is, if the TianShanService.xml is successfully opened, jump to 5)
+  4) puts an error as system event, say no configuration TianShanService.xml can be opened. Quit the program
+  5) reads the TianShanService.xml, if there is any XML formatting errors, put an error as system event then quit
+     the program
+  6) reads the LogFolder in the XML, take it if succeed, otherwise use ..\logs of where the executable is. Open the
+     main log file, and immediately put a line including
+       a) service name
+       b) service version number
+       c) the full pathname of TianShanService.xml
+     as the first log message in the main logfile
+  7) continues to populate other configurations
+  8) initialize the service and start serving
+-->
+
+<TianShan>
+
+	<!-- default configurations for the services of this TianShan deployment -->
+	<default>
+	
+		<!-- The IceStorm service where the services of this TianShan deployment will deliver events to.
+		     attributes:
+		       endpoint - the ICE endpoint to the IceStorm service
+		-->
+		<IceStorm endpoint="tcp -h {localIP} -p 10000"/>
+
+		<!-- The Ice trace log setting for all the services of this TianShan deployment.
+		     attributes:
+		       enabled       - 1 if the Ice trace is enabled, default "0"
+		       logfileSuffix - a suffix of the log filename, i.e. the service Weiwoo's main log file will
+		                       be "Weiwoo.log". With a suffix "_ice.log", the ICE trace will be in a
+		                       separate logfile "Weiwoo_ice.log" in the same directory
+		       level         - the log level of the ice trace log
+		       size          - the size that this trace log must roll
+		-->
+		<IceTrace enabled="1" logfileSuffix="_ice.log" level="7" size="10240000" />
+
+		<!-- Additional Ice properties if there is any, <prop /> is its sub element
+		     attrib of <prop />:
+		        name         - the name of the Ice property
+		        value        - the value of the Ice property
+		-->
+		<IceProperties>
+			<prop name="propName" value="propValue" />
+		</IceProperties>
+		
+		<!-- The default folder where the services of this TianShan deployment accesses their local
+		     databases if it is not defined by their individual configurations
+		     attributes:
+		       path          - path to the location of database directory, default "../data/"
+		-->
+		<DatabaseFolder	path="D:\work\project\ZQProjs\TianShan\data"/>
+
+		<!-- The default folder where the services of this TianShan deployment puts their logfiles
+		     attributes:
+		       path          - path to the location of log directory, default "../logs/"
+		-->
+		<LogFolder	path="D:\work\project\ZQProjs\TianShan\logs" />
+
+	</default>
+
+	<!-- configurations for the Weiwoo service -->
+	<Weiwoo>
+		<!-- The Ice adapter that the Weiwoo service is serving on
+		     attributes:
+		       endpoint      - the endpoint of Weiwoo adapter
+		       threadPool    - the threadpool of the adapter, values in the range 2-20 are acceptable
+		-->
+		<Adapter endpoint="tcp -h {localIP} -p 10001" threadPool="5" />
+
+		<!-- The folder where the Weiwoo service accesses its local database. The service will use
+		     default <DatabaseFolder/> if this is not specified
+		     attributes:
+		       path          - path to the location of database directory, default "../data/"
+		-->
+		<DatabaseFolder	path="D:\work\project\ZQProjs\TianShan\data"/>
+
+		<!-- The main logfile of this Weiwoo service
+		     attributes:
+		       level         - the log level of this main log
+		       size          - the size that this trace log must roll
+		       flushTimeout  - timeout in second that the logfile must flush
+		-->
+		<log level ="7" size="10240000" buffer="204800" flushTimeout="2"/>
+	</Weiwoo>
+	
+	<!-- configurations for the PathManager service
+	     when PathManager is running at a embedded mode, it also uses the configurations of Weiwoo, including:
+	     <Adapter/>, <DatabaseFolder/>
+	-->
+	<PathManager>
+		
+		<!-- The main logfile of this PathManager service
+		     attributes:
+		       level         - the log level of this main log
+		       size          - the size that this trace log must roll
+		       flushTimeout  - timeout in second that the logfile must flush
+		-->
+		<log level ="7" size="10240000" buffer="204800" flushTimeout="2"/>
+		
+		<!-- The folder where to populate the PHO plugins
+		     attributes:
+		       path          - path to the location of plugin directory, default "../modules/"
+		-->
+		<ModuleFolder path="D:\work\project\ZQProjs\TianShan\modules\"/>
+		
+		<!-- The Ice adapter that the PathManager service is serving on
+		     The service will always use that defined in <Weiwoo/> if PathManager is running at a embedded mode.
+		     attributes:
+		       endpoint      - the endpoint of PathManager adapter
+		       threadPool    - the threadpool of the adapter, values in the range 2-20 are acceptable
+		-->
+		<Adapter endpoint="tcp -h {localIP} -p 10002" threadPool="5" />
+
+		<!-- The folder where the PathManager service accesses its local database.
+		     The service will use default <DatabaseFolder/> if this is not specified.
+		     The service will always use that defined in <Weiwoo/> if PathManager is running at a embedded mode.
+		     attributes:
+		       path          - path to the location of database directory, default "../data/"
+		-->
+		<DatabaseFolder	path="D:\work\project\ZQProjs\TianShan\data"/>
+		
+	</PathManager>
+	
+	<!-- configurations for the BusinessRouter service
+	     when PathManager is running at a embedded mode, it also uses the configurations of Weiwoo, including:
+	     <Adapter/>, <DatabaseFolder/>
+	-->
+	<BusinessRouter>
+		
+		<!-- The main logfile of this BusinessRouter service
+		     attributes:
+		       level         - the log level of this main log
+		       size          - the size that this trace log must roll
+		       flushTimeout  - timeout in second that the logfile must flush
+		-->
+		<log level ="7" size="10240000" buffer="204800" flushTimeout="2"/>
+
+		<!-- The Ice adapter that the BusinessRouter service is serving on
+		     The service will always use that defined in <Weiwoo/> if PathManager is running at a embedded mode.
+		     attributes:
+		       endpoint      - the endpoint of PathManager adapter
+		       threadPool    - the threadpool of the adapter, values in the range 2-20 are acceptable
+		-->
+		<Adapter endpoint="tcp -h {localIP} -p 10002" threadPool="5" />
+
+		<!-- The folder where the BusinessRouter service accesses its local database.
+		     The service will use default <DatabaseFolder/> if this is not specified.
+		     The service will always use that defined in <Weiwoo/> if BusinessRouter is running at a embedded mode.
+		     attributes:
+		       path          - path to the location of database directory, default "../data/"
+		-->
+		<DatabaseFolder	path="D:\work\project\ZQProjs\TianShan\data"/>
+		
+	</BusinessRouter>
+
+</TianShan>

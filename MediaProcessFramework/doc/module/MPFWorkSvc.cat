@@ -1,0 +1,28 @@
+
+(object Petal
+    version    	47
+    _written   	"Rose 8.0.0303.1400"
+    charSet    	134)
+
+(object Class_Category "MPFWorkSvc"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    attributes 	(list Attribute_Set
+	(object Attribute
+	    tool       	"sc"
+	    name       	"SourceControlSpec"
+	    value      	
+|"$/ZQProjs/MediaProcessFramework/doc/module", CYIAAAAA
+	    ))
+    quid       	"42732C740366"
+    stereotype 	"Application System"
+    visible_categories 	(list visibility_relationship_list
+	(object Visibility_Relationship
+	    quid       	"42732D05038D"
+	    supplier   	"Logical View::MPF SDK::SampleWork"
+	    quidu      	"427326C90305"))
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "PluginModuleFactory"
+	    quid       	"4278386C03AA"))
+    logical_presentations 	(list unit_reference_list))

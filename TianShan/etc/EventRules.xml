@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Rules>
+   <Rule name="Rule1" >
+     <Action name="A3GetContentInfo">
+     	<arg name="RegionalIP" value="10.15.10.60"/>
+     	<arg name="RegionalPort" value="8080"/>
+     	<arg name="RegionalPath" value=""/>
+     	<arg name="VolumeName" value="SEAC00000/vol2"/>
+     	<arg name="SubType" value=".VVX"/>   	
+     </Action>	
+     <Action name="A3ExposeContent">
+      <arg name="NationalIP" value="10.15.10.40"/>
+     	<arg name="NationalPort" value="8080"/>
+     	<arg name="NationalPath" value=""/>
+     	<arg name="VolumeName" value="SEAC00000/vol2"/>
+     	<arg name="transferBitRate" value="45000000"/>
+     	<arg name="transferProtocol" value="ftp"/>     	
+	    <ResultMetaData>
+		     <result outputName="url" ctxMetaData="url" />
+		     <result outputName="userName" ctxMetaData="userName" />
+		     <result outputName="password" ctxMetaData="password" />
+		     <result outputName="transferBitRate" ctxMetaData="transferBitRate" />
+		  </ResultMetaData>     	
+     </Action>
+     <Action name="A3TransferContent">
+      <arg name="RegionalIP" value="10.15.10.60"/>
+     	<arg name="RegionalPort" value="8080"/>
+     	<arg name="RegionalPath" value=""/>
+     	<arg name="VolumeName" value="SEAC0000/vol2"/>
+     	<arg name="ContentInterfaceMode" value="SeaChange"/>
+     	<arg name="sourceType" value="MPEG2TS:VVX"/>
+     	<arg name="responseURL" value="http://10.15.10.40:8080/"/>      	
+     </Action>     
+   </Rule>
+   <Event category="ContentLocator" event="RemoteAssetResolved" >
+       <Exec rule="Rule1" />
+   </Event>
+</Rules>

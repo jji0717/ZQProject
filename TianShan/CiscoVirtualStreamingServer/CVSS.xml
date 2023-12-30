@@ -1,0 +1,191 @@
+<TianShan>
+
+<Definitions src="TianShanDef.xml">
+</Definitions>
+	
+<default>
+
+	<!-- CrashDump can help devoloper diagnose the program when it crashed
+			if you set enable to "1" you must make sure that the path is accessible
+			path: crashdump path
+			enabled: 1 to enable crashDump   //!!! former enableDump
+  --> 
+  <CrashDump path="${TianShanCrashDumpDir}" enabled="1"/> 
+
+	<!--The Ice trace log setting for all the services of this TianShan deployment.
+			attributes:
+				enabled: 1 if the Ice trace is enabled, default "0";
+				logfileSuffix: a suffix of the log filename, if the log service log file is test.log, then the ice trace log will be named test_ice.log by default until specify this fild;
+				level: the log level of the ice trace log;
+				size: the size that this trace log must roll.
+	--> 
+  <IceTrace enabled="1" level="7" size="10240000"/>
+  
+  <!-- example: 
+		
+			<EventChannel endPoint="tcp -h 10.50.12.4 -p 10000"/>
+			
+		-->
+		<!-- params: only one param is supported now
+		
+			endPoint: should be in format of "name:tcp -h ip -p port".
+			
+		-->
+  <!--EventChannel endpoint = "${PrimeEventChannelEndpoint}" -->
+	<EventChannel endPoint="${PrimeEventChannelEndpoint}"/>
+		
+	<!--Additional Ice properties if there is any, <prop /> is its sub element
+			attrib of <prop />:
+				name: the name of the Ice property
+				value: the value of the Ice property
+  --> 
+	<IceProperties>
+	<!-- 
+  the following are performance tuning parameters, please don't modify if you are not an expert at them 
+  --> 
+	  <prop name="Ice.Trace.Network" value="1" /> 
+	  <prop name="Ice.Trace.Protocol" value="0" /> 
+	  <prop name="Ice.Trace.Retry" value="1" /> 
+	  <prop name="Ice.Warn.Connections" value="1" /> 
+	  <prop name="Ice.Warn.Endpoints" value="1" /> 
+	  <prop name="Ice.Logger.TimeStamp" value="1" /> 
+	  <prop name="Freeze.Warn.Deadlocks" value="1" /> 
+	  <prop name="Freeze.Trace.Map" value="0" /> 
+	  <prop name="Freeze.Trace.DbEnv" value="2" /> 
+	  <prop name="Freeze.Trace.Evictor" value="0" /> 
+	  <!--prop name="Ice.Override.Timeout" value="20000" /--> 
+	  <prop name="Ice.ThreadPool.Server.Size" value="100" /> 
+	  <prop name="Ice.ThreadPool.Server.SizeMax" value="160" /> 
+	  <prop name="Ice.ThreadPool.Client.Size" value="100" /> 
+	  <prop name="Ice.ThreadPool.Client.SizeMax" value="130" /> 
+  </IceProperties>
+  
+	<!--The main logfile of this CVSS service
+		     attributes:
+		     	 path: full path of the log file //!!! former lmLog::name
+					 syntax: the file defines the syntax of the events via the regular expressions
+  -->
+  <PublishedLogs>
+    <Log  path="${TianShanLogDir}\CVSS.Log" syntax="${TianShanHomeDir}\etc\syntax_CVSS.xml" />
+  </PublishedLogs>
+
+	<!--The default folder where the services of this TianShan deployment accesses their local databases if it is not defined by their individual configurations
+			attributes:
+				path: path to the location of database directory, default "../data/"
+				runtimePath: path to keep the runtime data, default as the value of path
+		     //!!! former <DatabaseFolder>
+  --> 
+  <Database path="${TianShanDatabaseDir}" runtimePath="${TianShanDatabaseDir}\runtime" /> 
+  
+</default>
+  
+	<!--  configurations of the CVSS service 
+  -->
+<CVSS>
+
+  <!--The main logfile of this CVSS service
+		     attributes:
+		     	 path: full path of the log file //!!! former lmLog::name
+		       level: the log level of this main log
+		       logNum: the max log file numbers
+		       size: the size that this trace log must roll
+		       flushTimeout: timeout in second that the logfile must flush
+  -->
+  <LogFile path="${TianShanLogDir}\CVSS.Log" level="7" maxCount="100" size="25600000" buffer="1024" flushTimeout="1" />
+
+  <!--The local bind endpoint that the CVSS is serving on //!!! former Adapter
+			attributes:
+				endpoint: the bind endpoint of this CVSS
+				dispatchSize: the initial thread pool size to dispatch client requests, values in the range 4-20 are acceptable //!!! former threadpool
+				dispatchMax: the max thread pool size to dispatch client requests //!!! new added
+				evictoreSize: the max evictor session size
+				threadPoolSize: the thread pool size for thread request,
+	-->
+  <Bind endPoint="tcp -h ${ServerNetIf} -p 10800"  dispatchSize="5" dispatchMax="30" evictorSize="1000" threadPoolSize="30"/>
+
+
+  <!--The Ice log setting for the CVSS services of this TianShan deployment.
+			attributes:
+				path: full path of the log file //!!! former lmLog::name
+				level: the log level of the ice trace log;
+				logNum: the max number of log file stored;
+				size: the size that this trace log must roll;
+				buffer: the log buffer size;
+				flushTimeout: the delay time of log thread to flush.
+	--> 
+  <IceLog path="${TianShanLogDir}\CVSS_Ice.Log" level="7" maxCount="100" size="25600000" buffer="1024" flushTimeout="1"/> 
+  
+  <!-- example:
+  	<RTSPProp threadPoolSize="15" timeOut="5" bufferMaxSize="16" />
+  		attributes:
+        threadPoolSize: the thread pool size used in RTSP interaction
+  			timeOut: the CVSS module send one RTSP request and wait for response, if exceed this timeout config, will return false directly
+        bufferMaxSize: one socket's RTSP buffer max size in KB
+  -->
+  <RTSPProp threadPoolSize="15" timeOut="5" bufferMaxSize="16"/>
+		
+	<!-- example:
+		<StreamingServer address="10.15.10.35" port="554"/>
+	-->
+	<!-- params: two params are supported now
+		ip: specify the server ip address
+		port: config server's listen port
+	-->
+	<StreamingServer name="s1" ip="10.15.10.35" port="554"/>
+	
+	<!--SOAP contentstore config-->
+	<!--The main logfile of this A3CS service
+		     attributes:
+		     	 path: full path of the log file //!!! former lmLog::name
+					 syntax: the file defines the syntax of the events via the regular expressions
+		       level: the log level of this main log
+		       logNum: the max log file numbers
+		       size: the size that this trace log must roll
+		       flushTimeout: timeout in second that the logfile must flush
+	-->
+	<SoapLog path="${TianShanLogDir}\SoapCS.Log" level="7" maxCount="100" size="25600000" buffer="1024" flushTimeout="1" />
+	
+	<!--StoreInfo
+		netId:	the server host name
+		type:	server type
+		streamableLength:	content streamable time length,unit millisecond
+	-->
+	<StoreInfo netId="SoapTest" type="CISCOCS" streamableLength="100000">
+		<!--StoreReplica
+			groupId:	content store group id
+			replicaId:	content store id in the group
+			replicaPriority:	content store priority
+			timeout:	content store timeout
+			contentSize	content evictor size
+			volumeSize	volume evictor size	 
+		-->
+		<StoreReplica groupId="Group1" replicaId="No1" replicaPriority="0" timeout="0" contentSize="100" volumeSize="2"  />
+		<!--The local host ip and port information, local soap service will listen this ip:port for external message
+				attributes:
+					ip: local ip address;
+					port: local port number.
+		-->
+		<LocalSoapInfo ip="192.168.81.114" port="4444" />
+		
+		<!--The remote server with CISCO Soap Server send request and get response from
+					attributes:
+						ip: remote server ip address;
+						port: remote server port number.
+		-->
+		<ServerInfo ip="10.15.10.33" port="8080" />
+		
+		<!--The volume information used in A3 message
+					attributes:
+						name: specify the volume name in A3 message.
+		-->
+		<VolumeInfo name="test" path="70001"/>
+		
+		<!--the time interval(second) to get content list
+					attributes:
+						interval: time value.
+		-->
+		<HeartBeat interval="10" />
+	</StoreInfo>
+</CVSS>
+
+</TianShan>

@@ -1,0 +1,17 @@
+<Syntax>
+	<!-- type is the log file type that this syntax to match ,value is "filelog" or "sclog" -->	
+	<EventSource type="filelog">
+	    <!--Event is the basic info of every event .contain event name,event category,event id,stampUTc(the timestam of event that is the match result substring use syntax),SourceNetId(the network id where the event is fired. hostname is recommended if no network id),
+	    enabled(is or not use this event set ,value "1" is use,"0" is not) -->
+	    <Event name="ServiceStarted" category="NASContentStore" eventId="0001" stampUTC="$1" sourceNetId="${SourceNetId}" enabled="1">
+	       <!-- Syntax is the regular expression to match the log -->
+	       <Syntax value="([\d]{2}.[\d]{2} [\d]{2}:[\d]{2}:[\d]{2}.[\d]{3}).*===================== Loading service common interface.*" />
+	       <!-- Param the description of substring of match result, value is the special substring,such as "$2" is the second match string  -->
+	    </Event>
+	 
+	    <Event name="ServiceStopped" category="NASContentStore" eventId="0002" stampUTC="$1" sourceNetId="${SourceNetId}" enabled="1">
+	       <Syntax value="([\d]{2}.[\d]{2} [\d]{2}:[\d]{2}:[\d]{2}.[\d]{3}).*Recieve Stop message from service shell.*" />
+	    </Event>
+	 
+	</EventSource>
+</Syntax>

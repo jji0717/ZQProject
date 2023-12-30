@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TianShan>
+
+  <Definitions src="TianShanDef.xml">
+  </Definitions>
+
+  <default>
+
+    <!-- CrashDump can help devoloper diagnose the program when it crashed
+			if you set enable to "1" you must make sure that the path is accessible
+			path: crashdump path
+			enabled: 1 to enable crashDump
+  -->
+    <CrashDump path="${TianShanCrashDumpDir}" enabled="1"/>
+
+
+    <IceTrace level="7" size="10240000" count="5" buffer="204800" flushtimeout="2"/>
+    
+    <!-- example: 
+		
+			<EventChannel endPoint="tcp -h 10.50.12.4 -p 10000"/>
+			
+		-->
+    <!-- params: only one param is supported now
+		
+			endPoint: should be in format of "name:tcp -h ip -p port".
+			
+		-->
+    <!--EventChannel endpoint = "${PrimeEventChannelEndpoint}" -->
+    <EventChannel endPoint="${PrimeEventChannelEndpoint}"/>
+
+    <!--Additional Ice properties if there is any, <prop /> is its sub element
+			attrib of <prop />:
+				name: the name of the Ice property
+				value: the value of the Ice property
+  -->
+    <IceProperties>
+      <!-- 
+  the following are performance tuning parameters, please don't modify if you are not an expert at them 
+  -->
+      <prop name="Ice.Trace.Network" value="1" />
+      <prop name="Ice.Trace.Protocol" value="0" />
+      <prop name="Ice.Trace.Retry" value="1" />
+      <prop name="Ice.Warn.Connections" value="1" />
+      <prop name="Ice.Warn.Endpoints" value="1" />
+      <prop name="Freeze.Warn.Deadlocks" value="1" />
+      <prop name="Freeze.Trace.Map" value="0" />
+      <prop name="Freeze.Trace.DbEnv" value="2" />
+      <prop name="Freeze.Trace.Evictor" value="0" />
+      <prop name="Ice.Override.Timeout" value="15000" />
+      <prop name="Ice.Override.ConnectTimeout" value="2000" />
+      <prop name="Ice.ThreadPool.Server.Size" value="30" />
+      <prop name="Ice.ThreadPool.Server.SizeMax" value="50" />
+      <prop name="Ice.ThreadPool.Client.Size" value="10" />
+      <prop name="Ice.ThreadPool.Client.SizeMax" value="20" />
+      <prop name="Ice.MessageSizeMax" value="20480" />
+    </IceProperties>
+
+    <!-- Log file to publish thru SentryService
+		     	     attributes:
+		       		path    - full path of the log file
+		       		syntax  - the file defines the syntax of the events via the regular expressions
+	-->
+    <PublishedLogs>
+    <!--
+      <Log path="${TianShanLogDir}\EdgeRM.log" syntax="${TianShanHomeDir}\etc\syntax.xml" key="EdgeRMEvents" type=""/>
+      -->
+    </PublishedLogs>
+
+    <!--The default folder where the services of this TianShan deployment accesses their local databases if it is not defined by their individual configurations
+			attributes:
+				path: path to the location of database directory, default "../data/"
+				runtimePath: path to keep the runtime data, default as the value of path
+  -->
+    <Database path="${TianShanDatabaseDir}" runtimePath="${TianShanDatabaseDir}/runtime" />
+
+  </default>
+
+  <!--  configurations of the EdgeRM service 
+  -->
+  <EdgeRM  netId="">
+
+    <!--The local bind endpoint that the EdgeRM is serving on
+			attributes:
+				endpoint: the bind endpoint of this EdgeRM
+				dispatchSize: the initial thread pool size to dispatch client requests, values in the range 4-20 are acceptable
+				dispatchMax: the max thread pool size to dispatch client requests
+				evictoreSize: the max evictor session size
+				threadPoolSize: the thread pool size for thread request
+				xmlDeviceFile: the export device file, must be a shared file on net,
+											 make sure that the EERM and GERM can access it.
+											 example:\\192.168.1.1\c$\tianshan\ex_devices.xml
+	-->
+    <Bind endpoint="tcp -h ${ServerNetIf} -p 11400"  dispatchSize="30" dispatchMax="50" evictorSize="1000" threadPoolSize="30" clientPoolSize="20" autoLink = "0"/>
+
+	 <!-- Allocation : 
+		       allocationLease   - lease of allocation(msec)
+		       retryTimes        - check allocation expired retry times;
+		       retryInterval     - check allocation expired retry Interval; 
+		-->
+		<Allocation allocationLease="600000" retryTimes="3" retryInterval="600000"/>
+		
+		<!-- RtspEngine :  S6 message server listen ip and port 
+		       rtspIPv4    - IpV4 listener IP
+		       rtspIPv6    - IpV6 listener IP
+		       rtspTCPPort - TCP  listener port 
+		       rtspSSLPort - SSL  listener port
+		       rtspUDPPort - UDP  listener port 
+		-->
+    <RtspEngine  rtspIPv4="0.0.0.0" rtspIPv6="::" rtspTCPPort="10554"  rtspSSLPort="15540" rtspUDPPort="10555" receiveThreads="30" processThreads="30"
+                 logfilename="RtspEngine.log" level= "7" size="40960000" count="5" buffer="204800" flushtimeout="2"/>
+    
+    <SSL enabled="0" publicKeyFile="D:/SSLCerts/certificate.pem" privateKeyFile="D:/SSLCerts/private.key" privatePassword="SeaChange" dhParamFile="dhParam.pem" randFile="rand.pem" />
+    
+    <!-- VrepServer : 
+           enable   - indicates whether or not to recevie D6 Message, 1 means recevie, 0 means not send
+           ip       - vrep server Ip
+		       port     - vrep server port
+		       interval - receive mesage interval, default 60000ms
+		-->
+    <VrepServer enable="0" ip="${ServerNetIf} " port="2234" interval="60000"/>
+    
+    <!-- ERMIClient : 
+           enable               - indicates whether or not to send ERMI message to EQAM, 1 means send, 0 means not send
+           sessionTimeOut       - sessionTime timeout interval, default vlaue=600000(ms)
+		       maxSessionCount      - max sessionCount  of sessionGroup
+		       GroupSyncInterval    - sessionGroup sync sesions with ERMI server interval
+		       bindAddress          - the local ip by ERMIclient bind
+		-->
+    <ERMIClient enable="0" sessionTimeOut="600000"  maxSessionCount="3000" GroupSyncInterval="600000" bindAddress=""/>
+
+    <!-- R6Client :
+           enable               - indicates whether or not to send r6 message to QAM, 1 means send, 0 means not send 
+           sessionTimeOut       - sessionTime timeout interval, default vlaue=600000(ms)
+		       maxSessionCount      - max sessionCount  of sessionGroup
+		       GroupSyncInterval    - sessionGroup sync sesions with ERMI server interval
+		       bindAddress          - the local ip by R6client bind
+		-->
+    <R6Client enable="0" sessionTimeOut="600000"  maxSessionCount="3000" GroupSyncInterval="600000" bindAddress=""/>
+
+    <!-- TripServer : 
+            enable - indicates whether or not to receive trip server message, 1 means receiver, 0 means not recevie             
+		       ip      - trip server listener ip
+		       port    - trip server listener port
+		       threadPoolSize - trip server receive data threadpool size
+		       processThreads - data process threadpool size  
+		-->
+    <TripServer enable="0" ip="${ServerNetIf}" port="6169" receiveThreads="30" processThreads= "30"/>   
+    
+    <!-- Backup : 
+            mode      - indicates whether or not global ERM service,if mode= "standby: indicates Global ERM, else mode = "active", indicates Edge ERM
+                        when mode= "standby", ERM list indicate Edge ERM list,  manage by this ERM service
+                        when mode= "active",  ERM list allow only have one, indicates Global ERM service                                                   
+		        interval  - sync alloction interval (ms), default 120000
+		        syncDeviceInter - sync devices interval (s), must be multiple of the interval,
+		                          such as if interval if 120000ms, the syncdDeviceInter should be 240s or 360s,default is 1800(s)
+		        enableSync - indicates whether or not sync, 1 yes, 0 not, default 0;
+		    ERM:
+		        netId     - ERM service netId
+		        endpoint  - ERM service endpoint
+	  -->
+
+		<Backup mode="standby" interval="120000" syncDeviceInter="1800" enableSync="0" exportTimeout="120000">
+			<ERM netId="RegionA" endpoint="EdgeRM:tcp -h *.*.*.* -p 11400" enabled="0"/>
+			<ERM netId="RegionB" endpoint="EdgeRM:tcp -h *.*.*.* -p 11400" enabled="0"/>
+		</Backup>
+
+  </EdgeRM>
+
+</TianShan>
+

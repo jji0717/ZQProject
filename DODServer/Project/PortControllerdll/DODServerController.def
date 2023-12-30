@@ -1,0 +1,6 @@
+; DODServerController.def : Declares the module parameters for the DLL.
+
+LIBRARY      "DODServerController"
+
+EXPORTS
+    ; Explicit exports can go here

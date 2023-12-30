@@ -1,0 +1,6 @@
+1. activemq-all-5.5.0.jar
+   http://activemq.apache.org/
+
+2. slf4j-nop-1.5.11.jar
+   http://www.slf4j.org/
+   

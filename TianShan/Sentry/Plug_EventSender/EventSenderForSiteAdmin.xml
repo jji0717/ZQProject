@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TianShan>
+    <Definitions src="TianShanDef.xml">
+   	
+    </Definitions>
+
+
+    <EventSender>
+	<!--
+	logPath 	: the full path of the log file,this log file is used in event sender plugin
+	logfilesize	: log file size in byte
+	loglevel	: log level 0 ~ 7
+	 -->
+    	<Log logPath="${TianShanLogDir}\EventSenderForSiteAdmin.log" logFileSize="10240000" logLevel="${DefaultLogLevel}"/>
+    
+       <JmsSender>
+       <!-- Jms basic config item -->
+       <!--
+       context 			: JMS context ,you should leave it as a default value if you don't know the exact mean of this property
+       ipPort  			: JBoss service's Ip and port with format IP:port
+       detinationName : the target topic or queue name
+       connectionFactory: Jms ConnectionFactory,you should leave it as a default value if you don't know the mean of this property
+       -->
+       <Basic  	context="org.jnp.interfaces.NamingContextFactory" 
+       			ipPort="10.50.12.4:1199" 
+       			destinationName="queue/testQueue" 
+	       		connectionFactory="ConnectionFactory" />
+       
+       <!-- MapMessage property -->       
+       <JmsMessageProperty>
+       		<MsgProperty type="string" key="MESSAGECLASS" value="TianShan-Generic-Event" />
+ 		<MsgProperty type="int" key="MESSAGECODE" value="3927" />
+       </JmsMessageProperty>              
+       <!-- ProducerOptions config -->
+       <!--
+       timeToLive : used to specify the time-to-live for a message in millisecond
+       -->
+       <ProducerOpt timeToLive="0" />  
+       <!-- other config item -->
+       <!--
+       dequeSize : in Event sender,there is a deque used for reserve message which hasn't been sent out
+       				if the message count is bigger than the DequeSize,message will be flush into a file
+       				100 ~ 200 is crecommended
+       savePath  : file used to store temp message(Those haven't been sent out)				
+       NOTE: DO NOT USE A SINGLE FILE TO STORE ICE MESSAGE AND JMS MESSAGE TOGETHER
+       -->
+       <Other dequeSize="100" savePath="${TianShanRtRecDir}\JmsForSiteAdmin.txt" />
+    	</JmsSender>
+ 
+    	<IceSender>
+       <!-- Ice basic config item -->
+       <!--
+       endpoint : ice storm's service endpoint like TianShanEvents/TopicManager:tcp -h ip -p port
+       timeout	: leave it as 200 is recommended
+       -->
+       <Basic endPoint="TianShanEvents/TopicManager:${PrimeEventChannelEndpoint}" timeout="200" />
+       <!-- other config item -->
+       <!--
+       dequeSize : in Event sender,there is a deque used for reserve message which hasn't been sent out
+       				if the message count is bigger than the DequeSize,message will be flush into a file
+       				100 ~ 200 is crecommended
+       savePath  : file used to store temp message(Those haven't been sent out)
+       NOTE: Do NOT USE A SINGLE FILE TO STORE ICE MESSAGE AND JMS MESSAGE
+       -->
+       	<Other dequeSize="100" savePath="${TianShanRtRecDir}\saveice.txt" />
+    	</IceSender>
+    	<TextWriter>
+       	<!-- Write the message to special file, receiveFile: Set File path that the message write to -->
+       	<Basic receiveFile="${TianShanRtRecDir}\textwriter.txt" />
+    	</TextWriter> 
+    </EventSender>
+</TianShan>

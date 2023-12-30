@@ -1,0 +1,30 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PlaylistAS", "PlaylistAS.vcproj", "{D1D21F98-A9C3-49AB-9B71-46DEE60692B6}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 1
+		SccProjectUniqueName0 = PlaylistAS.vcproj
+		SccProjectName0 = \u0022$/ZQProjs/Telewest/PlaylistAS\u0022,\u0020QRFAAAAA
+		SccLocalPath0 = ..
+		SccProvider0 = MSSCCI:SourceOffSite
+		CanCheckoutShared = true
+		SccProjectFilePathRelativizedFromConnection0 = PlaylistAS_gSoap\\
+	EndGlobalSection
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{D1D21F98-A9C3-49AB-9B71-46DEE60692B6}.Debug.ActiveCfg = Debug|Win32
+		{D1D21F98-A9C3-49AB-9B71-46DEE60692B6}.Debug.Build.0 = Debug|Win32
+		{D1D21F98-A9C3-49AB-9B71-46DEE60692B6}.Release.ActiveCfg = Release|Win32
+		{D1D21F98-A9C3-49AB-9B71-46DEE60692B6}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

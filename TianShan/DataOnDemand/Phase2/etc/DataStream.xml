@@ -1,0 +1,38 @@
+<TianShan>
+     <DataStream>
+
+        <!-- logFile is the path of log file. logFileSize is size of log file. logLevel is the number of log leave 
+        <Log logFile="D:\ZQProjs\DataOnDemand\Phase2\DataStream\log\DataStream.log" logFileSize="10000000" logLevel="7"/> -->
+		
+        <!-- netid is the identity of current node in the Netwrok. set is equal to HostName
+        totalRate is the capability of pushing stream. 
+        higherPriority, if it's 1, the DataStream will run as higher priority -->
+        <System netId="ADMIN2_SS_CL" checkStreamTimeout="172800" totalRate="94371840" higherPriority="0" />
+		
+        <!-- readerThreadPoolMaxSize is the upper limit of reader threadpool .
+        senderThreadPoolMaxSize is the upper limit of sender threadpool. -->
+        <ThreadPool readerThreadPoolMaxSize="150" senderThreadPoolMaxSize="150" />
+		
+        <!-- choose specify network card-->
+        <NetWork  netWorkCard=""/>
+        
+        <IceProperties>
+            <prop name="Ice.Trace.Network"               value="0" />
+            <prop name="Ice.Trace.Protocol"              value="0" />
+            <prop name="Ice.Trace.Retry"                 value="0" />
+            <prop name="Ice.Trace.Slicing"               value="0" />
+            <prop name="Ice.Warn.Connections"            value="0" />
+            <prop name="Ice.Warn.Endpoints"              value="1" />
+            <prop name="Ice.ThreadPool.Client.Size"      value="1" />
+            <prop name="Ice.ThreadPool.Client.SizeMax"   value="1" />
+            <prop name="Ice.ThreadPool.Server.Size"      value="1" />
+            <prop name="Ice.ThreadPool.Server.SizeMax"   value="1" />
+            <prop name="Ice.Override.Timeout"            value="600000" />
+            <prop name="Ice.Override.ConnectTimeout"     value="600000" />
+            <prop name="Freeze.Evictor.UseNonmutating"   value="1" />
+            <prop name="DataStream.Endpoints"            value="default -p 10040" />
+            <prop name="DataStreamService.Proxy"         value="DataStreamService:default -p 10040" />
+        </IceProperties>
+
+    </DataStream>	
+</TianShan>

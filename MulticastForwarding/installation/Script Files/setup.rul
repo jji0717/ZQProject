@@ -1,0 +1,299 @@
+
+////////////////////////////////////////////////////////////////////////////////
+//                                                                            
+//   File Name:   Setup.rul                                                   
+//                                                                            
+//   Description: InstallShield script                                        
+//                                                                            
+//   Comments:    This script was generated based on the selections you made in
+//                the Project Wizard.  Refer to the help topic entitled "Modify      
+//                the script that the Project Wizard generates" for information
+//                on possible next steps.
+//
+////////////////////////////////////////////////////////////////////////////////
+
+
+// Include header files
+    
+#include "ifx.h"   
+
+// --- include script file section ---
+
+
+    
+////////////////////// string defines ////////////////////////////
+
+//////////////////// installation declarations ///////////////////
+
+// ----- DLL function prototypes -----
+
+
+    // your DLL function prototypes
+
+
+// ---- script function prototypes -----
+
+
+    // your script function prototypes
+
+    // your global variables
+string szLocation;
+string szServiceName;
+string szServicePort;
+string szServiceShellPort;
+string szExecutableName;
+string szAccount;
+string szPassWord;
+string szDisplayName;
+string szProductName;
+                     
+string szUpdatePath; 
+                    
+#include "s.rul"   
+//////////////////////////////////////////////////////////////////////////////////////////
+//                                                                           
+//  FUNCTION:   OnFirstUIBefore                                            
+//                                                                           
+//  EVENT:      The OnFirstUIBefore event is called by OnShowUI when the setup is
+//              running in first install mode. By default this event displays UI allowing
+//              the end user to specify installation parameters.
+//              
+//              Note: This event will not be called automatically in a
+//              program...endprogram style setup.                                                             
+//
+//////////////////////////////////////////////////////////////////////////////////////////
+function OnFirstUIBefore()
+    number  nResult;
+    number  nLoop;
+    string  szTitle, szMsg;
+    string  szOpt1, szOpt2, szLicenseFile;
+    string  szName, szCompany;
+    string  svDir;
+    string  szTargetDirAppendix;
+    BOOL    bLicenseAccepted;
+begin	
+
+    if ( ALLUSERS ) then   
+        TARGETDIR = "C:\\"^ IFX_PRODUCT_NAME;
+    else
+        TARGETDIR = FOLDER_APPDATA ^ IFX_COMPANY_NAME ^ IFX_PRODUCT_NAME; 
+    endif;
+
+    // Customize the default TARGETDIR for multi-instance application.
+    // TODO: If you want something different customize the code below.	
+    if( MAINT_OPTION = MAINT_OPTION_MULTI_INSTANCE  && MULTI_INSTANCE_COUNT > 0) then
+        nLoop = 1;
+        svDir = TARGETDIR;
+        while(ExistsDir(TARGETDIR) = EXISTS)			
+            NumToStr(szTargetDirAppendix,nLoop);
+            TARGETDIR = svDir + szTargetDirAppendix;
+            nLoop = nLoop + 1;
+        endwhile;						
+    endif;
+
+    svDir = TARGETDIR;
+    szName = "";
+    szCompany = "";
+    bLicenseAccepted = FALSE;
+
+// Beginning of UI Sequence
+Dlg_Start:
+
+Dlg_SdWelcome:
+    szTitle = "";
+    szMsg = "";
+    nResult = SdWelcome( szTitle, szMsg );
+    if (nResult = BACK) goto Dlg_Start;
+
+Dlg_SdLicense2:
+    szTitle = "";
+    szOpt1 = "";
+    szOpt2 = "";
+    szLicenseFile = SUPPORTDIR ^ "license.txt";
+    nResult = SdLicense2( szTitle, szOpt1, szOpt2, szLicenseFile, bLicenseAccepted );
+    if (nResult = BACK) then
+        goto Dlg_SdWelcome;
+    else
+        bLicenseAccepted = TRUE;
+    endif;
+
+Dlg_SdRegisterUser:
+    szMsg = "";
+    szTitle = "";	
+    nResult = SdRegisterUser( szTitle, szMsg, szName, szCompany );
+    if (nResult = BACK) goto Dlg_SdLicense2;
+
+Dlg_SdAskDestPath2:
+    szTitle = "";
+    szMsg = "";
+        nResult = SdAskDestPath2( szTitle, szMsg, svDir );
+        TARGETDIR = svDir^"\\bin";
+    if (nResult = BACK) goto Dlg_SdRegisterUser;
+
+Dlg_ObjDialogs:
+    nResult = ShowObjWizardPages( nResult );
+    if (nResult = BACK) goto Dlg_SdAskDestPath2;
+ 
+
+Dlg_SdStartCopy2:  
+  
+    szTitle = "";
+    szMsg = "";
+    nResult = SdStartCopy2( szTitle, szMsg );	
+    if (nResult = BACK) goto Dlg_ObjDialogs;
+      
+//CopyFile("",svDir^"\\");
+     
+    szLocation =   svDir ;
+    szServiceName = "McastFwd";
+    szServicePort = "6551";
+    szServiceShellPort = "6552";
+    szExecutableName = "McastFwd.exe";
+    szAccount = "LocalSystem";
+    szPassWord = "password";
+	szDisplayName = "";
+	szProductName = "ITV" ;  
+	 return 0;
+end;
+      
+
+
+
+   
+
+
+//---------------------------------------------------------------------------
+// OnUpdateUIBefore
+//
+// Update UI Sequence - Before Move Data
+//
+// The OnUpdateUIBefore event is called when the setup is running in update
+// mode. By default this event displays UI that allows the end user to
+// update the application to the current version.
+//
+// Note: This event will not be called automatically in a
+// program...endprogram style setup.
+//---------------------------------------------------------------------------
+function OnUpdateUIBefore()
+	string szTitle, szMsg, szIgnore, szVersionInstalled, szVersionSupported, szVersionUpdate;
+	number nVersionInstalled;
+	number nIgnore, nId, nMediaFlags;
+	number nResult;   
+	string svServiceName,szKey, szName,svValue,svPath;
+     number nType,nvSize;  
+     
+     
+begin
+
+	// Determine the update media type.	
+	MediaGetData( MEDIA, MEDIA_FIELD_MEDIA_FLAGS, nMediaFlags, szIgnore );
+
+	// Compare Versions
+	nResult = VerProductCompareVersions();
+
+	// Make sure that valid data was returned by VerProductCompareVersions
+	if( nResult < ISERR_SUCCESS ) then
+		szMsg = SdLoadString( IDS_IFX_ERROR_UPDATE_VERSION_COMPARE_FAILURE );
+		MessageBox( szMsg, SEVERE );
+		abort;
+	endif;
+
+	// Make sure that the product is installed.
+	if( nResult = VERSION_COMPARE_RESULT_NOT_INSTALLED ) then
+		// Note: This result should occur only for differential media, since OnFirstUIBefore
+		// will be called by default for non-differential media in this case.
+		szMsg = SdLoadString( IDS_IFX_ERROR_UPDATE_PRODUCT_NOT_INSTALLED );
+		SdSubstituteProductInfo( szMsg );
+		MessageBox( szMsg, SEVERE );
+		abort;
+	endif;	
+
+	// Check whether the update is older than the currently installed version.
+	if( nResult = VERSION_COMPARE_RESULT_OLDER ) then
+		szMsg = SdLoadString( IDS_IFX_ERROR_UPDATE_NOT_APPROPRIATE );
+		SdSubstituteProductInfo( szMsg );
+		MessageBox( szMsg, SEVERE );
+		abort;
+	endif;
+
+	// Verify that this update is appropriate for the version of the application that is installed.
+	if( nResult = VERSION_COMPARE_RESULT_NEWER_NOT_SUPPORTED ) then
+		szMsg = SdLoadString( IDS_IFX_ERROR_UPDATE_NOT_SUPPORTED );
+		SdSubstituteProductInfo( szMsg );
+		MessageBox( szMsg, SEVERE );
+		abort;
+	endif;
+
+	// Check whether the update is needed.
+	if( nResult = VERSION_COMPARE_RESULT_SAME ) then
+		// Note: This result should occur only for differential media, since the setup
+		// will display OnMaintUIBefore or OnFirstUIBefore by default if the versions match
+		// for full setup media.
+		szMsg = SdLoadString( IDS_IFX_WARNING_UPDATE_NOT_NEEDED );
+		SdSubstituteProductInfo( szMsg );
+		if( MessageBox( szMsg, MB_ICONEXCLAMATION | MB_YESNO ) != IDYES ) then
+			abort;
+		endif;
+	endif;
+
+	// Automatically select newly added components, do this before UI sequence in case so that
+	// if a component dialog is added, it reflects newly selected components.
+	ComponentSelectNew( MEDIA, TRUE );
+
+	// TODO: Enable this line if you want the update to to automatically uninstall
+	// any components that are not contained in the media but are listed in the 
+	// log file.
+	// ComponentRemoveAllInLogOnly();
+
+// Beginning of UI Sequence
+Dlg_Start:
+
+Dlg_SdWelcome:
+	szTitle = "";
+    szMsg = SdLoadString( IDS_IFX_SDWELCOMMESSAGE_UPDATE_WELCOME );
+    nResult = SdWelcome( szTitle, szMsg );
+    if (nResult = BACK) goto Dlg_Start;
+
+Dlg_ObjDialogs:
+    nResult = ShowObjWizardPages( nResult );
+    if (nResult = BACK) goto Dlg_SdWelcome; 
+
+	if( nMediaFlags & MEDIA_FLAG_FORMAT_DIFFERENTIAL ) then
+		// Differential installs patch media.
+		ComponentPatch();
+	else
+		// Update reinstalls (updates) all components in media.  
+	/////////////uninstall service at first if installed////////////////////////////////////////////
+		svServiceName = "McastFwd";
+		nType  = REGDB_STRING; 
+		nvSize = -1;
+	    
+	  	RegDBSetDefaultRoot (HKEY_LOCAL_MACHINE);     
+   		szKey = "SYSTEM\\CurrentControlSet\\Services\\" ^ svServiceName;
+		szName = "ImagePath"; 
+		nType = REGDB_STRING_EXPAND;
+
+		if (RegDBGetKeyValueEx(szKey, szName, nType, svValue, 
+						   nvSize) < 0) then
+       		MessageBox ("Uninstall information lost.Uninstall proccess failed.", SEVERE);
+      		abort;
+  		endif;     
+
+    	ParsePath(svPath, svValue, PATH);                      
+    	StrSub(szLocation ,svPath,0,StrLength(svPath)-4);  
+    	szServiceName = "McastFwd";
+	    szServicePort = "6551";
+	    szServiceShellPort = "6552";
+	    szExecutableName = "McastFwd.exe";
+	    szAccount = "LocalSystem";
+	    szPassWord = "password";
+		szDisplayName = "";
+		szProductName = "ITV" ;  
+    	///////////////////////////////////////////////////////
+		UnInstallService(svPath, "McastFwd");  
+		
+		ComponentReinstall();
+	endif;
+
+end;
+ 

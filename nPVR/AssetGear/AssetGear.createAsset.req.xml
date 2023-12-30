@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope
+ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+ xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+ xmlns:AssetGear2="http://localhost/services/AssetGearService">
+ <SOAP-ENV:Body SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+   <AssetGear2:message programID="1231" assetName="GrDeen" assetID="2312" url="" provider="Jie" bitRate="3750000">
+    <AssetGear2:Schedule scheduleID="22" channelID="1231" channelName="23" startTime="" endTime="" priority="0">
+    </AssetGear2:Schedule>
+    <AssetGear2:ListOfMetaData>
+     <AssetGear2:MetaData></AssetGear2:MetaData>
+    </AssetGear2:ListOfMetaData>
+   </AssetGear2:message>
+ </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+

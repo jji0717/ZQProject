@@ -1,0 +1,373 @@
+
+(object Petal
+    version    	47
+    _written   	"Rose 8.0.0303.1400"
+    charSet    	134)
+
+(object SubSystem "MPF SDK"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    attributes 	(list Attribute_Set
+	(object Attribute
+	    tool       	"sc"
+	    name       	"SourceControlSpec"
+	    value      	
+|"$/ZQProjs/MediaProcessFramework/doc/module", CYIAAAAA
+	    ))
+    quid       	"41C28C6601FE"
+    physical_models 	(list unit_reference_list
+	(object module "DirectShow Filter" "NotAModuleType" "NotAModulePart"
+	    quid       	"41C28C2F0015"
+	    stereotype 	"ActiveX"
+	    visible_modules 	(list dependency_list
+		(object Module_Visibility_Relationship
+		    quid       	"41C28CF2021E"
+		    supplier   	"Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IFilterGraph"
+		    quidu      	"41C153AC0383"
+		    supplier_is_interface 	TRUE))
+	    language   	"")
+	(object module "EntryDB" "NotAModuleType" "NotAModulePart"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"ProjectFile"
+		    value      	"D:\\projects\\ZQProjs\\MediaProcessFramework\\EntryDB\\build_win32\\edos.dsp")
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"WorkspaceFile"
+		    value      	"D:\\projects\\ZQProjs\\MediaProcessFramework\\EntryDB\\build_win32\\edos.dsw")
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"Kind"
+		    value      	("KindSet" 301))
+		(object Attribute
+		    tool       	"VC++"
+		    name       	"ProjectName"
+		    value      	"edos"))
+	    quid       	"4271CBD3018A"
+	    stereotype 	"DLL"
+	    language   	"VC++")
+	(object module "WorkNode" "NotAModuleType" "NotAModulePart"
+	    quid       	"427839570221"
+	    stereotype 	"DLL"
+	    visible_modules 	(list dependency_list
+		(object Module_Visibility_Relationship
+		    quid       	"42783ACB02EE"
+		    supplier   	"Component View::XMLRPC"
+		    quidu      	"4271B2EF035F"
+		    supplier_is_spec 	TRUE))
+	    language   	"")
+	(object module "SRM DB" "NotAModuleType" "NotAModulePart"
+	    quid       	"4278398702B6"
+	    stereotype 	"Database"
+	    language   	"")
+	(object module "SRMAPI" "NotAModuleType" "NotAModulePart"
+	    quid       	"427839F0031B"
+	    stereotype 	"DLL"
+	    visible_modules 	(list dependency_list
+		(object Module_Visibility_Relationship
+		    quid       	"42783AB402FF"
+		    supplier   	"Component View::MPF SDK::SRM DB"
+		    quidu      	"4278398702B6"
+		    supplier_is_spec 	TRUE)
+		(object Module_Visibility_Relationship
+		    quid       	"42783AD002F5"
+		    supplier   	"Component View::XMLRPC"
+		    quidu      	"4271B2EF035F"
+		    supplier_is_spec 	TRUE))
+	    language   	"")
+	(object module "MPFServiceProvider" "NotAModuleType" "NotAModulePart"
+	    quid       	"42783A0302B5"
+	    stereotype 	"Application"
+	    language   	""))
+    physical_presentations 	(list unit_reference_list
+	(object Module_Diagram "overview"
+	    quid       	"41C28C78001A"
+	    title      	"overview"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ModView "Component View::MPF SDK::DirectShow Filter" "NotAModuleType" "NotAModulePart" @1
+		    location   	(481, 748)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@1
+			location   	(414, 773)
+			fill_color 	13434879
+			anchor_loc 	3
+			nlines     	2
+			max_width  	252
+			label      	"DirectShow Filter")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@1
+			location   	(414, 692)
+			fill_color 	13434879
+			anchor     	10
+			anchor_loc 	3
+			nlines     	1
+			max_width  	248
+			label      	"<<ActiveX>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C28C2F0015"
+		    width      	454
+		    autoResize 	TRUE
+		    width      	454
+		    height     	162)
+		(object InterfaceView "Logical View::DirectX SDK::MSVidCtlLib Ver 1.0 (MS Video Control 1.0 Type Library)::IFilterGraph" @2
+		    location   	(630, 195)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(629, 303)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	385
+			justify    	0
+			label      	"IFilterGraph")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153AC0383"
+		    width      	58
+		    height     	58
+		    autoResize 	TRUE)
+		(object ModVisView "" @3
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"41C28CF2021E"
+		    client     	@1
+		    supplier   	@2
+		    line_style 	0)))
+	(object Module_Diagram "Stage I"
+	    quid       	"42783A310080"
+	    title      	"Stage I"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ModView "Component View::User WorkApp" "NotAModuleType" "NotAModulePart" @4
+		    location   	(325, 331)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@4
+			location   	(269, 306)
+			fill_color 	13434879
+			anchor_loc 	3
+			nlines     	2
+			max_width  	211
+			label      	"User WorkApp")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"42783A4402E0"
+		    width      	380
+		    autoResize 	TRUE
+		    width      	380
+		    height     	162)
+		(object ModView "Component View::MPF SDK::WorkNode" "NotAModuleType" "NotAModulePart" @5
+		    location   	(331, 709)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@5
+			location   	(296, 684)
+			fill_color 	13434879
+			anchor_loc 	3
+			nlines     	2
+			max_width  	128
+			label      	"WorkNode")
+		    icon       	"DLL"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"427839570221"
+		    width      	230
+		    autoResize 	TRUE
+		    width      	230
+		    height     	162)
+		(object ModVisView "" @6
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"42783A6102B0"
+		    client     	@4
+		    supplier   	@5
+		    line_style 	0)
+		(object ModView "Component View::User MgmApp" "NotAModuleType" "NotAModulePart" @7
+		    location   	(1294, 325)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@7
+			location   	(1238, 300)
+			fill_color 	13434879
+			anchor_loc 	3
+			nlines     	2
+			max_width  	211
+			label      	"User MgmApp")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"42783A810085"
+		    width      	380
+		    autoResize 	TRUE
+		    width      	380
+		    height     	162)
+		(object ModView "Component View::MPF SDK::SRMAPI" "NotAModuleType" "NotAModulePart" @8
+		    location   	(1306, 668)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@8
+			location   	(1271, 643)
+			fill_color 	13434879
+			anchor_loc 	3
+			nlines     	2
+			max_width  	128
+			label      	"SRMAPI")
+		    icon       	"DLL"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"427839F0031B"
+		    width      	230
+		    autoResize 	TRUE
+		    width      	230
+		    height     	162)
+		(object ModVisView "" @9
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"42783AAA0200"
+		    client     	@7
+		    supplier   	@8
+		    line_style 	0)
+		(object ModView "Component View::MPF SDK::SRM DB" "NotAModuleType" "NotAModulePart" @10
+		    location   	(1306, 1019)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@10
+			location   	(1305, 1175)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	427
+			justify    	0
+			label      	"SRM DB")
+		    icon       	"Database"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4278398702B6"
+		    width      	154
+		    height     	154
+		    autoResize 	TRUE
+		    width      	154
+		    height     	154)
+		(object ModVisView "" @11
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"42783AB402FF"
+		    client     	@8
+		    supplier   	@10
+		    line_style 	0)
+		(object ModView "Component View::XMLRPC" "NotAModuleType" "NotAModulePart" @12
+		    location   	(759, 903)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@12
+			location   	(724, 878)
+			fill_color 	13434879
+			anchor_loc 	3
+			nlines     	2
+			max_width  	128
+			label      	"XMLRPC")
+		    icon       	"DLL"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4271B2EF035F"
+		    width      	230
+		    autoResize 	TRUE
+		    width      	230
+		    height     	162)
+		(object ModVisView "" @13
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"42783ACB02EE"
+		    client     	@5
+		    supplier   	@12
+		    line_style 	0)
+		(object ModVisView "" @14
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"42783AD002F5"
+		    client     	@8
+		    supplier   	@12
+		    line_style 	0)))))

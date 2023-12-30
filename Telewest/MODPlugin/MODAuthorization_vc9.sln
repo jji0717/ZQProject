@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MODAuthorization_vc9", "ModAuthorization\MODAuthorization_vc9.vcproj", "{1979C5D7-3865-4D48-9AE5-681CA6B10C20}"
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 1
+		SccProjectUniqueName0 = ModAuthorization\\MODAuthorization_vc9.vcproj
+		SccProjectName0 = \u0022$/ZQProjs/Telewest/MODPlugin/MODAuthorization\u0022,\u0020BOFAAAAA
+		SccLocalPath0 = ModAuthorization
+		SccProvider0 = MSSCCI:SourceOffSite
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1979C5D7-3865-4D48-9AE5-681CA6B10C20}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1979C5D7-3865-4D48-9AE5-681CA6B10C20}.Debug|Win32.Build.0 = Debug|Win32
+		{1979C5D7-3865-4D48-9AE5-681CA6B10C20}.Release|Win32.ActiveCfg = Release|Win32
+		{1979C5D7-3865-4D48-9AE5-681CA6B10C20}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

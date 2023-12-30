@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TianShan>
+  <Definitions src="TianShanDef.xml"/>
+  <EGH_MQTT>
+    <!-- Log: The log setting of this module
+      level:  The log level(1-7).
+      size:   The log file size(in Byte).
+      count:  The log file count
+    -->
+    <Log level="${DefaultLogLevel}" size="10240000" count="7"/>
+
+    <!-- SafeStore: The safe store setting of this module
+      path:   The root data path. Every working RabbitMQ server connection
+              will be assigned a subfolder as the safe store path.
+    -->
+    <SafeStore path="${TianShanDatabaseDir}\EGH_MQTT"/>
+
+    <!-- RabbitMQServer: The RabbitMQ server setting
+      name:   The name of this server. This name will also be used as the safe store folder name.
+      Ip:    The ip of the rabbitMq server listen
+      port:  The port of the rabbitMq server listen
+      user:  access rabbitmq Server user account
+      passwd:  access rabbitmq Server user account password
+      enable: 1 for enable this RabbitMQ server, 0 for disable.
+    -->
+    <RabbitMQServer name="RabbitMQServer1" ip="10.15.10.78" port="1883" user="guest" passwd="centos" enabled="1" >
+
+      <!-- Channel: The message channel setting
+        name:         The name of the channel. This value always be a specific value and
+                      be known by the module.
+        destination:  The desitination of the jms message.
+      -->
+      <Channel name="PlayList" id="4">
+        <!-- The message properties-->
+        <MessageProperties>
+          <!-- StringProperty: String property of the message -->
+          <StringProperty name="content_type" value="text/plain" />
+          <StringProperty name="expiration" value="300000" />
+          <!-- IntProperty: Integer property of the message -->
+        </MessageProperties>
+        <!-- Option: The message option
+          TTL:      The ttl of the message, in milliseconds
+          enabled:  The sign for wether or not will the option setting be applied. 1 for enabled, 0 for disabled.
+        -->
+        <Option TTL="0" enabled="0"/>
+
+		<MqttCli_ConnOpts struct_id="MQTC" qos="1" struct_version="4" keepAliveInterval="60" cleansession="0" reliable="0" connectTimeout="30" retryInterval="30" MQTTVersion="0"/>
+      </Channel>
+    </RabbitMQServer>
+
+
+    <!-- The event transfer handlers setting -->
+    <EventHandlers>
+      <!-- Handler: The event handler setting
+        enabled:    0 for disable this handler, 1 for enable it.
+        name:       The description name of this handler.
+        target:     The destination of the jms message. In format of JMSServer.Topic
+        source:     The source of the event, which is the topic of original events.
+      -->
+	 <!-- Dsmcc Test -->
+     <Handler enabled="1" name="DsmccTest" target="RabbitMQServer1.PlayList">
+        <filter eventName="DsmccTest" category="HealthTest" sourceNetId=".*">
+        </filter>
+        <message type="text">
+          <text content="|CRG|$status|0|$MonitorIp|DSMCC|$StampUTC|2|$comment"/>
+		</message>
+     </Handler>
+	 
+     <!-- Streamer::PlayList -->
+     <Handler enabled="1" name="OnItemStepped" target="RabbitMQServer1.PlayList" source="TianShan/Event/Streamer/Playlist">
+        <filter eventName="OnItemStepped" category="PlayList" sourceNetId=".*">
+        </filter>
+        <message type="text">
+          <!-- <text content="V1.11&gt;PlayList::OnItemStepped(32)|timestamp=$StampUTC|netId=$SourceNetId|proxy=$proxy|OnDemandSessionId=$playlistId|currentUserCtrlNum=$currentUserCtrlNum|preUserCtrlNum=$preUserCtrlNum|EventSeq=$EventSeq|curStreamingSource=$curStreamingSource|currentItemFlags=$currentItemFlags|currentItemName=$currentItemName|currentItemTimeOffset=$currentItemTimeOffset|currentProviderAssetId=$currentProviderAssetId|currentProviderId=$currentProviderId|prevItemFlags=$prevItemFlags|prevItemName=$prevItemName|prevProviderAssetId=$prevProviderAssetId|prevProviderId=$prevProviderId|prevStreamingSource=$prevStreamingSource|stampUTC=$stampUTC|ADStatus=$sys.ADStatus|currentCtrlNum=$sys.currentCtrlNum|currentDur=$sys.currentDur|currentFlags=$sys.currentFlags|currentItem=$sys.currentItem|currentPAID=$sys.currentPAID|currentPID=$sys.currentPID|eventTime=$sys.event-date|npt=$sys.npt|nptPrimary=$sys.nptPrimary|prevCtrlNum=$sys.prevCtrlNum|prevDur=$sys.prevDur|prevFlags=$sys.prevFlags|prevItem=$sys.prevItem|prevPAID=$sys.prevPAID|prevPID=$sys.prevPID|totalDur=$sys.totalDur|totalVideodur=$sys.totalVideodur"/> -->
+		  <text content="V1.11&gt;PlayList::OnItemStepped(32)|timestamp=${StampUTC}|netId=${SourceNetId}|OnDemandSessionId=${playlistId}|ADStatus=${sys.ADStatus}|currentCtrlNum=${sys.currentCtrlNum}|currentDur=${sys.currentDur}|currentPAID=${sys.currentPAID}|currentPID=${sys.currentPID}|npt=${sys.npt}|nptPrimary=${sys.nptPrimary}|prevCtrlNum=${sys.prevCtrlNum}|prevDur=${sys.prevDur}|prevPAID=${sys.prevPAID}|prevPID=${sys.prevPID}"/>		
+		</message>
+     </Handler>
+	 
+	<!-- ClientRequest::SETUP -->
+     <Handler enabled="1" name="SETUP" target="RabbitMQServer1.PlayList" source="TianShan/Event/ClientRequest">
+        <filter eventName="SETUP" category="RTSP" sourceNetId=".*">
+        </filter>
+        <message type="text">
+		<text content="V1.11&gt;RTSP::SETUP(1000)|timestamp=${StampUTC}|session=${sess}|method=${verb}|result=${respCode}|server=${server}|app=${application-id}|asset=${asset}|home-id=${home-id}|device-id=${device-id}|smartcard-id=${smartcard-id}|user-agent=${ua}"/>
+		</message>
+     </Handler>
+	 
+	 <!-- ClientRequest::TEARDOWN -->
+     <Handler enabled="1" name="TEARDOWN" target="RabbitMQServer1.PlayList" source="TianShan/Event/ClientRequest">
+        <filter eventName="TEARDOWN" category="RTSP" sourceNetId=".*">
+        </filter>
+        <message type="text">
+		  <text content="V1.11&gt;RTSP::TEARDOWN(2000)|timestamp=${StampUTC}|netId=${SourceNetId}|session=${sess}|method=${verb}|result=${respCode}"/>		
+		</message>
+     </Handler>
+	 
+    </EventHandlers>
+  </EGH_MQTT>
+</TianShan>

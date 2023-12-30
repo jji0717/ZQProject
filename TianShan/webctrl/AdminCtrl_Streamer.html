@@ -1,0 +1,227 @@
+<script type='text/javascript' src='AdminCtrl_Util.js'></script>
+<script type='text/javascript'>
+// typedef
+function TSStreamer(netId, type, desc, ifep){
+    this.netId = netId;
+    this.type = type;
+    this.desc = desc;
+    this.ifep = ifep;
+    this.privateData = new Object();
+}
+function TSStreamerDescriptor(deviceId, type){
+    this.deviceId = deviceId;
+    this.type = type;
+}
+
+function TSStreamService(ifep, netId){
+    this.ifep = ifep;
+    this.netId = netId;
+    this.streamers = new Array();
+    for(var i = 2; i < arguments.length; ++i){
+        this.streamers.push(arguments[i]);
+    }
+    this.netIdOfStreamer = function(idx){
+        if(0 <= idx && idx < this.streamers.length){
+	    return (this.netId + '/' + this.streamers[idx].deviceId);
+        }else{
+	    return '';
+        }
+    }
+    this.indexOfStreamer = function(netId){
+        for(var i in this.streamers){
+	    if(netId == this.netIdOfStreamer(i))
+	        return i;
+        }
+        return this.streamers.length;
+    }
+}
+// global vars
+var _stmrs = new Array();
+var _template = '';
+var _endpoint = '';
+var _activeStreamSvc;
+// func
+function indexOfStreamer(netId){
+    for(var i in _stmrs){
+        if(_stmrs[i].netId == netId)
+            return i;
+    }
+    return _stmrs.length;
+}
+function endpointOfStreamer(netId){
+    var idx = indexOfStreamer(netId);
+    if(idx != _stmrs.length){
+        return _stmrs[idx].ifep;
+    }else if(_activeStreamSvc){
+        idx = _activeStreamSvc.indexOfStreamer(netId);
+        if(idx != _activeStreamSvc.streamers.length)
+	    return _activeStreamSvc.ifep;
+    }
+    return '';
+}
+function connectStreamService(){
+    var ifepNode = document.getElementById('stmr-ifep');
+    var ifep = ifepNode.value;
+    // check
+    if(!ifep.match(/\w+:[ \w\.-]+/)){
+	ifepNode.select();
+	return;
+    }
+    if(_activeStreamSvc && (_activeStreamSvc.ifep == ifep)){
+	stmrReset();
+	ifepNode.value = ifep;
+	return;
+    }
+    ifepNode.name = 'path.stmr#ifep';
+    document.getElementById('ctrl-action').value = 'c';
+    ifepNode.form.submit();
+}
+function updateStreamer(){
+    var idNode = document.getElementById('stmr-netid');
+    var ifepNode = document.getElementById('stmr-ifep');
+    // validity check
+    if(idNode.value == ''){
+        idNode.select();
+        return;
+    }
+    if((ifepNode.value == '') || (ifepNode.value != endpointOfStreamer(idNode.value))){
+        ifepNode.select();
+        return;
+    }
+    // submmit form
+    idNode.name = 'path.stmr#netid';
+    document.getElementById('stmr-type').name = 'path.stmr#type';
+    document.getElementById('stmr-desc').name = 'path.stmr#desc';
+    document.getElementById('stmr-ifep').name = 'path.stmr#ifep';
+    document.getElementById('ctrl-action').value = 'u';
+    idNode.form.submit();
+}
+function removeStreamer(){
+    var idNode = document.getElementById('stmr-netid');
+    // validity check
+    if(indexOfStreamer(idNode.value) == _stmrs.length){
+        idNode.select();
+        return;
+    }
+    if(!confirm("Delete Streamer " + idNode.value))
+        return;
+
+    // submmit form
+    idNode.name = 'path.stmr#netid';
+    document.getElementById('ctrl-action').value = 'r';
+    idNode.form.submit();
+}
+function stmrDetail(idx){
+    if(typeof(idx) == 'undefined'){
+        if(_activeStreamSvc){
+	    var netid = document.getElementById('stmr-netids').value;
+	    idx = indexOfStreamer(netid);
+	    if(idx == _stmrs.length){
+	        idx = _activeStreamSvc.indexOfStreamer(netid);
+		if(idx != _activeStreamSvc.streamers.length){
+		    document.getElementById('stmr-netid').value = netid;
+		    document.getElementById('stmr-type').value = _activeStreamSvc.streamers[idx].type;
+		    document.getElementById('stmr-desc').value = '';
+		    document.getElementById('stmr-ifep').value = _activeStreamSvc.ifep;
+		}else{
+		    stmrReset();
+		}
+		return;
+            }
+	    // else: streamer in the PathAdmin
+        }else{
+	    alert('bad logic.');
+	    stmrReset();
+	    return;
+        }
+    }
+    var stmr = _stmrs[idx];
+    // modify form fields
+    document.getElementById('stmr-netid').value = stmr.netId;
+    document.getElementById('stmr-type').value = stmr.type;
+    document.getElementById('stmr-desc').value = stmr.desc;
+    document.getElementById('stmr-ifep').value = stmr.ifep;
+    if(_activeStreamSvc){
+	document.getElementById('stmr-netids').selectedIndex = _activeStreamSvc.indexOfStreamer(stmr.netId);
+    }
+    // back to top
+    document.getElementById('current').getElementsByTagName('a')[0].focus();
+}
+function stmrReset(){
+    document.getElementById('stmr-netid').value = '';
+    document.getElementById('stmr-type').value = '';
+    document.getElementById('stmr-desc').value = '';
+    document.getElementById('stmr-ifep').value = '';
+    if(_activeStreamSvc){
+        document.getElementById('stmr-netids').selectedIndex = _activeStreamSvc.streamers.length;
+    }
+}
+
+function display(){
+    // streamer table
+    var tblNode = document.getElementById("stmr-tbl");
+    var tbodyNode = document.createElement("tbody");
+    for(var i = 0; i < _stmrs.length; ++i){
+        var trNode = document.createElement("tr");
+        trNode.className = 'lnk';
+        trNode.onclick = new Function("stmrDetail(" + i + ");");
+
+        var tdNode = document.createElement('td');
+        var spanNode = document.createElement("span");
+        spanNode.onclick = new Function("stmrDetail(" + i + ");removeStreamer();");
+        spanNode.className = 'ctrl';
+        spanNode.appendChild(document.createTextNode('r'));
+        tdNode.appendChild(spanNode);
+        trNode.appendChild(tdNode);
+
+        trNode.appendChild(createTableCell(_stmrs[i].netId));
+        trNode.appendChild(createTableCell(_stmrs[i].type));
+        trNode.appendChild(createTableCell(_stmrs[i].desc));
+        trNode.appendChild(createTableCell(_stmrs[i].ifep));
+
+        tbodyNode.appendChild(trNode);
+    }
+    tblNode.appendChild(tbodyNode);
+    // stream service info
+    if(_activeStreamSvc){
+        var idsNode = document.getElementById('stmr-netids');
+        for(var i in _activeStreamSvc.streamers){
+	    idsNode.appendChild(createOptionNode(_activeStreamSvc.netIdOfStreamer(i)));
+        }
+        idsNode.appendChild(createOptionNode(''));
+    }
+    // setup page info
+    document.getElementById('page-tmpl').value = _template;
+    document.getElementById('page-endpoint').value = _endpoint;
+    stmrReset();
+    if(_activeStreamSvc){
+        document.getElementById('stmr-ifep').value = _activeStreamSvc.ifep;
+    }
+}</script>
+<div id='display-area'>
+<h3>Streamer</h3>
+<form id='ctrl-form' method=get action="StreamerPage.ac.tswl">
+<input id = 'page-tmpl' type=hidden name='#template' value=''>
+<input id = 'page-endpoint' type=hidden name='#endpoint' value=''>
+<input id = 'ctrl-action' type=hidden name='#action' value=''>
+
+<table>
+<tr><td>endpoint</td><td>:</td><td><input id='stmr-ifep' type=text size='50' value=''>
+<input type='button' value='connect' onclick="connectStreamService();">
+</td></tr>
+<tr><td>net id</td><td>:</td><td><input id='stmr-netid' type=text size='30' readonly value=''>
+<select id='stmr-netids' onchange="stmrDetail();"></select>
+</td></tr>
+<tr><td>type</td><td>:</td><td><input id='stmr-type' type=text size='30' readonly value=''></td></tr>
+<tr><td>desc</td><td>:</td><td><input id='stmr-desc' type=text size='30' value=''></td></tr>
+</table>
+
+<input type=button value='clear' onclick="stmrReset();">
+<input type=button value=update onclick="updateStreamer();">
+</form>
+<hr>
+<table id='stmr-tbl' class='listTable'>
+<tr class='heading'><th>ctrl</th><th>net id</th><th>type</th><th>desc</th><th>endpoint</th></tr>
+</table>
+</div>
+

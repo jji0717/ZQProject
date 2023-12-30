@@ -1,0 +1,21 @@
+Because the lib use jni, you should first install jre before using the lib
+And set classpath and path envirnment variable;
+
+path=%path%;JREDIRECTORY\bin\client;
+classpath=.;DIRECTORY\javaclass;DIRECTORY\javaclass\jbossall-client.jar;
+
+JREDIRECTORY: the directory where you install jre;
+DIRECTORY:the directory where the zip file is unzipped;
+
+fowllowing is the introduction about the files included:
+
+lib\jmsc.lib :  the originally provided lib;
+Sample\debug\jmsc.dll :  the originally provided dll; 
+
+jmscpp_d.lib  : the newkly created lib(debug);
+jmscpp.lib    : the newkly created lib(release);
+
+jmshead.h   : the header file that should be included;
+Sample.cpp  : a simple sample about how you  should use the lib;
+
+javaclass directory:class files and jar file for classpath;

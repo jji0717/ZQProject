@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TianShan>	
+	 <Definitions src="TianShanDef.xml"/>
+	<default>
+		<!-- The EventChannel service where the services of this TianShan deployment will deliver events to.
+		     attributes:
+		       endpoint - the ICE endpoint to the EventChannel service
+		-->
+		<EventChannel endpoint="${PrimeEventChannelEndpoint}"/>
+				
+		<!--CrashDump can help devoloper diagnose the program when it crashed
+			if you set enableDump to "1" you must make sure that the path is accessible
+			path ===> crashdump path
+			enableDump ===> 1 for enable crashDump 0 for disable crashDump
+		 -->
+		<CrashDump path="${TianShanCrashDumpDir}" enableDump="1"/>
+		<!--
+		Database is used to store configuration and runtime data for service
+		path ==>the database path,it's must be accessible		
+		-->
+		<DatabaseFolder path="${TianShanDatabaseDir}" runtimeDbPath="${TianShanDatabaseDir}" />
+		<!--
+		store live txn and event data to an access datbase
+		destination: the output database's directory
+		template: the template for the output database
+		-->
+		<TxnData enabled="0" destination="${TianShanDatabaseDir}\Txn.History\TxnData.mdb" 
+			template="${TianShanUtilDir}\TxnData_template.mdb" size="20000000" number="5"/>
+		<!--
+		IceTrace can help devoloper trace the low level ice communication
+		enable ==>1 for enable 0 for disable
+		level  ==>log level 0 ~ 7
+		size   ==> log file size in byte
+    count  ==> file log count
+		-->
+		<IceTrace enabled="1" level="${DefaultLogLevel}" size="10240000" count="5"/>
+		<!--
+		Ice properties can influence ice's action		
+		-->
+		<IceProperties>		
+			<!-- prop name="propName" value="propValue" / --> 
+			<!-- prop name="propName" value="propValue" / -->
+			<prop name="Ice.Trace.Network"                    value="1" />
+			<prop name="Ice.Trace.Protocol"                   value="0" />
+			<prop name="Ice.Trace.Retry"                      value="1" />
+			<prop name="Ice.Warn.Connections"                 value="1" />
+			<prop name="Ice.Warn.Endpoints"                   value="1" />
+			<prop name="Ice.Logger.Timestamp"                 value="1" />
+			<prop name="Freeze.Warn.Deadlocks"                value="1" />
+			<prop name="Freeze.Trace.Map"                     value="0" />
+			<prop name="Freeze.Trace.DbEnv"                   value="2" />
+			<prop name="Freeze.Trace.Evictor"                 value="0" />
+			<prop name="Ice.Override.Timeout"                 value="15000"/>
+			<prop name="Ice.Override.ConnectTimeout"	  			value="2000" />
+      <prop name="Ice.ThreadPool.Server.Size" 					value="60"/>
+			<prop name="Ice.ThreadPool.Server.SizeMax"        value="60"/>
+			<prop name="Ice.ThreadPool.Client.Size" 					value="30"/>
+			<prop name="Ice.ThreadPool.Client.SizeMax"        value="30"/>
+		</IceProperties>		
+	</default>	
+	
+	<SiteAdmin>
+		<Service>
+			<!--
+			SiteAdmin service manage all virtual sites
+				endpoint ===>siteAdmin service endpoint
+				mode     ===> siteAdmin's url scheme, possible value: DNS, Path
+			-->
+			<SiteAdminService endPoint="tcp -h ${ServerNetIf} -p 10200" urlmode="DNS" />
+			<!--
+			the thread pool's size for service 5 ~ 20 is acceptable
+			-->			
+			<ServiceThread count="20"/>		
+			<PeformanceTune>
+        <!-- CheckpointPeriod :	Every Berkeley DB environment created by Freeze has an associated thread that
+										checkpoints this environment every num seconds. If num is less than 0, no checkpoint
+										is performed. The default is 120 seconds.
+				 	DbRecoverFatal	:	If num is set to a value larger than zero, fatal recovery is performed when the environment
+										is opened. The default value is 0.
+				-->
+
+        <IceFreezeEnviroment CheckpointPeriod="240" DbRecoverFatal="1"/>
+        <!-- SavePeriod :		Freeze uses a background thread to save updates to the database. After num milliseconds
+										without saving, if any facet is created, modified, or destroyed, this background
+										thread wakes up to save these facets. When num is 0, there is no periodic
+										saving. The default is 60000.
+				SaveSizeTrigger		:	Freeze uses a background thread to save updates to the database. When num is 0
+										or positive, as soon as num or more facets have been created, modified, or
+										destroyed, this background thread wakes up to save them. When num is negative,
+										there is no size trigger. The default is 10.
+				-->
+
+        <LiveTxn SavePeriod="240" SaveSizeTrigger="1000"/>
+      </PeformanceTune>	
+		</Service>
+		<EventSinkPlugin>
+			<EventSinkModule 	file="${TianShanHomeDir}\bin\eventsender.dll" 
+								type="jms" 
+								config="${TianShanHomeDir}\etc\EventSenderForSiteAdmin.xml" 
+								enable="0"/>
+			
+		</EventSinkPlugin>		
+	</SiteAdmin>
+</TianShan>

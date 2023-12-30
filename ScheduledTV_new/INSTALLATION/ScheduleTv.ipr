@@ -1,0 +1,528 @@
+[Components:ScheduleTV App:FileGroups]
+Apps:=
+
+[Components:ScheduleTV App:Properties]
+Object:=No
+Description:=Component Desc for STV App
+Status:=Component Stat for STV App
+Visible:=Yes
+FileNeed:=CRITICAL
+IncludeInBuild:=Yes
+Password:=
+Encrypt:=No
+Uninstallable:=Yes
+Comment:=
+DisplayText:=
+TargetDirCDROM:=
+HttpLocation:=
+FTPLocation:=
+Misc:=
+GUID:=F4EC5937-B56D-40CB-8CF4-6CA00DDD6873
+HandlerOnInstalling:=
+HandlerOnInstalled:=Main_Install
+HandlerOnUnInstalling:=Main_UnInstall
+HandlerOnUnInstalled:=
+
+[Components:ScheduleTV App\SeaChange App:FileGroups]
+Scexe:=
+
+[Components:ScheduleTV App\SeaChange App:Properties]
+Object:=No
+Description:=Component Desc for SeaChange App
+Status:=Component Stat for SeaChange App
+Visible:=Yes
+FileNeed:=STANDARD
+IncludeInBuild:=Yes
+Password:=
+Encrypt:=No
+Uninstallable:=Yes
+Comment:=
+DisplayText:=
+TargetDirCDROM:=
+HttpLocation:=
+FTPLocation:=
+Misc:=
+GUID:=A3A54422-ADF3-4EA6-BADE-976C203B2815
+HandlerOnInstalling:=
+HandlerOnInstalled:=Main_Install
+HandlerOnUnInstalling:=
+HandlerOnUnInstalled:=
+
+[Components:SeaChange App:FileGroups]
+Scexe:=
+
+[Components:SeaChange App:Properties]
+Object:=No
+Description:=Component Desc for SeaChange App
+Status:=Component Stat for SeaChange App
+Visible:=Yes
+FileNeed:=STANDARD
+IncludeInBuild:=Yes
+Password:=
+Encrypt:=No
+Uninstallable:=Yes
+Comment:=
+DisplayText:=
+TargetDirCDROM:=
+HttpLocation:=
+FTPLocation:=
+Misc:=
+GUID:=C6E7FF85-6A16-43E4-AA12-7DAF9896F1F2
+HandlerOnInstalling:=
+HandlerOnInstalled:=
+HandlerOnUnInstalling:=
+HandlerOnUnInstalled:=
+
+[Components:SeaChange DLLs:FileGroups]
+Sc:=
+
+[Components:SeaChange DLLs:Properties]
+Object:=No
+Description:=Component Desc for Sc common
+Status:=Component Stat for Sc common
+Visible:=Yes
+FileNeed:=STANDARD
+IncludeInBuild:=Yes
+Password:=
+Encrypt:=No
+Uninstallable:=Yes
+Comment:=
+DisplayText:=
+TargetDirCDROM:=
+HttpLocation:=
+FTPLocation:=
+Misc:=
+GUID:=CAEEA125-140C-4ACA-9F31-3A014B492AB8
+HandlerOnInstalling:=
+HandlerOnInstalled:=
+HandlerOnUnInstalling:=
+HandlerOnUnInstalled:=
+
+[Components:SubComponents]
+SeaChange DLLs:=
+SeaChange App:=
+ScheduleTV App:=
+
+[FileGroups:Apps:Properties]
+LinkType:=Dynamic Link
+Uninstallable:=Yes
+GUID:=B69865F7-C1EF-421D-B5AB-C92049FF3838
+Diff:=Yes
+FileType:=No
+SelfRegistering:=No
+Potentially:=No
+Compress:=Yes
+OperatingSystem:=0000000000000000
+Language:=
+Comment:=
+HttpLocation:=
+FtpLocation:=
+Misc:=
+Installation:=NewerVersion\NewerDate
+Target:=<TARGETDIR>
+Assembly:=NOT_ASSEMBLY
+IncludeSubDir:=No
+Folder:=E:\WorkPath\ZQProjs\ScheduledTV_new\installation\Data Files\Exe
+Wildcards:=*.exe
+ExclusionWildcards:=
+
+[FileGroups:FileGroups]
+Sc:=
+Apps:=
+Scexe:=
+
+[FileGroups:Sc:Properties]
+LinkType:=Static Link
+Uninstallable:=No
+GUID:=341C44B8-A621-490D-A618-5861957DA90C
+Diff:=Yes
+FileType:=Yes
+SelfRegistering:=No
+Potentially:=Yes
+Compress:=Yes
+OperatingSystem:=0000000000000000
+Language:=
+Comment:=
+HttpLocation:=
+FtpLocation:=
+Misc:=
+Installation:=NewerVersion\NewerDate
+Target:=<TARGETDIR>
+Assembly:=NOT_ASSEMBLY
+IncludeSubDir:=No
+Folder:=E:\workpath\ZQProjs\ScheduledTV\installation\Data Files\Dll
+Wildcards:=*.dll;*.exe
+ExclusionWildcards:=
+
+[FileGroups:Scexe:Properties]
+LinkType:=Static Link
+Uninstallable:=No
+GUID:=BE49D861-4519-4F8D-A268-1C49B5DDF1DE
+Diff:=Yes
+FileType:=Yes
+SelfRegistering:=No
+Potentially:=Yes
+Compress:=Yes
+OperatingSystem:=0000000000000000
+Language:=
+Comment:=
+HttpLocation:=
+FtpLocation:=
+Misc:=
+Installation:=NewerVersion\NewerDate
+Target:=<TARGETDIR>
+Assembly:=NOT_ASSEMBLY
+IncludeSubDir:=No
+Folder:=E:\workpath\ZQProjs\ScheduledTV\installation\Data Files\scexe
+Wildcards:=*.exe
+ExclusionWildcards:=
+
+[FileList:ISFileDestList:<PROGRAMFILES>:Folders]
+<COMMONFILES>:=
+
+[FileList:ISFileDestList:<TARGETDIR>:Folders]
+
+[FileList:ISFileDestList:<WINDIR>:Folders]
+<WINSYSDIR>:=
+
+[FileList:ISFileDestList:Folders]
+<WINDIR>:=
+<PROGRAMFILES>:=
+<TARGETDIR>:=
+USERDEFINED:=
+<SUPPORTDIR>:=
+
+[FileList:ISFileDestList:TYPE:Folders]
+<WINDIR>:=TEXTSUBFIXED
+<PROGRAMFILES>:=TEXTSUBFIXED
+<TARGETDIR>:=TEXTSUBFIXED
+USERDEFINED:=USERSTART
+<SUPPORTDIR>:=TEXTSUBFIXED
+<WINDIR>\<WINSYSDIR>:=TEXTSUBFIXED
+<PROGRAMFILES>\<COMMONFILES>:=TEXTSUBFIXED
+
+[FileList:Sc:Files]
+ShellMsgs.dll:=E:\WorkPath\Tech-Data\ITVSDK-v2.5.INTERNAL\Exe
+atomic_queues.dll:=E:\WorkPath\Tech-Data\ITVSDK-v2.5.INTERNAL\Exe
+cfgpkgU.dll:=E:\WorkPath\Tech-Data\ITVSDK-v2.5.INTERNAL\Exe
+CLog.dll:=E:\WorkPath\Tech-Data\ITVSDK-v2.5.INTERNAL\Exe
+ItvMessages.dll:=E:\WorkPath\Tech-Data\ITVSDK-v2.5.INTERNAL\Exe
+ManPkgU.dll:=E:\WorkPath\Tech-Data\ITVSDK-v2.5.INTERNAL\Exe
+MCastSvc.dll:=E:\WorkPath\Tech-Data\ITVSDK-v2.5.INTERNAL\Exe
+MtTcpComm.dll:=E:\WorkPath\Tech-Data\ITVSDK-v2.5.INTERNAL\Exe
+queue.dll:=E:\WorkPath\Tech-Data\ITVSDK-v2.5.INTERNAL\Exe
+Reporter.dll:=E:\WorkPath\Tech-Data\ITVSDK-v2.5.INTERNAL\Exe
+ScThreadPool.dll:=E:\WorkPath\Tech-Data\ITVSDK-v2.5.INTERNAL\Exe
+mfc42u.dll:=C:\WINDOWS\system32
+
+[FileList:Scexe:Files]
+srvshell.exe:=E:\WorkPath\Tech-Data\ITVSDK-v2.5.INTERNAL\Exe
+instserv.exe:=E:\WorkPath\Tech-Data\ITVSDK-v2.5.INTERNAL\Exe
+
+[General]
+Version:=3.00.000
+
+[Media:New CD-ROM Media:CodeSign]
+Sign:=No
+SignPackage:=No
+URL:=
+SPC:=
+PVK:=
+
+[Media:New CD-ROM Media:Components]
+7087DEAA-AA40-4809-8505-C39A96700843:=
+CAEEA125-140C-4ACA-9F31-3A014B492AB8:=
+A3A54422-ADF3-4EA6-BADE-976C203B2815:=
+C6E7FF85-6A16-43E4-AA12-7DAF9896F1F2:=
+F4EC5937-B56D-40CB-8CF4-6CA00DDD6873:=
+
+[Media:New CD-ROM Media:DataAsFilesComponents]
+ScheduleTV App:=No
+SeaChange DLLs:=No
+SeaChange App:=No
+
+[Media:New CD-ROM Media:DiffFileList]
+
+[Media:New CD-ROM Media:DiffVerList]
+
+[Media:New CD-ROM Media:Filter]
+LanguageDefault:=0009
+
+[Media:New CD-ROM Media:GeneralInfo]
+Name:=New CD-ROM Media
+MediaType:=CDROM
+BuildType:=Full
+BuildSize:=
+Password:=
+GUID:=EB6E2917-CEA4-4A95-ADD8-DBB5AC69317E
+BuildFolder:=
+Demo:=
+SpecifyComponents:=No
+
+[Media:New CD-ROM Media:Internet]
+CompressScript:=No
+Netscape:=No
+SaveOptionsDlg:=No
+Security:=No
+WebPage:=
+CreateDefaultWebPage:=No
+SaveOptions:=15
+
+[Media:New CD-ROM Media:Languages]
+key0:=0009
+
+[Media:New CD-ROM Media:Package]
+Create:=Yes
+Welcome:=No
+File:=setup.exe
+CommandLine:=
+ExtractFolder:=
+Password:=
+CompressPackage:=Yes
+
+[Media:New CD-ROM Media:Platforms]
+key0:=0000000000000010
+key1:=0000000000000040
+key2:=0000000000000080
+key3:=0000000000010000
+key4:=0000000000100000
+key5:=0000000000400000
+
+[Media:New CD-ROM Media:PostBuild]
+FTPSite:=
+FTPFolder:=
+FTPUser:=
+FTPPassword:=
+Folder:=
+Batch File:=
+
+[Media:New CD-ROM Media:SetupInfo]
+ApplicationName:=
+EnableLangDlg:=No
+
+[Media:New CD-ROM Media:UI]
+SmallProgress:=Yes
+UseSkin:=No
+SkinName:=ISSlate
+
+[Media:New CD-ROM Media:Update]
+EnableDifference:=No
+SupportedVersions:=
+ObjectDiffOptions:=IncludeIfChanged
+
+[Project:General]
+Version:=20
+SubVersion:=11
+
+[Project:Languages]
+0009:=
+
+[Project:Media]
+New CD-ROM Media:=
+
+[Project:Properties:CompileLink]
+WaringLevel:=3
+WaringsAsErrors:=No
+WarningMaximum:=50
+ErrorMaximum:=50
+Preproccessor:=
+CompileBeforeBuild:=Yes
+Libraries:=isrt.obl ifx.obl
+LinkPath:=
+InlineDebugInfo:=No
+
+[Project:Properties:DepManager]
+Application:=E:\workpath\ZQProjs\ScheduledTV\MainCtrl\Release\ScheduleTV.exe
+CommandLine:=
+StartInFolder:=C:\itv\exe\
+
+[Project:Properties:General]
+Platforms:=00000000005100d0
+
+[Project:Properties:Product]
+GUID:=D989F705-989A-4914-BD40-D9C12372B0CE
+CompanyName:=SeaChange
+URL:=www.schange.com
+EmailAddress:=
+Copyright:=SeaChange International ZQ
+Summary:=
+Name:=ITVPlayback
+Version:=1.0.1
+ExeFile:=ITVPlayback.exe
+Comments:=
+
+[Project:Properties:Project]
+Author:=
+Department:=
+Password:=
+
+[Project:Properties:RunDebug]
+SetupArguments:=
+GenerateMIF:=No
+MIFFileName:=Status
+MIFSerial:=
+
+[Project:Properties:Runtime]
+LogFile:=Standard
+EngineBinding:=Static
+UpdateModeSupported:=Yes
+UpdateServiceSupported:=No
+
+[Project:Properties:SourceControl]
+ProjName:=
+AuxProjPath:=
+
+[RegistryObj:<Default>]
+---Comment---:=
+---FileGroup0---:=
+---Default---:=Yes
+
+[RegistryObj:Data]
+Set0:=<Default>
+
+[SetupTypes]
+Complete:=
+Custom:=
+
+[SetupTypes:Complete:Components]
+Tutorial:=
+Examples:=
+SeaChange DLLs:=
+SeaChange App:=
+ScheduleTV App:=
+
+[SetupTypes:Complete:Properties]
+Descrip:=
+Comment:=
+DisplayText:=
+
+[SetupTypes:Custom:Components]
+Tutorial:=
+Examples:=
+SeaChange App:=
+ScheduleTV App:=
+
+[SetupTypes:Custom:Properties]
+Descrip:=
+Comment:=
+DisplayText:=
+
+[ShellObj:Data]
+Folder0:=<FOLDER_DESKTOP>
+Folder1:=<FOLDER_STARTMENU>
+Folder2:=<FOLDER_PROGRAMS>
+Folder3:=<FOLDER_STARTUP>
+
+[StringTable:Data:General]
+Component Desc for STV App:=
+Component Stat for STV App:=
+Component Desc for Sc common:=
+Component Stat for Sc common:=
+Service Desc:=
+Component Desc for SeaChange App:=
+Component Stat for SeaChange App:=
+
+[TextSub:Build:<COMMONFILES>]
+Value:=
+KeyType:=4
+
+[TextSub:Build:<ISPROJECTDIR>]
+Value:=
+KeyType:=4
+
+[TextSub:Build:<PROGRAMFILES>]
+Value:=
+KeyType:=4
+
+[TextSub:Build:<WINDIR>]
+Value:=
+KeyType:=4
+
+[TextSub:Build:<WINSYSDIR>]
+Value:=
+KeyType:=4
+
+[TextSub:Build:Data]
+Key0:=<PROGRAMFILES>
+Key1:=<COMMONFILES>
+Key2:=<WINDIR>
+Key3:=<WINSYSDIR>
+Key4:=<ISPROJECTDIR>
+
+[TextSub:Setup:<COMMONFILES>]
+Value:=
+KeyType:=4
+
+[TextSub:Setup:<HKCC>]
+Value:=
+KeyType:=4
+
+[TextSub:Setup:<HKCR>]
+Value:=
+KeyType:=4
+
+[TextSub:Setup:<HKCU>]
+Value:=
+KeyType:=4
+
+[TextSub:Setup:<HKDD>]
+Value:=
+KeyType:=4
+
+[TextSub:Setup:<HKLM>]
+Value:=
+KeyType:=4
+
+[TextSub:Setup:<HKUS>]
+Value:=
+KeyType:=4
+
+[TextSub:Setup:<PROGRAMFILES>]
+Value:=
+KeyType:=4
+
+[TextSub:Setup:<SHELL_OBJECT_FOLDER>]
+Value:=
+KeyType:=4
+
+[TextSub:Setup:<SRCDIR>]
+Value:=
+KeyType:=4
+
+[TextSub:Setup:<SUPPORTDIR>]
+Value:=
+KeyType:=4
+
+[TextSub:Setup:<TARGETDIR>]
+Value:=
+KeyType:=4
+
+[TextSub:Setup:<UNINST>]
+Value:=
+KeyType:=4
+
+[TextSub:Setup:<WINDIR>]
+Value:=
+KeyType:=4
+
+[TextSub:Setup:<WINSYSDIR>]
+Value:=
+KeyType:=4
+
+[TextSub:Setup:Data]
+Key0:=<TARGETDIR>
+Key1:=<PROGRAMFILES>
+Key2:=<COMMONFILES>
+Key3:=<WINDIR>
+Key4:=<WINSYSDIR>
+Key5:=<SUPPORTDIR>
+Key6:=<SRCDIR>
+Key7:=<HKLM>
+Key8:=<HKCU>
+Key9:=<HKCC>
+Key10:=<HKDD>
+Key11:=<HKUS>
+Key12:=<HKCR>
+Key13:=<SHELL_OBJECT_FOLDER>
+Key14:=<UNINST>
+

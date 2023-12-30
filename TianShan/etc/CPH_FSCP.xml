@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TianShan>
+	<Definitions src="TianShanDef.xml">
+	</Definitions>
+	
+	<!-- Configuration on RTI provision helper. It captures IP streaming traffic, performs RTF trick genenration and index
+	     pacing then save the results into Vstream file system
+	     attributes:
+	       maxSessions - the maximal concurrent sessions that this instance can host
+	       maxBandwidth - the maximal bandwidth in Kbps that this instance can host
+	-->
+	<CPH_FSCP maxSessions="30" maxBandwidth="150000" >
+		<!-- Configuration on media content r/w buffer
+		     attributes:
+		       bufferSize    - the buffer size in byte per each read/write on the input media content //!!! former MediaSample::size
+		-->
+		<MediaSample bufferSize="65536"/>		
+		<!-- interval - the value that is used for waiting for next reading, default value is 1s -->
+    <WaitTime timeInterval="1"/>
+		<!-- Configuration on the index pacing session
+		     attributes:
+		       cacheDir  - the location where to temporarily save the cached data during index pacing //!!! former pacing::cacheDir
+		       enableTrace - "1" if wish to trace the PacedIndex procedure in the log files //!!! former pacing::enableTrace
+		-->
+		<PacedIndex cacheDir="c:\temp" enableTrace="0"/>
+
+		<!-- Configuration on the RTF lib parameters
+		     attributes:
+		       maxSessionNum  - max session number that the RTFLib will process. this parameter will affect memory allocation during
+		                        initialization, so only put the number as neccesary
+		       maxInputBufferBytes  - the size of RtfInputBuffer, should be equal or greater than the MediaSample::bufferSize
+		       maxInputBuffersPerSession  - the buffer per session for RtfLib, default 128
+		       sessionFailThreshold  - the session failure threshold. The RTFLibary will be shut down if failed session count more than this value. 0 to disable, default is 0
+		-->
+		<RTF maxSessionNum="30" maxInputBufferBytes="98304" maxInputBuffersPerSession="128" sessionFailThreshold="0"/>
+
+		<!-- Configuration on the Vstream API
+		     attributes:
+		       BWMgrClientId  - the client Id of Vstream Bandwidth Management. Default 773220, 0 to disable bandwidth management //!!! former Vstrm::vstrmBWClientId
+		       disableBufDrvThrottle  - 1 would increased the vstrm write performance, default 1 //!!! former Vstrm::disableBufDrvThrottle
+		-->
+		<Vstream BWMgrClientId="773220"  disableBufDrvThrottle="1"/>
+
+		<!-- Configuration on the process events
+		-->
+		<Event>
+			<!-- Configuration on the progress events
+			     attributes:
+			       enable  - 1 to enable sending progress events
+			-->
+			<Progress enable="1"/>
+			
+			<!-- Configuration on the streamable events
+			     attributes:
+			       enable  - 1 to enable sending streamable events
+			       lagAfterStart  - the time lag in second after the provision starts to notify streamable //!!! former Streamable::requiredSeconds
+			-->
+			<Streamable enable="1" lagAfterStart="5" />
+		</Event>
+		
+		<!-- Configuration on the NTFS output mode, if this mode is enabled, the provision will not output into Vstream file system,
+		     instead, it only save the output locally onto the NTFS storage
+		       enable  - 1 to enable this NTFS output mode, vstream IO will be eliminated //!!! former Test::NTFS::enable
+		       homeDir  - the full path name of the home directory where to outuput the provision contents //!!! former Test::NTFS::outputDir
+		-->
+		<NtfsOutputMode enable="0" homeDir="c:\Tianshan\" />
+	 </CPH_FSCP>
+</TianShan>

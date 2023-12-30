@@ -1,0 +1,16 @@
+<!-- Proactive Import demostration
+     ** The names in the xml is sense sensitive
+		     attributes:
+		       pid             - pid of the content that need to be proactively imported, can not be empty
+		       paid            - paid of the content that need to be proactively imported, can not be empty. 
+           cluster         - which cluster does this content plan to import. CME will pick one if no cluster specified.
+           startTime       - what time does the proactive import suppose to happen. If empty value filled, CME will use current time. 
+                             If not empty, It is local time in format of: YYYY-MM-DD HH:MM:SS, ex: 2014-05-14 08:00:00
+           lifeTimeInHours - the hours that content will be kept in storage before deleting since startTime. 
+                             If import failed, CME will retry until reaching its life time. 
+                             if invalid number filled, CME will take 0 as the life time. 
+                             DO NOT SET IT VERY LONG. 
+		-->
+<Proactive>
+	<Content pid="xor-media.com" paid="AAAI0000007612806090" cluster="" startTime="" lifeTimeInHours="1" />
+</Proactive>

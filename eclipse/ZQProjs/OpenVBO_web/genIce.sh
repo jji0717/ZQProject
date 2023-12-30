@@ -1,0 +1,1 @@
+${SYS_INTERP} --library-path ${ICE_ROOT}/lib ${ICE_ROOT}/bin/slice2cpp  ${ZQProjsPath}/TianShan/OpenVBO/OpenVBO_web/SsmOpenVBO.ICE  -I .  -I ${ZQProjsPath}/TianShan/OpenVBO/OpenVBO_web  -I ${ZQProjsPath}/TianShan/Ice -I ${ZQProjsPath}/TianShan/common -I ${ICE_ROOT}/slice   --output-dir ${ZQProjsPath}/TianShan/OpenVBO/OpenVBO_web

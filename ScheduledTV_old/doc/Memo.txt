@@ -1,0 +1,13 @@
+1, SeaChange originally have NVOD system to support NVOD mode and Barker mode application. ZQ¡¯s CMS and CMS2 are able to work with NVOD to manage the working process.
+
+2, In order to implement NVOD and VOD on a single platform, ZQ extended the function of CMS2 to support ITV system as well as NVOD system. As you may know, in that case, since ITV system is a pure VOD system, we use AutoPlay to playout the movie back-to-back according to pre-defined schedule. 
+
+3, several months ago, ZQ had some discussions with the original NVOD engineering team on how to port NVOD application from NVOD platform to ITV platform. At that time, the project named ¡°Scheduled TV¡±. And from the requirement doc of Scheduled TV (Scheduled TV Features Description - DRAFT.doc), you can find all components and workflow are copied from NVOD system, the only different is the mechanism of how to control the system start/stop the stream. 
+
+4, We also delivered our proposal for Scheduled TV (Scheduled TV Product ZQ - draft(v0.23).doc) after several times con-calls. 
+
+5, Last month, a new round discussion was started. This time the contact window is not the original NVOD engineering team, Steve Davi take charge of this project. I don¡¯t remember his title, just know he is the top one guy of the broadband engineering team.  And his view of Scheduled TV system is not from the original NVOD system, instead, he pays more attention on Barker System, and even defines the Scheduled TV is the part of Barker System, although I am not quite agreed with that point. He gave us a new feature requirement doc (SeaChange VOD Barker System SPD.doc and BarkerReqs.doc)
+
+6, Last night, I revised our proposal to meet Steve¡¯s new requirement, and changed the architecture a lot to remove all unnecessary components to have the system architecture clearer (Scheduled TV Product ZQ - draft(v0.3.1).doc).
+
+7, attached is Steve¡¯s feedback. 

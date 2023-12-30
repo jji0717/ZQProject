@@ -1,0 +1,124 @@
+<sledgehammer>
+	<configuration>
+		<log file="yes" screen="yes">
+			<logfile level="900" size="10000000" path="C:\autotest\zodiac\log\AquariusTestFiles\SledgeHammer.log"/>
+		</log>
+		<environment name="OpenITV Environment"/>
+	</configuration>
+	<simulation>
+		<!-- this sequence takes  seconds to complete -->
+		<!-- iterations     time duration -->
+		<!--                minutes -->
+		<controlsequence name="My MPEG2 Test Suite" iterations="1">
+			<sop type="play" sleep="2m"/>
+		</controlsequence>
+		<!--
+********************************************************************************
+* CLIENTGROUP
+* 30
+* A clientgroup represents a logical configuration of a group of client ITV
+* applications.  A real-life example would be to consider a clientgroup to be a
+* group of set-tops in a particular neihbourhood, or serving area.
+*
+* The clientgroup tag can have the following attributes:
+*
+* count             - The number of clients in this particular group.
+*
+* name              - The name of the clientgroup.
+*
+* nodegroup         - The Delivery Network nodegroup ID of the group (if
+*                     applicable.)
+*
+* servingarea       - The Serving Area name of the group (if applicable.)
+*
+* sessioncontrol    - The session control protocol the clients should use.
+*
+* streamcontrol     - The stream control protocol the clients should use.
+********************************************************************************
+-->
+		<clientgroup count="1" name="The guys in neighbourhood" nodegroup="1" servingarea="CM1" sessioncontrol="dsmcc" streamcontrol="lsctcp">
+			<iptarget mac="00:11:2F:10:74:66" ip="155.12.168.192" port="16145">
+			</iptarget>
+		</clientgroup>
+		<!--
+
+********************************************************************************
+* TEST
+*
+* A test represents a grouping of configuration and test parameters that when
+* logically combined, represents a functional test of the ITV system.
+*
+* A test tag can have the following attributes:
+*
+* name            - The name of the test.
+*
+* iterations      - The number of times to run the test.
+*
+* iterationwait   - The amount of time to wait between runs of the test.
+*
+* sessioncontrol  - The session control protocol to use (DSM-CC, RTSP).
+*
+* streamcontrol   - The stream control protocol to use (LSC, RTSP, StreamOp).
+*
+* terminationmode - The mode in which the session should be terminated.
+*
+* retries         - The number of times a session should be re-attempted on
+*                   failure.
+*
+* retrywait       - The amount of time to wait in between attempts at
+*                   re-creating a session.
+********************************************************************************
+-->
+		<test name="Aquarius 0001 Sledgehammer" iterations="1" iterationwait="10s" sessioncontrol="dsmcc" streamcontrol="lsctcp" sessionstartwait="100ms" streamcontrolwait="2s" retries="2" retrywait="10s" assetselection="roundrobin" clientkeepalive="60s" rtspenv="4">
+			<assetlist mode="manual" appuid="0x05600001">
+				<asset id="0x05600295"/>
+			</assetlist>
+			<!--
+      Optionally, specify the SRM we wish to use.  Note: this must
+      correspond to a SRM server defined in the <srm> section.  If this tag is
+      not specified, the SRM will be determined from the selected CM. -->
+			<srmlist mode="manual">
+				<srm host="192.168.12.12"/>
+			</srmlist>
+			<cmlist mode="manual">
+				<srm host="192.168.12.12"/>
+			</cmlist>
+			<sctplist mode="manual">
+				<srm host="192.168.12.12"/>
+			</sctplist>
+			<!--
+      Flag whether or not to suspend the session. -->
+			<usesuspend value="true" resume="yes" resumewait="100s"/>
+			<!--
+      Occasionally, you may want to actually specify some of the
+      descriptors that get sent to the server on a session setup request. -->
+			<descriptor id="sspopprot" size="1" mode="manual" type="binary">
+				<!-- StreamOP=0x00, LSC/UDP=0x01, LSC/TCP=0x02 -->
+      0x00
+      </descriptor>
+			<!--
+      Specify the client groups that will take part in this test. -->
+			<clientgroup name="The guys in neighbourhood"/>
+			<clientattribute id="macaddress" value="00:11:2F:10:74:66"/>
+			<clientattribute id="homeid" value="50000"/>
+			<clientattribute id="smartcardid" value="0x1388"/>
+			<clientattribute id="supercasid" value="100"/>
+			<clientattribute id="billingid" value="5000"/>
+			<!-- PACKAGE ID
+      Since we are using a subset of asset uid(s) from the "Kids Movies" folder,
+      we have to specify package ID of 0
+      -->
+			<clientattribute id="packageid" value="0"/>
+			<!--
+      The first two control sequences are defined in the system
+      configuration file.
+      <controlsequence name="SOP Test Suite - With Pause -" usage="20%"/>
+      <controlsequence name="SOP Test Suite - No Pause -" usage="60%"/>
+       -->
+			<!--
+      This control sequences is defined in this configuration file.
+      -->
+			<controlsequence name="My MPEG2 Test Suite"/>
+		</test>
+	</simulation>
+</sledgehammer>

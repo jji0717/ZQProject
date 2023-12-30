@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TianShan>
+	<Definitions src="TianShanDef.xml">
+	</Definitions>
+	<ChannelOnDemand>
+		<!-- Specify crashdump settings -->
+		<CrashDump path="${TianShanCrashDumpDir}" fullDump="1"/>
+					
+		<!--
+		path: SafestorePath, must be set 
+		runtimeData: new added
+		-->
+		<Database path="${TianShanDatabaseDir}" runtimeData="${TianShanDatabaseDir}\runtime"/>		
+
+		<!--
+		endpoint: EndPoint of ChannelOnDemand service, format: tcp -h ip -p port 
+		cacheSize: ChannelPublishPointEvitSize, default 60					
+		inputAsLocalTime: the time communication with todas is local time, set to 0						
+		defaultChannelBitrate: 	Default max bitrate for a channel, default 4000000 bps				
+		protectionWindow: play protect time, when enter pausetv, we set the play position at "now - this_time", in microseconds, default: "20000"
+		maxItemNumber: max number of items of each Channel 
+		-->
+		<ChannelPublisher endpoint="tcp -h ${ServerNetIf} -p 10900" cacheSize="60" inputAsLocalTime="1" 
+			defaultChannelBitrate="4000000" protectionWindow="20000" maxItemNumber="20"/>
+		 
+		<!--
+		cacheSize : PurchaseEvitSize, default: 200 
+		itemCacheSize : PurchaseItemEvitSize, default: 1000	
+		timeout : unit is second. define how long the purchase will be timeout, if the weiwoo session 
+		relating to this purchase is still living, the purchase will renew again
+		-->
+		<PurchaseManagement cacheSize="200" itemCacheSize="1000" timeout="3600"/>
+		
+		<!-- ThreadPoolSize, default: 20 -->
+		<ThreadPool size="20"/>
+		
+		<!-- ItemStartTimeAhead, default: 10(mins) -->
+		<ItemStartTimeAhead size="10"/>		
+		
+		<!--
+		enable: Enable todas, must set to 1, 0 just for unit test
+		endpoint: Todas EndPoint, format: TodasForCod:tcp -h 192.168.80.70 -p 6789
+		bookmarkOnLeave: 0 not to save bookmark even TodasEnable equal to 1
+		-->
+		<Authorization module="Internal" entry="TODAS" enable="1">
+			<param name="endpoint" value="TodasForCod:tcp -h 192.168.80.70 -p 6789" />
+			<param name="bookmarkOnLeave" value="0" />
+			<AppDataPattern param="purchase-id" pattern="01(.*)" >
+				<param name="endpoint" value="TodasForCod:tcp -h 192.168.80.71 -p 6789"/>
+				<param name="bookmarkOnLeave" value="0" />
+			</AppDataPattern>
+			<AppDataPattern param="purchase-id" pattern="02(.*)" >
+				<param name="endpoint" value="TodasForCod:tcp -h 192.168.80.72 -p 6789"/>
+				<param name="bookmarkOnLeave" value="0" />
+			</AppDataPattern>
+			<AppDataPattern param="purchase-id" pattern="03(.*)" >
+				<param name="endpoint" value="TodasForCod:tcp -h 192.168.80.73 -p 6789"/>
+				<param name="bookmarkOnLeave" value="0" />
+			</AppDataPattern>			
+		</Authorization>
+		
+		<!--
+		EventChannelEndPoint: the EventChannel service's endpoint, format: "tcp -h x.x.x.x -p 11000"
+		listenEndpoint: the local ip and port to receive event from EventChannel, format: "tcp -h x.x.x.x -p 10000"
+		runtimeData: new added-->
+		<TianShanEvents  EventChannelEndPoint="${PrimeEventChannelEndpoint}" 
+				listenEndpoint="tcp -h ${ServerNetIf} -p 10901" 
+				runtimeData="${TianShanDatabaseDir}\runtime"/>
+				
+    <!--
+    <IceTrace enable="1" level="7" size="10240000" count="5"/>
+    enable: if equal to 1, ice log file will be created for stores ice message.
+    level: log file's level
+    size: log file's size
+    count: log file's count
+    -->
+    <IceTrace enable="1" level="7" size="10240000" count="5"/>					
+		
+		<!-- JMS properties -->	
+		<EventPublisher type="JMS">				
+			<param name="NamingContext" value="org.jnp.interfaces.NamingContextFactory" /> 
+			<param name="ServerIPPort" value="192.168.80.70:1099" /> 
+			<param name="DestinationName" value="queue/TodQueue" /> 
+			<param name="ConnectionFactory" value="ConnectionFactory"/> 
+			<param name="MessageStoreFile" value="${TianShanLogDir}\storageFile.txt"/> 
+			<param name="MessagePropertys" value="string,MESSAGECLASS,NOTIFICATION;int,MESSAGECODE,1101" /> 
+			<param name="ReconnectCount" value="5" />
+			<param name="ReconnectInterval" value="60000" />
+			<param name="ClassPath" value="${TianShanHomeDir}\bin\java\JndiClient.jar;${TianShanHomeDir}\bin\java\jbossall-client.jar" /> 
+			<param name="JavaHome"  value="" />
+			<param name="JmsLogLevel" value="6" />
+		</EventPublisher>		
+
+		<!-- Ice properties -->
+		<IceProperties>			
+			<!--  the following are performance tuning parameters, please don't modify if you are not an expert at them 
+			--> 
+			<prop name="Ice.Trace.Network"                    value="0" />
+			<prop name="Ice.Trace.Protocol"                   value="0" />
+			<prop name="Ice.Trace.Retry"                      value="1" />
+			<prop name="Ice.Warn.Connections"                 value="1" />
+			<prop name="Ice.Warn.Endpoints"                   value="1" />
+			<prop name="Ice.Logger.Timestamp"                 value="1" />
+			<prop name="Freeze.Warn.Deadlocks"                value="1" />
+			<prop name="Freeze.Trace.Map"                     value="0" />
+			<prop name="Freeze.Trace.DbEnv"                   value="2" />
+			<prop name="Freeze.Trace.Evictor"                 value="0" />
+			<prop name="Ice.Override.ConnectTimeout"          value="15000"/>
+			<prop name="Ice.Override.Timeout"                 value="5000"/>
+			<prop name="Ice.ThreadPool.Server.Size"           value="5"/>
+			<prop name="Ice.ThreadPool.Server.SizeMax"        value="20"/>
+			<prop name="Ice.ThreadPool.Client.Size"           value="5"/>
+			<prop name="Ice.ThreadPool.Client.SizeMax"        value="30"/>
+		</IceProperties>	
+	</ChannelOnDemand>	
+</TianShan>

@@ -1,0 +1,94 @@
+<TianShan> 
+	<!-- configurations for the DODApp service -->
+	<DODApp> 
+		 <Definitions src="TianShanDef.xml">
+	   </Definitions>   
+    <!-- DODApp Service Endpoint-->	
+		<Adapter endpoint="tcp -h 192.168.81.116 -p 10039"/>
+
+		<!-- The default folder where the services of this TianShan deployment accesses their local
+		     databases if it is not defined by their individual configurations
+		     attributes:
+		       path          - path to the location of database directory, default "../data/"-->
+		<DatabaseFolder dbpath="${TianShanDatabaseDir}\"/>
+		
+	        <!-- Log related configuration 
+	         level - log level
+	         size - log entry will start over after the file size reach the limit.-->	    	
+		<IceTrace level="7" size="10240000" />	
+		
+		<!-- Notify Loaclfolder Channel Updata interval (s)
+		     nitifytime default value 180(s)-->
+		<LocalFolder notifytime ="180"/>
+         
+               <!--  heartbeat with weiwoo session and stream 
+               renewtime  		heartbeat with weiwoo session (ms). default value 180(s)
+               streampingtime 	heartbeat with stream (s).default value 300(s) -->
+		<Stream renewtime="180" streampingtime = "90" />
+		
+		<!-- ServiceGroup
+		     groupID range 0 - 9999 -->
+		<ServiceGroup groupID="9999"/>
+		
+		<!-- SpaceName 
+		     if configname = ""; default value = hostname -->
+		<SpaceName configname=""/>
+		
+		<!-- RtspURL
+		     url  use default value url="Rtsp://www.i-zq.com/DataOndemand_DODApp?"-->
+		<RtspURL url="Rtsp://www.i-zq.com/DataOndemand_DODApp?"/>		
+		
+	       <!-- Ice properties -->
+		<IceProperties>
+                   <prop name="Ice.Warn.Endpoints"                   value="1" />
+                   <prop name="Ice.Trace.Protocol"                   value="0" />
+                   <prop name="Ice.Warn.Connections"                 value="1" />
+                   <prop name="Ice.UseEventLog"                      value="1" />
+                   <prop name="Ice.Trace.Retry"                      value="2" />
+                   <prop name="Ice.Trace.Slicing"                    value="1" />
+                   <prop name="Ice.Trace.Network"                    value="2" />
+                   <prop name="Ice.Override.Timeout"                 value="600000"/>
+                   <prop name="Ice.Override.ConnectTimeout"          value="600000"/>
+                   <prop name="Ice.ThreadPool.Client.Size"           value="5" />
+                   <prop name="Ice.ThreadPool.Client.SizeMax"        value="10" />
+                   <prop name="Ice.ThreadPool.Server.Size"           value="5" />
+                   <prop name="Ice.ThreadPool.Server.SizeMax"        value="10" />
+                   <prop name="Freeze.Evictor.UseNonmutating"        value="1" />
+                   <prop name="DODAppService.EvictorSize"            value="1" />    	    
+                   <prop name="Freeze.Trace.Map"                     value="2" />
+                   <prop name="Freeze.Trace.Evictor"                 value="3" />
+	       </IceProperties>
+	</DODApp>
+	
+	 <!-- configurations for the DODContentStore service -->	
+	 <DODContent>
+	     <!-- DODcontentStroe Service Endpoint config-->	
+		<Adapter endpoint="ContentStore:tcp -h 192.168.81.116 -p 55599"/>
+	 </DODContent>
+	
+        <!-- configurations for the Weiwoo service -->
+	<SRM>
+	    <!-- Weiwoo Service Endpoint-->	
+		<Adapter endpoint="tcp -h 192.168.81.116 -p 13589"/>
+	</SRM>
+		
+	<!-- configurations for the JMSDispatch DLL -->
+	<JmsDispatch>	
+		<!-- JBoss IP and Port-->
+		<JBossIPPort ipport="192.168.81.116:13001"/>
+		
+		<!-- It's receiving queue name of Configuration Application.
+		The default value is queue/queue_cf -->
+		<ConfigQueueName queuename="queue/queue_cf"/>
+		
+	        <!--Get Port Configration timeout.(ms)-->
+		<ConfigMsgTimeOut timeout="30000"/>
+		
+		<!-- Whether uses Jboss 
+		1 means using JBoss, 0 means not 
+		<UsingJboss useflag="1"/>-->
+		
+		<!-- Channel's cache folder.it's a net path-->
+		<SourceCachePath CachePath=""/>		
+       </JmsDispatch>
+</TianShan> 

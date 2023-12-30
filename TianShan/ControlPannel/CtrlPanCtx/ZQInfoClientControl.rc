@@ -1,0 +1,254 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "winres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Chinese (P.R.C.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""winres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "1 TYPELIB ""ZQInfoClientControl.tlb""\r\n"
+    "#include ""ZQVersion.RC ""// non-Microsoft Visual C++ edited version resource\0"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_ZQINFOCLIENTCTRL    BITMAP  DISCARDABLE     "zqinfocl.bmp"
+IDB_ARROWDOWN           BITMAP  DISCARDABLE     "ArrowDown.bmp"
+IDB_ARROWUP             BITMAP  DISCARDABLE     "arrowup.bmp"
+IDB_ERRORBITMAP         BITMAP  DISCARDABLE     "Errors.bmp"
+IDB_INFOBITMAP          BITMAP  DISCARDABLE     "Information.bmp"
+IDB_WARNINGBITMAP       BITMAP  DISCARDABLE     "Warnings.bmp"
+IDB_LEVEL               BITMAP  DISCARDABLE     "level.bmp"
+IDB_TABBITMAP           BITMAP  DISCARDABLE     "tabb.bmp"
+IDB_PLAYBMP             BITMAP  DISCARDABLE     "play.bmp"
+IDB_STOPBITMAP          BITMAP  DISCARDABLE     "stop.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// REGISTRY
+//
+
+IDR_ZQINFOCLIENTCTRL    REGISTRY DISCARDABLE    "ZQInfoClientCtrl.rgs"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_SNMPVAR_FORM DIALOGEX 0, 0, 229, 178
+STYLE DS_CONTROL | WS_CHILD
+EXSTYLE WS_EX_CONTROLPARENT | WS_EX_STATICEDGE
+FONT 8, "System"
+BEGIN
+    PUSHBUTTON      "Apply",IDOK,174,152,40,14,NOT WS_TABSTOP
+END
+
+IDD_EVENTDIALOG DIALOG DISCARDABLE  0, 0, 187, 128
+STYLE WS_CHILD
+FONT 10, "宋体"
+BEGIN
+    PUSHBUTTON      "Options",IDOK,145,107,35,14,NOT WS_TABSTOP
+    CONTROL         "List1",IDC_EVENTLIST,"SysListView32",LVS_REPORT | 
+                    LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,7,173,93
+    DEFPUSHBUTTON   "",IDC_PLAYBUTTON,118,107,16,14,BS_BITMAP
+END
+
+IDD_OPTIONDIALOG DIALOG DISCARDABLE  0, 0, 199, 174
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION
+CAPTION "Options"
+FONT 10, "System"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,146,150,40,14
+    CONTROL         "Errors",IDC_ERRORCHECK,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,10,14,60,10
+    CONTROL         "Warnings",IDC_WARNCHECK,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,10,45,60,10
+    CONTROL         "Information",IDC_INFOCHECK,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,10,81,60,10
+    GROUPBOX        "Level",IDC_STATIC,4,2,70,110
+    GROUPBOX        "Events",IDC_CATEGROUP,80,2,102,110
+    LTEXT           "Show Recent",IDC_STATIC,5,122,45,8
+    EDITTEXT        IDC_LINEEDIT,64,118,86,12,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "Lines",IDC_STATIC,156,122,21,8
+    CONTROL         "",IDC_CHECK1,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,88,
+                    13,74,10
+    CONTROL         "",IDC_CHECK2,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,88,
+                    26,74,10
+    CONTROL         "",IDC_CHECK3,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,88,
+                    38,74,10
+    CONTROL         "",IDC_CHECK4,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,88,
+                    51,74,10
+    CONTROL         "",IDC_CHECK5,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,88,
+                    64,74,10
+    CONTROL         "",IDC_CHECK6,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,88,
+                    78,74,10
+    CONTROL         "",IDC_CHECK7,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,88,
+                    91,74,10
+    CONTROL         "",IDC_CHECK8,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,88,
+                    102,16,8
+END
+
+IDD_ITEMDIALOG DIALOG DISCARDABLE  0, 0, 338, 242
+STYLE WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
+CAPTION "Item Property"
+FONT 10, "System"
+BEGIN
+END
+
+IDD_ATTRSDIALOG DIALOG DISCARDABLE  0, 0, 222, 201
+STYLE WS_CHILD
+FONT 10, "宋体"
+BEGIN
+END
+
+IDD_DATADIALOG DIALOG DISCARDABLE  0, 0, 306, 94
+STYLE WS_CHILD
+FONT 10, "宋体"
+BEGIN
+    LTEXT           "条件:",IDC_DATASTATIC,1,8,19,8
+    EDITTEXT        IDC_CONDITIONEDIT,27,4,64,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "查找",IDC_SEARCHBTN,94,4,36,14
+    CONTROL         "Progress1",IDC_DATAPROGRESS,"msctls_progress32",
+                    WS_BORDER,232,4,70,14
+    CONTROL         "是否显示详细信息",IDC_DATACHECK,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,142,8,75,10
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_SNMPVAR_FORM, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 222
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 171
+    END
+
+    IDD_EVENTDIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 180
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 121
+    END
+
+    IDD_OPTIONDIALOG, DIALOG
+    BEGIN
+        RIGHTMARGIN, 192
+        BOTTOMMARGIN, 167
+    END
+
+    IDD_ITEMDIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 331
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 235
+    END
+
+    IDD_ATTRSDIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 215
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 194
+    END
+
+    IDD_DATADIALOG, DIALOG
+    BEGIN
+        RIGHTMARGIN, 296
+        TOPMARGIN, 1
+        BOTTOMMARGIN, 91
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_STREAMERMENU MENU DISCARDABLE 
+BEGIN
+    POPUP "111"
+    BEGIN
+        MENUITEM "StorageLinks",                ID_STORAGELINK
+        MENUITEM "StreamerLinks",               ID_STREAMERLINK
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_PROJNAME            "ZQInfoClientControl"
+END
+
+#endif    // Chinese (P.R.C.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+1 TYPELIB "ZQInfoClientControl.tlb"
+#include "ZQVersion.RC "// non-Microsoft Visual C++ edited version resource
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

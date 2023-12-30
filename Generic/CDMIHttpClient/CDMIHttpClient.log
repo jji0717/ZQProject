@@ -1,0 +1,503 @@
+01-07 16:41:01.078 [    INFO ] CdmiFuseOps        [MyContainerCDMI/]create cdmi container
+01-07 16:41:01.078 [   DEBUG ] CdmiFuseOps        [MyContainerCDMI/]create cdmi container requestbody [{"exports":{"Network/NFSv4":{"identifier":"/users","permissions":"domain"},"OCCI/iSCSI":{"identifier":"AABRbgAVPcgvTXlDb250YWluZXIv","permissions":["http://example.com/compute/0/","http://example.com/compute/1/"]}}}
+]
+01-07 16:41:01.156 [    INFO ] CURLClient         ClientId[6UbVLyQX3PtIr9wfZ9E0RM]Socket[0] creat curl client with url[http://10.15.10.50:2364/MyContainerCDMI/] localbind[:0] timeout[20000] connectTimeout[20000]
+01-07 16:41:01.156 [    INFO ] CURLClient         ClientId[6UbVLyQX3PtIr9wfZ9E0RM]Socket[0] initialize curl client success
+01-07 16:41:01.156 [    INFO ] CURLClient         ClientId[6UbVLyQX3PtIr9wfZ9E0RM]Socket[0] set post data[216] success
+01-07 16:41:01.156 [   DEBUG ] CURLClient         ClientId[6UbVLyQX3PtIr9wfZ9E0RM]Socket[0] DEBUG== Info: timeout on name lookup is not supported
+01-07 16:41:01.156 [   DEBUG ] CURLClient         ClientId[6UbVLyQX3PtIr9wfZ9E0RM]Socket[0] DEBUG== Info: About to connect() to 10.15.10.50 port 2364 (#0)
+01-07 16:41:01.156 [    INFO ] CURLClient         ClientId[6UbVLyQX3PtIr9wfZ9E0RM]Socket[0] OnOpenSocket: family:2, socktype:1, protocol:0
+01-07 16:41:01.328 [   DEBUG ] CURLClient         ClientId[6UbVLyQX3PtIr9wfZ9E0RM]Socket[0] DEBUG== Info:   Trying 10.15.10.50...
+01-07 16:41:01.328 [    INFO ] CURLClient         ClientId[6UbVLyQX3PtIr9wfZ9E0RM]Socket[0] OnSockopt: Socket[7936]SocketType[CURLSOCKTYPE_IPCXN]
+01-07 16:41:01.328 [   DEBUG ] CURLClient         ClientId[6UbVLyQX3PtIr9wfZ9E0RM]Socket[7936] DEBUG== Info: connected
+01-07 16:41:01.328 [   DEBUG ] CURLClient         ClientId[6UbVLyQX3PtIr9wfZ9E0RM]Socket[7936] DEBUG== Info: Connected to 10.15.10.50 (10.15.10.50) port 2364 (#0)
+01-07 16:41:01.328 [   DEBUG ] CURLClient         ClientId[6UbVLyQX3PtIr9wfZ9E0RM]Socket[7936] DEBUG=> Send header, 214 bytes PUT /MyContainerCDMI/ HTTP/1.1Host: 10.15.10.50:2364Accept: application/cdmi-containerContent-Type: application/cdmi-containerX-CDMI-Specification-Version: 1.0Content-Length: 216Expect: 100-continue
+01-07 16:41:03.328 [   DEBUG ] CURLClient         ClientId[6UbVLyQX3PtIr9wfZ9E0RM]Socket[7936] DEBUG== Info: Done waiting for 100-continue
+01-07 16:41:03.328 [   DEBUG ] CURLClient         ClientId[6UbVLyQX3PtIr9wfZ9E0RM]Socket[7936] DEBUG=> Send data, 216 bytes {"exports":{"Network/NFSv4":{"identifier":"/users","permissions":"domain"},"OCCI/iSCSI":{"identifier":"AABRbgAVPcgvTXlDb250YWluZXIv","permissions":["http://example.com/compute/0/","http://example.com/compute/1/"]}}}.
+01-07 16:41:03.328 [   DEBUG ] CURLClient         ClientId[6UbVLyQX3PtIr9wfZ9E0RM]Socket[7936] DEBUG== Info: We are completely uploaded and fine
+01-07 16:41:05.687 [   DEBUG ] CURLClient         ClientId[6UbVLyQX3PtIr9wfZ9E0RM]Socket[7936] DEBUG<= Recv header, 22 bytes HTTP/1.1 201 Created
+01-07 16:41:05.687 [   DEBUG ] CURLClient         ClientId[6UbVLyQX3PtIr9wfZ9E0RM]Socket[7936] Response Header: HTTP/1.1 201 Created
+01-07 16:41:05.890 [   DEBUG ] CURLClient         ClientId[6UbVLyQX3PtIr9wfZ9E0RM]Socket[7936] DEBUG<= Recv header, 35 bytes Server: CMDI-Serve/dev Python/2.7
+01-07 16:41:05.890 [   DEBUG ] CURLClient         ClientId[6UbVLyQX3PtIr9wfZ9E0RM]Socket[7936] Response Header: Server: CMDI-Serve/dev Python/2.7
+01-07 16:41:05.890 [   DEBUG ] CURLClient         ClientId[6UbVLyQX3PtIr9wfZ9E0RM]Socket[7936] DEBUG<= Recv header, 37 bytes Date: Mon, 07 Jan 2013 08:39:25 GMT
+01-07 16:41:05.890 [   DEBUG ] CURLClient         ClientId[6UbVLyQX3PtIr9wfZ9E0RM]Socket[7936] Response Header: Date: Mon, 07 Jan 2013 08:39:25 GMT
+01-07 16:41:05.890 [   DEBUG ] CURLClient         ClientId[6UbVLyQX3PtIr9wfZ9E0RM]Socket[7936] DEBUG<= Recv header, 23 bytes X-Author: Koen Bollen
+01-07 16:41:05.890 [   DEBUG ] CURLClient         ClientId[6UbVLyQX3PtIr9wfZ9E0RM]Socket[7936] Response Header: X-Author: Koen Bollen
+01-07 16:41:05.890 [   DEBUG ] CURLClient         ClientId[6UbVLyQX3PtIr9wfZ9E0RM]Socket[7936] DEBUG<= Recv header, 42 bytes Content-Type: application/cdmi-container
+01-07 16:41:05.890 [   DEBUG ] CURLClient         ClientId[6UbVLyQX3PtIr9wfZ9E0RM]Socket[7936] Response Header: Content-Type: application/cdmi-container
+01-07 16:41:05.890 [   DEBUG ] CURLClient         ClientId[6UbVLyQX3PtIr9wfZ9E0RM]Socket[7936] DEBUG<= Recv header, 21 bytes Content-Length: 367
+01-07 16:41:05.890 [   DEBUG ] CURLClient         ClientId[6UbVLyQX3PtIr9wfZ9E0RM]Socket[7936] Response Header: Content-Length: 367
+01-07 16:41:05.890 [   DEBUG ] CURLClient         ClientId[6UbVLyQX3PtIr9wfZ9E0RM]Socket[7936] Response Header: 
+01-07 16:41:05.890 [   DEBUG ] CURLClient         ClientId[6UbVLyQX3PtIr9wfZ9E0RM]Socket[7936] DEBUG<= Recv header, 2 bytes 
+01-07 16:41:05.890 [   DEBUG ] CURLClient         ClientId[6UbVLyQX3PtIr9wfZ9E0RM]Socket[7936] DEBUG<= Recv data, 367 bytes {.  "completionStatus": "Complete", .  "objectID": "AABRbgAZw90vTXlDb250YWluZXJDRE1JLw==", .  "parentURI": "/", .  "objectURI": "/MyContainerCDMI/", .  "childrenrange": "0-0", .  "children": [], .  "metadata": {.    "cdmi_ctime": "2013-01-07T16:39:25", .    "cdmi_mtime": "2013-01-07T16:39:25", .    "cdmi_size": 4096, .    "cdmi_atime": "2013-01-07T16:39:25".  }.}
+01-07 16:41:05.890 [   DEBUG ] CURLClient         ClientId[6UbVLyQX3PtIr9wfZ9E0RM]Socket[7936] DEBUG== Info: Connection #0 to host 10.15.10.50 left intact
+01-07 16:41:05.890 [    INFO ] CURLClient         ClientId[6UbVLyQX3PtIr9wfZ9E0RM]Socket[7936] send Request complete
+01-07 16:41:05.890 [    INFO ] CdmiFuseOps        [MyContainerCDMI/]create cdmi container response[{
+  "completionStatus": "Complete", 
+  "objectID": "AABRbgAZw90vTXlDb250YWluZXJDRE1JLw==", 
+  "parentURI": "/", 
+  "objectURI": "/MyContainerCDMI/", 
+  "childrenrange": "0-0", 
+  "children": [], 
+  "metadata": {
+    "cdmi_ctime": "2013-01-07T16:39:25", 
+    "cdmi_mtime": "2013-01-07T16:39:25", 
+    "cdmi_size": 4096, 
+    "cdmi_atime": "2013-01-07T16:39:25"
+  }
+}
+]retCode[201]Status[HTTP/1.1 201 Created]
+01-07 16:41:05.890 [   DEBUG ] CURLClient         ClientId[6UbVLyQX3PtIr9wfZ9E0RM]Socket[7936] DEBUG== Info: Closing connection #0
+01-07 16:41:05.890 [    INFO ] CdmiFuseOps        [MyContainerNonCDMI/]create non-cdmi container
+01-07 16:41:05.890 [    INFO ] CURLClient         ClientId[5pe2hTwtUib3VlnJ3F5N78]Socket[0] creat curl client with url[http://10.15.10.50:2364/MyContainerNonCDMI/] localbind[:0] timeout[20000] connectTimeout[20000]
+01-07 16:41:05.890 [    INFO ] CURLClient         ClientId[5pe2hTwtUib3VlnJ3F5N78]Socket[0] initialize curl client success
+01-07 16:41:05.890 [   DEBUG ] CURLClient         ClientId[5pe2hTwtUib3VlnJ3F5N78]Socket[0] DEBUG== Info: timeout on name lookup is not supported
+01-07 16:41:05.890 [   DEBUG ] CURLClient         ClientId[5pe2hTwtUib3VlnJ3F5N78]Socket[0] DEBUG== Info: About to connect() to 10.15.10.50 port 2364 (#0)
+01-07 16:41:05.890 [    INFO ] CURLClient         ClientId[5pe2hTwtUib3VlnJ3F5N78]Socket[0] OnOpenSocket: family:2, socktype:1, protocol:0
+01-07 16:41:05.890 [   DEBUG ] CURLClient         ClientId[5pe2hTwtUib3VlnJ3F5N78]Socket[0] DEBUG== Info:   Trying 10.15.10.50...
+01-07 16:41:05.890 [    INFO ] CURLClient         ClientId[5pe2hTwtUib3VlnJ3F5N78]Socket[0] OnSockopt: Socket[7908]SocketType[CURLSOCKTYPE_IPCXN]
+01-07 16:41:05.890 [   DEBUG ] CURLClient         ClientId[5pe2hTwtUib3VlnJ3F5N78]Socket[7908] DEBUG== Info: connected
+01-07 16:41:05.890 [   DEBUG ] CURLClient         ClientId[5pe2hTwtUib3VlnJ3F5N78]Socket[7908] DEBUG== Info: Connected to 10.15.10.50 (10.15.10.50) port 2364 (#0)
+01-07 16:41:05.890 [   DEBUG ] CURLClient         ClientId[5pe2hTwtUib3VlnJ3F5N78]Socket[7908] DEBUG=> Send header, 124 bytes PUT /MyContainerNonCDMI/ HTTP/1.1Host: 10.15.10.50:2364Accept: */*Transfer-Encoding: chunkedExpect: 100-continue
+01-07 16:41:05.890 [   DEBUG ] CURLClient         ClientId[5pe2hTwtUib3VlnJ3F5N78]Socket[7908] DEBUG<= Recv header, 22 bytes HTTP/1.1 201 Created
+01-07 16:41:05.890 [   DEBUG ] CURLClient         ClientId[5pe2hTwtUib3VlnJ3F5N78]Socket[7908] Response Header: HTTP/1.1 201 Created
+01-07 16:41:06.093 [   DEBUG ] CURLClient         ClientId[5pe2hTwtUib3VlnJ3F5N78]Socket[7908] DEBUG<= Recv header, 35 bytes Server: CMDI-Serve/dev Python/2.7
+01-07 16:41:06.093 [   DEBUG ] CURLClient         ClientId[5pe2hTwtUib3VlnJ3F5N78]Socket[7908] Response Header: Server: CMDI-Serve/dev Python/2.7
+01-07 16:41:06.093 [   DEBUG ] CURLClient         ClientId[5pe2hTwtUib3VlnJ3F5N78]Socket[7908] DEBUG<= Recv header, 37 bytes Date: Mon, 07 Jan 2013 08:39:25 GMT
+01-07 16:41:06.093 [   DEBUG ] CURLClient         ClientId[5pe2hTwtUib3VlnJ3F5N78]Socket[7908] Response Header: Date: Mon, 07 Jan 2013 08:39:25 GMT
+01-07 16:41:06.093 [   DEBUG ] CURLClient         ClientId[5pe2hTwtUib3VlnJ3F5N78]Socket[7908] DEBUG<= Recv header, 23 bytes X-Author: Koen Bollen
+01-07 16:41:06.093 [   DEBUG ] CURLClient         ClientId[5pe2hTwtUib3VlnJ3F5N78]Socket[7908] Response Header: X-Author: Koen Bollen
+01-07 16:41:06.093 [   DEBUG ] CURLClient         ClientId[5pe2hTwtUib3VlnJ3F5N78]Socket[7908] DEBUG<= Recv header, 19 bytes Content-Length: 0
+01-07 16:41:06.093 [   DEBUG ] CURLClient         ClientId[5pe2hTwtUib3VlnJ3F5N78]Socket[7908] Response Header: Content-Length: 0
+01-07 16:41:06.093 [   DEBUG ] CURLClient         ClientId[5pe2hTwtUib3VlnJ3F5N78]Socket[7908] Response Header: 
+01-07 16:41:06.093 [   DEBUG ] CURLClient         ClientId[5pe2hTwtUib3VlnJ3F5N78]Socket[7908] DEBUG<= Recv header, 2 bytes 
+01-07 16:41:06.093 [   DEBUG ] CURLClient         ClientId[5pe2hTwtUib3VlnJ3F5N78]Socket[7908] DEBUG== Info: Connection #0 to host 10.15.10.50 left intact
+01-07 16:41:06.093 [    INFO ] CURLClient         ClientId[5pe2hTwtUib3VlnJ3F5N78]Socket[7908] send Request complete
+01-07 16:41:06.093 [   DEBUG ] CURLClient         ClientId[5pe2hTwtUib3VlnJ3F5N78]Socket[7908] DEBUG== Info: Closing connection #0
+01-07 16:41:06.093 [    INFO ] CdmiFuseOps        [MyContainerNonCDMI/]create non-cdmi container with retCode[201]Status[HTTP/1.1 201 Created]
+01-07 16:41:06.093 [    INFO ] CdmiFuseOps        [MyContainerCDMI/MyDataObject.txt]create cdmi data object
+01-07 16:41:06.093 [   DEBUG ] CdmiFuseOps        [MyContainerCDMI/MyDataObject.txt]create cdmi data object requestbody [{"mimetype":"text/plain","value":"This is the Value of this Data Object"}
+]
+01-07 16:41:06.093 [    INFO ] CURLClient         ClientId[5tibnDiu9asGA1aKPm96Wb]Socket[0] creat curl client with url[http://10.15.10.50:2364/MyContainerCDMI/MyDataObject.txt] localbind[:0] timeout[20000] connectTimeout[20000]
+01-07 16:41:06.093 [    INFO ] CURLClient         ClientId[5tibnDiu9asGA1aKPm96Wb]Socket[0] initialize curl client success
+01-07 16:41:06.093 [    INFO ] CURLClient         ClientId[5tibnDiu9asGA1aKPm96Wb]Socket[0] set post data[74] success
+01-07 16:41:06.093 [   DEBUG ] CURLClient         ClientId[5tibnDiu9asGA1aKPm96Wb]Socket[0] DEBUG== Info: timeout on name lookup is not supported
+01-07 16:41:06.093 [   DEBUG ] CURLClient         ClientId[5tibnDiu9asGA1aKPm96Wb]Socket[0] DEBUG== Info: About to connect() to 10.15.10.50 port 2364 (#0)
+01-07 16:41:06.093 [    INFO ] CURLClient         ClientId[5tibnDiu9asGA1aKPm96Wb]Socket[0] OnOpenSocket: family:2, socktype:1, protocol:0
+01-07 16:41:06.093 [   DEBUG ] CURLClient         ClientId[5tibnDiu9asGA1aKPm96Wb]Socket[0] DEBUG== Info:   Trying 10.15.10.50...
+01-07 16:41:06.093 [    INFO ] CURLClient         ClientId[5tibnDiu9asGA1aKPm96Wb]Socket[0] OnSockopt: Socket[7892]SocketType[CURLSOCKTYPE_IPCXN]
+01-07 16:41:06.109 [   DEBUG ] CURLClient         ClientId[5tibnDiu9asGA1aKPm96Wb]Socket[7892] DEBUG== Info: connected
+01-07 16:41:06.109 [   DEBUG ] CURLClient         ClientId[5tibnDiu9asGA1aKPm96Wb]Socket[7892] DEBUG== Info: Connected to 10.15.10.50 (10.15.10.50) port 2364 (#0)
+01-07 16:41:06.109 [   DEBUG ] CURLClient         ClientId[5tibnDiu9asGA1aKPm96Wb]Socket[7892] DEBUG=> Send header, 223 bytes PUT /MyContainerCDMI/MyDataObject.txt HTTP/1.1Host: 10.15.10.50:2364Accept: application/cdmi-objectContent-Type: application/cdmi-objectX-CDMI-Specification-Version: 1.0Content-Length: 74Expect: 100-continue
+01-07 16:41:08.109 [   DEBUG ] CURLClient         ClientId[5tibnDiu9asGA1aKPm96Wb]Socket[7892] DEBUG== Info: Done waiting for 100-continue
+01-07 16:41:08.109 [   DEBUG ] CURLClient         ClientId[5tibnDiu9asGA1aKPm96Wb]Socket[7892] DEBUG=> Send data, 74 bytes {"mimetype":"text/plain","value":"This is the Value of this Data Object"}.
+01-07 16:41:08.109 [   DEBUG ] CURLClient         ClientId[5tibnDiu9asGA1aKPm96Wb]Socket[7892] DEBUG== Info: We are completely uploaded and fine
+01-07 16:41:08.109 [   DEBUG ] CURLClient         ClientId[5tibnDiu9asGA1aKPm96Wb]Socket[7892] DEBUG<= Recv header, 22 bytes HTTP/1.1 201 Created
+01-07 16:41:08.109 [   DEBUG ] CURLClient         ClientId[5tibnDiu9asGA1aKPm96Wb]Socket[7892] Response Header: HTTP/1.1 201 Created
+01-07 16:41:08.296 [   DEBUG ] CURLClient         ClientId[5tibnDiu9asGA1aKPm96Wb]Socket[7892] DEBUG<= Recv header, 35 bytes Server: CMDI-Serve/dev Python/2.7
+01-07 16:41:08.296 [   DEBUG ] CURLClient         ClientId[5tibnDiu9asGA1aKPm96Wb]Socket[7892] Response Header: Server: CMDI-Serve/dev Python/2.7
+01-07 16:41:08.296 [   DEBUG ] CURLClient         ClientId[5tibnDiu9asGA1aKPm96Wb]Socket[7892] DEBUG<= Recv header, 37 bytes Date: Mon, 07 Jan 2013 08:39:27 GMT
+01-07 16:41:08.296 [   DEBUG ] CURLClient         ClientId[5tibnDiu9asGA1aKPm96Wb]Socket[7892] Response Header: Date: Mon, 07 Jan 2013 08:39:27 GMT
+01-07 16:41:08.296 [   DEBUG ] CURLClient         ClientId[5tibnDiu9asGA1aKPm96Wb]Socket[7892] DEBUG<= Recv header, 23 bytes X-Author: Koen Bollen
+01-07 16:41:08.296 [   DEBUG ] CURLClient         ClientId[5tibnDiu9asGA1aKPm96Wb]Socket[7892] Response Header: X-Author: Koen Bollen
+01-07 16:41:08.296 [   DEBUG ] CURLClient         ClientId[5tibnDiu9asGA1aKPm96Wb]Socket[7892] DEBUG<= Recv header, 39 bytes Content-Type: application/cdmi-object
+01-07 16:41:08.296 [   DEBUG ] CURLClient         ClientId[5tibnDiu9asGA1aKPm96Wb]Socket[7892] Response Header: Content-Type: application/cdmi-object
+01-07 16:41:08.296 [   DEBUG ] CURLClient         ClientId[5tibnDiu9asGA1aKPm96Wb]Socket[7892] DEBUG<= Recv header, 21 bytes Content-Length: 399
+01-07 16:41:08.296 [   DEBUG ] CURLClient         ClientId[5tibnDiu9asGA1aKPm96Wb]Socket[7892] Response Header: Content-Length: 399
+01-07 16:41:08.296 [   DEBUG ] CURLClient         ClientId[5tibnDiu9asGA1aKPm96Wb]Socket[7892] Response Header: 
+01-07 16:41:08.296 [   DEBUG ] CURLClient         ClientId[5tibnDiu9asGA1aKPm96Wb]Socket[7892] DEBUG<= Recv header, 2 bytes 
+01-07 16:41:08.296 [   DEBUG ] CURLClient         ClientId[5tibnDiu9asGA1aKPm96Wb]Socket[7892] DEBUG<= Recv data, 399 bytes {.  "mimetype": "text/plain", .  "completionStatus": "Complete", .  "objectID": "AABRbgApiT8vTXlDb250YWluZXJDRE1JL015RGF0YU9iamVjdC50eHQ=", .  "parentURI": "/MyContainerCDMI", .  "objectURI": "/MyContainerCDMI/MyDataObject.txt", .  "metadata": {.    "cdmi_ctime": "2013-01-07T16:39:27", .    "cdmi_mtime": "2013-01-07T16:39:27", .    "cdmi_size": 37, .    "cdmi_atime": "2013-01-07T16:39:27".  }.}
+01-07 16:41:08.296 [   DEBUG ] CURLClient         ClientId[5tibnDiu9asGA1aKPm96Wb]Socket[7892] DEBUG== Info: Connection #0 to host 10.15.10.50 left intact
+01-07 16:41:08.296 [    INFO ] CURLClient         ClientId[5tibnDiu9asGA1aKPm96Wb]Socket[7892] send Request complete
+01-07 16:41:08.296 [    INFO ] CdmiFuseOps        [MyContainerCDMI/MyDataObject.txt]create cdmi data object response[{
+  "mimetype": "text/plain", 
+  "completionStatus": "Complete", 
+  "objectID": "AABRbgApiT8vTXlDb250YWluZXJDRE1JL015RGF0YU9iamVjdC50eHQ=", 
+  "parentURI": "/MyContainerCDMI", 
+  "objectURI": "/MyContainerCDMI/MyDataObject.txt", 
+  "metadata": {
+    "cdmi_ctime": "2013-01-07T16:39:27", 
+    "cdmi_mtime": "2013-01-07T16:39:27", 
+    "cdmi_size": 37, 
+    "cdmi_atime": "2013-01-07T16:39:27"
+  }
+}
+]retCode[201]Status[HTTP/1.1 201 Created]
+01-07 16:41:08.296 [   DEBUG ] CURLClient         ClientId[5tibnDiu9asGA1aKPm96Wb]Socket[7892] DEBUG== Info: Closing connection #0
+01-07 16:41:08.312 [    INFO ] CdmiFuseOps        [MyContainerNonCDMI/MyDataObject.txt]create non-cdmi data object
+01-07 16:41:08.312 [    INFO ] CURLClient         ClientId[5oaC1jpvE4z5015Mjp2Tuv]Socket[0] creat curl client with url[http://10.15.10.50:2364/MyContainerNonCDMI/MyDataObject.txt] localbind[:0] timeout[20000] connectTimeout[20000]
+01-07 16:41:08.312 [    INFO ] CURLClient         ClientId[5oaC1jpvE4z5015Mjp2Tuv]Socket[0] initialize curl client success
+01-07 16:41:08.312 [    INFO ] CURLClient         ClientId[5oaC1jpvE4z5015Mjp2Tuv]Socket[0] set post data[37] success
+01-07 16:41:08.312 [   DEBUG ] CURLClient         ClientId[5oaC1jpvE4z5015Mjp2Tuv]Socket[0] DEBUG== Info: timeout on name lookup is not supported
+01-07 16:41:08.312 [   DEBUG ] CURLClient         ClientId[5oaC1jpvE4z5015Mjp2Tuv]Socket[0] DEBUG== Info: About to connect() to 10.15.10.50 port 2364 (#0)
+01-07 16:41:08.312 [    INFO ] CURLClient         ClientId[5oaC1jpvE4z5015Mjp2Tuv]Socket[0] OnOpenSocket: family:2, socktype:1, protocol:0
+01-07 16:41:08.312 [   DEBUG ] CURLClient         ClientId[5oaC1jpvE4z5015Mjp2Tuv]Socket[0] DEBUG== Info:   Trying 10.15.10.50...
+01-07 16:41:08.312 [    INFO ] CURLClient         ClientId[5oaC1jpvE4z5015Mjp2Tuv]Socket[0] OnSockopt: Socket[7880]SocketType[CURLSOCKTYPE_IPCXN]
+01-07 16:41:08.312 [   DEBUG ] CURLClient         ClientId[5oaC1jpvE4z5015Mjp2Tuv]Socket[7880] DEBUG== Info: connected
+01-07 16:41:08.312 [   DEBUG ] CURLClient         ClientId[5oaC1jpvE4z5015Mjp2Tuv]Socket[7880] DEBUG== Info: Connected to 10.15.10.50 (10.15.10.50) port 2364 (#0)
+01-07 16:41:08.312 [   DEBUG ] CURLClient         ClientId[5oaC1jpvE4z5015Mjp2Tuv]Socket[7880] DEBUG=> Send header, 172 bytes PUT /MyContainerNonCDMI/MyDataObject.txt HTTP/1.1Host: 10.15.10.50:2364Accept: */*Content-Type: text/plain;charset=utf-8Content-Length: 37Expect: 100-continue
+01-07 16:41:10.312 [   DEBUG ] CURLClient         ClientId[5oaC1jpvE4z5015Mjp2Tuv]Socket[7880] DEBUG== Info: Done waiting for 100-continue
+01-07 16:41:10.312 [   DEBUG ] CURLClient         ClientId[5oaC1jpvE4z5015Mjp2Tuv]Socket[7880] DEBUG=> Send data, 37 bytes This is the Value of this Data Object
+01-07 16:41:10.312 [   DEBUG ] CURLClient         ClientId[5oaC1jpvE4z5015Mjp2Tuv]Socket[7880] DEBUG== Info: We are completely uploaded and fine
+01-07 16:41:10.312 [   DEBUG ] CURLClient         ClientId[5oaC1jpvE4z5015Mjp2Tuv]Socket[7880] DEBUG<= Recv header, 22 bytes HTTP/1.1 201 Created
+01-07 16:41:10.312 [   DEBUG ] CURLClient         ClientId[5oaC1jpvE4z5015Mjp2Tuv]Socket[7880] Response Header: HTTP/1.1 201 Created
+01-07 16:41:10.515 [   DEBUG ] CURLClient         ClientId[5oaC1jpvE4z5015Mjp2Tuv]Socket[7880] DEBUG<= Recv header, 35 bytes Server: CMDI-Serve/dev Python/2.7
+01-07 16:41:10.515 [   DEBUG ] CURLClient         ClientId[5oaC1jpvE4z5015Mjp2Tuv]Socket[7880] Response Header: Server: CMDI-Serve/dev Python/2.7
+01-07 16:41:10.515 [   DEBUG ] CURLClient         ClientId[5oaC1jpvE4z5015Mjp2Tuv]Socket[7880] DEBUG<= Recv header, 37 bytes Date: Mon, 07 Jan 2013 08:39:30 GMT
+01-07 16:41:10.515 [   DEBUG ] CURLClient         ClientId[5oaC1jpvE4z5015Mjp2Tuv]Socket[7880] Response Header: Date: Mon, 07 Jan 2013 08:39:30 GMT
+01-07 16:41:10.515 [   DEBUG ] CURLClient         ClientId[5oaC1jpvE4z5015Mjp2Tuv]Socket[7880] DEBUG<= Recv header, 23 bytes X-Author: Koen Bollen
+01-07 16:41:10.515 [   DEBUG ] CURLClient         ClientId[5oaC1jpvE4z5015Mjp2Tuv]Socket[7880] Response Header: X-Author: Koen Bollen
+01-07 16:41:10.515 [   DEBUG ] CURLClient         ClientId[5oaC1jpvE4z5015Mjp2Tuv]Socket[7880] DEBUG<= Recv header, 19 bytes Content-Length: 0
+01-07 16:41:10.515 [   DEBUG ] CURLClient         ClientId[5oaC1jpvE4z5015Mjp2Tuv]Socket[7880] Response Header: Content-Length: 0
+01-07 16:41:10.515 [   DEBUG ] CURLClient         ClientId[5oaC1jpvE4z5015Mjp2Tuv]Socket[7880] Response Header: 
+01-07 16:41:10.515 [   DEBUG ] CURLClient         ClientId[5oaC1jpvE4z5015Mjp2Tuv]Socket[7880] DEBUG<= Recv header, 2 bytes 
+01-07 16:41:10.515 [   DEBUG ] CURLClient         ClientId[5oaC1jpvE4z5015Mjp2Tuv]Socket[7880] DEBUG== Info: Connection #0 to host 10.15.10.50 left intact
+01-07 16:41:10.515 [    INFO ] CURLClient         ClientId[5oaC1jpvE4z5015Mjp2Tuv]Socket[7880] send Request complete
+01-07 16:41:10.515 [    INFO ] CdmiFuseOps        [MyContainerNonCDMI/MyDataObject.txt]create non-cdmi data object with retCode[201]Status[HTTP/1.1 201 Created]
+01-07 16:41:10.515 [   DEBUG ] CURLClient         ClientId[5oaC1jpvE4z5015Mjp2Tuv]Socket[7880] DEBUG== Info: Closing connection #0
+01-07 16:41:10.515 [    INFO ] CdmiFuseOps        [MyContainerCDMI/MyDataObject.txt]read cdmi data object
+01-07 16:41:10.515 [    INFO ] CURLClient         ClientId[5oT3KzP47DJHKTxEKdlDBo]Socket[0] creat curl client with url[http://10.15.10.50:2364/MyContainerCDMI/MyDataObject.txt] localbind[:0] timeout[20000] connectTimeout[20000]
+01-07 16:41:10.515 [    INFO ] CURLClient         ClientId[5oT3KzP47DJHKTxEKdlDBo]Socket[0] initialize curl client success
+01-07 16:41:10.515 [   DEBUG ] CURLClient         ClientId[5oT3KzP47DJHKTxEKdlDBo]Socket[0] DEBUG== Info: timeout on name lookup is not supported
+01-07 16:41:10.515 [   DEBUG ] CURLClient         ClientId[5oT3KzP47DJHKTxEKdlDBo]Socket[0] DEBUG== Info: About to connect() to 10.15.10.50 port 2364 (#0)
+01-07 16:41:10.515 [    INFO ] CURLClient         ClientId[5oT3KzP47DJHKTxEKdlDBo]Socket[0] OnOpenSocket: family:2, socktype:1, protocol:0
+01-07 16:41:10.515 [   DEBUG ] CURLClient         ClientId[5oT3KzP47DJHKTxEKdlDBo]Socket[0] DEBUG== Info:   Trying 10.15.10.50...
+01-07 16:41:10.515 [    INFO ] CURLClient         ClientId[5oT3KzP47DJHKTxEKdlDBo]Socket[0] OnSockopt: Socket[7868]SocketType[CURLSOCKTYPE_IPCXN]
+01-07 16:41:10.531 [   DEBUG ] CURLClient         ClientId[5oT3KzP47DJHKTxEKdlDBo]Socket[7868] DEBUG== Info: connected
+01-07 16:41:10.531 [   DEBUG ] CURLClient         ClientId[5oT3KzP47DJHKTxEKdlDBo]Socket[7868] DEBUG== Info: Connected to 10.15.10.50 (10.15.10.50) port 2364 (#0)
+01-07 16:41:10.531 [   DEBUG ] CURLClient         ClientId[5oT3KzP47DJHKTxEKdlDBo]Socket[7868] DEBUG=> Send header, 181 bytes GET /MyContainerCDMI/MyDataObject.txt HTTP/1.1Host: 10.15.10.50:2364Accept: application/cdmi-objectContent-Type: application/cdmi-objectX-CDMI-Specification-Version: 1.0
+01-07 16:41:10.531 [   DEBUG ] CURLClient         ClientId[5oT3KzP47DJHKTxEKdlDBo]Socket[7868] DEBUG<= Recv header, 17 bytes HTTP/1.1 200 OK
+01-07 16:41:10.531 [   DEBUG ] CURLClient         ClientId[5oT3KzP47DJHKTxEKdlDBo]Socket[7868] Response Header: HTTP/1.1 200 OK
+01-07 16:41:10.718 [   DEBUG ] CURLClient         ClientId[5oT3KzP47DJHKTxEKdlDBo]Socket[7868] DEBUG<= Recv header, 35 bytes Server: CMDI-Serve/dev Python/2.7
+01-07 16:41:10.718 [   DEBUG ] CURLClient         ClientId[5oT3KzP47DJHKTxEKdlDBo]Socket[7868] Response Header: Server: CMDI-Serve/dev Python/2.7
+01-07 16:41:10.718 [   DEBUG ] CURLClient         ClientId[5oT3KzP47DJHKTxEKdlDBo]Socket[7868] DEBUG<= Recv header, 37 bytes Date: Mon, 07 Jan 2013 08:39:30 GMT
+01-07 16:41:10.718 [   DEBUG ] CURLClient         ClientId[5oT3KzP47DJHKTxEKdlDBo]Socket[7868] Response Header: Date: Mon, 07 Jan 2013 08:39:30 GMT
+01-07 16:41:10.718 [   DEBUG ] CURLClient         ClientId[5oT3KzP47DJHKTxEKdlDBo]Socket[7868] DEBUG<= Recv header, 23 bytes X-Author: Koen Bollen
+01-07 16:41:10.718 [   DEBUG ] CURLClient         ClientId[5oT3KzP47DJHKTxEKdlDBo]Socket[7868] Response Header: X-Author: Koen Bollen
+01-07 16:41:10.718 [   DEBUG ] CURLClient         ClientId[5oT3KzP47DJHKTxEKdlDBo]Socket[7868] DEBUG<= Recv header, 39 bytes Content-Type: application/cdmi-object
+01-07 16:41:10.718 [   DEBUG ] CURLClient         ClientId[5oT3KzP47DJHKTxEKdlDBo]Socket[7868] Response Header: Content-Type: application/cdmi-object
+01-07 16:41:10.718 [   DEBUG ] CURLClient         ClientId[5oT3KzP47DJHKTxEKdlDBo]Socket[7868] DEBUG<= Recv header, 21 bytes Content-Length: 442
+01-07 16:41:10.718 [   DEBUG ] CURLClient         ClientId[5oT3KzP47DJHKTxEKdlDBo]Socket[7868] Response Header: Content-Length: 442
+01-07 16:41:10.718 [   DEBUG ] CURLClient         ClientId[5oT3KzP47DJHKTxEKdlDBo]Socket[7868] Response Header: 
+01-07 16:41:10.718 [   DEBUG ] CURLClient         ClientId[5oT3KzP47DJHKTxEKdlDBo]Socket[7868] DEBUG<= Recv header, 2 bytes 
+01-07 16:41:10.718 [   DEBUG ] CURLClient         ClientId[5oT3KzP47DJHKTxEKdlDBo]Socket[7868] DEBUG<= Recv data, 442 bytes {.  "mimetype": "text/plain", .  "objectID": "AABRbgApiT8vTXlDb250YWluZXJDRE1JL015RGF0YU9iamVjdC50eHQ=", .  "parentURI": "/MyContainerCDMI", .  "objectURI": "/MyContainerCDMI/MyDataObject.txt", .  "value": "This is the Value of this Data Object", .  "valuerange": "0-36", .  "metadata": {.    "cdmi_ctime": "2013-01-07T16:39:27", .    "cdmi_mtime": "2013-01-07T16:39:27", .    "cdmi_size": 37, .    "cdmi_atime": "2013-01-07T16:39:30".  }.}
+01-07 16:41:10.718 [   DEBUG ] CURLClient         ClientId[5oT3KzP47DJHKTxEKdlDBo]Socket[7868] DEBUG== Info: Connection #0 to host 10.15.10.50 left intact
+01-07 16:41:10.718 [    INFO ] CURLClient         ClientId[5oT3KzP47DJHKTxEKdlDBo]Socket[7868] send Request complete
+01-07 16:41:10.718 [    INFO ] CdmiFuseOps        [MyContainerCDMI/MyDataObject.txt]read cdmi data object response[{
+  "mimetype": "text/plain", 
+  "objectID": "AABRbgApiT8vTXlDb250YWluZXJDRE1JL015RGF0YU9iamVjdC50eHQ=", 
+  "parentURI": "/MyContainerCDMI", 
+  "objectURI": "/MyContainerCDMI/MyDataObject.txt", 
+  "value": "This is the Value of this Data Object", 
+  "valuerange": "0-36", 
+  "metadata": {
+    "cdmi_ctime": "2013-01-07T16:39:27", 
+    "cdmi_mtime": "2013-01-07T16:39:27", 
+    "cdmi_size": 37, 
+    "cdmi_atime": "2013-01-07T16:39:30"
+  }
+}
+]retCode[200]Status[HTTP/1.1 200 OK]
+01-07 16:41:10.718 [   DEBUG ] CURLClient         ClientId[5oT3KzP47DJHKTxEKdlDBo]Socket[7868] DEBUG== Info: Closing connection #0
+01-07 16:41:10.718 [    INFO ] CdmiFuseOps        [MyContainerNonCDMI/MyDataObject.txt]read non-cdmi data object
+01-07 16:41:10.718 [    INFO ] CURLClient         ClientId[6mlPADO6MEQAJOBSBQZMmB]Socket[0] creat curl client with url[http://10.15.10.50:2364/MyContainerNonCDMI/MyDataObject.txt] localbind[:0] timeout[20000] connectTimeout[20000]
+01-07 16:41:10.718 [    INFO ] CURLClient         ClientId[6mlPADO6MEQAJOBSBQZMmB]Socket[0] initialize curl client success
+01-07 16:41:10.718 [   DEBUG ] CURLClient         ClientId[6mlPADO6MEQAJOBSBQZMmB]Socket[0] DEBUG== Info: timeout on name lookup is not supported
+01-07 16:41:10.718 [   DEBUG ] CURLClient         ClientId[6mlPADO6MEQAJOBSBQZMmB]Socket[0] DEBUG== Info: About to connect() to 10.15.10.50 port 2364 (#0)
+01-07 16:41:10.718 [    INFO ] CURLClient         ClientId[6mlPADO6MEQAJOBSBQZMmB]Socket[0] OnOpenSocket: family:2, socktype:1, protocol:0
+01-07 16:41:10.718 [   DEBUG ] CURLClient         ClientId[6mlPADO6MEQAJOBSBQZMmB]Socket[0] DEBUG== Info:   Trying 10.15.10.50...
+01-07 16:41:10.718 [    INFO ] CURLClient         ClientId[6mlPADO6MEQAJOBSBQZMmB]Socket[0] OnSockopt: Socket[7856]SocketType[CURLSOCKTYPE_IPCXN]
+01-07 16:41:10.734 [   DEBUG ] CURLClient         ClientId[6mlPADO6MEQAJOBSBQZMmB]Socket[7856] DEBUG== Info: connected
+01-07 16:41:10.734 [   DEBUG ] CURLClient         ClientId[6mlPADO6MEQAJOBSBQZMmB]Socket[7856] DEBUG== Info: Connected to 10.15.10.50 (10.15.10.50) port 2364 (#0)
+01-07 16:41:10.734 [   DEBUG ] CURLClient         ClientId[6mlPADO6MEQAJOBSBQZMmB]Socket[7856] DEBUG=> Send header, 100 bytes GET /MyContainerNonCDMI/MyDataObject.txt HTTP/1.1Host: 10.15.10.50:2364Accept: */*Range: 0
+01-07 16:41:10.734 [   DEBUG ] CURLClient         ClientId[6mlPADO6MEQAJOBSBQZMmB]Socket[7856] DEBUG<= Recv header, 17 bytes HTTP/1.1 200 OK
+01-07 16:41:10.734 [   DEBUG ] CURLClient         ClientId[6mlPADO6MEQAJOBSBQZMmB]Socket[7856] Response Header: HTTP/1.1 200 OK
+01-07 16:41:10.921 [   DEBUG ] CURLClient         ClientId[6mlPADO6MEQAJOBSBQZMmB]Socket[7856] DEBUG<= Recv header, 35 bytes Server: CMDI-Serve/dev Python/2.7
+01-07 16:41:10.921 [   DEBUG ] CURLClient         ClientId[6mlPADO6MEQAJOBSBQZMmB]Socket[7856] Response Header: Server: CMDI-Serve/dev Python/2.7
+01-07 16:41:10.921 [   DEBUG ] CURLClient         ClientId[6mlPADO6MEQAJOBSBQZMmB]Socket[7856] DEBUG<= Recv header, 37 bytes Date: Mon, 07 Jan 2013 08:39:30 GMT
+01-07 16:41:10.921 [   DEBUG ] CURLClient         ClientId[6mlPADO6MEQAJOBSBQZMmB]Socket[7856] Response Header: Date: Mon, 07 Jan 2013 08:39:30 GMT
+01-07 16:41:10.921 [   DEBUG ] CURLClient         ClientId[6mlPADO6MEQAJOBSBQZMmB]Socket[7856] DEBUG<= Recv header, 23 bytes X-Author: Koen Bollen
+01-07 16:41:10.921 [   DEBUG ] CURLClient         ClientId[6mlPADO6MEQAJOBSBQZMmB]Socket[7856] Response Header: X-Author: Koen Bollen
+01-07 16:41:10.921 [   DEBUG ] CURLClient         ClientId[6mlPADO6MEQAJOBSBQZMmB]Socket[7856] DEBUG<= Recv header, 40 bytes Content-Type: application/octet-stream
+01-07 16:41:10.921 [   DEBUG ] CURLClient         ClientId[6mlPADO6MEQAJOBSBQZMmB]Socket[7856] Response Header: Content-Type: application/octet-stream
+01-07 16:41:10.921 [   DEBUG ] CURLClient         ClientId[6mlPADO6MEQAJOBSBQZMmB]Socket[7856] DEBUG<= Recv header, 20 bytes Content-Length: 37
+01-07 16:41:10.921 [   DEBUG ] CURLClient         ClientId[6mlPADO6MEQAJOBSBQZMmB]Socket[7856] Response Header: Content-Length: 37
+01-07 16:41:10.921 [   DEBUG ] CURLClient         ClientId[6mlPADO6MEQAJOBSBQZMmB]Socket[7856] DEBUG<= Recv header, 27 bytes Content-Range: bytes=0-36
+01-07 16:41:10.921 [   DEBUG ] CURLClient         ClientId[6mlPADO6MEQAJOBSBQZMmB]Socket[7856] Response Header: Content-Range: bytes=0-36
+01-07 16:41:10.921 [   DEBUG ] CURLClient         ClientId[6mlPADO6MEQAJOBSBQZMmB]Socket[7856] Response Header: 
+01-07 16:41:10.921 [   DEBUG ] CURLClient         ClientId[6mlPADO6MEQAJOBSBQZMmB]Socket[7856] DEBUG<= Recv header, 2 bytes 
+01-07 16:41:10.921 [   DEBUG ] CURLClient         ClientId[6mlPADO6MEQAJOBSBQZMmB]Socket[7856] DEBUG<= Recv data, 37 bytes This is the Value of this Data Object
+01-07 16:41:10.921 [   DEBUG ] CURLClient         ClientId[6mlPADO6MEQAJOBSBQZMmB]Socket[7856] DEBUG== Info: Connection #0 to host 10.15.10.50 left intact
+01-07 16:41:10.921 [    INFO ] CURLClient         ClientId[6mlPADO6MEQAJOBSBQZMmB]Socket[7856] send Request complete
+01-07 16:41:10.921 [    INFO ] CdmiFuseOps        [MyContainerNonCDMI/MyDataObject.txt]read non-cdmi data object response[This is the Value of this Data Object]retCode[200]Status[HTTP/1.1 200 OK]
+01-07 16:41:10.921 [   DEBUG ] CURLClient         ClientId[6mlPADO6MEQAJOBSBQZMmB]Socket[7856] DEBUG== Info: Closing connection #0
+01-07 16:41:10.921 [    INFO ] CdmiFuseOps        [MyContainerCDMI/MyDataObject.txt]update cdmi data object
+01-07 16:41:10.921 [   DEBUG ] CdmiFuseOps        [MyContainerCDMI/MyDataObject.txt]update cdmi data object requestbody [{"mimetype":"text/plain","value":"This is the Value of this Data Object"}
+]
+01-07 16:41:10.921 [    INFO ] CURLClient         ClientId[6YLap6Tp0OfCAxWhWQ00Df]Socket[0] creat curl client with url[http://10.15.10.50:2364/MyContainerCDMI/MyDataObject.txt] localbind[:0] timeout[20000] connectTimeout[20000]
+01-07 16:41:10.921 [    INFO ] CURLClient         ClientId[6YLap6Tp0OfCAxWhWQ00Df]Socket[0] initialize curl client success
+01-07 16:41:10.921 [    INFO ] CURLClient         ClientId[6YLap6Tp0OfCAxWhWQ00Df]Socket[0] set post data[74] success
+01-07 16:41:10.921 [   DEBUG ] CURLClient         ClientId[6YLap6Tp0OfCAxWhWQ00Df]Socket[0] DEBUG== Info: timeout on name lookup is not supported
+01-07 16:41:10.921 [   DEBUG ] CURLClient         ClientId[6YLap6Tp0OfCAxWhWQ00Df]Socket[0] DEBUG== Info: About to connect() to 10.15.10.50 port 2364 (#0)
+01-07 16:41:10.921 [    INFO ] CURLClient         ClientId[6YLap6Tp0OfCAxWhWQ00Df]Socket[0] OnOpenSocket: family:2, socktype:1, protocol:0
+01-07 16:41:10.921 [   DEBUG ] CURLClient         ClientId[6YLap6Tp0OfCAxWhWQ00Df]Socket[0] DEBUG== Info:   Trying 10.15.10.50...
+01-07 16:41:10.921 [    INFO ] CURLClient         ClientId[6YLap6Tp0OfCAxWhWQ00Df]Socket[0] OnSockopt: Socket[7844]SocketType[CURLSOCKTYPE_IPCXN]
+01-07 16:41:10.937 [   DEBUG ] CURLClient         ClientId[6YLap6Tp0OfCAxWhWQ00Df]Socket[7844] DEBUG== Info: connected
+01-07 16:41:10.937 [   DEBUG ] CURLClient         ClientId[6YLap6Tp0OfCAxWhWQ00Df]Socket[7844] DEBUG== Info: Connected to 10.15.10.50 (10.15.10.50) port 2364 (#0)
+01-07 16:41:10.937 [   DEBUG ] CURLClient         ClientId[6YLap6Tp0OfCAxWhWQ00Df]Socket[7844] DEBUG=> Send header, 226 bytes PUT /MyContainerCDMI/MyDataObject.txt HTTP/1.1Host: 10.15.10.50:2364Accept: */*Content-Type: application/cdmi-objectX-CDMI-Partial: falseX-CDMI-Specification-Version: 1.0Content-Length: 74Expect: 100-continue
+01-07 16:41:12.937 [   DEBUG ] CURLClient         ClientId[6YLap6Tp0OfCAxWhWQ00Df]Socket[7844] DEBUG== Info: Done waiting for 100-continue
+01-07 16:41:12.937 [   DEBUG ] CURLClient         ClientId[6YLap6Tp0OfCAxWhWQ00Df]Socket[7844] DEBUG=> Send data, 74 bytes {"mimetype":"text/plain","value":"This is the Value of this Data Object"}.
+01-07 16:41:12.937 [   DEBUG ] CURLClient         ClientId[6YLap6Tp0OfCAxWhWQ00Df]Socket[7844] DEBUG== Info: We are completely uploaded and fine
+01-07 16:41:12.937 [   DEBUG ] CURLClient         ClientId[6YLap6Tp0OfCAxWhWQ00Df]Socket[7844] DEBUG<= Recv header, 22 bytes HTTP/1.1 201 Created
+01-07 16:41:12.937 [   DEBUG ] CURLClient         ClientId[6YLap6Tp0OfCAxWhWQ00Df]Socket[7844] Response Header: HTTP/1.1 201 Created
+01-07 16:41:13.234 [   DEBUG ] CURLClient         ClientId[6YLap6Tp0OfCAxWhWQ00Df]Socket[7844] DEBUG<= Recv header, 35 bytes Server: CMDI-Serve/dev Python/2.7
+01-07 16:41:13.234 [   DEBUG ] CURLClient         ClientId[6YLap6Tp0OfCAxWhWQ00Df]Socket[7844] Response Header: Server: CMDI-Serve/dev Python/2.7
+01-07 16:41:13.234 [   DEBUG ] CURLClient         ClientId[6YLap6Tp0OfCAxWhWQ00Df]Socket[7844] DEBUG<= Recv header, 37 bytes Date: Mon, 07 Jan 2013 08:39:32 GMT
+01-07 16:41:13.234 [   DEBUG ] CURLClient         ClientId[6YLap6Tp0OfCAxWhWQ00Df]Socket[7844] Response Header: Date: Mon, 07 Jan 2013 08:39:32 GMT
+01-07 16:41:13.234 [   DEBUG ] CURLClient         ClientId[6YLap6Tp0OfCAxWhWQ00Df]Socket[7844] DEBUG<= Recv header, 23 bytes X-Author: Koen Bollen
+01-07 16:41:13.234 [   DEBUG ] CURLClient         ClientId[6YLap6Tp0OfCAxWhWQ00Df]Socket[7844] Response Header: X-Author: Koen Bollen
+01-07 16:41:13.234 [   DEBUG ] CURLClient         ClientId[6YLap6Tp0OfCAxWhWQ00Df]Socket[7844] DEBUG<= Recv header, 39 bytes Content-Type: application/cdmi-object
+01-07 16:41:13.234 [   DEBUG ] CURLClient         ClientId[6YLap6Tp0OfCAxWhWQ00Df]Socket[7844] Response Header: Content-Type: application/cdmi-object
+01-07 16:41:13.234 [   DEBUG ] CURLClient         ClientId[6YLap6Tp0OfCAxWhWQ00Df]Socket[7844] DEBUG<= Recv header, 21 bytes Content-Length: 399
+01-07 16:41:13.234 [   DEBUG ] CURLClient         ClientId[6YLap6Tp0OfCAxWhWQ00Df]Socket[7844] Response Header: Content-Length: 399
+01-07 16:41:13.234 [   DEBUG ] CURLClient         ClientId[6YLap6Tp0OfCAxWhWQ00Df]Socket[7844] Response Header: 
+01-07 16:41:13.234 [   DEBUG ] CURLClient         ClientId[6YLap6Tp0OfCAxWhWQ00Df]Socket[7844] DEBUG<= Recv header, 2 bytes 
+01-07 16:41:13.234 [   DEBUG ] CURLClient         ClientId[6YLap6Tp0OfCAxWhWQ00Df]Socket[7844] DEBUG<= Recv data, 399 bytes {.  "mimetype": "text/plain", .  "completionStatus": "Complete", .  "objectID": "AABRbgApiT8vTXlDb250YWluZXJDRE1JL015RGF0YU9iamVjdC50eHQ=", .  "parentURI": "/MyContainerCDMI", .  "objectURI": "/MyContainerCDMI/MyDataObject.txt", .  "metadata": {.    "cdmi_ctime": "2013-01-07T16:39:32", .    "cdmi_mtime": "2013-01-07T16:39:32", .    "cdmi_size": 37, .    "cdmi_atime": "2013-01-07T16:39:30".  }.}
+01-07 16:41:13.234 [   DEBUG ] CURLClient         ClientId[6YLap6Tp0OfCAxWhWQ00Df]Socket[7844] DEBUG== Info: Connection #0 to host 10.15.10.50 left intact
+01-07 16:41:13.234 [    INFO ] CURLClient         ClientId[6YLap6Tp0OfCAxWhWQ00Df]Socket[7844] send Request complete
+01-07 16:41:13.234 [    INFO ] CdmiFuseOps        [MyContainerCDMI/MyDataObject.txt]update cdmi data object response[{
+  "mimetype": "text/plain", 
+  "completionStatus": "Complete", 
+  "objectID": "AABRbgApiT8vTXlDb250YWluZXJDRE1JL015RGF0YU9iamVjdC50eHQ=", 
+  "parentURI": "/MyContainerCDMI", 
+  "objectURI": "/MyContainerCDMI/MyDataObject.txt", 
+  "metadata": {
+    "cdmi_ctime": "2013-01-07T16:39:32", 
+    "cdmi_mtime": "2013-01-07T16:39:32", 
+    "cdmi_size": 37, 
+    "cdmi_atime": "2013-01-07T16:39:30"
+  }
+}
+]retCode[201]Status[HTTP/1.1 201 Created]
+01-07 16:41:13.234 [   DEBUG ] CURLClient         ClientId[6YLap6Tp0OfCAxWhWQ00Df]Socket[7844] DEBUG== Info: Closing connection #0
+01-07 16:41:13.234 [    INFO ] CdmiFuseOps        [MyContainerNonCDMI/MyDataObject.txt]update non-cdmi data object
+01-07 16:41:13.234 [    INFO ] CURLClient         ClientId[6oItZCYMM7rHbwKL2bIePw]Socket[0] creat curl client with url[http://10.15.10.50:2364/MyContainerNonCDMI/MyDataObject.txt] localbind[:0] timeout[20000] connectTimeout[20000]
+01-07 16:41:13.234 [    INFO ] CURLClient         ClientId[6oItZCYMM7rHbwKL2bIePw]Socket[0] initialize curl client success
+01-07 16:41:13.234 [    INFO ] CURLClient         ClientId[6oItZCYMM7rHbwKL2bIePw]Socket[0] set post data[11] success
+01-07 16:41:13.234 [   DEBUG ] CURLClient         ClientId[6oItZCYMM7rHbwKL2bIePw]Socket[0] DEBUG== Info: timeout on name lookup is not supported
+01-07 16:41:13.234 [   DEBUG ] CURLClient         ClientId[6oItZCYMM7rHbwKL2bIePw]Socket[0] DEBUG== Info: About to connect() to 10.15.10.50 port 2364 (#0)
+01-07 16:41:13.234 [    INFO ] CURLClient         ClientId[6oItZCYMM7rHbwKL2bIePw]Socket[0] OnOpenSocket: family:2, socktype:1, protocol:0
+01-07 16:41:13.234 [   DEBUG ] CURLClient         ClientId[6oItZCYMM7rHbwKL2bIePw]Socket[0] DEBUG== Info:   Trying 10.15.10.50...
+01-07 16:41:13.234 [    INFO ] CURLClient         ClientId[6oItZCYMM7rHbwKL2bIePw]Socket[0] OnSockopt: Socket[7832]SocketType[CURLSOCKTYPE_IPCXN]
+01-07 16:41:13.234 [   DEBUG ] CURLClient         ClientId[6oItZCYMM7rHbwKL2bIePw]Socket[7832] DEBUG== Info: connected
+01-07 16:41:13.234 [   DEBUG ] CURLClient         ClientId[6oItZCYMM7rHbwKL2bIePw]Socket[7832] DEBUG== Info: Connected to 10.15.10.50 (10.15.10.50) port 2364 (#0)
+01-07 16:41:13.234 [   DEBUG ] CURLClient         ClientId[6oItZCYMM7rHbwKL2bIePw]Socket[7832] DEBUG=> Send header, 218 bytes PUT /MyContainerNonCDMI/MyDataObject.txt HTTP/1.1Host: 10.15.10.50:2364Accept: */*Content-Range: 0-11/-1Content-Type: text/plain;charset=utf-8X-CDM-Partial: falseContent-Length: 11Expect: 100-continue
+01-07 16:41:15.234 [   DEBUG ] CURLClient         ClientId[6oItZCYMM7rHbwKL2bIePw]Socket[7832] DEBUG== Info: Done waiting for 100-continue
+01-07 16:41:15.234 [   DEBUG ] CURLClient         ClientId[6oItZCYMM7rHbwKL2bIePw]Socket[7832] DEBUG=> Send data, 11 bytes 0123456789.
+01-07 16:41:15.234 [   DEBUG ] CURLClient         ClientId[6oItZCYMM7rHbwKL2bIePw]Socket[7832] DEBUG== Info: We are completely uploaded and fine
+01-07 16:41:17.562 [   DEBUG ] CURLClient         ClientId[6oItZCYMM7rHbwKL2bIePw]Socket[7832] DEBUG<= Recv header, 22 bytes HTTP/1.1 201 Created
+01-07 16:41:17.562 [   DEBUG ] CURLClient         ClientId[6oItZCYMM7rHbwKL2bIePw]Socket[7832] Response Header: HTTP/1.1 201 Created
+01-07 16:41:17.765 [   DEBUG ] CURLClient         ClientId[6oItZCYMM7rHbwKL2bIePw]Socket[7832] DEBUG<= Recv header, 35 bytes Server: CMDI-Serve/dev Python/2.7
+01-07 16:41:17.765 [   DEBUG ] CURLClient         ClientId[6oItZCYMM7rHbwKL2bIePw]Socket[7832] Response Header: Server: CMDI-Serve/dev Python/2.7
+01-07 16:41:17.765 [   DEBUG ] CURLClient         ClientId[6oItZCYMM7rHbwKL2bIePw]Socket[7832] DEBUG<= Recv header, 37 bytes Date: Mon, 07 Jan 2013 08:39:37 GMT
+01-07 16:41:17.765 [   DEBUG ] CURLClient         ClientId[6oItZCYMM7rHbwKL2bIePw]Socket[7832] Response Header: Date: Mon, 07 Jan 2013 08:39:37 GMT
+01-07 16:41:17.765 [   DEBUG ] CURLClient         ClientId[6oItZCYMM7rHbwKL2bIePw]Socket[7832] DEBUG<= Recv header, 23 bytes X-Author: Koen Bollen
+01-07 16:41:17.765 [   DEBUG ] CURLClient         ClientId[6oItZCYMM7rHbwKL2bIePw]Socket[7832] Response Header: X-Author: Koen Bollen
+01-07 16:41:17.765 [   DEBUG ] CURLClient         ClientId[6oItZCYMM7rHbwKL2bIePw]Socket[7832] DEBUG<= Recv header, 19 bytes Content-Length: 0
+01-07 16:41:17.765 [   DEBUG ] CURLClient         ClientId[6oItZCYMM7rHbwKL2bIePw]Socket[7832] Response Header: Content-Length: 0
+01-07 16:41:17.765 [   DEBUG ] CURLClient         ClientId[6oItZCYMM7rHbwKL2bIePw]Socket[7832] Response Header: 
+01-07 16:41:17.765 [   DEBUG ] CURLClient         ClientId[6oItZCYMM7rHbwKL2bIePw]Socket[7832] DEBUG<= Recv header, 2 bytes 
+01-07 16:41:17.765 [   DEBUG ] CURLClient         ClientId[6oItZCYMM7rHbwKL2bIePw]Socket[7832] DEBUG== Info: Connection #0 to host 10.15.10.50 left intact
+01-07 16:41:17.765 [    INFO ] CURLClient         ClientId[6oItZCYMM7rHbwKL2bIePw]Socket[7832] send Request complete
+01-07 16:41:17.765 [   ERROR ] CdmiFuseOps        [MyContainerNonCDMI/MyDataObject.txt]failed to update non-cdmi data object with retCode[201]Status[HTTP/1.1 201 Created]ErrorCB[]
+01-07 16:41:17.765 [   DEBUG ] CURLClient         ClientId[6oItZCYMM7rHbwKL2bIePw]Socket[7832] DEBUG== Info: Closing connection #0
+01-07 16:41:17.765 [    INFO ] CdmiFuseOps        [MyContainerCDMI/]read cdmi container
+01-07 16:41:17.765 [    INFO ] CURLClient         ClientId[6QQunbrLBQLEFCp18hnMt1]Socket[0] creat curl client with url[http://10.15.10.50:2364/MyContainerCDMI/] localbind[:0] timeout[20000] connectTimeout[20000]
+01-07 16:41:17.765 [    INFO ] CURLClient         ClientId[6QQunbrLBQLEFCp18hnMt1]Socket[0] initialize curl client success
+01-07 16:41:17.765 [   DEBUG ] CURLClient         ClientId[6QQunbrLBQLEFCp18hnMt1]Socket[0] DEBUG== Info: timeout on name lookup is not supported
+01-07 16:41:17.765 [   DEBUG ] CURLClient         ClientId[6QQunbrLBQLEFCp18hnMt1]Socket[0] DEBUG== Info: About to connect() to 10.15.10.50 port 2364 (#0)
+01-07 16:41:17.765 [    INFO ] CURLClient         ClientId[6QQunbrLBQLEFCp18hnMt1]Socket[0] OnOpenSocket: family:2, socktype:1, protocol:0
+01-07 16:41:17.765 [   DEBUG ] CURLClient         ClientId[6QQunbrLBQLEFCp18hnMt1]Socket[0] DEBUG== Info:   Trying 10.15.10.50...
+01-07 16:41:17.765 [    INFO ] CURLClient         ClientId[6QQunbrLBQLEFCp18hnMt1]Socket[0] OnSockopt: Socket[7816]SocketType[CURLSOCKTYPE_IPCXN]
+01-07 16:41:17.765 [   DEBUG ] CURLClient         ClientId[6QQunbrLBQLEFCp18hnMt1]Socket[7816] DEBUG== Info: connected
+01-07 16:41:17.765 [   DEBUG ] CURLClient         ClientId[6QQunbrLBQLEFCp18hnMt1]Socket[7816] DEBUG== Info: Connected to 10.15.10.50 (10.15.10.50) port 2364 (#0)
+01-07 16:41:17.765 [   DEBUG ] CURLClient         ClientId[6QQunbrLBQLEFCp18hnMt1]Socket[7816] DEBUG=> Send header, 171 bytes GET /MyContainerCDMI/ HTTP/1.1Host: 10.15.10.50:2364Accept: application/cdmi-containerContent-Type: application/cdmi-containerX-CDMI-Specification-Version: 1.0
+01-07 16:41:17.765 [   DEBUG ] CURLClient         ClientId[6QQunbrLBQLEFCp18hnMt1]Socket[7816] DEBUG<= Recv header, 17 bytes HTTP/1.1 200 OK
+01-07 16:41:17.765 [   DEBUG ] CURLClient         ClientId[6QQunbrLBQLEFCp18hnMt1]Socket[7816] Response Header: HTTP/1.1 200 OK
+01-07 16:41:17.953 [   DEBUG ] CURLClient         ClientId[6QQunbrLBQLEFCp18hnMt1]Socket[7816] DEBUG<= Recv header, 35 bytes Server: CMDI-Serve/dev Python/2.7
+01-07 16:41:17.953 [   DEBUG ] CURLClient         ClientId[6QQunbrLBQLEFCp18hnMt1]Socket[7816] Response Header: Server: CMDI-Serve/dev Python/2.7
+01-07 16:41:17.953 [   DEBUG ] CURLClient         ClientId[6QQunbrLBQLEFCp18hnMt1]Socket[7816] DEBUG<= Recv header, 37 bytes Date: Mon, 07 Jan 2013 08:39:37 GMT
+01-07 16:41:17.953 [   DEBUG ] CURLClient         ClientId[6QQunbrLBQLEFCp18hnMt1]Socket[7816] Response Header: Date: Mon, 07 Jan 2013 08:39:37 GMT
+01-07 16:41:17.953 [   DEBUG ] CURLClient         ClientId[6QQunbrLBQLEFCp18hnMt1]Socket[7816] DEBUG<= Recv header, 23 bytes X-Author: Koen Bollen
+01-07 16:41:17.953 [   DEBUG ] CURLClient         ClientId[6QQunbrLBQLEFCp18hnMt1]Socket[7816] Response Header: X-Author: Koen Bollen
+01-07 16:41:17.953 [   DEBUG ] CURLClient         ClientId[6QQunbrLBQLEFCp18hnMt1]Socket[7816] DEBUG<= Recv header, 42 bytes Content-Type: application/cdmi-container
+01-07 16:41:17.953 [   DEBUG ] CURLClient         ClientId[6QQunbrLBQLEFCp18hnMt1]Socket[7816] Response Header: Content-Type: application/cdmi-container
+01-07 16:41:17.953 [   DEBUG ] CURLClient         ClientId[6QQunbrLBQLEFCp18hnMt1]Socket[7816] DEBUG<= Recv header, 21 bytes Content-Length: 393
+01-07 16:41:17.953 [   DEBUG ] CURLClient         ClientId[6QQunbrLBQLEFCp18hnMt1]Socket[7816] Response Header: Content-Length: 393
+01-07 16:41:17.953 [   DEBUG ] CURLClient         ClientId[6QQunbrLBQLEFCp18hnMt1]Socket[7816] Response Header: 
+01-07 16:41:17.953 [   DEBUG ] CURLClient         ClientId[6QQunbrLBQLEFCp18hnMt1]Socket[7816] DEBUG<= Recv header, 2 bytes 
+01-07 16:41:17.953 [   DEBUG ] CURLClient         ClientId[6QQunbrLBQLEFCp18hnMt1]Socket[7816] DEBUG<= Recv data, 393 bytes {.  "completionStatus": "Complete", .  "objectID": "AABRbgAZw90vTXlDb250YWluZXJDRE1JLw==", .  "parentURI": "/", .  "objectURI": "/MyContainerCDMI/", .  "childrenrange": "0-1", .  "children": [.    "MyDataObject.txt".  ], .  "metadata": {.    "cdmi_ctime": "2013-01-07T16:39:27", .    "cdmi_mtime": "2013-01-07T16:39:27", .    "cdmi_size": 4096, .    "cdmi_atime": "2013-01-07T16:39:37".  }.}
+01-07 16:41:17.953 [   DEBUG ] CURLClient         ClientId[6QQunbrLBQLEFCp18hnMt1]Socket[7816] DEBUG== Info: Connection #0 to host 10.15.10.50 left intact
+01-07 16:41:17.953 [    INFO ] CURLClient         ClientId[6QQunbrLBQLEFCp18hnMt1]Socket[7816] send Request complete
+01-07 16:41:17.953 [    INFO ] CdmiFuseOps        [MyContainerCDMI/]read cdmi container response[{
+  "completionStatus": "Complete", 
+  "objectID": "AABRbgAZw90vTXlDb250YWluZXJDRE1JLw==", 
+  "parentURI": "/", 
+  "objectURI": "/MyContainerCDMI/", 
+  "childrenrange": "0-1", 
+  "children": [
+    "MyDataObject.txt"
+  ], 
+  "metadata": {
+    "cdmi_ctime": "2013-01-07T16:39:27", 
+    "cdmi_mtime": "2013-01-07T16:39:27", 
+    "cdmi_size": 4096, 
+    "cdmi_atime": "2013-01-07T16:39:37"
+  }
+}
+]retCode[200]Status[HTTP/1.1 200 OK]
+01-07 16:41:17.953 [   DEBUG ] CURLClient         ClientId[6QQunbrLBQLEFCp18hnMt1]Socket[7816] DEBUG== Info: Closing connection #0
+01-07 16:41:17.968 [    INFO ] CdmiFuseOps        [MyContainerCDMI/]update cdmi container
+01-07 16:41:17.968 [   DEBUG ] CdmiFuseOps        [MyContainerCDMI/]update cdmi container requestbody [{"exports":{"Network/NFSv4":{"identifier":"/users","permissions":"domain"},"OCCI/iSCSI":{"identifier":"AABRbgAVPcgvTXlDb250YWluZXIv","permissions":["http://example.com/compute/0/","http://example.com/compute/1/"]}}}
+]
+01-07 16:41:17.968 [    INFO ] CURLClient         ClientId[61AS3FVAPp0EIAwKFpEw3y]Socket[0] creat curl client with url[http://10.15.10.50:2364/MyContainerCDMI/] localbind[:0] timeout[20000] connectTimeout[20000]
+01-07 16:41:17.968 [    INFO ] CURLClient         ClientId[61AS3FVAPp0EIAwKFpEw3y]Socket[0] initialize curl client success
+01-07 16:41:17.968 [    INFO ] CURLClient         ClientId[61AS3FVAPp0EIAwKFpEw3y]Socket[0] set post data[216] success
+01-07 16:41:17.968 [   DEBUG ] CURLClient         ClientId[61AS3FVAPp0EIAwKFpEw3y]Socket[0] DEBUG== Info: timeout on name lookup is not supported
+01-07 16:41:17.968 [   DEBUG ] CURLClient         ClientId[61AS3FVAPp0EIAwKFpEw3y]Socket[0] DEBUG== Info: About to connect() to 10.15.10.50 port 2364 (#0)
+01-07 16:41:17.968 [    INFO ] CURLClient         ClientId[61AS3FVAPp0EIAwKFpEw3y]Socket[0] OnOpenSocket: family:2, socktype:1, protocol:0
+01-07 16:41:17.968 [   DEBUG ] CURLClient         ClientId[61AS3FVAPp0EIAwKFpEw3y]Socket[0] DEBUG== Info:   Trying 10.15.10.50...
+01-07 16:41:17.968 [    INFO ] CURLClient         ClientId[61AS3FVAPp0EIAwKFpEw3y]Socket[0] OnSockopt: Socket[7804]SocketType[CURLSOCKTYPE_IPCXN]
+01-07 16:41:17.968 [   DEBUG ] CURLClient         ClientId[61AS3FVAPp0EIAwKFpEw3y]Socket[7804] DEBUG== Info: connected
+01-07 16:41:17.968 [   DEBUG ] CURLClient         ClientId[61AS3FVAPp0EIAwKFpEw3y]Socket[7804] DEBUG== Info: Connected to 10.15.10.50 (10.15.10.50) port 2364 (#0)
+01-07 16:41:17.968 [   DEBUG ] CURLClient         ClientId[61AS3FVAPp0EIAwKFpEw3y]Socket[7804] DEBUG=> Send header, 191 bytes PUT /MyContainerCDMI/ HTTP/1.1Host: 10.15.10.50:2364Accept: */*Content-Type: application/cdmi-containerX-CDMI-Specification-Version: 1.0Content-Length: 216Expect: 100-continue
+01-07 16:41:19.968 [   DEBUG ] CURLClient         ClientId[61AS3FVAPp0EIAwKFpEw3y]Socket[7804] DEBUG== Info: Done waiting for 100-continue
+01-07 16:41:19.968 [   DEBUG ] CURLClient         ClientId[61AS3FVAPp0EIAwKFpEw3y]Socket[7804] DEBUG=> Send data, 216 bytes {"exports":{"Network/NFSv4":{"identifier":"/users","permissions":"domain"},"OCCI/iSCSI":{"identifier":"AABRbgAVPcgvTXlDb250YWluZXIv","permissions":["http://example.com/compute/0/","http://example.com/compute/1/"]}}}.
+01-07 16:41:19.968 [   DEBUG ] CURLClient         ClientId[61AS3FVAPp0EIAwKFpEw3y]Socket[7804] DEBUG== Info: We are completely uploaded and fine
+01-07 16:41:19.968 [   DEBUG ] CURLClient         ClientId[61AS3FVAPp0EIAwKFpEw3y]Socket[7804] DEBUG<= Recv header, 22 bytes HTTP/1.1 201 Created
+01-07 16:41:19.968 [   DEBUG ] CURLClient         ClientId[61AS3FVAPp0EIAwKFpEw3y]Socket[7804] Response Header: HTTP/1.1 201 Created
+01-07 16:41:20.171 [   DEBUG ] CURLClient         ClientId[61AS3FVAPp0EIAwKFpEw3y]Socket[7804] DEBUG<= Recv header, 35 bytes Server: CMDI-Serve/dev Python/2.7
+01-07 16:41:20.171 [   DEBUG ] CURLClient         ClientId[61AS3FVAPp0EIAwKFpEw3y]Socket[7804] Response Header: Server: CMDI-Serve/dev Python/2.7
+01-07 16:41:20.171 [   DEBUG ] CURLClient         ClientId[61AS3FVAPp0EIAwKFpEw3y]Socket[7804] DEBUG<= Recv header, 37 bytes Date: Mon, 07 Jan 2013 08:39:39 GMT
+01-07 16:41:20.171 [   DEBUG ] CURLClient         ClientId[61AS3FVAPp0EIAwKFpEw3y]Socket[7804] Response Header: Date: Mon, 07 Jan 2013 08:39:39 GMT
+01-07 16:41:20.171 [   DEBUG ] CURLClient         ClientId[61AS3FVAPp0EIAwKFpEw3y]Socket[7804] DEBUG<= Recv header, 23 bytes X-Author: Koen Bollen
+01-07 16:41:20.171 [   DEBUG ] CURLClient         ClientId[61AS3FVAPp0EIAwKFpEw3y]Socket[7804] Response Header: X-Author: Koen Bollen
+01-07 16:41:20.171 [   DEBUG ] CURLClient         ClientId[61AS3FVAPp0EIAwKFpEw3y]Socket[7804] DEBUG<= Recv header, 42 bytes Content-Type: application/cdmi-container
+01-07 16:41:20.171 [   DEBUG ] CURLClient         ClientId[61AS3FVAPp0EIAwKFpEw3y]Socket[7804] Response Header: Content-Type: application/cdmi-container
+01-07 16:41:20.171 [   DEBUG ] CURLClient         ClientId[61AS3FVAPp0EIAwKFpEw3y]Socket[7804] DEBUG<= Recv header, 21 bytes Content-Length: 393
+01-07 16:41:20.171 [   DEBUG ] CURLClient         ClientId[61AS3FVAPp0EIAwKFpEw3y]Socket[7804] Response Header: Content-Length: 393
+01-07 16:41:20.171 [   DEBUG ] CURLClient         ClientId[61AS3FVAPp0EIAwKFpEw3y]Socket[7804] Response Header: 
+01-07 16:41:20.171 [   DEBUG ] CURLClient         ClientId[61AS3FVAPp0EIAwKFpEw3y]Socket[7804] DEBUG<= Recv header, 2 bytes 
+01-07 16:41:20.171 [   DEBUG ] CURLClient         ClientId[61AS3FVAPp0EIAwKFpEw3y]Socket[7804] DEBUG<= Recv data, 393 bytes {.  "completionStatus": "Complete", .  "objectID": "AABRbgAZw90vTXlDb250YWluZXJDRE1JLw==", .  "parentURI": "/", .  "objectURI": "/MyContainerCDMI/", .  "childrenrange": "0-1", .  "children": [.    "MyDataObject.txt".  ], .  "metadata": {.    "cdmi_ctime": "2013-01-07T16:39:27", .    "cdmi_mtime": "2013-01-07T16:39:27", .    "cdmi_size": 4096, .    "cdmi_atime": "2013-01-07T16:39:37".  }.}
+01-07 16:41:20.171 [   DEBUG ] CURLClient         ClientId[61AS3FVAPp0EIAwKFpEw3y]Socket[7804] DEBUG== Info: Connection #0 to host 10.15.10.50 left intact
+01-07 16:41:20.171 [    INFO ] CURLClient         ClientId[61AS3FVAPp0EIAwKFpEw3y]Socket[7804] send Request complete
+01-07 16:41:20.171 [   ERROR ] CdmiFuseOps        [MyContainerCDMI/]failed to update cdmi container with retCode[201]Status[HTTP/1.1 201 Created]ErrorCB[]
+01-07 16:41:20.171 [   DEBUG ] CURLClient         ClientId[61AS3FVAPp0EIAwKFpEw3y]Socket[7804] DEBUG== Info: Closing connection #0
+01-07 16:41:20.171 [    INFO ] CdmiFuseOps        [MyContainerCDMI/MyDataObject.txt]delete cdmi data object
+01-07 16:41:20.171 [    INFO ] CURLClient         ClientId[6LUaLOyvsXf11L6ljD3jP0]Socket[0] creat curl client with url[http://10.15.10.50:2364/MyContainerCDMI/MyDataObject.txt] localbind[:0] timeout[20000] connectTimeout[20000]
+01-07 16:41:20.171 [    INFO ] CURLClient         ClientId[6LUaLOyvsXf11L6ljD3jP0]Socket[0] initialize curl client success
+01-07 16:41:20.171 [   DEBUG ] CURLClient         ClientId[6LUaLOyvsXf11L6ljD3jP0]Socket[0] DEBUG== Info: timeout on name lookup is not supported
+01-07 16:41:20.171 [   DEBUG ] CURLClient         ClientId[6LUaLOyvsXf11L6ljD3jP0]Socket[0] DEBUG== Info: About to connect() to 10.15.10.50 port 2364 (#0)
+01-07 16:41:20.171 [    INFO ] CURLClient         ClientId[6LUaLOyvsXf11L6ljD3jP0]Socket[0] OnOpenSocket: family:2, socktype:1, protocol:0
+01-07 16:41:20.171 [   DEBUG ] CURLClient         ClientId[6LUaLOyvsXf11L6ljD3jP0]Socket[0] DEBUG== Info:   Trying 10.15.10.50...
+01-07 16:41:20.171 [    INFO ] CURLClient         ClientId[6LUaLOyvsXf11L6ljD3jP0]Socket[0] OnSockopt: Socket[7788]SocketType[CURLSOCKTYPE_IPCXN]
+01-07 16:41:20.187 [   DEBUG ] CURLClient         ClientId[6LUaLOyvsXf11L6ljD3jP0]Socket[7788] DEBUG== Info: connected
+01-07 16:41:20.187 [   DEBUG ] CURLClient         ClientId[6LUaLOyvsXf11L6ljD3jP0]Socket[7788] DEBUG== Info: Connected to 10.15.10.50 (10.15.10.50) port 2364 (#0)
+01-07 16:41:20.187 [   DEBUG ] CURLClient         ClientId[6LUaLOyvsXf11L6ljD3jP0]Socket[7788] DEBUG=> Send header, 164 bytes DELETE /MyContainerCDMI/MyDataObject.txt HTTP/1.1Host: 10.15.10.50:2364Accept: */*Content-Type: application/cdmi-objectX-CDMI-Specification-Version: 1.0
+01-07 16:41:20.187 [   DEBUG ] CURLClient         ClientId[6LUaLOyvsXf11L6ljD3jP0]Socket[7788] DEBUG<= Recv header, 17 bytes HTTP/1.1 200 OK
+01-07 16:41:20.187 [   DEBUG ] CURLClient         ClientId[6LUaLOyvsXf11L6ljD3jP0]Socket[7788] Response Header: HTTP/1.1 200 OK
+01-07 16:41:20.375 [   DEBUG ] CURLClient         ClientId[6LUaLOyvsXf11L6ljD3jP0]Socket[7788] DEBUG<= Recv header, 35 bytes Server: CMDI-Serve/dev Python/2.7
+01-07 16:41:20.375 [   DEBUG ] CURLClient         ClientId[6LUaLOyvsXf11L6ljD3jP0]Socket[7788] Response Header: Server: CMDI-Serve/dev Python/2.7
+01-07 16:41:20.375 [   DEBUG ] CURLClient         ClientId[6LUaLOyvsXf11L6ljD3jP0]Socket[7788] DEBUG<= Recv header, 37 bytes Date: Mon, 07 Jan 2013 08:39:40 GMT
+01-07 16:41:20.375 [   DEBUG ] CURLClient         ClientId[6LUaLOyvsXf11L6ljD3jP0]Socket[7788] Response Header: Date: Mon, 07 Jan 2013 08:39:40 GMT
+01-07 16:41:20.375 [   DEBUG ] CURLClient         ClientId[6LUaLOyvsXf11L6ljD3jP0]Socket[7788] DEBUG<= Recv header, 23 bytes X-Author: Koen Bollen
+01-07 16:41:20.375 [   DEBUG ] CURLClient         ClientId[6LUaLOyvsXf11L6ljD3jP0]Socket[7788] Response Header: X-Author: Koen Bollen
+01-07 16:41:20.375 [   DEBUG ] CURLClient         ClientId[6LUaLOyvsXf11L6ljD3jP0]Socket[7788] DEBUG<= Recv header, 19 bytes Content-Length: 0
+01-07 16:41:20.375 [   DEBUG ] CURLClient         ClientId[6LUaLOyvsXf11L6ljD3jP0]Socket[7788] Response Header: Content-Length: 0
+01-07 16:41:20.375 [   DEBUG ] CURLClient         ClientId[6LUaLOyvsXf11L6ljD3jP0]Socket[7788] Response Header: 
+01-07 16:41:20.375 [   DEBUG ] CURLClient         ClientId[6LUaLOyvsXf11L6ljD3jP0]Socket[7788] DEBUG<= Recv header, 2 bytes 
+01-07 16:41:20.375 [   DEBUG ] CURLClient         ClientId[6LUaLOyvsXf11L6ljD3jP0]Socket[7788] DEBUG== Info: Connection #0 to host 10.15.10.50 left intact
+01-07 16:41:20.375 [    INFO ] CURLClient         ClientId[6LUaLOyvsXf11L6ljD3jP0]Socket[7788] send Request complete
+01-07 16:41:20.375 [   ERROR ] CdmiFuseOps        [MyContainerCDMI/MyDataObject.txt]failed to delete cdmi data object with retCode[200]Status[HTTP/1.1 200 OK]ErrorCB[]
+01-07 16:41:20.375 [   DEBUG ] CURLClient         ClientId[6LUaLOyvsXf11L6ljD3jP0]Socket[7788] DEBUG== Info: Closing connection #0
+01-07 16:41:20.375 [    INFO ] CdmiFuseOps        [MyContainerNonCDMI/MyDataObject.txt]delete non-cdmi data object
+01-07 16:41:20.375 [    INFO ] CURLClient         ClientId[6fUJNFePKR6JDz0XPuweP9]Socket[0] creat curl client with url[http://10.15.10.50:2364/MyContainerNonCDMI/MyDataObject.txt] localbind[:0] timeout[20000] connectTimeout[20000]
+01-07 16:41:20.375 [    INFO ] CURLClient         ClientId[6fUJNFePKR6JDz0XPuweP9]Socket[0] initialize curl client success
+01-07 16:41:20.375 [   DEBUG ] CURLClient         ClientId[6fUJNFePKR6JDz0XPuweP9]Socket[0] DEBUG== Info: timeout on name lookup is not supported
+01-07 16:41:20.375 [   DEBUG ] CURLClient         ClientId[6fUJNFePKR6JDz0XPuweP9]Socket[0] DEBUG== Info: About to connect() to 10.15.10.50 port 2364 (#0)
+01-07 16:41:20.375 [    INFO ] CURLClient         ClientId[6fUJNFePKR6JDz0XPuweP9]Socket[0] OnOpenSocket: family:2, socktype:1, protocol:0
+01-07 16:41:20.375 [   DEBUG ] CURLClient         ClientId[6fUJNFePKR6JDz0XPuweP9]Socket[0] DEBUG== Info:   Trying 10.15.10.50...
+01-07 16:41:20.375 [    INFO ] CURLClient         ClientId[6fUJNFePKR6JDz0XPuweP9]Socket[0] OnSockopt: Socket[7776]SocketType[CURLSOCKTYPE_IPCXN]
+01-07 16:41:20.390 [   DEBUG ] CURLClient         ClientId[6fUJNFePKR6JDz0XPuweP9]Socket[7776] DEBUG== Info: connected
+01-07 16:41:20.390 [   DEBUG ] CURLClient         ClientId[6fUJNFePKR6JDz0XPuweP9]Socket[7776] DEBUG== Info: Connected to 10.15.10.50 (10.15.10.50) port 2364 (#0)
+01-07 16:41:20.390 [   DEBUG ] CURLClient         ClientId[6fUJNFePKR6JDz0XPuweP9]Socket[7776] DEBUG=> Send header, 93 bytes DELETE /MyContainerNonCDMI/MyDataObject.txt HTTP/1.1Host: 10.15.10.50:2364Accept: */*
+01-07 16:41:20.390 [   DEBUG ] CURLClient         ClientId[6fUJNFePKR6JDz0XPuweP9]Socket[7776] DEBUG<= Recv header, 17 bytes HTTP/1.1 200 OK
+01-07 16:41:20.390 [   DEBUG ] CURLClient         ClientId[6fUJNFePKR6JDz0XPuweP9]Socket[7776] Response Header: HTTP/1.1 200 OK
+01-07 16:41:20.671 [   DEBUG ] CURLClient         ClientId[6fUJNFePKR6JDz0XPuweP9]Socket[7776] DEBUG<= Recv header, 35 bytes Server: CMDI-Serve/dev Python/2.7
+01-07 16:41:20.671 [   DEBUG ] CURLClient         ClientId[6fUJNFePKR6JDz0XPuweP9]Socket[7776] Response Header: Server: CMDI-Serve/dev Python/2.7
+01-07 16:41:20.671 [   DEBUG ] CURLClient         ClientId[6fUJNFePKR6JDz0XPuweP9]Socket[7776] DEBUG<= Recv header, 37 bytes Date: Mon, 07 Jan 2013 08:39:40 GMT
+01-07 16:41:20.671 [   DEBUG ] CURLClient         ClientId[6fUJNFePKR6JDz0XPuweP9]Socket[7776] Response Header: Date: Mon, 07 Jan 2013 08:39:40 GMT
+01-07 16:41:20.671 [   DEBUG ] CURLClient         ClientId[6fUJNFePKR6JDz0XPuweP9]Socket[7776] DEBUG<= Recv header, 23 bytes X-Author: Koen Bollen
+01-07 16:41:20.671 [   DEBUG ] CURLClient         ClientId[6fUJNFePKR6JDz0XPuweP9]Socket[7776] Response Header: X-Author: Koen Bollen
+01-07 16:41:20.671 [   DEBUG ] CURLClient         ClientId[6fUJNFePKR6JDz0XPuweP9]Socket[7776] DEBUG<= Recv header, 19 bytes Content-Length: 0
+01-07 16:41:20.671 [   DEBUG ] CURLClient         ClientId[6fUJNFePKR6JDz0XPuweP9]Socket[7776] Response Header: Content-Length: 0
+01-07 16:41:20.671 [   DEBUG ] CURLClient         ClientId[6fUJNFePKR6JDz0XPuweP9]Socket[7776] Response Header: 
+01-07 16:41:20.671 [   DEBUG ] CURLClient         ClientId[6fUJNFePKR6JDz0XPuweP9]Socket[7776] DEBUG<= Recv header, 2 bytes 
+01-07 16:41:20.671 [   DEBUG ] CURLClient         ClientId[6fUJNFePKR6JDz0XPuweP9]Socket[7776] DEBUG== Info: Connection #0 to host 10.15.10.50 left intact
+01-07 16:41:20.671 [    INFO ] CURLClient         ClientId[6fUJNFePKR6JDz0XPuweP9]Socket[7776] send Request complete
+01-07 16:41:20.671 [   ERROR ] CdmiFuseOps        [MyContainerNonCDMI/MyDataObject.txt]failed to delete non-cdmi data object with retCode[200]Status[HTTP/1.1 200 OK]ErrorCB[]
+01-07 16:41:20.671 [   DEBUG ] CURLClient         ClientId[6fUJNFePKR6JDz0XPuweP9]Socket[7776] DEBUG== Info: Closing connection #0
+01-07 16:41:20.671 [    INFO ] CdmiFuseOps        [MyContainerCDMI/]delete cdmi container
+01-07 16:41:20.671 [    INFO ] CURLClient         ClientId[6EMNrefn42RIfVCyllu0cI]Socket[0] creat curl client with url[http://10.15.10.50:2364/MyContainerCDMI/] localbind[:0] timeout[20000] connectTimeout[20000]
+01-07 16:41:20.671 [    INFO ] CURLClient         ClientId[6EMNrefn42RIfVCyllu0cI]Socket[0] initialize curl client success
+01-07 16:41:20.671 [   DEBUG ] CURLClient         ClientId[6EMNrefn42RIfVCyllu0cI]Socket[0] DEBUG== Info: timeout on name lookup is not supported
+01-07 16:41:20.671 [   DEBUG ] CURLClient         ClientId[6EMNrefn42RIfVCyllu0cI]Socket[0] DEBUG== Info: About to connect() to 10.15.10.50 port 2364 (#0)
+01-07 16:41:20.671 [    INFO ] CURLClient         ClientId[6EMNrefn42RIfVCyllu0cI]Socket[0] OnOpenSocket: family:2, socktype:1, protocol:0
+01-07 16:41:20.671 [   DEBUG ] CURLClient         ClientId[6EMNrefn42RIfVCyllu0cI]Socket[0] DEBUG== Info:   Trying 10.15.10.50...
+01-07 16:41:20.671 [    INFO ] CURLClient         ClientId[6EMNrefn42RIfVCyllu0cI]Socket[0] OnSockopt: Socket[7764]SocketType[CURLSOCKTYPE_IPCXN]
+01-07 16:41:20.687 [   DEBUG ] CURLClient         ClientId[6EMNrefn42RIfVCyllu0cI]Socket[7764] DEBUG== Info: connected
+01-07 16:41:20.687 [   DEBUG ] CURLClient         ClientId[6EMNrefn42RIfVCyllu0cI]Socket[7764] DEBUG== Info: Connected to 10.15.10.50 (10.15.10.50) port 2364 (#0)
+01-07 16:41:20.687 [   DEBUG ] CURLClient         ClientId[6EMNrefn42RIfVCyllu0cI]Socket[7764] DEBUG=> Send header, 151 bytes DELETE /MyContainerCDMI/ HTTP/1.1Host: 10.15.10.50:2364Accept: */*Content-Type: application/cdmi-containerX-CDMI-Specification-Version: 1.0
+01-07 16:41:20.687 [   DEBUG ] CURLClient         ClientId[6EMNrefn42RIfVCyllu0cI]Socket[7764] DEBUG<= Recv header, 17 bytes HTTP/1.1 200 OK
+01-07 16:41:20.687 [   DEBUG ] CURLClient         ClientId[6EMNrefn42RIfVCyllu0cI]Socket[7764] Response Header: HTTP/1.1 200 OK
+01-07 16:41:20.984 [   DEBUG ] CURLClient         ClientId[6EMNrefn42RIfVCyllu0cI]Socket[7764] DEBUG<= Recv header, 35 bytes Server: CMDI-Serve/dev Python/2.7
+01-07 16:41:20.984 [   DEBUG ] CURLClient         ClientId[6EMNrefn42RIfVCyllu0cI]Socket[7764] Response Header: Server: CMDI-Serve/dev Python/2.7
+01-07 16:41:20.984 [   DEBUG ] CURLClient         ClientId[6EMNrefn42RIfVCyllu0cI]Socket[7764] DEBUG<= Recv header, 37 bytes Date: Mon, 07 Jan 2013 08:39:40 GMT
+01-07 16:41:20.984 [   DEBUG ] CURLClient         ClientId[6EMNrefn42RIfVCyllu0cI]Socket[7764] Response Header: Date: Mon, 07 Jan 2013 08:39:40 GMT
+01-07 16:41:20.984 [   DEBUG ] CURLClient         ClientId[6EMNrefn42RIfVCyllu0cI]Socket[7764] DEBUG<= Recv header, 23 bytes X-Author: Koen Bollen
+01-07 16:41:20.984 [   DEBUG ] CURLClient         ClientId[6EMNrefn42RIfVCyllu0cI]Socket[7764] Response Header: X-Author: Koen Bollen
+01-07 16:41:20.984 [   DEBUG ] CURLClient         ClientId[6EMNrefn42RIfVCyllu0cI]Socket[7764] DEBUG<= Recv header, 19 bytes Content-Length: 0
+01-07 16:41:20.984 [   DEBUG ] CURLClient         ClientId[6EMNrefn42RIfVCyllu0cI]Socket[7764] Response Header: Content-Length: 0
+01-07 16:41:20.984 [   DEBUG ] CURLClient         ClientId[6EMNrefn42RIfVCyllu0cI]Socket[7764] Response Header: 
+01-07 16:41:20.984 [   DEBUG ] CURLClient         ClientId[6EMNrefn42RIfVCyllu0cI]Socket[7764] DEBUG<= Recv header, 2 bytes 
+01-07 16:41:20.984 [   DEBUG ] CURLClient         ClientId[6EMNrefn42RIfVCyllu0cI]Socket[7764] DEBUG== Info: Connection #0 to host 10.15.10.50 left intact
+01-07 16:41:20.984 [    INFO ] CURLClient         ClientId[6EMNrefn42RIfVCyllu0cI]Socket[7764] send Request complete
+01-07 16:41:20.984 [   ERROR ] CdmiFuseOps        [MyContainerCDMI/]failed to delete cdmi container with retCode[200]Status[HTTP/1.1 200 OK]ErrorCB[]
+01-07 16:41:20.984 [   DEBUG ] CURLClient         ClientId[6EMNrefn42RIfVCyllu0cI]Socket[7764] DEBUG== Info: Closing connection #0
+01-07 16:41:20.984 [    INFO ] CdmiFuseOps        [MyContainerNonCDMI/]delete non-cdmi container
+01-07 16:41:20.984 [    INFO ] CURLClient         ClientId[6aI97SxEDTz38RLFw8poFm]Socket[0] creat curl client with url[http://10.15.10.50:2364/MyContainerNonCDMI/] localbind[:0] timeout[20000] connectTimeout[20000]
+01-07 16:41:20.984 [    INFO ] CURLClient         ClientId[6aI97SxEDTz38RLFw8poFm]Socket[0] initialize curl client success
+01-07 16:41:20.984 [   DEBUG ] CURLClient         ClientId[6aI97SxEDTz38RLFw8poFm]Socket[0] DEBUG== Info: timeout on name lookup is not supported
+01-07 16:41:20.984 [   DEBUG ] CURLClient         ClientId[6aI97SxEDTz38RLFw8poFm]Socket[0] DEBUG== Info: About to connect() to 10.15.10.50 port 2364 (#0)
+01-07 16:41:20.984 [    INFO ] CURLClient         ClientId[6aI97SxEDTz38RLFw8poFm]Socket[0] OnOpenSocket: family:2, socktype:1, protocol:0
+01-07 16:41:20.984 [   DEBUG ] CURLClient         ClientId[6aI97SxEDTz38RLFw8poFm]Socket[0] DEBUG== Info:   Trying 10.15.10.50...
+01-07 16:41:20.984 [    INFO ] CURLClient         ClientId[6aI97SxEDTz38RLFw8poFm]Socket[0] OnSockopt: Socket[7752]SocketType[CURLSOCKTYPE_IPCXN]
+01-07 16:41:20.984 [   DEBUG ] CURLClient         ClientId[6aI97SxEDTz38RLFw8poFm]Socket[7752] DEBUG== Info: connected
+01-07 16:41:20.984 [   DEBUG ] CURLClient         ClientId[6aI97SxEDTz38RLFw8poFm]Socket[7752] DEBUG== Info: Connected to 10.15.10.50 (10.15.10.50) port 2364 (#0)
+01-07 16:41:20.984 [   DEBUG ] CURLClient         ClientId[6aI97SxEDTz38RLFw8poFm]Socket[7752] DEBUG=> Send header, 77 bytes DELETE /MyContainerNonCDMI/ HTTP/1.1Host: 10.15.10.50:2364Accept: */*
+01-07 16:41:20.984 [   DEBUG ] CURLClient         ClientId[6aI97SxEDTz38RLFw8poFm]Socket[7752] DEBUG<= Recv header, 17 bytes HTTP/1.1 200 OK
+01-07 16:41:20.984 [   DEBUG ] CURLClient         ClientId[6aI97SxEDTz38RLFw8poFm]Socket[7752] Response Header: HTTP/1.1 200 OK
+01-07 16:41:21.171 [   DEBUG ] CURLClient         ClientId[6aI97SxEDTz38RLFw8poFm]Socket[7752] DEBUG<= Recv header, 35 bytes Server: CMDI-Serve/dev Python/2.7
+01-07 16:41:21.171 [   DEBUG ] CURLClient         ClientId[6aI97SxEDTz38RLFw8poFm]Socket[7752] Response Header: Server: CMDI-Serve/dev Python/2.7
+01-07 16:41:21.171 [   DEBUG ] CURLClient         ClientId[6aI97SxEDTz38RLFw8poFm]Socket[7752] DEBUG<= Recv header, 37 bytes Date: Mon, 07 Jan 2013 08:39:40 GMT
+01-07 16:41:21.171 [   DEBUG ] CURLClient         ClientId[6aI97SxEDTz38RLFw8poFm]Socket[7752] Response Header: Date: Mon, 07 Jan 2013 08:39:40 GMT
+01-07 16:41:21.171 [   DEBUG ] CURLClient         ClientId[6aI97SxEDTz38RLFw8poFm]Socket[7752] DEBUG<= Recv header, 23 bytes X-Author: Koen Bollen
+01-07 16:41:21.171 [   DEBUG ] CURLClient         ClientId[6aI97SxEDTz38RLFw8poFm]Socket[7752] Response Header: X-Author: Koen Bollen
+01-07 16:41:21.171 [   DEBUG ] CURLClient         ClientId[6aI97SxEDTz38RLFw8poFm]Socket[7752] DEBUG<= Recv header, 19 bytes Content-Length: 0
+01-07 16:41:21.171 [   DEBUG ] CURLClient         ClientId[6aI97SxEDTz38RLFw8poFm]Socket[7752] Response Header: Content-Length: 0
+01-07 16:41:21.171 [   DEBUG ] CURLClient         ClientId[6aI97SxEDTz38RLFw8poFm]Socket[7752] Response Header: 
+01-07 16:41:21.171 [   DEBUG ] CURLClient         ClientId[6aI97SxEDTz38RLFw8poFm]Socket[7752] DEBUG<= Recv header, 2 bytes 
+01-07 16:41:21.171 [   DEBUG ] CURLClient         ClientId[6aI97SxEDTz38RLFw8poFm]Socket[7752] DEBUG== Info: Connection #0 to host 10.15.10.50 left intact
+01-07 16:41:21.171 [    INFO ] CURLClient         ClientId[6aI97SxEDTz38RLFw8poFm]Socket[7752] send Request complete
+01-07 16:41:21.171 [   ERROR ] CdmiFuseOps        [MyContainerNonCDMI/]failed to delete non-cdmi container with retCode[200]Status[HTTP/1.1 200 OK]ErrorCB[]
+01-07 16:41:21.171 [   DEBUG ] CURLClient         ClientId[6aI97SxEDTz38RLFw8poFm]Socket[7752] DEBUG== Info: Closing connection #0

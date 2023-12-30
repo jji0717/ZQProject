@@ -1,0 +1,37 @@
+TianShan-Notice:
+201 Created
+
+400 BadRequest
+230101  Client bandwidth capacity restriction
+230102  Rejected by streaming service
+230103  Bad XML format
+230104  XML element missed:...
+230105  Invalid parameter:...
+
+404 NotFound
+230111  CreateStream get InvalidParameter
+230112  Rejected by streaming service
+230113  Got empty content list from AM
+        Got empty content list from ContentLib 
+230114  LogicError from AM
+230115  Content doesn't exist locally and the forward function is disabled.
+        (VolumeList is empty but no forward url configured)
+230116  Failed to forward
+
+416
+230121  Rejected by streaming service
+
+500 InternalServerError
+230131  Can't locate afert max retries
+230132  TestContent format error
+        GetAEList Ice::Exception
+        GetAEList unknown exception
+        ContentLib Ice::Exception
+        ContentLib unknown exception
+230133  Can't query content due to bad configuration
+        (No TestContent, LAM or ContentLib configured)
+230134  FullContentName format error
+
+    
+503 ServiceUnavailable
+230141  No port available

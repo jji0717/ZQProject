@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:impl="http://www.schange.com/services/CMEService" xmlns:intf="http://www.schange.com/services/CMEService" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://www.schange.com/services/CMEService">
+  <wsdl:message name="cacheNotificationRequest">
+    <!--
+      status: TBD.
+    -->
+    <wsdl:part name="providerID" type="xsd:string"/>
+    <wsdl:part name="providerAssetID" type="xsd:string"/>
+    <wsdl:part name="clusterID" type="xsd:string"/>
+    <wsdl:part name="status" type="xsd:long"/>
+  </wsdl:message>
+  <wsdl:message name="cacheNotificationResponse">
+  </wsdl:message>
+  <wsdl:message name="sessionNotificationRequest">
+    <wsdl:part name="providerID" type="xsd:string"/>
+    <wsdl:part name="providerAssetID" type="xsd:string"/>
+    <wsdl:part name="func" type="xsd:int"/>
+    <wsdl:part name="clusterID" type="xsd:string"/>
+    <wsdl:part name="sessionID" type="xsd:string"/>
+    <wsdl:part name="timeStamp" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="sessionNotificationResponse">
+  </wsdl:message>
+  <wsdl:portType name="CMEService">
+    <wsdl:operation name="cacheNotification" parameterOrder="providerID providerAssetID clusterID status">
+      <wsdl:documentation>Service definition of function cacheNotification</wsdl:documentation>
+      <wsdl:input name="cacheNotificationRequest" message="impl:cacheNotificationRequest"/>
+      <wsdl:output name="cacheNotificationResponse" message="impl:cacheNotificationResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="sessionNotification">
+      <wsdl:documentation>Service definition of function ns__sessionNotification</wsdl:documentation>
+      <wsdl:input name="sessionNotificationRequest" message="impl:sessionNotificationRequest"/>
+      <wsdl:output name="sessionNotificationResponse" message="impl:sessionNotificationResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CMEServiceSoapBinding" type="impl:CMEService">
+    <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="cacheNotification">
+      <wsdlsoap:operation/>
+      <wsdl:input>
+        <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.schange.com/services/CMEService"/>
+      </wsdl:input>
+      <wsdl:output>
+        <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.schange.com/services/CMEService"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sessionNotification">
+      <wsdlsoap:operation/>
+      <wsdl:input>
+        <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.schange.com/services/CMEService"/>
+      </wsdl:input>
+      <wsdl:output>
+        <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.schange.com/services/CMEService"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CMEService">
+    <wsdl:port name="CMEService" binding="impl:CMEServiceSoapBinding">
+      <wsdlsoap:address location="http://www.schange.com/services/CMEService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

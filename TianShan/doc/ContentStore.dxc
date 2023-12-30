@@ -1,0 +1,929 @@
+// ===========================================================================
+// Copyright (c) 2006 by
+// ZQ Interactive, Inc., Shanghai, PRC.,
+// All Rights Reserved.  Unpublished rights reserved under the copyright
+// laws of the United States.
+// 
+// The software contained  on  this media is proprietary to and embodies the
+// confidential technology of ZQ Interactive, Inc. Possession, use,
+// duplication or dissemination of the software and media is authorized only
+// pursuant to a valid written license from ZQ Interactive, Inc.
+// 
+// This software is furnished under a  license  and  may  be used and copied
+// only in accordance with the terms of  such license and with the inclusion
+// of the above copyright notice.  This software or any other copies thereof
+// may not be provided or otherwise made available to  any other person.  No
+// title to and ownership of the software is hereby transferred.
+//
+// The information in this software is subject to change without notice and
+// should not be construed as a commitment by ZQ Interactive, Inc.
+//
+// Ident : $Id: ContentSotre.dxc $
+// Branch: $Name:  $
+// Author: Mei Zhang
+// Desc  : 
+//
+// Revision History: 
+// ---------------------------------------------------------------------------
+// see section of "Revision History" in manpage
+// ===========================================================================
+/*!
+
+@page page_cscfg ContentSotre Configuration
+@author  Mei Zhang
+@date    2007-08-28
+
+@section confsec_ssrevision Revision History
+$Log: /ZQProjs/TianShan/doc/ContentSotre.dxc $
+
+@section confsec_ssov Overview
+For more detail from ken or huangfei
+@li Registry settings
+@li ClusterContentStore.xml
+@li NodeContentStore.xml
+
+@section confsec_csreg Registry Settings
+@subsection confsec_csshell ZQSvcShell
+<b>Path:</b>
+@code
+[HKEY_LOCAL_MACHINE\SOFTWARE\ZQ Interactive\TianShan\CurrentVersion\Services\ClusterContentStore_shell]
+@endcode
+
+<table>
+<tr><th>Attribute</th>    <th>DataType</th>  <th>Description</th><th>Default</th></tr>
+    
+<tr><td>ImagePath</td>    <td>string</td>    <td>The full path of the executeable image file</td>
+    <td>\%InstallRoot%\\bin\\ClusterContentSotre.exe</td></tr>
+<tr><td>LoggingMask</td>  <td>dword</td>     <td></td>
+    <td>00000000</td></tr>
+<tr><td>logDir</td>  <td>string</td><td>The default log directory of the service</td>
+    <td>\%InstallRoot%\\Logs</td></tr>
+<tr><td>LastStart</td>  <td>dword</td><td>Updated automatically, the last time when the shell call up the svc image file</td>
+    <td>-</td></tr>
+<tr><td>StartCount</td>  <td>dword</td><td>Updated automatically, the count of how many that the shell has called up the svc image file during this shell's up time</td>
+    <td>-</td></tr>
+
+</table>
+
+<b>Path:</b>
+@code
+[HKEY_LOCAL_MACHINE\SOFTWARE\ZQ Interactive\TianShan\CurrentVersion\Services\NodeContentStore_shell]
+@endcode
+
+<table>
+<tr><th>Attribute</th>    <th>DataType</th>  <th>Description</th><th>Default</th></tr>
+    
+<tr><td>ImagePath</td>    <td>string</td>    <td>The full path of the executeable image file</td>
+    <td>\%InstallRoot%\\bin\\NodeContentStore.exe</td></tr>
+<tr><td>LoggingMask</td>  <td>dword</td>     <td></td>
+    <td>00000000</td></tr>
+<tr><td>logDir</td>  <td>string</td><td>The default log directory of the service</td>
+    <td>\%InstallRoot%\\Logs</td></tr>
+<tr><td>LastStart</td>  <td>dword</td><td>Updated automatically, the last time when the shell call up the svc image file</td>
+    <td>-</td></tr>
+<tr><td>StartCount</td>  <td>dword</td><td>Updated automatically, the count of how many that the shell has called up the svc image file during this shell's up time</td>
+    <td>-</td></tr>
+
+</table>
+
+@subsection confssec_csreg ClusterContentSotre
+<b>Path:</b>
+@code
+[HKEY_LOCAL_MACHINE\SOFTWARE\ZQ Interactive\TianShan\CurrentVersion\Services\ClusterContentSotre]
+@endcode
+
+<table>
+<tr><th>Attribute</th>    <th>DataType</th>  <th>Description</th>
+    <th>Default</th></tr>
+    
+<tr><td>configDir</td>    <td>string</td>    <td>The full path of the configuration folder</td>
+    <td>\%InstallRoot%\\etc</td></tr>
+<tr><td>logDir</td>    <td>string</td>    <td>The full path of the configuration folder</td>
+    <td>\%InstallRoot%\\logs</td></tr>
+<tr><td>LogLevel</td>  <td>dword</td>    <td>The level of logging: 7-DEBUG, 6-INFO, 5-WARNING, 4-ERROR</td>
+    <td>6</td></tr>
+<tr><td>LogFileSize</td>  <td>dword</td>    <td>The maximal size in KByte for the log file to roll</td>
+    <td>10000</td></tr>
+<tr><td>LogBufferSize</td><td>dword</td> <td>Size of memory buffer for logging, in bytes</td>
+    <td>12800</td></tr>
+<tr><td>LogFlushTimeOut</td>  <td>dword</td> <td>Timeout to flush log buffer, in second</td>
+    <td>2</td></tr>
+<tr><td>KeepAliveIntervals</td><td>dword</td> <td>Timeout to send heartbeat to the shell, in second</td>
+    <td>2</td></tr>
+
+</table>
+
+@subsection confssec_nodecsreg NodeContentSotre
+<b>Path:</b>
+@code
+[HKEY_LOCAL_MACHINE\SOFTWARE\ZQ Interactive\TianShan\CurrentVersion\Services\NodeContentSotre]
+@endcode
+
+<table>
+<tr><th>Attribute</th>    <th>DataType</th>  <th>Description</th>
+    <th>Default</th></tr>
+    
+<tr><td>configDir</td>    <td>string</td>    <td>The full path of the configuration folder</td>
+    <td>\%InstallRoot%\\etc</td></tr>
+<tr><td>logDir</td>    <td>string</td>    <td>The full path of the configuration folder</td>
+    <td>\%InstallRoot%\\logs</td></tr>
+<tr><td>LogLevel</td>  <td>dword</td>    <td>The level of logging: 7-DEBUG, 6-INFO, 5-WARNING, 4-ERROR</td>
+    <td>6</td></tr>
+<tr><td>LogFileSize</td>  <td>dword</td>    <td>The maximal size in KByte for the log file to roll</td>
+    <td>10000</td></tr>
+<tr><td>LogBufferSize</td><td>dword</td> <td>Size of memory buffer for logging, in bytes</td>
+    <td>12800</td></tr>
+<tr><td>LogFlushTimeOut</td>  <td>dword</td> <td>Timeout to flush log buffer, in second</td>
+    <td>2</td></tr>
+<tr><td>KeepAliveIntervals</td><td>dword</td> <td>Timeout to send heartbeat to the shell, in second</td>
+    <td>2</td></tr>
+
+</table>
+
+@section confsec_csxml ClusterContentStore.xml
+After setup ClusterContentStore, a ClusterContentStore_Sample.xml will be copied into the folder TianShan/etc. It contains the latest schema definiton of
+the XML configuration. For a fresh installation, you must copy the sample XML to ClusterContentStore.xml and correct the settings to
+meet the environment. For an upgrade, you must compare the existing settings to check if the schema matches the latest or if there
+are any required settings need to be appended. Once you corrected the settings, turn the log level to DEBUG and start the service.
+After the functions have been verified, adjust the log level back
+
+@subsection confssec_csxmldef Definition
+<table>
+<tr><th>Element</th>    <th>Attribute</th>    <th>DataType</th>  <th>Description</th>
+    <th>Default</th></tr>
+
+<tr><td>TianShan/default/DatabaseFolder</td><td>Path</td>  <td>string</td> <td>Path to local database</td>
+    <td>\%InstallRoot%\\Data</td></tr>
+
+<tr><td>TianShan/default/CrashDump</td><td>Path</td>  <td>string</td> <td>Path to dump files</td>
+    <td>\%InstallRoot%\\CrashDump</td></tr>
+
+<tr><td>TianShan/ContentStore/Adapter</td><td>clusterEndpoint</td>  <td>string</td> <td>the endpoint that nodes  connect to</td>
+    <td>tcp -h {LocalIP} -p {port}</td></tr>
+
+<tr><td>TianShan/ContentStore/Host</td><td>netId</td>  <td>string</td> <td>ClusterContentStore net ID</td>
+    <td>CL<ClusterID></td></tr>
+
+<tr><td>TianShan/ContentStore/Host</td><td>mediaClusterId</td>  <td>string</td> <td>The unique ID for a media cluster in numeric form</td>
+    <td>1</td></tr>
+    
+<tr><td>TianShan/ContentStore/Service/eventByJMS</td><td>value</td>  <td>dword</td> <td>Send ingest report using JMS</td>
+    <td>1</td></tr>    
+
+<tr><td>TianShan/ContentStore/Service/eventByICE</td><td>value</td>  <td>dword</td> <td>Send ingest report using ICE storm</td>
+    <td>0</td></tr>
+    
+<tr><td>TianShan/ContentStore/Service/heartbeatInterval</td><td>value</td>  <td>dword</td> <td>Time to check availability of nodes</td>
+    <td>15</td></tr>  
+    
+<tr><td>TianShan/ContentStore/Service/heartbeatLogInterval</td><td>value</td>  <td>dword</td> <td>for how many hearbeats that a log message should be created</td>
+    <td>5</td></tr>   
+    
+<tr><td>TianShan/ContentStore/Service/maxConnectInterval</td><td>value</td>  <td>dword</td> <td>Not used by ClusterContentStore</td>
+    <td>30</td></tr>
+    
+<tr><td>TianShan/ContentStore/Service/useUTC</td><td>value</td>  <td>dword</td> <td>Use local time or UTC time 0: local time 1: UTC time</td>
+    <td>0</td></tr>
+    
+<tr><td>TianShan/ContentStore/Provision</td><td>active</td>  <td>dword</td> <td>Use active provision, this will affect the loading of corresponding modules</td>
+    <td>1</td></tr> 
+<tr><td>TianShan/ContentStore/Provision</td><td>Passive</td>  <td>dword</td> <td>Use passive provision</td>
+    <td>0</td></tr>               
+    
+<tr><td>TianShan/ContentStore/JMS/server</td><td>value</td>  <td>string</td> <td>Jboss Server IP</td>
+    <td>IPAddress</td></tr>
+<tr><td>TianShan/ContentStore/JMS/port</td><td>value</td>  <td>dword</td> <td>Jboss Server port</td>
+    <td>port</td></tr>             
+<tr><td>TianShan/ContentStore/JMS/stateChangeTopic</td><td>value</td>  <td>string</td> <td>stateChange Topic name</td>
+    <td>topic/TianShan\Provision\StateChange</td></tr>             
+<tr><td>TianShan/ContentStore/JMS/progressTopic</td><td>value</td>  <td>string</td> <td>progress Topict name</td>
+    <td>topic/TianShan\Provision\Progress</td></tr>             
+<tr><td>TianShan/ContentStore/JMS/namingContext</td><td>value</td>  <td>string</td> <td>namingContext</td>
+    <td>org.jnp.interfaces.NamingContextFactory</td></tr> 
+<tr><td>TianShan/ContentStore/JMS/propertyConfig</td><td>value</td>  <td>string</td> <td>property Config file</td>
+    <td>C:\\TianShan\\etc\\CSJMSHeaderPropertyCfg.xml</td></tr>                    
+<tr><td>TianShan/ContentStore/JMS/connectInterval</td><td>value</td>  <td>dword</td> <td>connectInterval</td>
+    <td>5</td></tr>           
+<tr><td>TianShan/ContentStore/JMS/connectionFactory</td><td>value</td>  <td>string</td> <td>connectionFactory</td>
+    <td>ConnectionFactory</td></tr>  
+    
+<tr><td>TianShan/ContentStore/IceStorm/topicManagerEndpoint</td><td>value</td>  <td>string</td> <td>ICEStorm topic endpoint</td>
+    <td>According to real environment, the format is: TianShanEvents/TopicManager:default -h {ICEStormIP} -p 10000</td></tr>    
+<tr><td>TianShan/ContentStore/IceStorm/stateChangeTopic</td><td>value</td>  <td>string</td> <td>ICEStorm stateChange Topic name</td>
+    <td>topic/TianShan\Provision\StateChange</td></tr>             
+<tr><td>TianShan/ContentStore/IceStorm/progressTopic</td><td>value</td>  <td>string</td> <td>ICEStorm progress Topict name</td>
+    <td>topic/TianShan\Provision\Progress</td></tr>     
+
+<tr><td>TianShan/ContentStore/PushManager/Adapter</td><td>endpoint</td>  <td>string</td> <td>PushManager Log Level 7- the lowest, 1- the highest</td>
+    <td>7"</td></tr>     
+
+<tr><td>TianShan/ContentStore/PushManager/Log</td><td>level</td>  <td>dword</td> <td>PushManager Log file size</td>
+    <td>1000000</td></tr>     
+
+<tr><td>TianShan/ContentStore/PushManager/Log</td><td>size</td>  <td>dword</td> <td>PushManager Endpoint</td>
+    <td>According to real environment, the format is "tcp -h {LocalIP} -p {port}"</td></tr>     
+
+<tr><td>TianShan/ContentStore/PushManager/MCP</td><td>destPortList</td>  <td>string</td> <td>MCP destination PortList</td>
+    <td>6000-8000</td></tr>     
+
+<tr><td>TianShan/ContentStore/PushManager/MCP</td><td>multicastAddressList</td>  <td>string</td> <td>multicast Address List</td>
+    <td>225.20.10.5-225.20.10.136</td></tr>     
+
+<tr><td>TianShan/ContentStore/PushManager/MCP</td><td>reserveBandwidth</td>  <td>dword</td> <td>reserve Bandwidth</td>
+    <td>10000000</td></tr>     
+
+<tr><td>TianShan/ContentStore/PushManager/Service/allowAnonymousPush</td><td>value</td>  <td>dword</td> <td>allow Anonymous Push or not, "1" enable,"0" disable</td>
+    <td>1</td></tr>     
+
+<tr><td>TianShan/ContentStore/PushManager/Service/skipFtpAuth</td><td>value</td>  <td>dword</td> <td>skip Ftp Auth</td>
+    <td>1</td></tr>     
+
+<tr><td>TianShan/ContentStore/PushManager/Service/pushTimeWindow</td><td>value</td>  <td>dword</td> <td>push Time Window</td>
+    <td>30</td></tr>     
+
+<tr><td>TianShan/ContentStore/PushManager/Service/pushStartDelay</td><td>value</td>  <td>dword</td> <td>push Start Delay time</td>
+    <td>300</td></tr>     
+
+<tr><td>TianShan/ContentStore/PushManager/Service/pushDuration</td><td>value</td>  <td>dword</td> <td>push Duration</td>
+    <td>7200</td></tr>     
+
+<tr><td>TianShan/ContentStore/PushManager/Service/checkStreamableIdle</td><td>value</td>  <td>dword</td> <td>check Streamable Idle</td>
+    <td>300</td></tr>     
+
+<tr><td>TianShan/ContentStore/PushManager/Service/delayActiveTime</td><td>value</td>  <td>dword</td> <td>delay Asset Active Time after provision success</td>
+    <td>5</td></tr>     
+
+<tr><td>TianShan/ContentStore/PushManager/MCP/Service/expiredTimeWindow</td><td>value</td>  <td>dword</td> <td>expired Time Window</td>
+    <td>360</td></tr>     
+
+<tr><td>TianShan/ContentStore/PushManager/MCP/Service/sessionExpiredTime</td><td>value</td>  <td>dword</td> <td>session Expired Time</td>
+    <td>600</td></tr>
+    
+<tr><td>TianShan/ContentStore/PushManager/MCP/Service/keepAliveLeaseTerm</td><td>value</td>  <td>dword</td> <td>keep Alive Lease Term</td>
+    <td>60</td></tr>     
+
+<tr><td>TianShan/ContentStore/PushManager/MCP/Service/expiredTimeWindow</td><td>value</td>  <td>dword</td> <td>expired Time Window</td>
+    <td>360</td></tr>             
+
+<tr><td>TianShan/ContentStore/CPManager/Adapter</td><td>endpoint</td>  <td>String</td> <td>CPManager Endpoint</td>
+    <td>According to real environment, the format is: "tcp -h {LocalIP} -p {port}"</td></tr>     
+
+<tr><td>TianShan/ContentStore/CPManager/Log</td><td>size</td>  <td>dword</td> <td>CPManager Logfile size</td>
+    <td>1000000</td></tr> 
+<tr><td>TianShan/ContentStore/CPManager/Log</td><td>level</td>  <td>dword</td> <td>CPManager Log level 7- the lowest, 1- the highest</td>
+    <td>7</td></tr> 
+    
+<tr><td>TianShan/ContentStore/CPManager/Service/registerInterval</td><td>value</td>  <td>dword</td> <td>register Interval</td>
+    <td>15</td></tr> 
+
+<tr><td>TianShan/ContentStore/CPManager/Service/transferBitrate</td><td>value</td>  <td>dword</td> <td>transfer Bitrate</td>
+    <td>375000</td></tr>  
+
+<tr><td>TianShan/ContentStore/CPManager/CPNode/RtfCPNode/rtfProp/name/rtfTrickFileCount</td><td>value</td>  <td>dword</td> <td>rtf TrickFile Count</td>
+    <td>1</td></tr>  
+    
+<tr><td>TianShan/ContentStore/CPManager/CPNode/RtfCPNode/rtfProp/name/rtfTrickIndexType</td><td>value</td>  <td>dword</td> <td>rtf TrickIndex Type, vvx or vv2</td>
+    <td>vvx</td></tr>
+    
+</table>
+@subsection confssec_csxmlsample Sample
+@code
+<!--
+Regular procedures of loading configurations:
+  1) When a service starts, read HKEY_LM\Softwares\ZQ Interactive\TianShan\Services\<ServiceName>\configDir, if the
+     TianShanService.xml is successfully opened, jump to 5)
+  2) tries HKEY_LM\Softwares\ZQ Interactive\TianShan\Services\configDir, if the TianShanService.xml is successfully
+     opened, jump to 5)
+  3) tries the dir ..\etc of where the executable is, if the TianShanService.xml is successfully opened, jump to 5)
+  4) puts an error as system event, say no configuration TianShanService.xml can be opened. Quit the program
+  5) reads the TianShanService.xml, if there is any XML formatting errors, put an error as system event then quit
+     the program
+  6) reads the LogFolder in the XML, take it if succeed, otherwise use ..\logs of where the executable is. Open the
+     main log file, and immediately put a line including
+       a) service name
+       b) service version number
+       c) the full pathname of TianShanService.xml
+     as the first log message in the main logfile
+  7) continues to populate other configurations
+  8) initialize the service and start serving
+-->
+
+<TianShan>
+
+	<!-- default configurations for the services of this TianShan deployment -->
+	<Default>
+		<!-- The default folder where the services of this TianShan deployment accesses their local
+		     databases if it is not defined by their individual configurations
+		     attributes:
+		       path          - path to the location of database directory, default "../data/"
+		-->
+		<DatabaseFolder	path="C:\TianShan\data" />
+
+		<CrashDump path="c:\TianShan\CrashDump" />
+
+	</Default>
+
+	<!-- configurations for the NodeContentStore service -->
+	<ContentStore>
+		<!-- The Ice adapter that the NodeContentStore service is serving on
+		     attributes:
+                clusterEndpoint - the endpoint of MediaCluster that the slave will be connecting to.
+                                  for standalone NodeContentStore, comment out this option. 
+		-->
+        <Adapter clusterEndpoint="tcp -h 192.168.81.100 -p 55588" />
+
+        <!-- Ice properties -->
+        <IceProperties>
+            <csProp name="Ice.Trace.Network" value="0" />
+            <csProp name="Ice.Trace.Protocol" value="0" />
+            <csProp name="Ice.Trace.Retry" value="0" />
+            <csProp name="Ice.Trace.Slicing" value="0" />
+            <csProp name="Ice.Warn.Connections" value="0" />
+            <csProp name="Ice.Warn.Endpoints" value="0" />
+            <csProp name="ContentStore.ThreadPool.Size" value="10" />
+            <csProp name="ContentStore.ThreadPool.SizeMax" value="15" />
+            <csProp name="Ice.ThreadPool.Client.Size" value="1" />
+            <csProp name="Ice.ThreadPool.Client.SizeMax" value="1" />
+            <csProp name="Ice.ThreadPool.Server.Size" value="1" />
+            <csProp name="Ice.ThreadPool.Server.SizeMax" value="1" />
+            <csProp name="Ice.Override.Timeout" value="5000" />
+            <csProp name="Ice.Override.ConnectTimeout" value="5000" />
+            <csProp name="Ice.Logger.Timestamp" value="1" />
+            <csProp name="ContentStore.EvictorSize" value="10"/>
+		</IceProperties>
+
+   		<!-- Host information. 
+		     attributes:
+               mediaClusterId - Identity of current mediacluster
+		-->
+        <Host mediaClusterId="1" />
+
+        <!-- To tell which module is used to handle events. 
+             eventByJms - event handled by JMS
+             eventByIce - event handled by icestorm
+             heartbeatInterval - Will increase when connecting failed till maxRetryInterval is met.
+             heartbeatLogInterval - log heartbeat event in a certain frequency.
+             maxConnectInterval - Max heartbeat interval.
+             useUtc - Use utc time or local time.
+		-->
+        <Service>
+            <eventByJMS value="0" />
+            <eventByICE value="0" />
+            <heartbeatInterval value="15" />
+            <heartbeatLogInterval value="5" />
+            <maxConnectInterval value="30" />
+            <useUTC value="0" />
+        </Service>
+
+
+        <!-- provision mode switch -->
+        <Provision active="1" passive="0" />
+
+
+        <!-- JMS related configuration  -->
+        <JMS>
+            <server value="10.50.12.4" />
+            <port value="1199" />
+            <stateChangeTopic value="topic/TianShan\Provision\StateChange" />
+            <progressTopic value="topic/TianShan\Provision\Progress" />
+            <namingContext value="org.jnp.interfaces.NamingContextFactory" />
+            <propertyConfig value="C:\TianShan\etc\CSJMSHeaderPropertyCfg.xml" />
+            <connectInterval value="5" />
+            <connectionFactory value="ConnectionFactory" />
+        </JMS>
+
+        <IceStorm>
+            <topicManagerEndpoint value="TianShanEvents/TopicManager:default -h 10.11.0.21 -p 10000" /> 
+            <stateChangeTopic value="TianShan/Event/Provision/StateChange" />
+            <progressTopic value="TianShan/Event/Provision/Progress" />
+        </IceStorm>
+
+    </ContentStore>
+	
+
+	<!-- configurations for the PushManager service -->
+    <PushManager>
+        <!-- The Ice adapter that PushManager is serving on.
+		       endpoint   - Endpoint of PushManager.
+		-->
+        <Adapter endpoint="tcp -h 192.168.81.120 -p 33388" />
+
+        <!-- Ice properties -->
+        <IceProperties>
+            <pmProp name="Ice.Trace.Network" value="0" />
+            <pmProp name="Ice.Trace.Protocol" value="0" />
+            <pmProp name="Ice.Trace.Retry" value="0" />
+            <pmProp name="Ice.Trace.Slicing" value="0" />
+            <pmProp name="Ice.Warn.Connections" value="0" />
+            <pmProp name="Ice.Warn.Endpoints" value="1" />
+            <pmProp name="TianShanPushManagerAdapter.ThreadPool.Size" value="5" />
+            <pmProp name="TianShanPushManagerAdapter.ThreadPool.SizeMax" value="5" />
+            <pmProp name="Ice.ThreadPool.Client.Size" value="1" />
+            <pmProp name="Ice.ThreadPool.Client.SizeMax" value="1" />
+            <pmProp name="Ice.ThreadPool.Server.Size" value="1" />
+            <pmProp name="Ice.ThreadPool.Server.SizeMax" value="1" />
+            <pmProp name="Ice.Override.Timeout" value="-1" />
+            <pmProp name="Ice.Override.ConnectTimeout" value="-1" />
+            <pmProp name="Ice.Logger.Timestamp" value="1" />
+		</IceProperties>
+
+		<!-- Log related configuration 
+			file - Name for log file, under the path specified by LogFolder.
+			size - Max log file size.
+		-->
+        <Log level="7" size="1000000" />
+		
+		<!-- MCP interface -->
+		<MCP destPortList="6000-8000" multicastAddressList="225.20.10.5-225.20.10.136" reserveBandwidth="10000000" />
+
+        <Service>
+			<allowAnonymousPush value="1" />
+			<skipFtpAuth value="1" />
+			<pushTimeWindow value="30" />
+			<pushStartDelay value="300" />
+			<pushDuration value="7200" />
+			<pushBitRate value="3750000" />
+			<idleSeconds value="20" />
+			<checkStreamableIdle value="300" />
+			<delayActiveTime value="5" />
+			<expiredTimeWindow value="360" />
+			<sessionExpiredTime value="600" />
+			<keepAliveLeaseTerm value="60" />
+		</Service>
+
+    </PushManager>
+	
+    <CPManager>
+        <Adapter endpoint="tcp -h 192.168.81.100 -p 44488" />
+		
+        <Log size="1000000" level="7" />
+
+        <!-- Ice properties -->
+        <IceProperties>
+            <cpProp name="Ice.Trace.Network" value="0" />
+            <cpProp name="Ice.Trace.Protocol" value="0" />
+			<cpProp name="ContentProcessManager.ThreadPool.Size" value="5" />
+			<cpProp name="ContentProcessManager.ThreadPool.SizeMax" value="5" />
+		</IceProperties>
+
+		<!--
+			registerInterval: time interval that a CPNode report to CPManager.
+			transferBitrate: speed limit while retrieving file from a remote site.
+							 0 means no limit.
+		-->
+		<Service>
+			<registerInterval value="15" />
+			<transferBitrate value="375000"/>
+		</Service>
+
+        <CPNode>
+			<!-- for RTF workstations.
+				rtfTrickFileCount - How many trick files will be generated.
+				rtfTrickIndexType - "VVX" or "VV2"
+			-->
+            <RtfCPNode>
+				<rtfProp name="rtfTrickFileCount" value="1"/>
+				<rtfProp name="rtfTrickIndexType" value="VVX"/>
+			</RtfCPNode>
+
+	    </CPNode>
+
+    </CPManager>
+
+</TianShan>
+
+
+@endcode
+
+@section confsec_nodecsxml NodeContentStore.xml
+After setup NodeContentSotre, a NodeContentSotre_Sample.xml will be copied into the folder TianShan/etc. It contains the latest schema definiton of
+the XML configuration. For a fresh installation, you must copy the sample XML to NodeContentSotre.xml and correct the settings to
+meet the environment. For an upgrade, you must compare the existing settings to check if the schema matches the latest or if there
+are any required settings need to be appended. Once you corrected the settings, turn the log level to DEBUG and start the service.
+After the functions have been verified, adjust the log level back
+
+@subsection confssec_csxmldef Definition
+<table>
+<tr><th>Element</th>    <th>Attribute</th>    <th>DataType</th>  <th>Description</th>
+    <th>Default</th></tr>
+
+<tr><td>TianShan/default/DatabaseFolder</td><td>Path</td>  <td>string</td> <td>Path to local database</td>
+    <td>\%InstallRoot%\\Data</td></tr>
+<tr><td>TianShan/default/CrashDump</td><td>Path</td>  <td>string</td> <td>CrashDump path</td>
+    <td>\%InstallRoot%\\CrashDump</td></tr>
+
+<tr><td>TianShan/ContentStore/Adapter</td><td>clusterEndpoint</td>  <td>string</td> <td>the endpoint of ClusterContentStore that the slave will be connecting to.for standalone NodeContentStore, comment out this property.</td>
+    <td>the format is: "ContentStore:tcp -h {IP} -p {port}"</td></tr>
+<tr><td>TianShan/ContentStore/Adapter</td><td>nodeEndpoint</td>  <td>string</td> <td>The endpoint of NodeContentStore itself</td>
+    <td>the format is: "tcp -h {IP} -p {port}"</td></tr> 
+    
+<tr><td>TianShan/ContentStore/Host</td><td>netId</td>  <td>string</td> <td>NodeContentStore notId</td>
+    <td>Cl<ClusterID>"</td></tr>   
+<tr><td>TianShan/ContentStore/Host</td><td>propagationIP</td>  <td>string</td> <td>Local machine propagationIP</td>
+    <td>According to real environment</td></tr>   
+<tr><td>TianShan/ContentStore/Host</td><td>mediaClusterId</td>  <td>string</td> <td>Identity of current mediacluster</td>
+    <td>1</td></tr>   
+<tr><td>TianShan/ContentStore/Host</td><td>vstrmBWClientId</td>  <td>string</td> <td>vstrmBWClientId</td>
+    <td>1</td></tr>   
+
+<tr><td>TianShan/ContentStore/Service/eventByJMS</td><td>value</td>  <td>dword</td> <td>event handled by JMS</td>
+    <td>1</td></tr>             
+
+<tr><td>TianShan/ContentStore/Service/eventByICE</td><td>value</td>  <td>dword</td> <td>event handled by icestorm</td>
+    <td>0</td></tr>
+
+<tr><td>TianShan/ContentStore/Service/heartbeatInterval</td><td>value</td>  <td>dword</td> <td>Will increase when connecting failed till maxRetryInterval is met</td>
+    <td>10</td></tr>
+
+<tr><td>TianShan/ContentStore/Service/heartbeatLogInterval</td><td>value</td>  <td>dword</td> <td>log heartbeat event in a certain frequency</td>
+    <td>5</td></tr>
+
+<tr><td>TianShan/ContentStore/Service/maxConnectInterval</td><td>value</td>  <td>dword</td> <td>Max heartbeat interval</td>
+    <td>30</td></tr>
+
+<tr><td>TianShan/ContentStore/Service/streamableInterval</td><td>value</td>  <td>dword</td> <td>Seconds before streamable event fired after provision</td>
+    <td>10</td></tr>
+            
+<tr><td>TianShan/ContentStore/Service/useUTC</td><td>value</td>  <td>dword</td> <td>Use utc time or local time</td>
+    <td>0</td></tr>
+    
+<tr><td>TianShan/ContentStore/Service/maxSessionCount</td><td>dword</td>  <td>dword</td> <td>maxSessionCount</td>
+    <td>10</td></tr>    
+
+<tr><td>TianShan/ContentStore/Service/bufferPoolSize</td><td>value</td>  <td>dword</td> <td>bufferPool Size</td>
+    <td>100</td></tr>
+
+<tr><td>TianShan/ContentStore/Service/bufferSize</td><td>value</td>  <td>dword</td> <td>bufferSize</td>
+    <td>65536</td></tr>
+
+<tr><td>TianShan/ContentStore/Service/progressReportInterval</td><td>value</td>  <td>dword</td> <td>progress Report Interval</td>
+    <td>5000</td></tr>
+
+<tr><td>TianShan/ContentStore/Service/traceProvisionDetails</td><td>value</td>  <td>dword</td> <td>trace Provision Details</td>
+    <td>0</td></tr>
+
+<tr><td>TianShan/ContentStore/Export/ttl</td><td>value</td>  <td>dword</td> <td>number of seconds that a ftp client has to open connection</td>
+    <td>86400</td></tr>
+
+<tr><td>TianShan/ContentStore/Export/bitrate</td><td>value</td>  <td>dword</td> <td>ftp transfer bitrate</td>
+    <td>3750000</td></tr>
+
+<tr><td>TianShan/ContentStore/Export/FTPServer/BindIP</td><td>value</td>  <td>String	</td> <td>FTPServer Binded IP</td>
+    <td>IPAddress</td></tr>
+
+<tr><td>TianShan/ContentStore/Export/FTPServer/Port</td><td>value</td>  <td>dword</td> <td>FTPServer Port</td>
+    <td>9910</td></tr>
+
+<tr><td>TianShan/ContentStore/Export/FTPServer/DefaultDLBitrate</td><td>value</td>  <td>dword</td> <td>Default Bitrate</td>
+    <td>3750000</td></tr>
+
+<tr><td>TianShan/ContentStore/Export/FTPServer/HomeDir</td><td>value</td>  <td>string</td> <td>ftpserver Home Dir</td>
+    <td>c:\\ftphome</td></tr>
+
+<tr><td>TianShan/ContentStore/Export/FTPServer/RootUrl</td><td>value</td>  <td>string</td> <td>ftpserverRootUrl</td>
+    <td>ftp://{IP}:{port}/</td></tr>
+
+<tr><td>TianShan/ContentStore/Export/ThreadPoolSize</td><td>value</td>  <td>dword</td> <td>Export ThreadPoolSize</td>
+    <td>40</td></tr>
+
+<tr><td>TianShan/ContentStore/Export/SafestorePath</td><td>value</td>  <td>string</td> <td>Export SafestorePath</td>
+    <td>c:\\ssdf</td></tr>
+
+<tr><td>TianShan/ContentStore/Export/DisableSessionMgr</td><td>value</td>  <td>dword</td> <td>DisableSessionMgr</td>
+    <td>0</td></tr>
+
+<tr><td>TianShan/ContentStore/Provision</td><td>active</td>  <td>dword</td> <td>Use active provision, this will affect the loading of corresponding modules</td>
+    <td>1</td></tr>
+<tr><td>TianShan/ContentStore/Provision</td><td>passive</td>  <td>dword</td> <td>Use passive provision</td>
+    <td>0</td></tr>
+
+<tr><td>TianShan/ContentStore/JMS/server</td><td>value</td>  <td>string</td> <td>JBOSS Server IP</td>
+    <td>IPAddress</td></tr>
+
+<tr><td>TianShan/ContentStore/JMS/port</td><td>value</td>  <td>dword</td> <td>JBOSS Port</td>
+    <td>Port</td></tr>
+<tr><td>TianShan/ContentStore/JMS/stateChangeTopic</td><td>value</td>  <td>string</td> <td>stateChange Topic name</td>
+    <td>topic/TianShan\Provision\StateChange</td></tr>             
+<tr><td>TianShan/ContentStore/JMS/progressTopic</td><td>value</td>  <td>string</td> <td>progress Topict name</td>
+    <td>topic/TianShan\Provision\Progress</td></tr>             
+<tr><td>TianShan/ContentStore/JMS/namingContext</td><td>value</td>  <td>string</td> <td>namingContext</td>
+    <td>org.jnp.interfaces.NamingContextFactory</td></tr> 
+<tr><td>TianShan/ContentStore/JMS/propertyConfig</td><td>value</td>  <td>string</td> <td>property Config file</td>
+    <td>C:\\TianShan\\etc\\CSJMSHeaderPropertyCfg.xml</td></tr>                    
+<tr><td>TianShan/ContentStore/JMS/connectInterval</td><td>value</td>  <td>dword</td> <td>connectInterval</td>
+    <td>5</td></tr>           
+<tr><td>TianShan/ContentStore/JMS/connectionFactory</td><td>value</td>  <td>string</td> <td>connectionFactory</td>
+    <td>ConnectionFactory</td></tr>    
+
+<tr><td>TianShan/ContentStore/IceStorm/topicManagerEndpoint</td><td>value</td>  <td>string</td> <td>ICEStorm topic endpoint</td>
+    <td>According to real environment, the format is: TianShanEvents/TopicManager:default -h {ICEStormIP} -p 10000</td></tr>    
+<tr><td>TianShan/ContentStore/IceStorm/stateChangeTopic</td><td>value</td>  <td>string</td> <td>ICEStorm stateChange Topic name</td>
+    <td>topic/TianShan\Provision\StateChange</td></tr>             
+<tr><td>TianShan/ContentStore/IceStorm/progressTopic</td><td>value</td>  <td>string</td> <td>ICEStorm progress Topict name</td>
+    <td>topic/TianShan\Provision\Progress</td></tr>
+    
+<tr><td>TianShan/ContentStore/PushManager/Adapter</td><td>endpoint</td>  <td>string</td> <td>PushManager Log Level 7- the lowest, 1- the highest</td>
+    <td>7"</td></tr>     
+
+<tr><td>TianShan/ContentStore/PushManager/Log</td><td>level</td>  <td>dword</td> <td>PushManager Log file size</td>
+    <td>1000000</td></tr>     
+
+<tr><td>TianShan/ContentStore/PushManager/Log</td><td>size</td>  <td>dword</td> <td>PushManager Endpoint</td>
+    <td>According to real environment, the format is "tcp -h {LocalIP} -p {port}"</td></tr>     
+
+<tr><td>TianShan/ContentStore/PushManager/MCP</td><td>destPortList</td>  <td>string</td> <td>MCP destination PortList</td>
+    <td>6000-8000</td></tr>     
+
+<tr><td>TianShan/ContentStore/PushManager/MCP</td><td>multicastAddressList</td>  <td>string</td> <td>multicast Address List</td>
+    <td>225.20.10.5-225.20.10.136</td></tr>     
+
+<tr><td>TianShan/ContentStore/PushManager/MCP</td><td>reserveBandwidth</td>  <td>dword</td> <td>reserve Bandwidth</td>
+    <td>10000000</td></tr>     
+
+<tr><td>TianShan/ContentStore/PushManager/Service/allowAnonymousPush</td><td>value</td>  <td>dword</td> <td>allow Anonymous Push or not, "1" enable,"0" disable</td>
+    <td>1</td></tr>     
+
+<tr><td>TianShan/ContentStore/PushManager/Service/skipFtpAuth</td><td>value</td>  <td>dword</td> <td>skip Ftp Auth</td>
+    <td>1</td></tr>     
+
+<tr><td>TianShan/ContentStore/PushManager/Service/pushTimeWindow</td><td>value</td>  <td>dword</td> <td>push Time Window</td>
+    <td>30</td></tr>     
+
+<tr><td>TianShan/ContentStore/PushManager/Service/pushStartDelay</td><td>value</td>  <td>dword</td> <td>push Start Delay time</td>
+    <td>300</td></tr>     
+
+<tr><td>TianShan/ContentStore/PushManager/Service/pushDuration</td><td>value</td>  <td>dword</td> <td>push Duration</td>
+    <td>7200</td></tr>     
+
+<tr><td>TianShan/ContentStore/PushManager/Service/checkStreamableIdle</td><td>value</td>  <td>dword</td> <td>check Streamable Idle</td>
+    <td>300</td></tr>     
+
+<tr><td>TianShan/ContentStore/PushManager/Service/delayActiveTime</td><td>value</td>  <td>dword</td> <td>delay Asset Active Time after provision success</td>
+    <td>5</td></tr>     
+
+<tr><td>TianShan/ContentStore/PushManager/MCP/Service/expiredTimeWindow</td><td>value</td>  <td>dword</td> <td>expired Time Window</td>
+    <td>360</td></tr>     
+
+<tr><td>TianShan/ContentStore/PushManager/MCP/Service/sessionExpiredTime</td><td>value</td>  <td>dword</td> <td>session Expired Time</td>
+    <td>600</td></tr>
+    
+<tr><td>TianShan/ContentStore/PushManager/MCP/Service/keepAliveLeaseTerm</td><td>value</td>  <td>dword</td> <td>keep Alive Lease Term</td>
+    <td>60</td></tr>     
+
+<tr><td>TianShan/ContentStore/PushManager/MCP/Service/expiredTimeWindow</td><td>value</td>  <td>dword</td> <td>expired Time Window</td>
+    <td>360</td></tr>             
+
+<tr><td>TianShan/ContentStore/CPManager/Adapter</td><td>endpoint</td>  <td>String</td> <td>CPManager Endpoint</td>
+    <td>According to real environment, the format is: "tcp -h {LocalIP} -p {port}"</td></tr>     
+
+<tr><td>TianShan/ContentStore/CPManager/Log</td><td>size</td>  <td>dword</td> <td>CPManager Logfile size</td>
+    <td>1000000</td></tr> 
+<tr><td>TianShan/ContentStore/CPManager/Log</td><td>level</td>  <td>dword</td> <td>CPManager Log level 7- the lowest, 1- the highest</td>
+    <td>7</td></tr> 
+    
+<tr><td>TianShan/ContentStore/CPManager/Service/registerInterval</td><td>value</td>  <td>dword</td> <td>register Interval</td>
+    <td>15</td></tr> 
+
+<tr><td>TianShan/ContentStore/CPManager/Service/transferBitrate</td><td>value</td>  <td>dword</td> <td>transfer Bitrate</td>
+    <td>375000</td></tr>  
+
+<tr><td>TianShan/ContentStore/CPManager/CPNode/RtfCPNode/rtfProp/name/rtfTrickFileCount</td><td>value</td>  <td>dword</td> <td>rtf TrickFile Count</td>
+    <td>1</td></tr>  
+    
+<tr><td>TianShan/ContentStore/CPManager/CPNode/RtfCPNode/rtfProp/name/rtfTrickIndexType</td><td>value</td>  <td>dword</td> <td>rtf TrickIndex Type, vvx or vv2</td>
+    <td>vvx</td></tr>
+    
+</table>    
+
+@subsection confssec_nodecsxmlsample Sample
+@code
+<!--
+Regular procedures of loading configurations:
+  1) When a service starts, read HKEY_LM\Softwares\ZQ Interactive\TianShan\Services\<ServiceName>\configDir, if the
+     TianShanService.xml is successfully opened, jump to 5)
+  2) tries HKEY_LM\Softwares\ZQ Interactive\TianShan\Services\configDir, if the TianShanService.xml is successfully
+     opened, jump to 5)
+  3) tries the dir ..\etc of where the executable is, if the TianShanService.xml is successfully opened, jump to 5)
+  4) puts an error as system event, say no configuration TianShanService.xml can be opened. Quit the program
+  5) reads the TianShanService.xml, if there is any XML formatting errors, put an error as system event then quit
+     the program
+  6) reads the LogFolder in the XML, take it if succeed, otherwise use ..\logs of where the executable is. Open the
+     main log file, and immediately put a line including
+       a) service name
+       b) service version number
+       c) the full pathname of TianShanService.xml
+     as the first log message in the main logfile
+  7) continues to populate other configurations
+  8) initialize the service and start serving
+-->
+
+<TianShan>
+
+	<!-- default configurations for the services of this TianShan deployment -->
+	<Default>
+		<!-- The default folder where the services of this TianShan deployment accesses their local
+		     databases if it is not defined by their individual configurations
+		     attributes:
+		       path          - path to the location of database directory, default "../data/"
+		-->
+		<DatabaseFolder	path="C:\TianShan\data"/>
+		<CrashDump path="C:\TianShan\CrashDump"/>
+	</Default>
+
+	<!-- configurations for the NodeContentStore service -->
+	<ContentStore>
+		<!-- The Ice adapter that the NodeContentStore service is serving on
+		     The NodeContentStore could run as Single NodeCS or Slave NodeCS
+		     1. Running as Single NodeCS 
+		        - Delete clusterEndpoint property from followed Adapter xml node 
+		     2. Running as Slave NodeCS of ClusterCS
+		        - Confige clusterEndpoint to the ClusterContentStore
+		     attributes:
+                clusterEndpoint - the endpoint of MediaCluster that the slave will be connecting to.
+                                  for standalone NodeContentStore, comment out this property. 
+                nodeEndpoint - The endpoint of NodeContentStore itself. 
+                
+		-->
+        <Adapter clusterEndpoint="ContentStore:tcp -h 10.15.10.49 -p 55588" nodeEndpoint="tcp -h 192.168.81.120 -p 55588" />
+
+       <!-- Ice properties -->
+        <IceProperties>
+            <csProp name="Ice.Trace.Network" value="0" />
+            <csProp name="Ice.Trace.Protocol" value="0" />
+            <csProp name="Ice.Trace.Retry" value="0" />
+            <csProp name="Ice.Trace.Slicing" value="0" />
+            <csProp name="Ice.Warn.Connections" value="0" />
+            <csProp name="Ice.Warn.Endpoints" value="1" />
+			<csProp name="ContentStore.EvictorSize" value="10" />
+            <csProp name="ContentStore.ThreadPool.Size" value="0" />
+            <csProp name="ContentStore.ThreadPool.SizeMax" value="0" />
+            <csProp name="Ice.ThreadPool.Client.Size" value="1" />
+            <csProp name="Ice.ThreadPool.Client.SizeMax" value="1" />
+            <csProp name="Ice.ThreadPool.Server.Size" value="1" />
+            <csProp name="Ice.ThreadPool.Server.SizeMax" value="1" />
+            <csProp name="Ice.Override.Timeout" value="5000" />
+            <csProp name="Ice.Override.ConnectTimeout" value="5000" />
+            <csProp name="Ice.Logger.Timestamp" value="1" />
+		</IceProperties>
+
+   		<!-- Host information. 
+		     attributes:
+		       netId - The unique Id of the node
+               propagationIP - network adapter dedicted for content uploading.
+               mediaClusterId - Identity of current mediacluster
+		-->
+        <Host netId="FEI" propagationIP="192.168.81.120" mediaClusterId="1" vstrmBWClientId="1" />
+
+        <!-- To tell which module is used to handle events. 
+             eventByJms - event handled by JMS
+             eventByIce - event handled by icestorm
+             heartbeatInterval - Will increase when connecting failed till maxRetryInterval is met.
+             heartbeatLogInterval - log heartbeat event in a certain frequency.
+             maxConnectInterval - Max heartbeat interval.
+             streamableInterval - Seconds before streamable event fired after provision.
+             useUtc - Use utc time or local time.
+		-->
+        <Service>
+            <eventByJMS value="0" />  <!-- For Single NodeCS, value = 1, For Slave NodeCS of ClusterContentStore, value = 0 -->
+            <eventByICE value="0" />  
+            <heartbeatInterval value="10" />
+            <heartbeatLogInterval value="5" />
+            <maxConnectInterval value="30" />
+            <streamableInterval value="10" />
+            <useUTC value="0" />
+			<maxSessionCount value="10" />
+			<bufferPoolSize value="100" />
+			<bufferSize value="65536" />
+			<progressReportInterval value="5000" />
+			<traceProvisionDetails value="0" />
+        </Service>
+
+		<!--
+			ttl - number of seconds that a ftp client has to open connection.
+			bitrate - ftp transfer bitrate	
+			BWClientId - this client id for vstrm bandwith should be unique in whole site, 
+						which means each nodecontentstore should use a diffrent value for it
+	
+		-->
+		<Export>
+			<ttl value="86400" />
+			<bitrate value="3750000" />
+			<FTPServer BindIP="0.0.0.0" Port="9910" DefaultDLBitrate="3750000" HomeDir="c:\ftphome" RootUrl="ftp://10.11.0.250:9910/" /> 
+			<ThreadPoolSize value="40" />
+			<SafestorePath value="c:\ssdf" />
+			<DisableSessionMgr value="0" />
+			<BWClientId value="773220" />
+		</Export>
+
+		<Provision active="1" passive="0" />
+
+        <!-- JMS related configuration  -->
+        <JMS>
+            <server value="10.11.0.21" />
+            <port value="1199" />
+            <stateChangeTopic value="topic/TianShan\Provision\StateChange" />
+            <progressTopic value="topic/TianShan\Provision\Progress" />
+            <namingContext value="org.jnp.interfaces.NamingContextFactory" />
+            <propertyConfig value="C:\TianShan\etc\CSJMSHeaderPropertyCfg.xml" />
+            <connectInterval value="5" />
+            <connectionFactory value="ConnectionFactory" />
+        </JMS>
+
+        <IceStorm> 
+            <topicManagerEndpoint value="TianShanEvents/TopicManager:default -h 10.11.0.21 -p 10000" /> 
+            <stateChangeTopic value="TianShan/Event/Provision/StateChange" />
+            <progressTopic value="TianShan/Event/Provision/Progress" />
+        </IceStorm>
+
+    </ContentStore>
+	
+
+	<!-- configurations for the PushManager service -->
+    <PushManager>
+         <!-- The Ice adapter that PushManager is serving on.
+           For Slave NodeCS, PushManager configuration does NOT take effective, just left it without setting.
+		       endpoint   - Endpoint of PushManager.
+		-->
+        <Adapter endpoint="tcp -h 192.168.81.120 -p 33388" />
+
+        <!-- Ice properties -->
+        <IceProperties>
+            <pmProp name="Ice.Trace.Network" value="0" />
+            <pmProp name="Ice.Trace.Protocol" value="0" />
+            <pmProp name="Ice.Trace.Retry" value="0" />
+            <pmProp name="Ice.Trace.Slicing" value="0" />
+            <pmProp name="Ice.Warn.Connections" value="0" />
+            <pmProp name="Ice.Warn.Endpoints" value="1" />
+            <pmProp name="TianShanPushManagerAdapter.ThreadPool.Size" value="5" />
+            <pmProp name="TianShanPushManagerAdapter.ThreadPool.SizeMax" value="5" />
+            <pmProp name="Ice.ThreadPool.Client.Size" value="1" />
+            <pmProp name="Ice.ThreadPool.Client.SizeMax" value="1" />
+            <pmProp name="Ice.ThreadPool.Server.Size" value="1" />
+            <pmProp name="Ice.ThreadPool.Server.SizeMax" value="1" />
+		</IceProperties>
+
+		<!-- Log related configuration -->
+        <Log level="7" size="1000000" />
+		
+		<!-- MCP interface -->
+		<MCP destPortList="6000-8000" multicastAddressList="225.20.10.5-225.20.10.136" reserveBandwidth="10000000" />
+
+        <Service>
+			<allowAnonymousPush value="1" />
+			<skipFtpAuth value="1" />
+			<pushTimeWindow value="30" />
+			<pushStartDelay value="300" />
+			<pushDuration value="7200" />
+			<pushBitRate value="3750000" />
+			<idleSeconds value="20" />
+			<checkStreamableIdle value="300" />
+			<delayActiveTime value="5" />
+			<expiredTimeWindow value="360" />
+			<sessionExpiredTime value="600" />
+			<keepAliveLeaseTerm value="60" />
+		</Service>
+
+    </PushManager>
+
+  <CPManager>
+
+        <Adapter endpoint="tcp -h 192.168.81.100 -p 44488" />
+		
+        <Log size="1000000" level="7" />
+
+        <!-- Ice properties -->
+        <IceProperties>
+            <cpProp name="Ice.Trace.Network" value="0" />
+            <cpProp name="Ice.Trace.Protocol" value="0" />
+			<cpProp name="ContentProcessManager.ThreadPool.Size" value="5" />
+			<cpProp name="ContentProcessManager.ThreadPool.SizeMax" value="5" />
+		</IceProperties>
+		
+		<!--
+			registerInterval: time interval that a CPNode report to CPManager.
+			transferBitrate: speed limit while retrieving file from a remote site.
+							 0 means no limit.
+		-->
+		<Service>
+			<registerInterval value="15" />
+			<transferBitrate value="375000"/>
+		</Service>
+
+
+        <CPNode>
+			<!-- for RTF workstations.
+				rtfTrickFileCount - How many trick files will be generated.
+				rtfTrickIndexType - "VVX" or "VV2"
+			-->
+            <RtfCPNode>
+				<rtfProp name="rtfTrickFileCount" value="1" />
+				<rtfProp name="rtfTrickIndexType" value="VVX" />
+			</RtfCPNode>
+	   </CPNode>
+
+	</CPManager>
+</TianShan>
+@endcode
+
+@section confsec_cssetup The Setup Script    
+*/

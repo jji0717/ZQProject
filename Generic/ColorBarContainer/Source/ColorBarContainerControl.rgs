@@ -1,0 +1,34 @@
+HKCR
+{
+	CBarContainer.ColorBarContainerControl.1 = s 'ColorBarContainerControl Class'
+	{
+		CLSID = s '{E0B8A5E4-5EF3-4C02-B86C-62E7A44FC40F}'
+	}
+	CBarContainer.ColorBarContainerControl = s 'ColorBarContainerControl Class'
+	{
+		CLSID = s '{E0B8A5E4-5EF3-4C02-B86C-62E7A44FC40F}'
+		CurVer = s 'CBarContainer.ColorBarContainerControl.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {E0B8A5E4-5EF3-4C02-B86C-62E7A44FC40F} = s 'ColorBarContainerControl Class'
+		{
+			ProgID = s 'CBarContainer.ColorBarContainerControl.1'
+			VersionIndependentProgID = s 'CBarContainer.ColorBarContainerControl'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			ForceRemove 'Control'
+			ForceRemove 'Insertable'
+			ForceRemove 'ToolboxBitmap32' = s '%MODULE%, 101'
+			'MiscStatus' = s '0'
+			{
+			    '1' = s '131473'
+			}
+			'TypeLib' = s '{C17D3AC8-EAE6-4787-BFD1-5269816E90F8}'
+			'Version' = s '1.0'
+		}
+	}
+}

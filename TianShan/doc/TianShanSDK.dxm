@@ -1,0 +1,144 @@
+/*!
+
+@mainpage TianShan Architecture SDK
+@author  Hui Shao
+@date    created on 2006-8-30
+<b>Revision History</b>
+$Log: /ZQProjs/TianShan/doc/TianShanSDK.dxm $
+<br>
+
+@section sec_sdkintro Introduction
+TianShan On-Demand Architecture defines an open architecture and interfaces among various video components. In addition, the architecture
+is designedto be flexible to support various business applications, and shall be scalable, cost effective, and high performance.\n
+The following summarizes the advantages thatTianShan On-Demand Architecture offers:
+
+@subsection sec_sdkintroo Openness and Portable Components
+The architecture offers open interfaces among different components. In addition, it allows the portable modules to be introduced into
+the system. This implies that each functional component in the system can be supplied by multiple vendors; and any functional component
+in the system that scales with multiple modules can be provided by a mixture of vendors in a heterogeneous environment.
+
+@subsection sec_sdkintros Standard Compliance
+It is desirable that the interfaces be based on the existing open standards wherever they apply. It may be necessary to provide extensions
+to the existing standards as long as the proposed extensions are intended to be open
+
+@subsection sec_sdkintrom Mature Technology 
+TianShan architecture and interfaces shall take advantage of mature technology that has already been proven in deployments, whenever possible.
+New technology such as storage or network transport can be introduced as long as it provides added benefits and is practical to be implemented
+in a cost effective manner. 
+
+@subsection sec_sdkintrooo Object-Oriented Interface Definition
+It is desirable that the interfaces between the various components are defined in an object-oriented language, which could provide lot of
+pleasure for the vendor to follow. It shall cut much engineering cost and reduce the engineering duration to meet business needs
+
+@subsection sec_sdkintrosp Scalability/Performance 
+The architecture and interface shall be highly scalable to large number of simultaneous users and large amount of media assets. Centralized,
+distributed, or hybrid architectures can be suggested.\nThe system shall support fault tolerance and load balancing capabilities.
+
+@subsection sec_sdkintrolc Low Cost 
+It is desired that proposed architecture and interfaces can be implemented in a cost effective manner. The system shall be implement-able
+based on the commodity and/or specialized hardware and software as long as they are cost-effective. However, it is not expected to evaluate
+the exact cost of each specific product implementation as part of this specification. 
+
+@subsection sec_sdkintroof Operational Feasibility 
+Another important consideration is the operational feasibility of the architecture. 
+Examples are how to provide centralized network management, or how to ease system upgrade while adding additional system capacity
+(e.g. adding video server or splitting node). 
+
+@section sec_icebasic ICE Basic
+The TianShan on-demand architecture uses Internet Communications Engine (ICE) technology on it object-oriented interface definition.
+ICE is an object-oriented middleware platform provided by ZeroC. Ice applications are suitable for use in heterogeneous environments:
+client and server can be written in different programming languages , can run on different operating system and machine architectures,
+and can communicate using a variety of networking technologies,. The source code for these applications is portable regardless of the
+deployment environment.
+
+The ICE technology provides a number of benefits to application developers:
+@li Object-oriented semantics
+@li Support for synchronous and asynchronous messaging
+@li Support for multiple interfaces in one object implementation
+@li Machine and OS independence
+@li Programming language independence
+@li Implementation independence
+@li Threading support
+@li Transport independence
+@li Location and server transparency
+@li communication security
+@li Built-in object persistence
+@li Open source
+Please refer to ZeroC's documentations for more details about the ICE technology
+
+@subsection ssec_iceexp General Invocation Exceptions
+
+TianShan defines its user exception in each API in the SDK, but the developer must know some general ICE exceptions before reaching TianShan
+exceptions.\n
+Most error conditions are detected on the client side. For example, if an attempt to contact a server fails, the client-side run time
+raises a ConnectTimeoutException. However, there are three specific error conditions that are detected by the server and made known
+explicitly to the client-side run time via the Ice protocol: 
+
+<b>ObjectNotExistException</b>
+This exception indicates that a request was delivered to the server but the server could not locate a servant with the identity that
+is embedded in the proxy. In other words, the server could not find an object to dispatch the request to. \n
+An ObjectNotExistException is a death certificate: it indicates that the target object in the server does not exist. Most likely, this
+is the case because the object existed some time in the past and has since been destroyed, but the same exception is also raised if a
+client uses a proxy with the identity of an object that has never been created. If you receive this exception, you are expected to clean
+up whatever resources you might have allocated that relate to the specific object for which you receive this exception. 
+
+<b>FacetNotExistException</b>
+The client attempted to contact a non-existent facet of an object, that is, the server has at least one servant with the given identity,
+but no servant with a matching facet name.
+
+<b>OperationNotExistException</b>
+This exception is raised if the server could locate an object with the correct identity but, on attempting to dispatch the client¡¯s
+operation invocation, the server found that the target object does not have such an operation. You will see this exception in only two
+cases: 
+@li You have used an unchecked down-cast on a proxy of the incorrect type. 
+@li Client and server have been built with Slice definitions for an interface that disagree with each other, that is, the client was built
+with an interface definition for the object that indicates that an operation exists, but the server was built with a different version of
+the interface definition in which the operation is absent. 
+
+Any error condition on the server side that is not described by one of the three preceding exceptions is made known to the client as one
+of three generic exceptions 
+
+<b>UnknownUserException</b>
+This exception indicates that an operation implementation has thrown a exception that is not declared in the operation¡¯s exception
+specification (and is not derived from one of the exceptions in the operation¡¯s exception specification). 
+
+<b>UnknownLocalException</b>
+If an operation implementation raises a run-time exception other than ObjectNotExistException, FacetNotExistException, or 
+OperationNotExistException (such as a NotRegisteredException), the client receives an UnknownLocalException. In other words, the Ice protocol
+does not transmit the exact exception that was encountered in the server, but simply returns a bit to the client in the reply to indicate
+that the server encountered a run-time exception. 
+
+A common cause for a client receiving an UnknownLocalException is failure to catch and handle all exceptions in the server. For example, if
+the implementation of an operation encounters an exception it does not handle, the exception propagates all the way up the call stack until
+the stack is unwound to the point where the Ice run time invoked the operation. The Ice run time catches all Ice exceptions that ¡°escape¡±
+from an operation invocation and returns them to the client as an UnknownLocalException. 
+
+<b>UnknownException</b>
+An operation has thrown a non-Ice exception. For example, if the operation in the server throws a C++ exception or a Java exception, 
+the client receives an UnknownException. 
+All other run-time exceptions are detected by the client-side run time and are raised locally. 
+
+@section sec_sdkns Core NameSpaces and Major Classes
+
+<table>
+<tr><th align=left>Name Space</th> <th align=left>Major Classes</th><th align=left>Description</th></tr>
+<tr valign=top><th align=left>TianShanIce</th><td valign=top>BaseService<br>Exception<i>s</i><br>ReplicaQuery<br>ReplicaSubscriber</td><td align=top>The base name space that defines the common data type and classes shared by all the classes shared in other TianShan namespaces</td></tr>
+<tr valign=top><th align=left>TianShanIce::Storage</th><td valign=top>Content<br>Volume<br>ContentStore</td><td align=top>The name space defines the entities and service to represent a media storage</td></tr>
+<tr valign=top><th align=left>TianShanIce::Streamer</th><td valign=top>Stream<br>Playlist<br>StreamService</td><td align=top>The name space defines the session and service to represent a streaming server</td></tr>
+<tr valign=top><th align=left>TianShanIce::Transport</th><td valign=top>Storage<br>Streamer<br>ServiceGroup<br>PathManager<br>PathTicket</td><td align=top>The abstract layer to define the modules involved to deliver a stream. It also covers the path allocation and lifetime management thru the PathManager and PathTicket</td></tr>
+<tr valign=top><th align=left>TianShanIce::SRM</th><td valign=top>Resource<br>Session<br>SessionManager</td><td>The name space defines the streaming session and resource management, including the resource allocation and session lifetime management</td></tr>
+<tr valign=top><th align=left>TianShanIce::ContentProvision</th><td valign=top>ProvisionSession<br>ContentProvisionService<br>ContentProvisionCluster</td><td>The name space defines the modules involved in content provisioning. It covers the provisioning service and its dispatcher ContentProvisionCluster, also covers the provisioning session management</td></tr>
+<tr valign=top><th align=left>TianShanIce::Application</th><td valign=top>Purchase<br>AppService</td><td>The name space defines the common interface that an application service should respond the TianShan architecture, it also covers the session of application as Purchase entity</td></tr>
+</table>
+
+@section sec_sdksa Sample Application
+@ref ssec_sdkchod "ChannelOnDemand Application and its Interfaces"
+
+@section sec_sdkref References and Supplemental Docs
+@li [R1] The TianShan Overall Architecture
+@li [R2] ZQ TianShan Components
+@li [R3] SeaChange RTSP Specification, TianShan edition
+@li [R4] Writing StreamSmith Modules -- A Guide to StreamSmith Module API
+@li [R5] Distributed Programming with ICE, ZeroC
+
+*/

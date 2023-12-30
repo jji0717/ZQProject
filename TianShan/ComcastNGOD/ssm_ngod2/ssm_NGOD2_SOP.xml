@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Configurations on SOP restrictions:
+       attributes:
+         enableWarmup 		- if this configuration is turned on(set it to 1) ,NGOD2 will connect to streamer when it startup
+		                  		turn it off if you do not want it to connect to streamer when plugin startup
+         retryCount 		- the max number of the retries if failed to setup streams
+         maxPenaltyValue 	- the penalty to apply if an SOP failed to setup a stream
+         penaltyOfTimeout	- penalty value to be used when encounter an icetimeout exception, this value shoud <= maxPenaltyValue
+         penaltyMask		- this mask is used to define which operation may cause a penalty
+         						The Mask value are list below:
+         							PLAY			:	1
+         							PAUSE			:	2  
+         							GET_PARAMETER	:	4       							
+         						These values can be combined , for example , if you want to enable penalty in PLAY and PAUSE, 
+         						set penaltyEnableMask to 3 which is 1 + 2
+-->
+<SOPRestriction enableWarmup="1" retryCount="10" penaltyOfTimeout="2" maxPenaltyValue="10" penaltyMask="7" execMask="7" streamerQueryInterval="5000" replicaUpdateInterval="20" >
+	
+  <!-- Configurations on each SOP:
+       attributes:
+         name - the name of SOP that refer to the NGOD ODRM's configuration
+         serviceGroup - to specify a service group if this SOP is picked
+         sopGroup - the name of the sopgroup used for D5 message
+       Important Notice : please don't use '0x06' character in sop name
+  -->
+  <sop name="SEACnnnnn" serviceGroup="30" sopGroup="">
+    <!-- Configurations on streamer:
+       attributes:
+         netId : target streamer's netid
+         enabled : 0 to eliminated the streamer from the selection for new sessions
+         serviceEdnpoint: endpoint of streamservice bind to this streamer
+         volume : volume name 
+         totalBW : total abandwidth, in Kbps, can be used by the streamer
+         maxStream : max srtea count can be used by this streamer
+         import channel: name of import channel bind to this streamer
+    -->
+    <!-- samples for adopted SeaChange MediaCluster products:
+    	<streamer netId="NodeName_SS_NC/SpigotXX" enabled="1" serviceEndpoint="StreamSmith:tcp -h NodeName_SS_NC -p 10700" volume="MediaClusterID/*" totalBW="940000" maxStream="250" importChannel="NodeName_SS_NC" /> 
+    -->
+  </sop>
+</SOPRestriction>

@@ -1,0 +1,9 @@
+
+LIBRARY		TrickPub.dll
+;DESCRIPTION	'Microsoft DirectShow TrickPublish Source Filter'
+EXPORTS
+			DllMain PRIVATE
+            DllRegisterServer PRIVATE
+            DllUnregisterServer PRIVATE
+            DllGetClassObject PRIVATE
+            DllCanUnloadNow PRIVATE

@@ -1,0 +1,230 @@
+<TianShan>
+
+	<ssm_NGOD_r2c1>
+		
+		<!-- example: 
+		
+			<LogFile name="E:\tianshan\logs\ssm_NGOD_r2c1.log" size="50000000" level="7" number="10"/>
+			
+		-->
+		<!-- params: four params are supported now
+		
+			name: must be a filename with absolute path.
+			
+			size: log file's maxinum size.
+			
+			level: config the level of log file, you can use the following values of (0,1,2,3,4,5,6,7).			
+			the larger the number is, the log will be more detail, but it'll take more process time.
+			
+			number: config the max number of backup log files.
+			
+		-->
+		<LogFile name="C:\tianshan\logs\ssm_NGOD_r2c1.log" size="50000000" level="7" number="10"/>
+		
+		<!-- example: 
+		
+			<IceStorm endPoint="tcp -h 10.50.12.4 -p 10000"/>
+			
+		-->
+		<!-- params: only one param is supported now
+		
+			endPoint: should be in format of "name:tcp -h ip -p port".
+			
+		-->
+		<IceStorm endPoint="tcp -h TIANSHAN2_SS_CL -p 10000"/>
+		
+		<!-- example: 
+		
+			<SessionManager endPoint="SessionManager:tcp -h 10.50.12.4 -p 10001"/>
+			
+		-->
+		<!-- params: only one param is supported now
+		
+			endPoint: should be in format of "name:tcp -h ip -p port".
+			
+		-->
+		<SessionManager endPoint="SessionManager:tcp -h TIANSHAN2_SS_CL -p 10001"/>
+		
+		<!-- here you can config the endpoint for listening event adapter -->
+		<!-- example: 
+		
+			<ListenEventAdapter endPoint="tcp -h 192.168.81.99 -p 5735"/>
+			
+		-->
+		<!-- params: only one param is supported now
+		
+			endPoint: should be in format of "tcp -h ip -p port", notice that the ip address must be local machine's.
+			
+		-->
+		<ListenEventAdapter endPoint="tcp -h TIANSHAN2_SS_CL -p 5735"/>
+
+		<!-- example: 
+		
+			<ClientSession timeout="600" adapterEndPoint="tcp -h 192.168.81.99 -p 5736" evictorSize="1000"/>
+			
+		-->
+		<!-- params: four params are supported now
+		
+			timeout: must be an integer, its default value is 600, and it's unit is second
+				if not configed or set to a invalid value, plug-in will set it to 600;
+				if it's value is less than 60, plug-in will set it to 60; (even config value < 60)
+			
+			adapterEndPoint: should be in format of "tcp -h ip -p port", notice that 
+				the ip address must be local machine's.
+			
+			evictorSize: must be an integer, default value is 1000.
+				if not configed or set it to a invalid value, plug-in will set it to 1000;
+				if its value is less than 200, plug-in will set it to 200; (even config value < 200)
+				if its value is larger than 5000, plug-in will set it 5000. (even config value > 5000)
+				
+			threadPoolSize: must be an in teger, default value is 5.
+				if not configed or set it to a invalid value, plug-in will set it to 3;
+				if its value is less than 3, plug-in will set it to 3; (even config value < 3)
+			
+		-->
+		<ClientSession timeout="3600" adapterEndPoint="tcp -h TIANSHAN2_SS_CL -p 5736" evictorSize="1000" threadPoolSize="5"/>
+		
+		<!-- example: 
+		
+			<SafeStore path="E:\tianshan\data\ssm_NGOD_r2c1"/>
+			
+		-->
+		<!-- params: only one param is supported now
+		
+			path: config the path of SafeStore
+			
+		-->
+		<SafeStore path="R:\ssm_NGOD_r2c1"/>
+		
+		<!-- example: 
+		
+			<NodeGroup id="0"/>
+			
+		-->		
+		<!-- params: only on param is configurable now.
+		
+			id: the node group id to be configured
+			
+		-->		
+		<NodeGroup id="0"/>
+		
+		<!-- example: 
+		
+			<Announce globalSeqNumber="1"/>
+			
+		-->		
+		<!-- params: only on param is configurable now.
+		
+			globalSeqNumber: 0 or 1. default value is 0.
+			
+		-->		
+		<Announce useGlobalSequence="0"/>
+		
+		<!-- example: just for test now.
+		
+			<SetParameter enableHeartBeat="0"/>
+			
+		-->		
+		<!-- params: only on param is configurable now.
+		
+			enableHeartBeat: 0 or 1. default value is 0.
+			
+		-->		
+		<SetParameter enableHeartBeat="0"/>
+		
+	</ssm_NGOD_r2c1>
+		
+	<!-- here you can set the properties of ice runtime -->
+	<!-- example: 
+		<IceProperties>
+			<prop name="Ice.Override.Timeout" value="20000"/>
+			<prop name="Ice.ThreadPool.Server.Size" value="10"/>
+			<prop name="Ice.ThreadPool.Client.Size" value="10"/>
+			<prop name="Freeze.DbEnv.env_name.DbRecoverFatal" value="0"/>
+		<IceProperties/>
+	-->
+	<IceProperties>
+		<prop name="Ice.Override.Timeout" value="20000"/>
+		<prop name="Ice.ThreadPool.Server.Size" value="5"/>
+		<prop name="Ice.ThreadPool.Client.Size" value="10"/>
+		<prop name="Freeze.DbEnv.E:\tianshan\data\ssm_NGOD_r2c1.DbRecoverFatal" value="0"/>
+	</IceProperties>
+	
+	<SOPRestriction>
+	   <sop name="CL70001N0SL0" serviceGroup="30">
+		<streamer netId="10.15.10.250/BoardNumber0" />
+	   </sop>
+	   <sop name="CL70001N0SL1" serviceGroup="31">
+		<streamer netId="10.15.10.250/BoardNumber1" />
+	   </sop>
+	   <sop name="CL70001N0SL2" serviceGroup="32">
+		<streamer netId="10.15.10.250/BoardNumber2" />
+	   </sop>
+	   <sop name="CL70001N0SL3" serviceGroup="33">
+		<streamer netId="10.15.10.250/BoardNumber3" />
+	   </sop>
+	   <sop name="CL70001N0SL4" serviceGroup="34">
+		<streamer netId="10.15.10.250/BoardNumber4" />
+	   </sop>
+	   <sop name="CL70001N0SL5" serviceGroup="35">
+		<streamer netId="10.15.10.250/BoardNumber5" />
+	   </sop>
+	   <sop name="CL70001N2SL0" serviceGroup="10">
+		<streamer netId="10.15.10.252/BoardNumber0" />
+	   </sop>
+	   <sop name="CL70001N2SL1" serviceGroup="11">
+		<streamer netId="10.15.10.252/BoardNumber1" />
+	   </sop>
+	   <sop name="CL70001N2SL2" serviceGroup="12">
+		<streamer netId="10.15.10.252/BoardNumber2" />
+	   </sop>
+	   <sop name="CL70001N2SL3" serviceGroup="13">
+		<streamer netId="10.15.10.252/BoardNumber3" />
+	   </sop>
+	   <sop name="CL70001N2SL4" serviceGroup="14">
+		<streamer netId="10.15.10.252/BoardNumber4" />
+	   </sop>
+	   <sop name="CL70001N2SL5" serviceGroup="15">
+		<streamer netId="10.15.10.252/BoardNumber5" />
+	   </sop>
+	   <sop name="CL70001N1SL0" serviceGroup="20">
+		<streamer netId="10.15.10.251/BoardNumber0" />
+	   </sop>
+	   <sop name="CL70001N1SL1" serviceGroup="21">
+		<streamer netId="10.15.10.251/BoardNumber1" />
+	   </sop>
+	   <sop name="CL70001N1SL2" serviceGroup="22">
+		<streamer netId="10.15.10.251/BoardNumber2" />
+	   </sop>
+	   <sop name="CL70001N1SL3" serviceGroup="23">
+		<streamer netId="10.15.10.251/BoardNumber3" />
+	   </sop>
+	   <sop name="CL70001N1SL4" serviceGroup="24">
+		<streamer netId="10.15.10.251/BoardNumber4" />
+	   </sop>
+	   <sop name="CL70001N1SL5" serviceGroup="25">
+		<streamer netId="10.15.10.251/BoardNumber5" />
+	   </sop>
+	   <sop name="NGODTEST" >
+		<streamer netId="10.15.10.250/BoardNumber0" />
+		<streamer netId="10.15.10.250/BoardNumber1" />
+		<streamer netId="10.15.10.250/BoardNumber2" />
+		<streamer netId="10.15.10.250/BoardNumber3" />
+		<streamer netId="10.15.10.250/BoardNumber4" />
+		<streamer netId="10.15.10.250/BoardNumber5" />
+		<streamer netId="10.15.10.251/BoardNumber0" />
+		<streamer netId="10.15.10.251/BoardNumber1" />
+		<streamer netId="10.15.10.251/BoardNumber2" />
+		<streamer netId="10.15.10.251/BoardNumber3" />
+		<streamer netId="10.15.10.251/BoardNumber4" />
+		<streamer netId="10.15.10.251/BoardNumber5" />
+		<streamer netId="10.15.10.252/BoardNumber0" />
+		<streamer netId="10.15.10.252/BoardNumber1" />
+		<streamer netId="10.15.10.252/BoardNumber2" />
+		<streamer netId="10.15.10.252/BoardNumber3" />
+		<streamer netId="10.15.10.252/BoardNumber4" />
+		<streamer netId="10.15.10.252/BoardNumber5" />
+	   </sop>
+	</SOPRestriction>
+
+</TianShan>

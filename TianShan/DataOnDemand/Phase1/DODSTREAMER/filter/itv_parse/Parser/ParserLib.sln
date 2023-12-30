@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Parser", "ParserLib.vcproj", "{3CDE116F-5F8F-4979-8F20-D5EA3E9DE28C}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectDependencies) = postSolution
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{3CDE116F-5F8F-4979-8F20-D5EA3E9DE28C}.Debug.ActiveCfg = Debug|Win32
+		{3CDE116F-5F8F-4979-8F20-D5EA3E9DE28C}.Debug.Build.0 = Debug|Win32
+		{3CDE116F-5F8F-4979-8F20-D5EA3E9DE28C}.Release.ActiveCfg = Release|Win32
+		{3CDE116F-5F8F-4979-8F20-D5EA3E9DE28C}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3CDE116F-5F8F-4979-8F20-D5EA3E9DE28C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3CDE116F-5F8F-4979-8F20-D5EA3E9DE28C}.Debug|Win32.Build.0 = Debug|Win32
+		{3CDE116F-5F8F-4979-8F20-D5EA3E9DE28C}.Release|Win32.ActiveCfg = Release|Win32
+		{3CDE116F-5F8F-4979-8F20-D5EA3E9DE28C}.Release|Win32.Build.0 = Release|Win32
+		{B5D3FE80-0750-4192-B7D5-9EC4CD58D291}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B5D3FE80-0750-4192-B7D5-9EC4CD58D291}.Debug|Win32.Build.0 = Debug|Win32
+		{B5D3FE80-0750-4192-B7D5-9EC4CD58D291}.Release|Win32.ActiveCfg = Release|Win32
+		{B5D3FE80-0750-4192-B7D5-9EC4CD58D291}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

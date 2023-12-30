@@ -1,0 +1,13 @@
+============
+  Linux
+============
+1) login with build / itv
+2) cd /home/build/CMEBuild_start
+3) ./autobuild4CME -b /home/build/CMEBuild  -u build -p nightly
+
+============
+  Windows
+============
+E:\CMEV2Build_start>ZQAutoBuild4CME.bat --buildroot=E:\CMEV2Build --projects=CMEV2 --skipgetsource
+
+E:\CMEV2Build_start>ZQAutoBuild4CME.bat --buildroot=E:\CMEV2Build --projects=CMEV2

@@ -1,0 +1,7 @@
+###set timeout value (ms in time).default value is 150000 ms .you cab modify the value if necessarily.
+
+#CRMetaData_analogCopyPurchase  flag of type bool, default 0. if you test,and you would set analogcopypurchase=1
+analogcopypurchase=0
+timeout=150000
+threadcount=10
+threadinterval=30

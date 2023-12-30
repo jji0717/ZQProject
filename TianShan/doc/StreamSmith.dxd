@@ -1,0 +1,149 @@
+// ===========================================================================
+// Copyright (c) 2006 by
+// ZQ Interactive, Inc., Shanghai, PRC.,
+// All Rights Reserved.  Unpublished rights reserved under the copyright
+// laws of the United States.
+// 
+// The software contained  on  this media is proprietary to and embodies the
+// confidential technology of ZQ Interactive, Inc. Possession, use,
+// duplication or dissemination of the software and media is authorized only
+// pursuant to a valid written license from ZQ Interactive, Inc.
+// 
+// This software is furnished under a  license  and  may  be used and copied
+// only in accordance with the terms of  such license and with the inclusion
+// of the above copyright notice.  This software or any other copies thereof
+// may not be provided or otherwise made available to  any other person.  No
+// title to and ownership of the software is hereby transferred.
+//
+// The information in this software is subject to change without notice and
+// should not be construed as a commitment by ZQ Interactive, Inc.
+//
+// Ident : $Id: StreamSmith.dxd $
+// Branch: $Name:  $
+// Author: Hui Shao
+// Desc  : 
+//
+// Revision History: 
+// ---------------------------------------------------------------------------
+// see section of "Revision History" in manpage
+// ===========================================================================
+/*!
+
+@page page_tsss The StreamSmith Service
+
+@author  Hui Shao
+@date    2007-7-30
+@version 0.1
+
+@section sec_ssrevision Revision History
+$Log: /ZQProjs/TianShan/doc/StreamSmith.dxd $
+  
+  1     10-11-12 16:05 Admin
+  Created.
+  
+  1     10-11-12 15:39 Admin
+  Created.
+  
+  1     07-08-23 18:19 Hui.shao
+
+@section sec_sscontents Contents
+- @subpage page_ssoverview 	"Overview"
+- @subpage page_ssstrmpl   	"Stream and Playlist"
+- @subpage conf_StreamSmith   	"Configuration"
+
+*/
+
+////////////////////////////////////////////////////////////////////////////////////////////
+/*!
+
+@page page_ssoverview Overview
+
+@section sec_ssintro Introduction
+StreamSmith runs as a standalone RTSP server on a MediaCluster server as a reliable NT service to accept RTSP requests or TianShan invocations. It drives the stream execution over SeaChange Vstream. It is also a dynamic server-side playlist executor and supports back-to-back items and critical-start items in the list.
+StreamSmith offers users a flexible extension opportunity with modules, a plugin-architecture. User will be able to customize the process for RTSP requests with applying various business application logic, or define own RTSP specification extensions.
+
+@section sec_ssfeat Features
+The SeaChange StreamSmith consists of the following features:
+@subsection subsec_ssfeat1 Standalone RTSP server-side
+a socket server with RTSP protocol support: 
+@li RTSP, RFC 2326
+@li SeaChange Interactive Television Real Time Streaming Protocol Client Interface Specification, 2.0.3
+@li Up to 2000 concurrent connections
+@li Session context management
+@li Verbs are supported: OPTION, DESCRIBE, SETUP, PLAY, PAUSE, TEARDOWN, PING
+@li Support of SSL on RTSP connection
+
+@subsection sec_ssfeat2 Dynamic server-side playlist support
+@li Sequential stream automation
+@li Flexible on-fly list operations: insert, erase, seek¡­
+@li Support of back-to-back items and critical-start items
+
+@subsection sec_ssfeat3 Plugin framework
+@li Provides flexible customization opportunities
+@li Business application logic map to plugin
+@li Private business context
+@li External application service support
+
+@subsection sec_ssfeat4 Local Vstream resource management
+Manages local streaming resource at VstreamPort level
+
+@subsection sec_ssfeat5 Standalone Streaming w/o SeaChange Axiom
+StreamSmith will be able to stream off a MediaCluster node directly without Axiom's help. The content can be ordered as simple as the filename in SeaFile file system
+
+@subsection sec_ssfeat6 Support of Motorola ECM pre-encryption MPEG files
+When an item is inserted into the playlist, the content can be specified with the pre-encryption attributes, currently support Motorola ECM pre-encryption
+
+@section sec_ssarch Architectual Overview
+In a typical single node SeaChange MediaCluster, the following diagrams show StreamSmith service and its installation directory layout structure.
+@image html streamsmith_arch.JPG
+
+The StreamSmith consists of three parts: 
+@subsection sec_ssarchtsss TianShan StreamService
+StreamSmith is an implementation of TianShan StreamService definition over a SeaChange MediaCluster server. It response all the invocation defined on StreamService interface
+thru its plugin ssm_TianShan
+
+@subsection sec_ssarchdspl Dynamic Server-side Playlist (DSPL) Engine
+StreamSmith is also an implementation of dynamic server-side playlist(DSPL) engine. It supports the accesses defined in TianShan Playlist, and supports on-fly list operations: insert, erase, seek¡­.
+Also it supports back-to-back and critical-start playlist items
+
+@subsection sec_ssrtspsvr RTSP Server-side
+When the StreamSmith is deployed as a standalone system, it can work as a RTSP server to directly handle the client request via RTSP protocol. The RTSP Request process
+is as same as that of TianShan RtspProxy, please refer to RtspProxy for more detail about the RTSP request handling.
+
+*/
+
+////////////////////////////////////////////////////////////////////////////////////////////
+/*!
+
+@page page_ssstrmpl Stream and Playlist
+@section sec_ssstrmstate Stream Item State Diagram
+Each item within the playlist will follow the below state changes:
+@image html strm_states.JPG
+
+@section sec_ssdspl Dynamic Server-side Playlist
+In addition to the above state diagram on each individual item, the playlist can be divided into the following stages based on the current streaming position:
+@image html dspl_def.JPG
+ 
+@subsection sec_ssdspl_fs FreeStreaming (FS)
+the range between two protection edges within a streamable item. Speed-changes to any other speeds will be applicable in this stage, and any stages can seek into this stage.
+
+@subsection sec_ssdspl_EoH EdgeOfHeader (EoH)
+the protection edge at the beginning of the leading item in a list. In this stage, change to another backward speed is forbidden.
+
+@subsection sec_ssdspl_EoIS EdgeOfItemSwitch (EoIS)
+the protection edge consist of the last 10 seconds of a previous item and the first 10 seconds of the successor item. Once the streaming enters this stage, the next item in the same direction will be pre-loaded and all speed changes will be denied
+
+@subsection sec_ssdspl_EoT EdgeOfTail (EoT)
+the protection edge at the end of last item of the list. It is configurable and should be longer than RealtimeTail. Once the streaming enters this stage, the streaming will be forced to be normal speed. Speed changes to any forward direction will be denied.
+This protection is on by default for all playlist instance, but can be turned off by calling Playlist::enableEoT(false)
+
+@subsection sec_ssdspl_RT RealtimeTail (RT)
+This is a native Vstream feature, it overlaps partial EoT at the end. Any forward speed will be adjusted to normal when the streaming reaches this.
+
+@subsection sec_ssdspl_state DSPL State Diagram
+The following is the state summary of the above playlist stages:
+@image html dspl_states.JPG
+
+
+*/
+

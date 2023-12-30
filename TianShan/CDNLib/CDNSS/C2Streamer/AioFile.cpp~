@@ -1,0 +1,1179 @@
+
+#include <ZQ_common_conf.h>
+#include <malloc.h>
+#include <assert.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <SystemUtils.h>
+#include <TimeUtil.h>
+#include "C2StreamerEnv.h"
+#include "AioFile.h"
+#include "C2SessionHelper.h"
+#include "ReadClient.h"
+#include <SystemInfo.h>
+//#include <http.h>
+#include <ReadHttp.h>
+
+#define PAGE_SIZE (4*1024)
+
+namespace C2Streamer
+{
+
+//////////////////////////////////////////////////////////////////////
+////
+Notifier::Notifier( ):
+mbSignalled(false){
+}
+
+Notifier::~Notifier() {
+}
+
+void Notifier::broadcast() {
+    boost::mutex::scoped_lock gd(mLocker);
+    mbSignalled = true;
+    mCond.notify_all();
+}
+
+bool Notifier::timedwait( uint64 ms ) {
+    boost::mutex::scoped_lock gd(mLocker);
+    if(mbSignalled)
+        return true;
+    if( ms == (uint64)-1) {
+        mCond.wait(gd);
+    } else {
+        mCond.timed_wait(gd,boost::posix_time::milliseconds(ms) );
+    }
+    return mbSignalled;
+}
+
+//////////////////////////////////////////////////////////
+/// CacheCenter
+CacheCenter::CacheCenter( C2StreamerEnv& env)
+:mEnv(env),
+mbRunning(false),
+mBufferCount(0),
+mDefaultBufferCount(0),
+mFreeBufferCount(0),
+mOutStandingIoReqCount(0),
+mExpireChecker(env,*this){
+    mHead = new Buffer( *this, 0 , 0 ); // a dummy one, will not be used
+    mBufferCountDelta = 10;
+}
+
+CacheCenter::~CacheCenter( ) {
+    stop();
+    delete mHead;
+}
+
+void CacheCenter::stop( ) {
+    // FIXME: 未完成，需要考虑所有的buffer的引用计数应该都???.也就是是没有任何一个user在使用buffer
+    // 的时候才能destroy这个buffer
+    if( mbRunning ) {
+        mbRunning = false;
+    }
+    mReaderPtr = NULL;
+    mExpireChecker.stop();
+}
+
+bool CacheCenter::start( size_t bufferSize, size_t defaultBufferCount , size_t delta ) {
+
+    if(delta < 4 )
+        delta = 4;  
+    defaultBufferCount = ( defaultBufferCount + delta -1 ) / delta * delta;
+    mDefaultBufferCount = defaultBufferCount;
+    mBufferCountDelta = delta;
+    mBufferSize = bufferSize;
+
+    MLOG(ZQ::common::Log::L_INFO, CLOGFMT(CacheCenter,"start() create buffer, size[%zu] count[%zu]"),
+            bufferSize, defaultBufferCount);
+    //启动过程中，就不用加锁了
+    for( size_t i = 0; i < defaultBufferCount ; i += delta ) {
+        if( !addBuffer( ) ) {
+            MLOG(ZQ::common::Log::L_ERROR, CLOGFMT(CacheCenter,"start() not enough memory"));
+            return false;
+        }
+    }
+    mbRunning = true;
+    mExpireChecker.start();
+
+    if ( 0 == mEnv.getConfig().clientType)
+    {
+        AioClient::Ptr pt = new AioClient(this, mEnv);
+        if ( !pt->initClient() )
+        {
+            MLOG(ZQ::common::Log::L_ERROR, CLOGFMT(CacheCenter,"start() init aioclient failed."));
+            pt = NULL;
+            return false;
+        }
+        mReaderPtr = pt;
+    }
+    else if ( 1 == mEnv.getConfig().clientType)
+    {
+        ZQ::StreamService::C2ClientConf c2conf;
+        c2conf.url                  = mEnv.getConfig().C2ClientURL;
+        c2conf.upstreamIP           = mEnv.getConfig().C2ClientUpStreamIP;
+        c2conf.clientTransfer       = mEnv.getConfig().C2ClientTransfer;
+        c2conf.locateIP             = mEnv.getConfig().C2ClientHttpCRGAddr;
+        c2conf.locatePort           = mEnv.getConfig().C2ClientHttpCRGPort;
+        c2conf.defaultGetPort       = mEnv.getConfig().C2ClientDefaultGetPort;
+        c2conf.transferRate         = mEnv.getConfig().C2ClientTransferRate;
+        c2conf.waitBufferTime       = mEnv.getConfig().C2ClientWaitBufferTime;
+        c2conf.indexTimeout         = mEnv.getConfig().C2ClientIndexTimeout;
+        c2conf.indexRetryTimes      = mEnv.getConfig().C2ClientIndexRetryTimes;
+        c2conf.mainfileTimeout      = mEnv.getConfig().C2ClientMainfileTimeout;
+        c2conf.mainfileRetryTimes   = mEnv.getConfig().C2ClientMainfileRetryTimes;
+
+
+        ZQ::StreamService::ReadClient::Ptr pt = new ZQ::StreamService::ReadClient( this, *(mEnv.getLogger()), c2conf);
+        if (pt == NULL )
+        {
+            MLOG(ZQ::common::Log::L_ERROR, CLOGFMT(CacheCenter,"start() create c2client  failed."));
+            return false;
+        }
+        mReaderPtr = pt;
+    }
+    else if ( 2 == mEnv.getConfig().clientType )
+    {
+        ReadHttp::Ptr pt = new ReadHttp(this, 
+                                      mEnv.getConfig().httpProxyURL,
+                                      mEnv.getConfig().segmentURL,
+                                      *(mEnv.getLogger()),
+                                      mEnv.getConfig().httpTimeOut);
+        if (pt == NULL)
+        {
+            MLOG(ZQ::common::Log::L_ERROR, CLOGFMT(CacheCenter,"start() create http client  failed."));
+            return false;
+        }
+        mReaderPtr = pt;
+    }
+    else
+    {
+        MLOG(ZQ::common::Log::L_ERROR, CLOGFMT(CacheCenter,"start() not valid client type [%d]."), mEnv.getConfig().clientType);
+        return false;
+    }
+    return true;
+}
+
+bool CacheCenter::addBuffer( ) {
+    size_t size = mBufferSize * mBufferCountDelta;
+    char* addr = (char*)memalign( 4096, size );
+    if(!addr) {
+        MLOG(ZQ::common::Log::L_EMERG, CLOGFMT(CacheCenter,"addBuffer() not enough memory"));
+        return false;
+    }
+    for( size_t i = 0 ; i < mBufferCountDelta ; i ++ ) {
+        ++mBufferCount;
+        Buffer* buf = new Buffer( *this, &addr[i*mBufferSize], mBufferSize);
+        chainBuffer( buf);
+    }
+    MLOG(ZQ::common::Log::L_DEBUG,CLOGFMT(CacheCenter, "allocated buffer no.%zu: %zuB"),    mBufferCount, mBufferSize);
+    return true;
+}
+
+AioFile* CacheCenter::open( const std::string& filename ) {
+    ZQ::common::MutexGuard gd(mLocker);
+    FILEINFOMAP::iterator it = mFileInfos.find( filename );
+    if( it != mFileInfos.end() ) {
+        it->second->open( filename );
+        return it->second;
+    } 
+    AioFile* f = new AioFile(mEnv, *this);
+    if( f->open( filename) < 0 ) {
+        delete f;
+        return 0;
+    }
+    mFileInfos[filename] = f;
+    return f;
+}
+
+void CacheCenter::close( AioFile* f ) {
+    ZQ::common::MutexGuard gd(mLocker);
+    if( f->clear() > 0 ) 
+        return;
+    
+    FILEINFOMAP::iterator it = mFileInfos.find( f->filename() );
+    assert( it != mFileInfos.end() );
+    assert( it->second == f );
+    mFileInfos.erase( it );
+    delete f;
+}
+
+BufferUser CacheCenter::makeRequest( AioFile* file, uint64 offset, size_t size, bool preRead ) {
+    BufferUser ret(*this,0);
+    if( size <= 0 ) 
+        return ret;
+
+    if( mEnv.getConfig().mUseBufferIo ) {
+        return makeRequest( file, offset, size, 0 );
+    }
+
+    bool firstBlock = true;
+    uint64 start = offset / mBufferSize * mBufferSize;
+    uint64 end = ( offset + size + mBufferSize - 1 ) /mBufferSize * mBufferSize;
+    
+    size_t blockCount = (size_t)( ( end-start ) / mBufferSize );
+    
+    blockCount = mEnv.getConfig().mCacheReadaheadCount + 1;
+    end= start + mBufferSize * blockCount;
+
+    std::vector<Buffer*> bufs;
+    int64        bufferSize = 0;
+    {
+        Buffer* bufret = 0;
+        
+        RangeInfo ri;
+        ri.filename = file->filename();
+
+        ZQ::common::MutexGuard gd(mLocker);
+        for( uint64 i = start ; i < end; i += mBufferSize ) {
+            ri.offset = i;
+            CACHEDMAP::iterator it = mCachedData.find( ri );
+            if( it == mCachedData.end() ) {
+                // create a new cache data entry
+                Buffer* buf= getBuffer();
+                if(!buf) {
+                    MLOG(ZQ::common::Log::L_EMERG, CLOGFMT(CacheCenter,"request() no available free buffer"));
+                    return ret;
+                }
+                assert(buf->vacant());
+                buf->attach( file->filename(), file->fd(), i );
+                buf->request();
+                bufs.push_back( buf );
+                bufferSize += buf->bufSize();
+                mCachedData[ ri ] = buf;
+            } else  if( firstBlock ) {
+                bufret = it->second;
+                useBuffer( bufret );
+            }
+            firstBlock = false;
+        }
+        mOutStandingIoReqCount += bufs.size();
+        file->newRequest( bufs.size() );
+        ret = BufferUser(*this,bufret);
+    }
+
+    if( bufs.size() > 0 ) {
+          for (int i = 0; i < bufs.size(); i++ )
+          {
+                Buffer* buf = bufs[i];
+                MLOG(ZQ::common::Log::L_DEBUG, CLOGFMT(CacheCenter, "makeRequest() get file[%s] offset[%lu], buffer size[%d]."),
+                      buf->filename().c_str(), buf->offsetInFile(), buf->bufSize());
+                if ( 1 == mEnv.getConfig().clientType )
+                {
+					if( buf->reqCount != 0)
+						assert(false && "one buffer request more than onece.");
+					buf->reqCount++;
+					buf->resCount = 0;
+                    int64 timeNow = ZQ::common::TimeUtil::now();
+                    std::string name = buf->filename();
+                    uint64 offset = buf->offsetInFile();
+                    onLatency(name, offset, timeNow);
+                }
+          }
+        mReaderPtr->read(bufs);
+        MLOG(ZQ::common::Log::L_DEBUG, CLOGFMT(CacheCenter,"makeRequest() read called with file[%s] buffers[%d] size[%lld]"), 
+                file->filename().c_str(), bufs.size(), bufferSize);
+    }
+    if( !preRead && ret.valid() )
+        ret.wait();
+    return ret;
+}
+
+void CacheCenter::queryAssetAttributes(const std::string& filename, AssetAttribute::Ptr attr ) {
+    assert( mReaderPtr != NULL );
+    MLOG(ZQ::common::Log::L_INFO,CLOGFMT(CacheCenter,"query attribute for:%s"),filename.c_str());
+    mReaderPtr->queryIndexInfo( filename, attr);
+}
+
+BufferUser CacheCenter::findBuffer( AioFile* file, uint64 offset ) {
+    uint64 start = offset / mBufferSize * mBufferSize;
+    RangeInfo ri;
+    ri.filename = file->filename();
+    ri.offset = start;
+    ZQ::common::MutexGuard gd(mLocker);
+    CACHEDMAP::iterator it = mCachedData.find(ri);
+    if( it == mCachedData.end())
+        return BufferUser(*this,0);
+    else
+        return BufferUser(*this,it->second);
+}
+
+
+BufferUser CacheCenter::makeRequest( AioFile* file, uint64 offset, size_t size, int ) {
+    BufferUser ret(*this,0);
+
+    bool firstBlock = true;
+    uint64 start = offset / mBufferSize * mBufferSize;
+    uint64 end = ( offset + size + mBufferSize - 1 ) /mBufferSize * mBufferSize;
+    size_t blockCount = (size_t)( ( end-start ) / mBufferSize );
+    blockCount = mEnv.getConfig().mCacheReadaheadCount + 1;
+    end= start + mBufferSize * blockCount;
+
+    std::vector<Buffer*> bufs;
+    {
+        Buffer* bufret = 0;
+        
+        RangeInfo ri;
+        ri.filename = file->filename();
+
+        ZQ::common::MutexGuard gd(mLocker);
+        for( uint64 i = start ; i < end; i += mBufferSize ) {
+            ri.offset = i;
+            CACHEDMAP::iterator it = mCachedData.find( ri );
+            if( it == mCachedData.end() ) {
+                // create a new cache data entry
+                Buffer* buf= getBuffer();
+                if(!buf) {
+                    MLOG(ZQ::common::Log::L_EMERG, CLOGFMT(CacheCenter,"request() no available free buffer"));
+                    return ret;
+                }
+                assert(buf->vacant());
+                buf->attach( file->filename(), file->fd(), i );
+                buf->request();
+                bufs.push_back( buf );
+                mCachedData[ ri ] = buf;
+            } else  if( firstBlock ) {
+                bufret = it->second;
+                useBuffer( bufret );
+            }
+            firstBlock = false;
+        }
+        mOutStandingIoReqCount += bufs.size();
+        file->newRequest( bufs.size() );
+        ret = BufferUser(*this,bufret);
+    }
+
+    if( bufs.size() > 0 ) {
+        StopWatch sw;sw.start();
+        std::vector<Buffer*>::iterator it = bufs.begin();
+        for( ; it != bufs.end() ; it ++ ) {
+            Buffer* buf = *it;
+            ssize_t result = pread( buf->mFd, buf->mBuf, buf->mBufSize, buf->mOrigOffset );
+            buf->mSize = result < 0 ? 0 : result;
+        }
+        sw.stop();
+        requestComplete( bufs );
+        for( it = bufs.begin(); it != bufs.end(); it ++ ) {
+            (*it)->signal();
+        }
+        MLOG(ZQ::common::Log::L_DEBUG, CLOGFMT(CacheCenter,"makeRequest() took[%lu]ms to read [%d] buffers for file[%s]"),
+                sw.span()/1000, (int)bufs.size(),bufs[0]->mFileName.c_str());
+    }
+    if( ret.valid() )
+        ret.wait();
+    return ret;
+}
+
+void CacheCenter::requestComplete( const std::vector<Buffer*>& bufs ) {
+    ZQ::common::MutexGuard gd(mLocker);
+    for(std::vector<Buffer*>::const_iterator itBuf = bufs.begin(); itBuf != bufs.end(); itBuf ++ ) {
+        Buffer* buf = *itBuf;
+        FILEINFOMAP::iterator it = mFileInfos.find(buf->filename());
+        if( it != mFileInfos.end() ) {
+            AioFile* file = it->second;
+            if(file->requestDone(1) <= 0 ) {
+                delete file;
+                mFileInfos.erase(it);
+            }
+            if(buf->users() <=0 ) {
+                chainBuffer(buf);
+            }
+            int64 timeoutInterval = mEnv.getConfig().defaultTimeOut;
+            int lastError = buf->lastError();
+            if(lastError != 0 ) {
+                int category = lastError >> 28;
+                switch( category ) {
+                case Buffer::ECATE_FILEIO:
+                    timeoutInterval = mEnv.getConfig().fioErrTimeOut;
+                    break;
+                case Buffer::ECATE_HTTP:
+                    timeoutInterval = mEnv.getConfig().httpErrTimeOut;
+                    break;
+                case Buffer::ECATE_SOCKET:
+                    timeoutInterval = mEnv.getConfig().socketErrTimeOut;
+                    break;
+                case Buffer::ECATE_TIMEOUT:
+                    timeoutInterval = mEnv.getConfig().otherErrTimeOut;
+                    break;
+				case Buffer::ECATE_CLIENTTIMEOUT:
+					timeoutInterval = 0; // evict from cache immediately
+					break;
+                default:
+                    break;
+                }
+            }
+            buf->updateTimer( timeoutInterval );
+            mExpireChecker.add(buf);
+        }
+        buf->signal();
+    }
+    assert( mOutStandingIoReqCount >= bufs.size() );
+    mOutStandingIoReqCount -= bufs.size();
+}
+
+bool CacheCenter::listEmpty() const {
+    return !mHead || mHead->vacant();
+}
+
+void CacheCenter::chainBuffer( Buffer* buf ) {
+    ZQ::common::MutexGuard gd(mLocker);
+	if( mFreeBufferCount == 0 ) {
+		mHead = buf;
+		mFreeBufferCount = 1;
+	} else {
+		Buffer* head = mHead;
+		assert( head != 0 );
+		unchainBuffer( buf );
+
+		Buffer* last = head->prev();
+		last->next() = buf;
+		head->prev() = buf;
+
+		buf->next() = head;
+		buf->prev() = last;
+
+		mFreeBufferCount ++;
+	}
+    MLOG(ZQ::common::Log::L_INFO,CLOGFMT(CacheCenter,"chainBuffer:free[%zu] total[%zu] cached[%zu] outstanding[%zu] :%p"),
+          mFreeBufferCount, mBufferCount, mCachedData.size(), mOutStandingIoReqCount, buf );
+}
+
+void CacheCenter::unchainBuffer( Buffer* buf ) { 
+    {
+        ZQ::common::MutexGuard gd(mLocker);
+        if( buf->vacant() )
+            return;
+		if( mFreeBufferCount != 1 ) {
+			buf->next()->prev() = buf->prev();
+			buf->prev()->next() = buf->next();
+		}
+        buf->prev() = buf->next() = buf;
+        mFreeBufferCount --;
+		if(mFreeBufferCount<=0)
+			mHead = NULL;
+    }
+    assert(buf->vacant());
+    MLOG(ZQ::common::Log::L_INFO,CLOGFMT(CacheCenter,"unchainBuffer:free[%zu] total[%zu] cached[%zu] outstanding[%zu]: %p"),
+          mFreeBufferCount, mBufferCount, mCachedData.size(), mOutStandingIoReqCount, buf );
+}
+
+void CacheCenter::invalidateCache( const std::string& filename, uint64 offset ) {
+    RangeInfo ri;
+    ri.filename = filename;
+    ri.offset = offset;
+
+    ZQ::common::MutexGuard gd(mLocker);
+    CACHEDMAP::iterator it = mCachedData.find(ri);
+    if( it == mCachedData.end()) {
+        return;
+    }
+    Buffer* buf = it->second;
+	MLOG(ZQ::common::Log::L_DEBUG, CLOGFMT(CacheCenter,"invalidateCache, evict cached data: %s :%lu, now:%ld timeoutTarget:%ld"),
+			filename.c_str(), offset, ZQ::common::now(), buf->timeoutTarget());
+    if( buf->inExpireChecker())
+        mExpireChecker.remove(buf);
+    mCachedData.erase(it);
+}
+
+void CacheCenter::useBuffer( Buffer* buf ) {
+    unchainBuffer(buf);
+}
+
+Buffer* CacheCenter::getBuffer( ) {
+    ZQ::common::MutexGuard gd(mLocker);
+    if( listEmpty() ) {
+        addBuffer();
+        if( listEmpty() ) {
+            MLOG(ZQ::common::Log::L_ERROR,CLOGFMT(CacheCenter,"getBuffer() failed to allocate new buffer block"));
+			return NULL;
+        }
+    }
+    Buffer* buf = mHead->next();
+	assert(buf->reqCount == 0);
+    assert(buf->users() <= 0 );
+    invalidateCache( buf->filename(), buf->offsetInFile() );
+    if(buf->inExpireChecker())
+		mExpireChecker.remove(buf);
+    unchainBuffer(buf);
+	MLOG(ZQ::common::Log::L_DEBUG, CLOGFMT(CacheCenter,"getBuffer(), get from free list, info of buffer: file[%s:%ld] timeoutTarget[%ld]"),
+			buf->filename().c_str(), buf->offsetInFile(), buf->timeoutTarget());
+    assert(buf->vacant());
+    buf->reset();
+    return buf;
+}
+
+void CacheCenter::evictCache( const std::string& filename, uint64 offset, size_t size ) {
+    uint64 start = offset /mBufferSize*mBufferSize;
+    uint64 end = ( offset + size + mBufferSize - 1) / mBufferSize * mBufferSize;
+    for( uint64 i = start; i < end; i += mBufferSize) {
+        invalidateCache( filename, i );
+    }
+}
+
+void CacheCenter::innerEvictCache( const std::string& filename,uint64 offset ) {
+    invalidateCache( filename, offset );
+}
+
+void CacheCenter::refBuffer( Buffer* buf) {
+    ZQ::common::MutexGuard gd(mLocker);
+    buf->mUsers.inc();
+}
+
+void CacheCenter::unrefBuffer( Buffer* buf) {
+    ZQ::common::MutexGuard gd(mLocker);
+    if( buf->mUsers.dec() <= 0 ) {
+        assert( buf->vacant() );
+        chainBuffer(buf);
+    }
+}
+
+void CacheCenter::onIndexInfo( AssetAttribute::Ptr attr ) {
+    if(!attr)
+        return;
+    MLOG(ZQ::common::Log::L_INFO,CLOGFMT(CacheCenter,"onIndexInfo() got asset attribute for [%s]: pwe[%s] lastError[%d]"),
+            attr->filename().c_str(), attr->pwe()?"true":"false", attr->lastError());
+    attr->signal();
+}
+
+void    CacheCenter::onRead( const std::vector<Buffer*>& bufs )
+{
+      MLOG(ZQ::common::Log::L_DEBUG,CLOGFMT(CacheCenter,"onRead() entry with buffers[%d]."), bufs.size());
+      for (int i = 0; i < bufs.size(); i++ )
+      {
+            Buffer* buf = bufs[i];
+            MLOG(ZQ::common::Log::L_DEBUG, CLOGFMT(CacheCenter, "onRead() get file[%s] data [%lu: %d], buffer size[%d]."),
+                  buf->filename().c_str(), buf->offsetInFile(), buf->getDataSize(), buf->bufSize());
+            if ( 1 == mEnv.getConfig().clientType )
+            {   
+				if(buf->resCount != 0 )
+					assert(false && "one buffer response more than once");
+				buf->resCount ++;
+				buf->reqCount=0;
+                std::string name = buf->filename();
+                uint64 offset = buf->offsetInFile();
+                int64 timeNow = ZQ::common::TimeUtil::now();
+				int latency = mEnv.getLatencyMap(name, offset, timeNow);
+				if (latency >= 0)
+					MLOG(ZQ::common::Log::L_DEBUG, CLOGFMT(CacheCenter, "onRead() file[%s] received [%ld +%d] took[%d]ms"), name.c_str(), offset, buf->getDataSize(), latency);
+            }
+
+      }
+      requestComplete(bufs);
+      return;
+}
+
+void CacheCenter::onLatency(std::string& fileName, int64 offset,int64 time)
+{
+    int lencty = mEnv.getLatencyMap(fileName, offset, time);
+    if (lencty < 0)
+        return;
+    MLOG(ZQ::common::Log::L_DEBUG, CLOGFMT(CacheCenter, "onLatency() get file[%s] offset[%ld] latency[%d]."),fileName.c_str() , offset, lencty);
+	if( 1 == mEnv.getConfig().clientType )
+	{
+		int64 timeNow = ZQ::common::TimeUtil::now();
+		mEnv.setLatencyMap(fileName, offset, timeNow);
+	}			
+    return;
+} 
+
+void CacheCenter::onError( int err )
+{
+      MLOG(ZQ::common::Log::L_DEBUG,CLOGFMT(CacheCenter,"onError() entry with errcode[%d]."), err);
+}
+
+///////////////////////////////////////
+// AioFile
+AioFile::AioFile( C2StreamerEnv& env, CacheCenter& cc )
+    :mEnv(env),
+    mCc(cc),
+    mFd(-1),
+    mUsers(0),
+    mOutstandingReqs(0) {
+}
+
+AioFile::~AioFile( ) {
+    if(mFd<0)
+        return;
+    ::close(mFd);
+    mFd = -1;
+}
+void AioFile::close( ) {
+    mCc.close(this);
+}
+
+long AioFile::open( const std::string& filename ) {
+      MLOG(ZQ::common::Log::L_DEBUG, CLOGFMT(AioFile,"open() entry with file[%s]."), filename.c_str());
+      if (0 == mEnv.getConfig().clientType )
+      {
+            std::string aioFile = C2Streamer::fsConcatPath(mEnv.getDocumentRootFolder(), filename);
+            if (mFd < 0)
+            {
+                  mFd = ::open( aioFile.c_str(), O_RDONLY|O_DIRECT );
+                  if( mFd < 0 ) {
+                        MLOG(ZQ::common::Log::L_ERROR, CLOGFMT(AioFile,"open() failed to open file[%s]"), aioFile.c_str());
+                        return -1;
+                  }
+                  MLOG(ZQ::common::Log::L_DEBUG, CLOGFMT(AioFile,"open()  open aiofile[%s] successful."), aioFile.c_str());
+                  mFileName = aioFile;
+                  mUsers = 1;
+            }
+            else{
+                  ++ mUsers;
+            }
+      }
+      else if ( 1 == mEnv.getConfig().clientType || 2 == mEnv.getConfig().clientType)
+      {
+            mFd = -1;
+            mFileName = filename;
+            if (mUsers < 1){
+                  mUsers = 1;
+            }
+            else{
+                  ++ mUsers;
+            }
+      }
+      else
+      {
+            MLOG(ZQ::common::Log::L_ERROR, CLOGFMT(AioFile,"open() not valid client type[%d]."),mEnv.getConfig().clientType);
+            return -1;
+      }
+    return mUsers + mOutstandingReqs;
+}
+
+void AioFile::invalidateCache( uint64 offset, size_t size ) {
+    mCc.evictCache( mFileName, offset, size );
+}
+
+long AioFile::clear( ) {
+    if( -- mUsers < 0 ){
+        assert(false);
+        mUsers = 0;
+    }
+    return mUsers + mOutstandingReqs;
+}
+
+long AioFile::newRequest( long count ) {
+    mOutstandingReqs += count;
+    return mUsers + mOutstandingReqs;
+}
+
+long AioFile::requestDone( long count ) {
+    if( ( mOutstandingReqs -= count )< 0 ) {
+        //assert(false);
+        mOutstandingReqs = 0 ;
+    }
+    return mUsers + mOutstandingReqs;
+}
+
+BufferUser AioFile::read( uint64 offset, size_t size, bool preRead ) {
+    //issue a read request
+    BufferUser  bu =  mCc.makeRequest( this, offset, size, preRead );
+    bu.seek( offset % mCc.getBufferSize() );
+    return bu;
+}
+
+//////////////////////////////////////////////////////////
+// Buffer
+Buffer::Buffer( CacheCenter& cc, char* addr, size_t size )
+    :mCc(cc),
+    mN(0),
+    mBuf(addr),
+    mBufSize(size){
+    mPrev = mNext = this;
+    mExpireNext = mExpirePrev = this;
+    reset();
+	reqCount = 0;
+	resCount = 0;
+}
+
+Buffer::~Buffer( ) {
+}
+
+void Buffer::reset( ) {
+    mN = new Notifier();
+    mSize = 0 ;
+    mLastError = 0;
+    mFd = 0;
+    mOrigOffset = 0;
+    mReqTimeStamp = 0;
+    mRespTimeStamp = 0;
+    mTimeoutTarget = 0;
+}
+
+void Buffer::updateTimer(int64 delta) {
+	assert( mTimeoutTarget == 0 );
+    mTimeoutTarget = ZQ::common::now() + delta;
+}
+
+void Buffer::signal( ) {
+    mRespTimeStamp = ZQ::common::now();
+    mN->broadcast();
+}
+void Buffer::request( ) {
+    mReqTimeStamp = ZQ::common::now();
+}
+
+bool Buffer::wait( uint64 ms ) {
+    return mN->timedwait( ms );//wait for ever
+}
+
+void Buffer::get( ) {
+    mCc.refBuffer(this);
+}
+
+void Buffer::put( ) {
+    mCc.unrefBuffer(this);
+}
+
+void Buffer::attach( const std::string& filename, int fd, uint64 offsetInFile ) {
+    mFd = fd;
+    mFileName = filename;
+    mOrigOffset = offsetInFile;
+}
+
+char* Buffer::data( ) {
+    return mBuf;
+}
+
+/////////////////////////////////////////////////
+/// BufferUser
+BufferUser::BufferUser( CacheCenter& cc, Buffer* buf ):
+    mCc(cc),
+    mBuf(buf),
+    mOffset(0){     
+    if(mBuf) {
+        mBuf->get();
+    }
+}
+
+BufferUser::BufferUser( const BufferUser& b ):
+    mCc(b.mCc),
+    mBuf(0){    
+    mOffset = b.mOffset;
+    if(mBuf != b.mBuf) {
+        if(mBuf)
+            mBuf->put();
+        mBuf = b.mBuf;
+        if(mBuf) {
+            mBuf->get();
+        }
+    }   
+}
+
+BufferUser::~BufferUser() {
+    if(mBuf) {
+        mBuf->put();
+    }
+    mBuf = 0;
+}
+BufferUser& BufferUser::operator=( const BufferUser& b ) {  
+    mOffset = b.mOffset;
+    if(mBuf != b.mBuf) {
+        if( mBuf)
+            mBuf->put();
+        mBuf = b.mBuf;
+        if(mBuf) {
+            mBuf->get();
+        }
+    }   
+    return *this;
+}
+
+bool BufferUser::valid( ) const {
+    return mBuf != 0 ;
+}
+
+size_t BufferUser::seek( size_t offset ) {
+    if(!mBuf) return 0;
+    mOffset = offset;
+    if( mOffset > mBuf->mSize ) {
+        mOffset = mBuf->mSize;
+    }
+    return mOffset;
+}
+
+size_t BufferUser::tell( ) const {
+    return mOffset;
+}
+
+size_t BufferUser::dataLeft( ) const {
+    if( !mBuf)
+        return 0;
+
+    if( mOffset >= mBuf-> mSize ) 
+        return 0;
+    return mBuf->mSize - mOffset;
+}
+
+size_t BufferUser::advance( size_t dataSize ) {
+    mOffset += dataSize;
+    assert( mOffset <= mBuf->mSize );
+    return mOffset;
+}
+
+char* BufferUser::data( ) {
+    if(!mBuf) return 0;
+    if( dataLeft() <= 0 ) return 0;
+    return mBuf->data() + mOffset;
+}
+
+ExpireChecker::ExpireChecker( C2StreamerEnv& env, CacheCenter& cc ):
+    mEnv(env),
+    mCc(cc),
+    mHead(cc,0,0),
+    mbRunning(false){
+}
+
+ExpireChecker::~ExpireChecker() {
+}
+
+bool ExpireChecker::start() {
+    mbRunning = true;
+    return ZQ::common::NativeThread::start();
+}
+
+void ExpireChecker::stop( ) {
+    if(!mbRunning)
+        return;
+    mbRunning = false;
+    mbSignalled = true;
+    mCond.notify_one();
+    waitHandle(-1);
+}
+
+void ExpireChecker::add( Buffer* buf ) {
+    if(!buf)
+        return;
+    bool signal = false;
+    {
+        boost::mutex::scoped_lock  gd(mLocker);
+        if(buf->inExpireChecker())
+            return;
+        buf->addToExpireChecker( &mHead);
+        mBuffers.insert(buf);
+        signal = buf->timeoutTarget() < mNextWakeup;
+        if(signal)
+            mbSignalled = true;
+    }
+    if(signal) {
+        mCond.notify_one();
+    }
+}
+
+void ExpireChecker::remove( Buffer *buf ) {
+    if(!buf)
+        return;
+    boost::mutex::scoped_lock gd(mLocker);
+    if(!buf->inExpireChecker())
+        return;
+    buf->removeFromExpireChecker();
+    mBuffers.erase(buf);
+}
+
+int ExpireChecker::run( ){
+    int64 idledefault = 10 * 1000;
+    int64 idlemin = 5;
+    int64 idle = idledefault;
+    mNextWakeup = ZQ::common::now() + idle;
+    mbSignalled = false;
+    MLOG(ZQ::common::Log::L_INFO,CLOGFMT(expireChecker,"running"));
+    while( mbRunning ) {
+        {
+            boost::mutex::scoped_lock gd(mLocker);
+            if(!mbSignalled)
+                mCond.timed_wait(gd, boost::posix_time::milliseconds(idle));
+            mbSignalled = false;
+        }
+        if(!mbRunning)
+            break;
+        while( true ) {
+            Buffer* buf = 0;
+            {
+                boost::mutex::scoped_lock gd(mLocker);
+                int64 timenow = ZQ::common::now();
+                if( mBuffers.empty() ) {
+                    idle = idledefault;
+                    mNextWakeup = timenow + idle;
+                    break;
+                }
+                buf = *mBuffers.begin();
+                if( buf->timeoutTarget() <= timenow ) {
+                    buf->removeFromExpireChecker();
+                    mBuffers.erase(mBuffers.begin());
+					MLOG(ZQ::common::Log::L_DEBUG, CLOGFMT(CacheCenter,"ExpireChecker() buffer[%s:%ld] target:%ld, now:%ld"),
+							buf->filename().c_str(), buf->offsetInFile(), buf->timeoutTarget(), timenow );
+                } else {
+                    idle = timenow - buf->timeoutTarget();
+                    if( idle < idlemin ) 
+                        idle = idlemin;
+                    mNextWakeup = timenow + idle;
+                    buf = 0;
+                    break;
+                }
+            }
+            if(buf)
+                mCc.innerEvictCache( buf->filename(), buf->offsetInFile() );
+        }
+    }
+    MLOG(ZQ::common::Log::L_INFO,CLOGFMT(expireChecker,"stopped"));
+    return 0;
+}
+
+///////////////////////////////////
+//AioRunner
+AioRunner::AioRunner( C2StreamerEnv& env, AioClient::Ptr ptr ):
+mEnv(env), mClientPtr(ptr),mbRunning(false), mReaper(env,ptr) {
+    memset( &mIoCtx, 0, sizeof(mIoCtx) );
+}
+
+AioRunner::~AioRunner(){
+    stop();
+    mClientPtr = NULL;
+}
+
+bool AioRunner::start( size_t groupCount) {
+    stop();
+    int rc = io_setup( 65536/groupCount,&mIoCtx);
+    if( rc != 0 ) {
+        MLOG(ZQ::common::Log::L_ERROR, CLOGFMT(AioRunner,"failed to invoke io_setup:[%d]"),rc);
+        return false;
+    }
+    mbRunning = true;
+    if(!mReaper.start(&mIoCtx))
+        return false;
+    return ZQ::common::NativeThread::start();
+}
+
+void AioRunner::stop( ) {
+    if( !mbRunning )
+        return;
+    mbRunning = false;
+    waitHandle(-1);
+    mReaper.stop();
+    io_destroy(mIoCtx);
+}
+
+size_t AioRunner::pushBuffer( Buffer* b ) {
+    boost::mutex::scoped_lock gd(mLocker);
+    mList.push_back(b);
+    mCond.notify_one();
+    return ++mBufferCount;
+}
+
+int AioRunner::run( ) {
+	{
+		int policy;
+		struct sched_param param;
+
+		pthread_getschedparam(pthread_self(), &policy, &param);
+		param.sched_priority = sched_get_priority_max(policy);
+		pthread_setschedparam(pthread_self(), policy, &param);
+	}
+
+    BufferList bufs;
+    MLOG(ZQ::common::Log::L_INFO,CLOGFMT(AioRunner,"running"));
+    while(mbRunning) {
+        {
+            boost::mutex::scoped_lock gd(mLocker);
+            mCond.timed_wait( gd, boost::posix_time::milliseconds(500) );
+            if(!mbRunning)
+                break;
+            bufs.swap(mList);
+            mBufferCount = 0;
+        }
+        while( !bufs.empty() ) {//俺是一个一个的submit???还是群殴???
+            Buffer* buf = bufs.front();
+            bufs.pop_front();
+            struct iocb cb;
+            io_prep_pread( &cb, buf->mFd, buf->mBuf, buf->mBufSize, buf->mOrigOffset );
+            StopWatch sw;sw.start();
+            cb.data =(void*)buf;
+            struct iocb* arrcb =&cb;
+            if( int rc = io_submit( mIoCtx, 1, &arrcb)  != 1 ){
+                MLOG(ZQ::common::Log::L_ERROR, CLOGFMT(AioRunner,"failed to submit io request for file[%s] error[%d]"),
+                        buf->mFileName.c_str(), rc);
+            }
+            sw.stop();
+            if( sw.span()/1000 > mEnv.getConfig().mFsIoCommitThreshold ){
+                MLOG(ZQ::common::Log::L_INFO, CLOGFMT(AioRunner,"took [%lu]ms to submit [%d] blocks read request begin at [%s][%lu]"),
+                        sw.span()/1000, 1, buf->mFileName.c_str(), buf->mOrigOffset );
+            }
+        }
+        bufs.clear();
+    }
+
+    MLOG(ZQ::common::Log::L_INFO,CLOGFMT(AioRunner,"stopped"));
+    return 0;
+}
+
+//////////////////////////////////////////////////////////////////////////
+//
+AioEventReaper::AioEventReaper( C2StreamerEnv& env, AioClient::Ptr ptr) :
+    mEnv(env),
+    mClientPtr(ptr),
+    mbRunning(false) {
+    memset( &mIoCtx,0,sizeof(mIoCtx) );
+}
+
+AioEventReaper::~AioEventReaper() {
+    stop();
+    mClientPtr = NULL;
+}
+
+bool AioEventReaper::start( io_context_t* ctx ) {
+    memcpy(&mIoCtx,ctx,sizeof(mIoCtx) );
+    stop( );
+    mbRunning = true;
+    return ZQ::common::NativeThread::start();
+}
+
+void AioEventReaper::stop( ) {
+    if(!mbRunning)
+        return;
+    mbRunning = false;
+    waitHandle(-1);
+}
+
+int AioEventReaper::run( ) {
+    MLOG(ZQ::common::Log::L_INFO,CLOGFMT(AioEventReaper,"running"));
+    struct timespec ts;
+    ts.tv_sec = 1;
+    ts.tv_nsec = 0;
+    const size_t MAX_EVENT_COUNT = 1204;
+    struct io_event events[ MAX_EVENT_COUNT ];
+    while(mbRunning) {
+        int rc = io_getevents( mIoCtx, 1, MAX_EVENT_COUNT, events, &ts );
+        if(!mbRunning)
+            break;
+        if( rc < 0 ) {
+            if( -rc != EINTR ) {
+                MLOG(ZQ::common::Log::L_ERROR, CLOGFMT(AioEventReaper,"run() got an error[%d] in io_getevents"),rc);
+            }
+            continue;
+        } else if( rc == 0 ) {
+            continue;
+        }
+        //mCc.requestComplete( events, (size_t)rc );
+        mClientPtr->requestComplete(events, (size_t)rc);
+    }
+
+    MLOG(ZQ::common::Log::L_INFO,CLOGFMT(AioEventReaper,"stopped"));
+    return 0;
+}
+
+AioClient::AioClient( IReaderCallback* pCallBack, C2StreamerEnv& env)
+    :_cacheCallBack(pCallBack), mEnv(env)
+{
+    //initClient();
+}
+
+AioClient::~AioClient()
+{
+    unInitClient();
+    _cacheCallBack = NULL;
+}
+
+bool AioClient::read( const std::vector<Buffer*>& bufs )
+{
+    if (bufs.empty())
+    {
+        MLOG(ZQ::common::Log::L_WARNING,CLOGFMT(AioClient,"read() entry with empty bufs."));
+        return true;
+    }
+    Buffer* buf = bufs[0];
+    std::string fileName = buf->filename();
+    if (fileName.empty())
+    {
+        MLOG(ZQ::common::Log::L_ERROR,CLOGFMT(AioClient,"read() get the fileName failed."));
+        return false;
+    }
+    Ptr pt(this);
+    AioRunner* r = getRunner( fileName );
+    assert( r != 0 );
+    size_t pendingReqs = 0;
+    std::vector<Buffer*>::const_iterator it = bufs.begin();
+    for( ; it != bufs.end() ; it ++ ) 
+    {
+        pendingReqs = r->pushBuffer( *it );
+    }
+    if(pendingReqs > 10 ) 
+    {
+        MLOG(ZQ::common::Log::L_INFO, CLOGFMT(AioClient,"read(), too many pending io_requests[%d]"),(int)pendingReqs);
+    }
+    pt = NULL;
+    return true;
+}
+
+bool AioClient::initClient()
+{
+      MLOG(ZQ::common::Log::L_DEBUG, CLOGFMT(AioClient,"initClient() entry."));
+      size_t numcore = boost::thread::hardware_concurrency();
+      if(numcore == 0 || numcore > 20 ) {
+            numcore = 20;
+      }
+      Ptr p(this);
+      for(size_t i = 0 ; i < numcore; i ++ ) {
+            AioRunner* r = new AioRunner( mEnv, p);
+            if(!r->start(numcore)) {
+                  r->stop();
+                  delete r;
+                  return false;
+            }
+            mRunners.push_back(r);
+      }
+      return mRunners.size() > 0 ;
+}
+
+void AioClient::unInitClient()
+{
+      MLOG(ZQ::common::Log::L_DEBUG, CLOGFMT(AioClient,"unInitClient() entry."));
+      std::vector<AioRunner*>::iterator it = mRunners.begin();
+      for( ; it != mRunners.end(); it ++ ) {
+            (*it)->stop();
+      }
+      mRunners.clear();
+}
+
+AioRunner*  AioClient::getRunner( const std::string& filename ) {
+      std::size_t seed = 0;
+      boost::hash_combine( seed, filename );
+      seed = seed % mRunners.size();
+      return mRunners[seed];
+}
+
+void AioClient::requestComplete( struct io_event* evts, size_t count ) {
+      if (count <= 0)
+            return;
+      std::vector<Buffer*> bufs;
+      for(size_t i = 0 ; i < count; i ++ ) 
+     {
+            Buffer* buf = (Buffer*)(evts[i].data);
+            long result = (long)evts[i].res;
+            buf->setDataSize( result < 0 ? 0 : result );
+            if( result<0) {
+                buf->setLastError( (int)result, Buffer::ECATE_FILEIO);
+            }
+            bufs.push_back(buf);
+     } 
+      _cacheCallBack->onRead(bufs);
+      return;
+}
+
+void AioClient::requestComplete( const std::vector<Buffer*>& bufs ) {
+      _cacheCallBack->onRead(bufs);
+      return;
+}
+
+bool AssetAttribute::expired( )const {
+    if( inprogress() )
+        return false;
+    if( mOpenForWrite || ( mLastError != 0 ) ) {
+        if( mTimestamp > 0 &&(ZQ::common::now() - mTimestamp) > (int64)mEnv.getConfig().attributesTimeoutInPwe ) 
+            return true;
+    }
+    return false;
+}
+
+}//namespace C2Streamer
+

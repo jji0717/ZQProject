@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TianShan>
+  <!-- global property definition.		
+		usage: ${<property>} will be replaced with the property value.
+		For example, define the global property "TianShanHomeDir" and value here, then we could use ${TianShanHomeDir} in the xml 
+		that included this file instead of directly inputing the value there.
+	-->
+  <Definitions>
+    <property name="TianShanHomeDir" value="/opt/TianShan"/>
+    <property name="TianShanLogDir" value="${TianShanHomeDir}/logs"/>
+    <property name="TianShanConfDir" value="${TianShanHomeDir}/etc"/>
+    <property name="TianShanDatabaseDir" value="${TianShanHomeDir}/data"/>
+    <property name="TianShanCrashDumpDir" value="${TianShanLogDir}/crashdump"/>
+    <property name="TianShanUtilDir" value="${TianShanHomeDir}/utils"/>
+    <!-- TianShanRtRecDir: the directory where the programs may drop their temporary runtime records in -->
+    <property name="TianShanRtRecDir" value="${TianShanLogDir}/rtrec"/>
+    <!-- TianShanGroupAddr: TianShan components may advertise to each other in a same deployment via multicast messaging -->
+    <property name="TianShanGroupAddr" value="239.200.200.1"/>
+    <!-- HostNetID: hostname is recommend, please config it, used in CPESvc -->
+    <property name="HostNetID" value="UML-0123456"/>
+    <!-- ServerNetIf: The local Server to Server IP 
+		     IngestNetIf: The local ingestion network interface, usually use the propagation IP, used in CPESvc
+		     ClusterCSNetIf: MediaClusterCS service IP, used in CPESvc and StreamSmith
+		     CPENetIf: CPE Service IP, used in CRM_3dServer -->
+    <property name="ServerNetIf" value="127.0.0.1"/>
+    <property name="IngestNetIf" value="127.0.0.1"/>
+    <property name="ClusterCSNetIf" value="127.0.0.1"/>
+    <property name="CPENetIf" value=""/>
+    <!-- ServerNetIf_NC: The nature card ip address of the server(distinguish from a Legato one). -->
+    <property name="ServerNetIf_NC" value=""/>
+    <!-- TimeServer: The ip address of a remote server that provide the NTP time service. -->
+    <property name="TimeServer" value=""/>
+    <property name="PartitionServerEndpoint" value="SessionManager:tcp -h ${ServerNetIf} -p 10100"/>
+    <property name="SiteAdminEndpoint" value="tcp -h ${ServerNetIf} -p 10200"/>
+    <property name="PathManagerEndpoint" value="tcp -h ${ServerNetIf} -p 10300"/>
+    <property name="PrimeEventChannelEndpoint" value="tcp -h ${ServerNetIf} -p 11000"/>
+    <!-- used for serverload -->
+    <property name="RtspProxyIP" value=""/>
+    <property name="RtspProxyPort" value=""/>
+    <property name="snapshotTemplate" value="//10.50.12.4/e$/serverload.tmpl.xml"/>
+    <property name="snapshotTarget" value="C:/serverload.snapshot.xml"/>
+    <!-- Replica group id definition for whole site -->
+    <property name="ReplicaGroupId" value="SEAC00000"/>
+    <!-- -->
+    <property name="CdnSsSubscriberEndpoint" value="tcp -h ${ServerNetIf} -p 6789"/>
+    <property name="CacheStoreEndpoint" value="tcp -h ${ServerNetIf} -p 10700"/>
+    <property name="DefaultLogLevel" value="6"/>
+  </Definitions>
+</TianShan>

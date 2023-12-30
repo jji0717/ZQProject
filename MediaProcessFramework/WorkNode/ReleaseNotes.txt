@@ -1,0 +1,98 @@
+******************************* ZQ Media Process Framework *******************************
+*******************************  Work Node     SDK V0.0.3  *******************************
+* RELEASE NOTES
+	PRODUCTION NAME:MPF Worknode SDK
+	VERSION NO.: 0.0.3	
+	RELEASE DATE:24/June/2005
+	RELEASER: Bernie Zhao
+
+* WHAT'S NEW
+	1.Added Systray support interfaces
+	2.Sample projects update
+	3.Fixed some bugs
+	
+* PRECONDITION FOR THE INSTALLATION/UPGRADE
+	- OPERATION STEPS
+		1.link both xmlprc and worknode libraries to your project
+		2.add include directory as your extra include path
+	- CONFIGURATION AND PARAMETERS CHECKING 
+		1.	
+		2.	
+	- NEW FEATURE LIST
+		1.
+		
+	- FIXED BUG LIST
+		1.
+* OTHER REMARKS
+******************************* ZQ Media Process Framework *******************************
+*******************************  Work Node     SDK V0.0.2  *******************************
+* RELEASE NOTES
+	PRODUCTION NAME:MPF Worknode SDK
+	VERSION NO.: 0.0.2	
+	RELEASE DATE:23/May/2005
+	RELEASER: Bernie Zhao
+
+* WHAT'S NEW
+	1.Worknode heartbeat timer mechanism change
+	
+	2.Sample projects update
+	
+* PRECONDITION FOR THE INSTALLATION/UPGRADE
+	- OPERATION STEPS
+		1.link both xmlprc and worknode libraries to your project
+		2.add include directory as your extra include path
+	- CONFIGURATION AND PARAMETERS CHECKING 
+		1.	
+		2.	
+	- NEW FEATURE LIST
+		1.
+		
+	- FIXED BUG LIST
+		1.
+* OTHER REMARKS
+	
+******************************************************************************************
+******************************* ZQ Media Process Framework *******************************
+*******************************  Work Node     SDK V0.0.1  *******************************
+* RELEASE NOTES
+	PRODUCTION NAME:MPF Worknode SDK
+	VERSION NO.: 0.0.1	
+	RELEASE DATE:20/May/2005
+	RELEASER: Bernie Zhao
+
+* WHAT'S NEW
+	1.Manage-able and portable task 
+		a.Session attachment - task context fetching 
+		b.DummySession - standalone work node deployment 
+		c.Work factory and plugin architecture - highly portable 
+		d.Task request interface - friendly usage 
+		e.Task state change subscriber - flexible measualbe 
+	
+	2.Portable messaging modules 
+		a.XMLRPC over HTTP 
+	
+	3.User customizable request map
+		a.Use simple macros to enable user customized request map
+
+* PRECONDITION FOR THE INSTALLATION/UPGRADE
+	- OPERATION STEPS
+		1.link both xmlprc and worknode libraries to your project
+		2.add include directory as your extra include path
+	- CONFIGURATION AND PARAMETERS CHECKING 
+		1.	
+		2.	
+	- NEW FEATURE LIST
+		1.
+		
+	- FIXED BUG LIST
+		1.fix the abnomal sequence of nodegroup
+
+* OTHER REMARKS
+	2 samples are availble:
+	* DSSender - dummy session request sender: send dummy session attached work request to work node
+	* WorknodeApp - Work node application: simple work node application which implement a type of fake work 		with user customized request map
+
+	For more information, please refer to 
+	http://192.168.80.8/NextGeneration/Wiki.jsp?page=MediaProcessingFramework
+
+******************************************************************************************

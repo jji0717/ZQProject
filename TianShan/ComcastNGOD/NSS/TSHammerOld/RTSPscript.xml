@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+	<Session seqId="0123" desc="" iteration="2000" loop="1" interval="35" timeout="20">
+
+	<Server ip="10.15.10.33" port="554" connectType="Share" buffersize="4096"/>
+	
+	<SessCtx key="URL" value="rtsp://CatvOfChangNing/60010000?assetUID=3B9ACB3D" type="local"/>
+	<!--SessCtx key="URL" value="rtsp://CatvOfChangNing/60010000?assetUID=asset_schange.com.SEAC0000000000081C2F" type="local"/-->
+	
+	<SessCtx key="PORT" value="INC(1)" type="global"/>
+	
+	<!-- this SessCSeq is a reserve Macro, don't modify it-->
+	<!--SessCtx key="SessCSeq" value="INC(1)" type="global"/-->
+	
+	<Request skip="0">
+		<line>SETUP ${URL} RTSP/1.0${CLS}</line>
+		<line>CSeq: ${SessCSeq}${CLS}</line>
+		<line>User-Agent: ITVLibrary 1.0; amino${CLS}</line>
+		<line>Transport: MP2T/AVP/UDP;unicast;destination=255.1.1.1;client_port=${PORT}${CLS}</line>
+		<line>TianShan-Version: 1.0${CLS}</line>
+		<line>TianShan-ServiceGroup: 1${CLS}</line>
+		<line>TianShan-AppData: smartcard-id=0000000001;device-id=000000000000;home-id=1234567890${CLS}</line>
+		<line>${CLS}</line>
+	</Request>
+	
+	<Response>
+		<Header name="Session:" syntax="[^s]*(.*)" >
+			<SessCtx key="SessId" value="${1}" type="local"/>
+		</Header>
+		<!--Header name="a=control:" syntax="(.*)" >
+			<SessCtx key="URL" value="${1}" />
+		</Header-->
+	</Response>
+
+	<Sleep wait="1000" />
+
+	<Request skip="1">
+		<line>PLAY ${URL} RTSP/1.0${CLS}</line>
+		<line>Session: ${SessId}${CLS}</line>
+		<line>CSeq: ${SessCSeq}${CLS}</line>
+		<line>Scale: 1${CLS}</line>
+		<line>${CLS}</line>
+	</Request>
+	
+	<Response/>
+
+	<Sleep wait="5000" />
+	
+	<Request skip="0">
+		<line>TEARDOWN ${URL} RTSP/1.0${CLS}</line>
+		<line>Session: ${SessId}${CLS}</line>
+		<line>CSeq: ${SessCSeq}${CLS}</line>
+		<line>User-Agent: ITVLibrary 1.0; amino${CLS}</line>
+		<line>x-reason: User Requested Teardown${CLS}</line>
+		<line>${CLS}</line>
+	</Request>
+	
+	<Response/>
+	<Sleep wait="1000" />
+</Session>

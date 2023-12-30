@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JndiClient", "JndiClient.vcproj", "{83509EA9-89D8-4576-B875-0A02783FEC1F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C0DEE18A-189A-444C-99E2-BCF2FE865792} = {C0DEE18A-189A-444C-99E2-BCF2FE865792}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZQCommonStlp", "..\..\Common\dll\ZQCommonStlp.vcproj", "{C0DEE18A-189A-444C-99E2-BCF2FE865792}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JndiClientTest", "JndiClientTest.vcproj", "{5E1B677E-7A0B-4610-95C9-FEFC00A0C89A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{83509EA9-89D8-4576-B875-0A02783FEC1F} = {83509EA9-89D8-4576-B875-0A02783FEC1F}
+		{C0DEE18A-189A-444C-99E2-BCF2FE865792} = {C0DEE18A-189A-444C-99E2-BCF2FE865792}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 1
+		SccProjectUniqueName0 = ..\\..\\Common\\dll\\ZQCommonStlp.vcproj
+		SccProjectName0 = \u0022$/ZQProjs/Common/dll\u0022,\u0020INOAAAAA
+		SccLocalPath0 = ..\\..\\Common\\dll
+		SccProvider0 = MSSCCI:Microsoft\u0020Visual\u0020SourceSafe
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
+		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{83509EA9-89D8-4576-B875-0A02783FEC1F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{83509EA9-89D8-4576-B875-0A02783FEC1F}.Debug|Win32.Build.0 = Debug|Win32
+		{83509EA9-89D8-4576-B875-0A02783FEC1F}.Debug|x64.ActiveCfg = Debug|Win32
+		{83509EA9-89D8-4576-B875-0A02783FEC1F}.Release|Win32.ActiveCfg = Release|Win32
+		{83509EA9-89D8-4576-B875-0A02783FEC1F}.Release|Win32.Build.0 = Release|Win32
+		{83509EA9-89D8-4576-B875-0A02783FEC1F}.Release|x64.ActiveCfg = Release|Win32
+		{C0DEE18A-189A-444C-99E2-BCF2FE865792}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C0DEE18A-189A-444C-99E2-BCF2FE865792}.Debug|Win32.Build.0 = Debug|Win32
+		{C0DEE18A-189A-444C-99E2-BCF2FE865792}.Debug|x64.ActiveCfg = Debug|x64
+		{C0DEE18A-189A-444C-99E2-BCF2FE865792}.Debug|x64.Build.0 = Debug|x64
+		{C0DEE18A-189A-444C-99E2-BCF2FE865792}.Release|Win32.ActiveCfg = Release|Win32
+		{C0DEE18A-189A-444C-99E2-BCF2FE865792}.Release|Win32.Build.0 = Release|Win32
+		{C0DEE18A-189A-444C-99E2-BCF2FE865792}.Release|x64.ActiveCfg = Release|x64
+		{C0DEE18A-189A-444C-99E2-BCF2FE865792}.Release|x64.Build.0 = Release|x64
+		{5E1B677E-7A0B-4610-95C9-FEFC00A0C89A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5E1B677E-7A0B-4610-95C9-FEFC00A0C89A}.Debug|Win32.Build.0 = Debug|Win32
+		{5E1B677E-7A0B-4610-95C9-FEFC00A0C89A}.Debug|x64.ActiveCfg = Debug|Win32
+		{5E1B677E-7A0B-4610-95C9-FEFC00A0C89A}.Release|Win32.ActiveCfg = Release|Win32
+		{5E1B677E-7A0B-4610-95C9-FEFC00A0C89A}.Release|Win32.Build.0 = Release|Win32
+		{5E1B677E-7A0B-4610-95C9-FEFC00A0C89A}.Release|x64.ActiveCfg = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,8 @@
+<DCAConfiguration>
+	<DODJBOSS IPAddress="192.168.80.49" IPPort="1199" ConfigQueueName="queue/queue_cf"/>
+	<SRMLocation IPAddress="192.168.80.49" IPPort="4000"/>
+	<UpdateInterval UpdateInterval="5"/>
+	<RunMode LocalConfig="0"/>
+	<ConfigMsgTimeOut time = "7000"/>	
+	<RemoteLog UserName="" Password=""/>	
+</DCAConfiguration>

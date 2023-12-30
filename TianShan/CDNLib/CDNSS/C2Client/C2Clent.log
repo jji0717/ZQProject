@@ -1,0 +1,63 @@
+06-08 15:46:45.262 [   DEBUG ] C2Client  	[T0000181C] CID[1] constructor entry, enter phase [(null)]
+06-08 15:46:45.262 [   DEBUG ] C2Client  	[T0000181C] CID[1] destructor entry, release resources
+06-08 15:46:45.262 [   DEBUG ] C2Client  	[T0000181C] CID[2] constructor entry, enter phase [(null)]
+06-08 15:46:45.262 [   DEBUG ] C2Client  	[T0000181C] CID[2] destructor entry, release resources
+06-08 15:46:45.262 [   DEBUG ] C2Client  	[T0000181C] CID[3] constructor entry, enter phase [(null)]
+06-08 15:46:45.262 [   DEBUG ] C2Client  	[T0000181C] CID[3] destructor entry, release resources
+06-08 15:52:00.805 [   DEBUG ] C2Client  	[T000021F8] CID[1] constructor entry, enter phase [(null)]
+06-08 15:52:00.805 [    INFO ] C2Client  	[T000021F8] CID[1] startRequest() prepare for locate request
+06-08 15:53:30.993 [   DEBUG ] C2Client  	[T00003630] CID[1] constructor entry, enter phase [(null)]
+06-08 15:53:30.993 [    INFO ] C2Client  	[T00003630] CID[1] startRequest() prepare for locate request
+06-08 15:57:25.623 [   DEBUG ] C2Client  	[T0000387C] CID[1] constructor entry, enter phase [(null)]
+06-08 15:57:25.623 [    INFO ] C2Client  	[T0000387C] CID[1] startRequest() prepare for locate request
+06-08 15:57:32.001 [   DEBUG ] C2Client  	[T00001990] CID[1] constructor entry, enter phase [(null)]
+06-08 15:57:32.001 [    INFO ] C2Client  	[T00001990] CID[1] startRequest() prepare for locate request
+06-08 15:57:41.969 [   DEBUG ] LocateRequest  	[T00002580] [C2Client] bufReqID[1] process(), begin send locate request endpoint[(null):43052684]
+06-08 16:07:52.862 [   DEBUG ] C2Client  	[T00003ECC] CID[1] constructor entry, enter phase [(null)]
+06-08 16:07:52.862 [    INFO ] C2Client  	[T00003ECC] CID[1] startRequest() prepare for locate request
+06-08 16:19:28.121 [   DEBUG ] C2Client  	[T00003BC0] CID[1] constructor entry, enter phase [(null)]
+06-08 16:19:28.121 [    INFO ] C2Client  	[T00003BC0] CID[1] startRequest() prepare for locate request
+06-08 16:19:39.215 [   DEBUG ] LocateRequest  	[T00003274] [C2Client] bufReqID[1] process(), begin send locate request endpoint[(null):43052644]
+06-08 16:20:06.899 [   DEBUG ] C2Client  	[T00003608] CID[1] constructor entry, enter phase [(null)]
+06-08 16:20:07.502 [    INFO ] C2Client  	[T00003608] CID[1] startRequest() prepare for locate request
+06-08 16:45:49.089 [   DEBUG ] C2Client  	[T00000830] CID[1] constructor entry, enter phase [(null)]
+06-08 16:45:49.801 [    INFO ] C2Client  	[T00000830] CID[1] startRequest() prepare for locate request
+06-08 16:46:00.007 [   DEBUG ] LocateRequest  	[T00002304] [C2Client] bufReqID[1] process(), begin send locate request endpoint[(null):44549836]
+06-08 16:46:01.119 [   DEBUG ] RequestHandle  	[T00002304] [C2Client] bufReqID[1] entry onReqMsgSent(), send size[0]
+06-08 16:46:01.119 [   DEBUG ] RequestHandle  	[T00002304] [C2Client] bufReqID[1] start send body
+06-08 16:46:01.119 [   DEBUG ] RequestHandle  	[T00002304] [C2Client] bufReqID[1] entry onReqMsgSent(), send size[0]
+06-08 16:46:01.119 [   DEBUG ] RequestHandle  	[T00002304] [C2Client] bufReqID[1] entry onReqMsgSent(), send size[0]
+06-08 16:46:01.119 [   DEBUG ] RequestHandle  	[T00002304] [C2Client] bufReqID[1] get response
+06-08 16:46:01.119 [   DEBUG ] RequestHandle  	[T00002304] [C2Client] bufReqID[1] end send body
+06-08 16:46:01.119 [   DEBUG ] RequestHandle  	[T00002304] [C2Client] bufReqID[1] onHttpMessage(), received http header
+06-08 16:46:01.119 [   DEBUG ] RequestHandle  	[T00002304] [C2Client] bufReqID[1] onHttpComplete() entry
+06-08 16:47:42.812 [   DEBUG ] C2Client  	[T000039E0] CID[1] constructor entry, enter phase [(null)]
+06-08 16:47:43.738 [    INFO ] C2Client  	[T000039E0] CID[1] startRequest() prepare for locate request
+06-08 16:50:34.680 [   DEBUG ] C2Client  	[T00000478] CID[1] constructor entry, enter phase [(null)]
+06-08 16:50:35.812 [    INFO ] C2Client  	[T00000478] CID[1] startRequest() prepare for locate request
+06-08 16:54:04.390 [   DEBUG ] C2Client  	[T00003F28] CID[1] constructor entry, enter phase [(null)]
+06-08 16:54:05.053 [    INFO ] C2Client  	[T00003F28] CID[1] startRequest() prepare for locate request
+06-08 16:57:32.701 [   DEBUG ] C2Client  	[T000024B8] CID[1] constructor entry, enter phase [(null)]
+06-08 16:57:34.654 [    INFO ] C2Client  	[T000024B8] CID[1] startRequest() prepare for locate request
+06-08 16:57:44.675 [   DEBUG ] LocateRequest  	[T00001430] [C2Client] bufReqID[1] process(), begin send locate request endpoint[(null):43314788]
+06-08 16:57:45.176 [   DEBUG ] RequestHandle  	[T00001430] [C2Client] bufReqID[1] entry onReqMsgSent(), send size[0]
+06-08 16:57:45.176 [   DEBUG ] RequestHandle  	[T00001430] [C2Client] bufReqID[1] start send body
+06-08 16:57:45.176 [   DEBUG ] RequestHandle  	[T00001430] [C2Client] bufReqID[1] entry onReqMsgSent(), send size[0]
+06-08 16:57:45.176 [   DEBUG ] RequestHandle  	[T00001430] [C2Client] bufReqID[1] entry onReqMsgSent(), send size[0]
+06-08 16:57:45.176 [   DEBUG ] RequestHandle  	[T00001430] [C2Client] bufReqID[1] get response
+06-08 16:57:45.176 [   DEBUG ] RequestHandle  	[T00001430] [C2Client] bufReqID[1] end send body
+06-08 16:57:45.181 [   DEBUG ] RequestHandle  	[T00001430] [C2Client] bufReqID[1] onHttpMessage(), received http header
+06-08 16:57:45.181 [   DEBUG ] RequestHandle  	[T00001430] [C2Client] bufReqID[1] onHttpComplete() entry
+06-08 16:59:58.542 [   DEBUG ] C2Client  	[T000039B0] CID[1] constructor entry, enter phase [(null)]
+06-08 16:59:59.309 [    INFO ] C2Client  	[T000039B0] CID[1] startRequest() prepare for locate request
+06-08 17:13:08.097 [   DEBUG ] C2Client  	[T00003890] CID[1] constructor entry, enter phase [(null)]
+06-08 17:13:08.797 [    INFO ] C2Client  	[T00003890] CID[1] startRequest() prepare for locate request
+06-08 17:13:11.107 [   DEBUG ] LocateRequest  	[T00003890] [C2Client] bufReqID[1] process(), begin send locate request endpoint[(null):42790300]
+06-08 17:13:11.708 [   DEBUG ] RequestHandle  	[T00003EE0] [C2Client] bufReqID[1] entry onReqMsgSent(), send size[0]
+06-08 17:13:11.708 [   DEBUG ] RequestHandle  	[T00003EE0] [C2Client] bufReqID[1] start send body
+06-08 17:13:11.708 [   DEBUG ] RequestHandle  	[T00003EE0] [C2Client] bufReqID[1] entry onReqMsgSent(), send size[0]
+06-08 17:13:11.708 [   DEBUG ] RequestHandle  	[T00003EE0] [C2Client] bufReqID[1] entry onReqMsgSent(), send size[0]
+06-08 17:13:11.708 [   DEBUG ] RequestHandle  	[T00003EE0] [C2Client] bufReqID[1] get response
+06-08 17:13:11.708 [   DEBUG ] RequestHandle  	[T00003EE0] [C2Client] bufReqID[1] end send body
+06-08 17:13:11.711 [   DEBUG ] RequestHandle  	[T00003EE0] [C2Client] bufReqID[1] onHttpMessage(), received http header
+06-08 17:13:11.711 [   DEBUG ] RequestHandle  	[T00003EE0] [C2Client] bufReqID[1] onHttpComplete() entry

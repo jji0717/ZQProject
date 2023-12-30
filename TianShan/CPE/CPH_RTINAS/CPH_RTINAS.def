@@ -1,0 +1,10 @@
+
+; CPH_RTINAS.def : Declares the module parameters for the DLL.
+
+LIBRARY      "CPH_RTINAS"
+DESCRIPTION  'CPH_RTINAS" TianShan Content Provision Helper Object - RTINAS'
+
+EXPORTS
+    ; Explicit exports can go here
+InitCPH
+UninitCPH

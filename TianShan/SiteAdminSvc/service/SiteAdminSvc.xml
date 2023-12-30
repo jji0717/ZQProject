@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TianShan>	
+	 <Definitions src="TianShanDef.xml"/>
+	<default>
+		<!-- The EventChannel service where the services of this TianShan deployment will deliver events to.
+		     attributes:
+		       endpoint - the ICE endpoint to the EventChannel service
+		-->
+		<EventChannel endpoint="${PrimeEventChannelEndpoint}"/>
+				
+		<!--CrashDump can help devoloper diagnose the program when it crashed
+			if you set enableDump to "1" you must make sure that the path is accessible
+			path ===> crashdump path
+			enableDump ===> 1 for enable crashDump 0 for disable crashDump
+		 -->
+		<CrashDump path="${TianShanCrashDumpDir}" enableDump="1"/>
+		<!--
+		Database is used to store configuration and runtime data for service
+		path ==>the database path,it's must be accessible		
+		-->
+		<DatabaseFolder path="${TianShanDatabaseDir}" runtimeDbPath="${TianShanDatabaseDir}" />
+		<!--
+		store live txn and event data to an access datbase
+		destination: the output database's directory
+		template: the template for the output database
+		-->
+		<TxnData enabled="0" destination="${TianShanDatabaseDir}\Txn.History\TxnData.mdb" 
+			template="${TianShanUtilDir}\TxnData_template.mdb" size="20000000" number="5"/>
+		<!--
+		IceTrace can help devoloper trace the low level ice communication
+		enable ==>1 for enable 0 for disable
+		level  ==>log level 0 ~ 7
+		size   ==> log file size in byte
+    count  ==> file log count
+		-->
+		<IceTrace enabled="1" level="${DefaultLogLevel}" size="10240000" count="5"/>
+		<!--
+		Ice properties can influence ice's action		
+		-->
+		<IceProperties>		
+			<!-- prop name="propName" value="propValue" / --> 
+			<!-- prop name="propName" value="propValue" / -->
+			<prop name="Ice.Override.Timeout" value="15000" />
+			<prop name="Ice.Override.ConnectTimeout" value="2000" />
+		</IceProperties>		
+	</default>	
+	
+	<SiteAdmin>
+		<Service>
+			<!--
+			SiteAdmin service manage all virtual sites
+				endpoint ===>siteAdmin service endpoint
+				mode     ===> siteAdmin's url scheme, possible value: DNS, Path
+			-->
+			<SiteAdminService endPoint="tcp -h ${ServerNetIf} -p 10200" urlmode="DNS" />
+			<!--
+			the thread pool's size for service 5 ~ 20 is acceptable
+			-->			
+			<ServiceThread count="10"/>			
+		</Service>
+		<EventSinkPlugin>
+			<EventSinkModule 	file="${TianShanHomeDir}\bin\eventsender.dll" 
+								type="jms" 
+								config="${TianShanHomeDir}\etc\EventSenderForSiteAdmin.xml" 
+								enable="1"/>
+			
+		</EventSinkPlugin>		
+	</SiteAdmin>
+</TianShan>

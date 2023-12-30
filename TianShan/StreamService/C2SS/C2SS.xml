@@ -1,0 +1,234 @@
+<TianShan>
+
+<Definitions src="TianShanDef.xml">
+</Definitions>
+	
+<default>
+
+	<!-- CrashDump can help devoloper diagnose the program when it crashed
+			if you set enable to "1" you must make sure that the path is accessible
+			path: crashdump path
+			enabled: 1 to enable crashDump
+  --> 
+  <CrashDump path="${TianShanCrashDumpDir}" enabled="1"/> 
+
+	<!--The Ice trace log setting for all the services of this TianShan deployment.
+			attributes:
+				enabled: 1 if the Ice trace is enabled, default "0";
+				logfileSuffix: a suffix of the log filename, if the log service log file is test.log, then the ice trace log will be named test_ice.log by default until specify this fild;
+				level: the log level of the ice trace log;
+				size: the size that this trace log must roll.
+	--> 
+  <IceTrace enabled="1" level="7" size="10240000"/>
+  
+  <!-- example: 
+		
+			<EventChannel endPoint="tcp -h 10.50.12.4 -p 10000"/>
+			
+		-->
+		<!-- params: only one param is supported now
+		
+			endPoint: should be in format of "name:tcp -h ip -p port".
+			
+		-->
+  <!--EventChannel endpoint = "${PrimeEventChannelEndpoint}" -->
+  <EventChannel endPoint="${PrimeEventChannelEndpoint}"/>
+
+  <!--The default folder where the services of this TianShan deployment accesses their local databases if it is not defined by their individual configurations
+			attributes:
+				path: path to the location of database directory, default "../data/"
+				runtimePath: path to keep the runtime data, default as the value of path
+  -->
+  <Database path="${TianShanDatabaseDir}" runtimePath="${TianShanDatabaseDir}\runtime" />
+
+</default>
+
+<!--  configurations of the NSS service 
+  -->
+<C2SS netId="ZQ_OSTR">
+<!--
+	the C2ContentAche configure
+		timeout: the time to wait for all C2Attr return default 300000ms
+		managerSize:	the manager number of c2Clicent factory  
+		threadSize:		the thread number of c2Client factory
+		cacheSize:		the capacity of c2AttrCache
+-->
+<C2Content timeout="300000" managerSize="1" threadSize="1" cacheSize="5000"/>
+
+<!--
+		the httpCRG param for c2Client
+			UpStreamIP: IP of nic to bind on
+			addr:       the ip addr of service HttpCRG
+			port:				the port of service HttpCRG
+			url:				the url of HttpCRG RtspRequest
+			clientTransfer:		transfer ip in locate request body
+-->
+<HttpCRG UpStreamIP="" addr="0.0.0.0"  port="10080" url="/vodadi.cgi" clientTransfer="" defaultGetPort="12000" />
+  <!--
+  	control the sync or async for call c2client
+  		enable:		1  sync
+  							0	 async
+  		timeout:	timeout for sync only effective if the enable = 1
+
+<sync	enable="0" timeout="10000" />  
+ -->   
+  <!--Additional Ice properties if there is any, <prop /> is its sub element
+			attrib of <prop />:
+				name: the name of the Ice property
+				value: the value of the Ice property
+  -->
+  <IceProperties>
+    <!-- 
+  the following are performance tuning parameters, please don't modify if you are not an expert at them 
+  -->
+    <prop name="Ice.Trace.Network" value="1" />
+    <prop name="Ice.Trace.Protocol" value="0" />
+    <prop name="Ice.Trace.Retry" value="1" />
+    <prop name="Ice.Warn.Connections" value="1" />
+    <prop name="Ice.Warn.Endpoints" value="1" />
+    <prop name="Ice.Logger.TimeStamp" value="1" />
+    <prop name="Freeze.Warn.Deadlocks" value="1" />
+    <prop name="Freeze.Trace.Map" value="0" />
+    <prop name="Freeze.Trace.DbEnv" value="2" />
+    <prop name="Freeze.Trace.Evictor" value="0"/>
+    <prop name="Ice.Override.Timeout" value="15000" />
+    <prop name="Ice.Override.ConnectTimeout" value="2000"/>
+    <prop name="Ice.ThreadPool.Server.Size" value="100"/>
+    <prop name="Ice.ThreadPool.Server.SizeMax" value="160"/>
+    <prop name="Ice.ThreadPool.Client.Size" value="100" />
+    <prop name="Ice.ThreadPool.Client.SizeMax" value="130" />
+  </IceProperties>
+
+  <!-- Log file to publish thru SentryService
+		     	     attributes:
+		       		path    - full path of the log file
+		       		syntax  - the file defines the syntax of the events via the regular expressions
+	-->
+  <PublishedLogs>
+    <!--
+    <Log path="${TianShanLogDir}\NSS_NGODCS_events.log" syntax="${TianShanHomeDir}\etc\syntax.xml" key="NSSEvents" type=""/>
+    -->
+    <Log path="${TianShanLogDir}\NSS_NGODCS_events.log" syntax="${TianShanHomeDir}\etc\syntax.xml" key="CSEvents" type="FileLog"/>
+  </PublishedLogs>
+  
+	<!--The local bind endpoint that the NSS is serving on
+			attributes:
+				endpoint: the bind endpoint of this NSS
+				dispatchSize: the initial thread pool size to dispatch client requests, values in the range 4-20 are acceptable
+				dispatchMax: the max thread pool size to dispatch client requests
+				evictoreSize: the max evictor session size
+				threadPoolSize: the streaming part thread pool size for thread request, RTSP request will share this thread pool
+				contentstoreThreadPoolSize: the contentstore part thread size				
+	--> 
+	<Bind endPoint="tcp -h ${ServerNetIf} -p 10801"  dispatchSize="100" dispatchMax="160" evictorSize="1000" threadPoolSize="200" contentstoreThreadPoolSize="20"/>
+	
+	   <!-- example:
+  	<SessionHistory enable="1" />
+  		attributes:
+  			enable: log SessionHistory after receive TEARDOWN response
+  --> 
+  <SessionHistory enable="0"  path="${TianShanLogDir}\SessionHistory.Log"  level="7" maxCount="10" size="50000000" bufferSize="8192" flushTimeout="1" />
+ 		
+  <!--
+  		attributes:
+  			enableScaleChangeEvent: enable post scale change event
+  			enableStateChangeEvent: enable post state change event
+  --> 
+  <PostEvent enableScaleChangeEvent="1" enableStateChangeEvent="1" />
+	<!-- example:
+  <VideoServer> params:
+      netId: netId for this NSS service, use as ContentStore NetId and Streamer NetId for sentry config
+      vondor: specify the video server vendor, support NGOD and CCUR now
+      model: video server model(reserved)
+      enableMessageBinaryDump:	set to 1 to enable binary dump for communication messages, 0 for disable, default is 0
+      streamSyncInterval:	stream session sync with OSTR interval in seconds, the default is 3600 seconds
+      sessionRenewInterval:		weiwoo session renew interval in seconds, the default is 600 seconds
+  <VideoServer netId="CiscoXXXX" vendor="NGOD" model="" >
+  
+    <SessionInterface> params:
+      address: video server ip address
+      port: video server port to connect
+      maxSessionGroup: maximum session group number support by this service
+      maxSessionsPerGroup: maximum session numbers per session group, this value shoud betwen 600-1000
+      requestTimeout: RTSP interaction timeout(in ms)
+    <SessionInterface ip="10.15.10.35" port="554" maxSessionGroup="2" maxSessionsPerGroup="600" requestTimeout="5000">
+    
+      <FixedSpeedSet> params(only valid when vendor is CCUR): use to support multi trick files content streaming;
+			  enabel : 1 for enable , 0 for disable
+			  forward : forward speed set split with white space
+			  backward: backword speed set split with white space
+      <FixedSpeedSet enable="0" forward="2 1.26 1.5 1.8 2" backward="-2 -1.26 -1.5 -1.8 -2"/>
+    </SessionInterface>
+    
+    <ContentInterface> params: contentstore server information
+      ip: contentstore server ip address;
+      port: contentstore server port;
+      path: HTTP request path;
+      syncInterval: how long take this service to sync content with contentstore server
+      syncRetry: how many times NSS will retry sync content list when sync timeout or fail
+      mode: content interface mode, specify "SeaChange" will use cscontenttype in transfercontent metadata
+      httpTimeOut: http client recv timeout in ms
+      destroyEnable: 1=enable, 0=disable, when destroy is enable, NSS will send deleteContent A3 message to OSTR
+      urlPercentDecodeOnOutgoingMsg: 1=enable, 0=disable, predecode the percent-encoded charactors on the urls out goes to the 3rd party NGOD SS
+    <ContentInterface ip="10.15.10.33" port="8080" path="" syncInterval="100000" mode="SeaChange" httpTimeOut="200000" destroyEnable="1" urlPercentDecodeOnOutgoingMsg="0">
+    
+      <Feedback> params: this is configuration for contentstore server to connect and feedback content provision status
+        ip: local ip address;
+        port: local port(make sure it's avalible;
+			<Feedback ip="${ServerNetIf}" port="4444" />
+         
+      <StoreReplic> params: storage replica information(reserved)
+        groupId: replica group id;
+        replicaId: the replica id for specify if this is a valid replica
+        replicaPriority: 
+        timeout: replica response timeout;
+			<StoreReplica groupId="Group1" replicaId="No1" replicaPriority="0" timeout="0" />
+         
+      <DatabaseCache> params: configuration for local content database
+        volumeSize: volume evictor size;
+        contentSize: content evictor size;
+        contentSavaPeriod: reserved for future use;
+        contentSaveSizeTrigger: reserved for future use;
+			<DatabaseCache volumeSize="2" contentSize="2000" contentSavePeriod="4000" contentSaveSizeTrigger="150" />
+       
+      <Log> param: content log configuration
+        path: full path of the log file
+				level: the log level of the ice trace log;
+				maxCount: the max number of log file stored;
+				size: the size that this trace log must roll;
+				bufferSize: the log buffer size;
+				flushTimeout: the delay time of log thread to flush.
+			<Log path="${TianShanLogDir}\A3CS.Log" level="7" maxCount="100" size="25600000" bufferSize="1024" flushTimeout="1" />
+         
+      <EventLog> param: content provision event log configuration
+			<EventLog path="${TianShanLogDir}\A3CS_events.Log" level="7" maxCount="100" size="25600000" bufferSize="1024" flushTimeout="1" />
+         
+      <Volumes> param: volume list information(only support one default volume now)
+			<Volumes>
+         
+        <Vol> param:
+          mount: the mount name for this volume;
+          targetName: the remote contentstore server volume name;
+          default: if default volume, there must be only one default volume now(future will support volume list with one default volume)
+				<Vol mount="test" targetName="70001" default="1" />
+			</Volumes>
+		</ContentInterface>
+  </VideoServer>
+	-->
+      <VideoServer vendor="SeaChange" model="generic" enableMessageBinaryDump="0" streamSyncInterval="3600" sessionRenewInterval="600">
+      	<DatabasePerfTune checkpointPeriod="120" saveSizeTrigger="100" savePeriod="60000"/>      	
+        <SessionInterface ip="10.15.10.35" port="554" bind="${ServerNetIf}" maxSessionGroup="10" maxSessionsPerGroup="800" requestTimeout="5000" disconnectAtTimeout="20" >
+          <FixedSpeedSet enable="0" forward="2 1.26 1.5 1.8 2" backward="-2 -1.26 -1.5 -1.8 -2"/>
+        </SessionInterface>
+        <ContentInterface ip="10.15.10.33" port="8080" path="" syncInterval="3600000" syncRetry="3" mode="SeaChange" httpTimeOut="200000" destroyEnable="0" secondaryIP="" secondaryPort="8080" >
+          <Feedback ip="${ServerNetIf}" port="4444" />
+          <StoreReplica groupId="Group1" replicaId="No1" replicaPriority="0" timeout="0" />
+          <DatabaseCache volumeSize="4" contentSize="2000" contentSavePeriod="4000" contentSaveSizeTrigger="150" />
+			    <Volumes>
+				    <Vol mount="test" targetName="70001" default="1" defaultBitRate="45000000"/>
+			    </Volumes>
+				</ContentInterface>
+				<CDN libraryVolume="library" />
+      </VideoServer>
+</C2SS>
+</TianShan>

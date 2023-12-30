@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+Notice: TianShanDef.xml has been preloaded when this configuration file is being parsed, please refer to
+        TianShanDef.xml for the common properties
+
+Regular procedures of loading configurations:
+  1) When a service starts, read HKEY_LM\Softwares\ZQ Interactive\TianShan\Services\<ServiceName>\configDir, load 
+     the common properties if the TianShanDef.xml is opened, if <ServiceName>.xml is successfully opened, jump to 5)
+  2) tries HKEY_LM\Softwares\ZQ Interactive\TianShan\Services\configDir, load the common properties if the
+     TianShanDef.xml is opened, if <ServiceName>.xml is successfully opened, jump to 5)
+  3) tries the dir ..\etc of where the executable is, load the common properties if the TianShanDef.xml is opened,
+     if <ServiceName>.xml is successfully opened, jump to 5)
+  4) puts an error as system event, say no configuration TianShanService.xml can be opened. Quit the program
+  5) reads the <ServiceName>.xml, if there is any XML formatting errors, put an error as system event then quit
+     the program
+  6) reads the LogFolder in the XML, take it if succeed, otherwise use ..\logs of where the executable is. Open the
+     main log file, and immediately put a line including
+       a) service name
+       b) service version number
+       c) the full pathname of <ServiceName>.xml
+     as the first log message in the main logfile
+  7) continues to populate other configurations
+  8) initialize the service and start serving
+
+-->
+<TianShan>
+	<!-- common definitions -->
+	<Definitions src="TianShanDef.xml"/>
+	<!-- default configurations for the services of this TianShan deployment -->
+	<default>
+		<!-- The EventChannel service where the services of this TianShan deployment will deliver events to.
+		     attributes:
+		       endpoint - the ICE endpoint to the EventChannel service
+		-->
+		<EventChannel endpoint="${PrimeEventChannelEndpoint}" />
+		
+					
+		<!--CrashDump can help devoloper diagnose the program when it crashed if you set enable to "1" you must
+		    make sure that the path is accessible
+		     attributes:
+			path   - crashdump path
+			enabled - 1 to enable crashDump   
+		 -->
+		<CrashDump path="${TianShanCrashDumpDir}" enabled="1"/>
+
+		<!-- The Ice trace log setting for all the services of this TianShan deployment.
+		     attributes:
+		       enabled       - 1 if the Ice trace is enabled, default "0"
+		       logfileSuffix - a suffix of the log filename, i.e. the service Weiwoo's main log file will
+		                       be "Weiwoo.log". With a suffix "_ice.log", the ICE trace will be in a
+		                       separate logfile "Weiwoo_ice.log" in the same directory
+		       level         - the log level of the ice trace log
+		       size          - the size that this trace log must roll
+		       fileCount	  - the max file count of this trace log roll
+		-->
+		<IceTrace enabled="1" level="7" size="10240000" fileCount="1"/>
+
+		<!-- The default folder where the services of this TianShan deployment accesses their local
+		     databases if it is not defined by their individual configurations
+		     attributes:
+		       path          - path to the location of database directory, default "../data/"
+		       runtimePath   - path to keep the runtime data, default as the value of path
+		-->
+		<Database path="${TianShanDatabaseDir}" runtimePath="${TianShanDatabaseDir}\runtime" />
+	
+	
+		<!-- Log files to publish thru SentryService
+		-->
+		<PublishedLogs>
+			<Log path="${TianShanLogDir}/CPESvc.log" syntax="${TianShanHomeDir}/etc/syntax.xml" key="CPESvc" type="FileLog" >
+			</Log>
+		</PublishedLogs>
+	</default>
+  	
+	<!-- Configuration on the ContentProvisionEngineservice
+	     attributes:
+	       netId  - The unique id of ContentProvisionEngine instance, use the hostname of this server or other unique string to identify this CPE.
+	       					This value must be set and be unique if there are more than 1 CPESvc instance in a environment. 
+	       					
+	       threads  - The thread pool size of content provision engine, threads should >= (plugin_A_maxsession + plugin_B_maxsession + ... + 10)
+	       maxthreads  - The max thread pool size of content provision engine
+	       sessionCacheSize	-	the provision session evector size, the session count to keep in memory
+	       timerthreads - The thread pool size of content timer engine
+	-->
+	<ContentProvisionEngine netId="${HostNetID}" threads="40" maxthreads="80" sessionCacheSize="500" timerthreads="5">
+		<!-- The local bind endpoint that the ContentProvisionEngine service is serving on
+		     attributes:
+		       endpoint      - the bind endpoint of this ContentProvisionEngine service
+		       dispatchSize  - the initial thread pool size to dispatch client requests, values in the range 4-20 are acceptable
+		       dispatchMax   - the max thread pool size to dispatch client requests
+		-->
+		<Bind endpoint="tcp -h ${ServerNetIf} -p 10500" dispatchSize="5" dispatchMax="30"/>
+		
+		
+		<!-- The content provision error
+			attributres:
+			restartOnCritical	-	set to 1 to enable restarting logic when critical provision error happen, 0 to disable, default is 0
+		-->
+		<ProvisionError restartOnCritical="0"/>
+		
+		<!-- The critical content provision error list, define the keyword of critical errors here.
+			attributres:
+			keyword		-	the critical provision error keyword, if this keyword exist in the session provision error string, we think the critical error happen.
+							the keyword is case sensitive.
+		-->
+		<CriticalProvisionError>
+			<Error keyword="unrecoverable underflow"/>
+		</CriticalProvisionError>
+		
+		
+	  <!-- Configuration for global buffer pool for media processing
+		     attributes:
+		       bufferSize    - the buffer block size in byte, should be 65536.
+		       maxBufferPoolSize  -  the maximize buffer pool size, default is max_session_count*400, for 30 sessions is 12000
+		       minBufferPoolSize  -  the minimal buffer pool size that is reserved for re-allocatioin, default is maxBufferPoolSize/2
+		-->
+    <MediaSample bufferSize="65536" maxBufferPoolSize="12000" minBufferPoolSize="6000"/>	
+
+		<!-- The ContentProvisionCluster information:
+			endpoint		- the endpoint of CPC(ContentProvisionCluster) service, the CPC is embeded in ClusterContentStore currently 		
+		-->
+		<ContentProvisionCluster endpoint="tcp -h ${ClusterCSNetIf} -p 11500"/>		
+
+		<!-- Configuration on the passive ingestion triggers
+		-->
+	  	<PushTriggers>
+			<!-- Configuration on the passive ftp ingestion triggers
+			     attributes:
+			       bindIP  - the ftp server bind ip
+			       port  - the ftp server port
+			       rootUrl - the root Url to publish
+			       homeDir - the local folder to expose as the ftp server root
+			       threads - the thread pool size of this ftp server-side, one client need one thread
+			       maxConnection - the maximal connections that this ftp can accept
+			       maxBandwidth - the maximal bandwidth in Kbps that this ftp can accept
+			       dataConnTimeout - timeout in second if an ftp data connection has no data to read
+	
+			-->
+			<FTPServer
+				bindIP="${IngestNetIf}"
+				port="10021"
+				rootUrl="ftp://${IngestNetIf}:10021/"
+				homeDir="c:\ftphome\"
+				threads="42"
+				maxConnection="300"
+				maxBandwidth ="200000"
+				dataConnTimeout="20" >
+				<!--
+				Directory: map volume name to ftp virtual directory, should be identical to 
+					   the real volume configuration in CdnSS.
+				-->
+				<VirtualDirectory>
+				  <Directory name="vol2" value="/tmp/bbb" />
+				</VirtualDirectory>			  	
+			</FTPServer>
+
+			<!-- Configuration for the content export -->
+			<ContentExport>
+				<!-- Configuration for content export by ftp server from vstream
+				     attributes:
+				       enable	- enable/disable this function, 1 for enable, 0 for disable, disable it if CPE not running on mediacluster
+				       BWMgrClientId  - the client Id of Vstream Bandwidth Management. Default 773220, 0 to disable bandwidth management
+				       defaultBitrate - the default transfer bitrate for content export,if transfer bitrate is 0, defaultBitrate will be assigned to transfer bitrate in bps
+                                       maxBitrate      - max bitrate for transfer, if specified transfer bitrate is larger than maxBitrate, maxBitrate will be assigned to the transfer bitrate, in bps
+				       enableAuthorization - 1 for enable authorization on user login and file download , 0 for disable authorization, default is 1
+				       ttl				- time to live for the every export session, in seconds, default is 86400 seconds(24 hours, 24*3600=86400)
+				-->				
+				<FtpOverVstrm enable="0" BWMgrClientId="773220" defaultBitrate="3750000" maxBitrate="30000000" enableAuthorization="1" ttl="86400"/>
+			</ContentExport>
+	  	</PushTriggers>
+
+		<!-- Configuration on the schedule execution
+		     attributes:
+		       maxDelayedStartMs - to specify the timeout in millisecond if the start-time is missed. Session will be out of service if the timeout is reached
+		       maxStoppedLingerMs - to specify the timeout in millisecond if the end-time is reached but still have feed going on. Session will be terminated if the timeout is reached
+           minDurationSeconds - the mimimaze duration time of the session, the default is 5 seconds  
+		-->
+	  	<ScheduleExecution maxDelayStartMs="600000" maxStoppedLingerMs="1000" minDurationSeconds="5"/>	
+	  	
+	  	<!-- Provision event configuration	  		
+	  	-->
+	  	<Event>
+        <!-- Configuration on the delivery of provision progress events
+
+          minIntervalMs  - to specify the minimal interval in millisecond of progress events
+
+          maxPecentageStep - to specify the maximal step, in percent of total filesize, between progress events. 
+
+                    Acceptable values [0, 99], in which 0 to disable the limitation by this percentage step
+
+        note: the event would be fired whenever either of the above two conditions gets met first. For some ingestions that the total file size
+
+              is uncertain, the percentage step would be disabled and the events become only restricted by the time intervals -->
+        <Progress minIntervalMs="60000" maxPecentageStep="20" />
+	  	</Event>
+
+    <Plugins>    	
+      <!-- "CPH_RTFRDS.dll" plug-in, methods supported:  
+          "SeaChange.MediaCluster.RTFRDS":   Allow client to upload MPEG2 content thru FTP server (built in CPE), and do the RTF trick generation, write into local vstream. This method is not used in NGOD.
+          "SeaChange.MediaCluster.NTFSRTF":  Read source MPEG2 content from NTFS, and do the RTF trick generation, write into local vstream.
+          "SeaChange.MediaCluster.FTPRTF":   Download source MPEG2 content from FTP server, and do the RTF trick generation, write into local vstream.
+          "SeaChange.MediaCluster.NTFSRTF.H264":   Read source H264 content from NTFS, and do the RTF trick generation, write into local vstream.
+          "SeaChange.MediaCluster.FTPRTF.H264":   Download source H264 content from FTP server, and do the RTF trick generation, write into local vstream.
+          "SeaChange.MediaCluster.FTPPropagation":   Propagate the content fileset from the FTP server into local vstream.
+          
+          This plugin is needed if it's running on cluster node.
+      -->     	
+    	<CPH file="${TianShanHomeDir}\modules\CPH_RTFRDS.dll"   enable="1" />
+    	
+      <!-- "CPH_RTI.dll" plug-in, methods supported:  
+          "SeaChange.MediaCluster.RTI":   Capture multicast MPEG2 stream, and do the RTF trick generation, write into local vstream.
+          "SeaChange.MediaCluster.RTI.H264":   Capture multicast H264 stream, and do the RTF trick generation, write into local vstream.
+ 
+          This plugin is needed if it's running on cluster node and the source is multicast stream.
+      -->     	
+    	<CPH file="${TianShanHomeDir}\modules\CPH_RTI.dll"   enable="1" />
+     
+      <!-- "CPH_nPVR.dll" plug-in, methods supported:  
+          "SeaChange.MediaCluster.NPVR":  nPVR session, capture multicast MPEG2 stream, and do the RTF trick generation, write into local vstream.
+ 
+          This plugin is needed in on NPVR streamming server.
+      -->     	
+    	<CPH file="${TianShanHomeDir}\modules\CPH_NPVR.dll"   enable="0" />
+
+      <!-- "CPH_RTINAS.dll" plug-in, methods supported:  
+          "SeaChange.NAS.RTI":   Capture multicast MPEG2 stream, and do the RTF generation, write into NAS storage.
+ 
+          This plugin is needed if we use the NAS storage and the source is mpeg2 multicast stream.
+      -->     	
+    	<CPH file="${TianShanHomeDir}\modules\CPH_RTINAS.dll"   enable="0" />
+ 
+      <!-- "CPH_NasCopy.dll" plug-in, methods supported:  
+          "SeaChange.MediaCluster.NASCOPY":   Propagate the content fileset from the NTFS drive into local vstream.
+ 
+          This plugin is needed if it's running on cluster node and need to propagate fileset from NAS storage(NTFS drive) to local vstream.
+      -->     	
+    	<CPH file="${TianShanHomeDir}\modules\CPH_NasCopy.dll"   enable="1" />
+
+      <!-- "CPH_RDS.dll" plug-in, methods supported:  
+           "SeaChange.MediaCluster.RDS":   Allow client to upload MPEG2 content thru FTP server (built in CPE), and do the trick generation with trick library , write into vstream.
+
+           This plugin is not needed for NGOD, enable this plugin if you need to use it.           
+      --> 
+    	<CPH file="${TianShanHomeDir}\modules\CPH_RDS.dll"   enable="0" />
+    	
+    	<!-- "CPH_CSI.dll" plug-in, methods supported:  
+          "XOR.MediaCluster.CSI"
+          This plugin is needed if it's running on cluster node.
+         -->     	
+    	<CPH file="${TianShanHomeDir}\modules\CPH_CSI.dll"   enable="0" />
+    	 
+    	<CPH file="${TianShanHomeDir}/modules/libCPH_CDN.so"   enable="0" />
+    	<CPH file="${TianShanHomeDir}/modules/libCPH_PCAP.so"   enable="0" />
+    	<CPH file="${TianShanHomeDir}/modules/libCPH_AquaRec.so"   enable="0" />
+    	<CPH file="${TianShanHomeDir}/modules/libCPH_Raw.so"   enable="0" />
+        <CPH file="${TianShanHomeDir}/modules/libCPH_AquaLib.so"   enable="0" />
+
+    </Plugins>
+		<!-- Additional Ice properties if there is any, <prop /> is its sub element
+		     attrib of <prop />:
+		        name         - the name of the Ice property
+		        value        - the value of the Ice property
+		-->
+		<IceProperties>
+			<!--  the following are performance tuning parameters, please don't modify if you are not an expert at them 
+			--> 
+			<prop name="Ice.Trace.Network"                    value="0" />
+			<prop name="Ice.Trace.Protocol"                   value="0" />
+			<prop name="Ice.Trace.Retry"                      value="0" />
+			<prop name="Ice.Warn.Connections"                 value="1" />
+			<prop name="Ice.Warn.Endpoints"                   value="1" />
+			<prop name="Freeze.Warn.Deadlocks"                value="1" />
+			<prop name="Freeze.Trace.Map"                     value="0" />
+			<prop name="Freeze.Trace.DbEnv"                   value="1" />
+			<prop name="Freeze.Trace.Evictor"                 value="0" />
+			<prop name="Freeze.Evictor.UseNonmutating"        value="1" />
+			<prop name="Ice.Override.Timeout"                 value="30000"/>
+			<prop name="Ice.Override.ConnectTimeout"          value="2000"/>
+			<prop name="Ice.ThreadPool.Server.Size"           value="5"/>
+			<prop name="Ice.ThreadPool.Server.SizeMax"        value="15"/>
+			<prop name="Ice.ThreadPool.Client.Size"           value="5"/>
+			<prop name="Ice.ThreadPool.Client.SizeMax"        value="15"/>
+			<prop name="Freeze.DbEnv.${TianShanDatabaseDir}\CPSess\.DbRecoverFatal" value="1"/>
+			<prop name="Freeze.DbEnv.${TianShanDatabaseDir}\CPSess\.CheckpointPeriod" value="10" />
+			<prop name="Freeze.Evictor.${TianShanDatabaseDir}\CPSess\.ProvSess.SaveSizeTrigger" value="60" />
+			<prop name="Freeze.Evictor.${TianShanDatabaseDir}\CPSess\.ProvSess.SavePeriod" value="6000" />			
+		</IceProperties>
+		
+	  <!--  Volumes: check the mount path,  the same config with CDNSS, If the path is not Mounted success, stop the service  
+	                enable:     1  enable check mount path,  0 disable, default 0
+	  -->	
+	  <Volumes  enable="0">
+			<Volume name="$" path="/mnt/bwfs/c2files" fstype="enfs" default="1" />			
+		</Volumes>
+	</ContentProvisionEngine>
+</TianShan>

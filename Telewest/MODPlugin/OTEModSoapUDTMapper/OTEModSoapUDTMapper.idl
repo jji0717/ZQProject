@@ -1,0 +1,112 @@
+// OTEModSoapUDTMapper.idl : IDL source for OTEModSoapUDTMapper.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (OTEModSoapUDTMapper.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+	[
+		object,
+		uuid(DDB08440-D38A-405A-B0F5-BC1C93EAF3F7),
+		dual,
+		helpstring("IModSoapModel Interface"),
+		pointer_default(unique)
+	]
+	interface IModSoapModel : IDispatch
+	{
+		[propget, id(1), helpstring("property DeviceID")] HRESULT DeviceID([out, retval] BSTR *pVal);
+		[propput, id(1), helpstring("property DeviceID")] HRESULT DeviceID([in] BSTR newVal);
+		[propget, id(2), helpstring("property TicketID")] HRESULT TicketID([out, retval] BSTR *pVal);
+		[propput, id(2), helpstring("property TicketID")] HRESULT TicketID([in] BSTR newVal);
+		[propget, id(3), helpstring("property StreamID")] HRESULT StreamID([out, retval] BSTR *pVal);
+		[propput, id(3), helpstring("property StreamID")] HRESULT StreamID([in] BSTR newVal);
+		[propget, id(4), helpstring("property PurchaseID")] HRESULT PurchaseTime([out, retval] BSTR *pVal);
+		[propput, id(4), helpstring("property PurchaseID")] HRESULT PurchaseTime([in] BSTR newVal);
+		[propget, id(5), helpstring("property ErrorCode")] HRESULT ErrorCode([out, retval] BSTR *pVal);
+		[propput, id(5), helpstring("property ErrorCode")] HRESULT ErrorCode([in] BSTR newVal);
+		[propget, id(6), helpstring("property ProviderID")] HRESULT ProviderID([out, retval] BSTR *pVal);
+		[propput, id(6), helpstring("property ProviderID")] HRESULT ProviderID([in] BSTR newVal);
+		[propget, id(7), helpstring("property ProviderAssetID")] HRESULT ProviderAssetID([out, retval] BSTR *pVal);
+		[propput, id(7), helpstring("property ProviderAssetID")] HRESULT ProviderAssetID([in] BSTR newVal);
+	};
+	[
+		object,
+		uuid(0C1D89E3-251F-4F21-BB05-D1E38F325245),
+		dual,
+		helpstring("IModSoapModelMap Interface"),
+		pointer_default(unique)
+	]
+	interface IModSoapModelMap : IDispatch
+	{
+	};
+	[
+		object,
+		uuid(B95BDD3A-8235-4872-A1A8-D20613B42ABC),
+		dual,
+		helpstring("IModSoapResultModel Interface"),
+		pointer_default(unique)
+	]
+	interface IModSoapResultModel : IDispatch
+	{
+		[propget, id(1), helpstring("property Result")] HRESULT Result([out, retval] long *pVal);
+		[propput, id(1), helpstring("property Result")] HRESULT Result([in] long newVal);
+		[propget, id(2), helpstring("property Price")] HRESULT Price([out, retval] double *pVal);
+		[propput, id(2), helpstring("property Price")] HRESULT Price([in] double newVal);
+		[propget, id(3), helpstring("property RentalDuration")] HRESULT RentalDuration([out, retval] long *pVal);
+		[propput, id(3), helpstring("property RentalDuration")] HRESULT RentalDuration([in] long newVal);
+	};
+	[
+		object,
+		uuid(F6DE4423-BB9A-4106-8A36-5F97608288D1),
+		dual,
+		helpstring("IModSoapResultModelMap Interface"),
+		pointer_default(unique)
+	]
+	interface IModSoapResultModelMap : IDispatch
+	{
+	};
+
+[
+	uuid(E76A2B2F-205F-432B-B2B0-B748F59BF2EE),
+	version(1.0),
+	helpstring("OTEModSoapUDTMapper 1.0 Type Library")
+]
+library OTEMODSOAPUDTMAPPERLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	[
+		uuid(79D7034A-6D3F-4ED2-A693-1D531BCD682C),
+		helpstring("ModSoapModel Class")
+	]
+	coclass ModSoapModel
+	{
+		[default] interface IModSoapModel;
+	};
+	[
+		uuid(514048E3-AC8A-40B9-8132-91FC4C0B2E35),
+		helpstring("ModSoapModelMap Class")
+	]
+	coclass ModSoapModelMap
+	{
+		[default] interface IModSoapModelMap;
+	};
+	[
+		uuid(B098EEB6-03EB-4D95-898E-CB2DC716DE31),
+		helpstring("ModSoapResultModel Class")
+	]
+	coclass ModSoapResultModel
+	{
+		[default] interface IModSoapResultModel;
+	};
+	[
+		uuid(4FF3482F-8B58-4450-B21E-CCE477FA5A3E),
+		helpstring("ModSoapResultModelMap Class")
+	]
+	coclass ModSoapResultModelMap
+	{
+		[default] interface IModSoapResultModelMap;
+	};
+};

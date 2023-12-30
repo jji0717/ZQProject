@@ -1,0 +1,99 @@
+﻿<Config>
+    <TICP>
+	<Ip address="10.9.0.101" port="61233" />
+	<Ip address="10.9.0.101" port="61233" />
+    </TICP>
+    <SMServer>
+	<Ip address="211.147.224.131" port="9212" />
+    </SMServer>
+    <ON_OFF>
+    	<Response       Flag="1" />
+    	<ErrorResponse  Flag="1" />
+	<ReplyHistory   Flag="1" />
+    </ON_OFF>
+    <ACTION>
+    	<RegisterControl   Flag="RG" />
+    	<StreamControl     Flag="AC" />
+    	<ChatControl       Flag="LT" />
+	<NickNameControl   Flag="10" />
+    </ACTION>
+    <StreamControl>
+   	<PlayFlag         SMS="play"   Ticp="91" />
+	<StopFlag         SMS="stop"   Ticp="92" />	
+	<FastForwardFlag  SMS="ff"     Ticp="93" />
+	<FastRewindFlag   SMS="fr"     Ticp="94" />
+	<PauseFlag        SMS="pause"  Ticp="95" />
+	<ResumeFlag       SMS="resume" Ticp="96" />
+    </StreamControl>
+    <SMSProvider>
+    	<PHS SP="1234" ZipCode="021"/>
+	<MOBILE SP="yidong" ZipCode=""/>
+	<UNICOM SP="lianton" ZipCode=""/>
+    </SMSProvider>
+    <ReturnText>
+    	<TICP ActionCode="0"  text="操作失败" />
+    	<TICP ActionCode="1"  text="操作成功" SuccessFlag="1" />
+    	<TICP ActionCode="3"  text="号码已邦定，但是需要验证用户名和密码" />
+    	<TICP ActionCode="4"  text="号码没有权限" />
+    	<TICP ActionCode="5"  text="号码未邦定，需要验证用户名和密码" />
+    	<TICP ActionCode="6"  text="点播失败" />
+    	<TICP ActionCode="7"  text="点播的节目不存在" />
+    	<TICP ActionCode="8"  text="点播人数过多，请稍候再播" />
+    	<TICP ActionCode="9"  text="点播费用不够" />
+    	<TICP ActionCode="10" text="输入不正确" />
+    	<TICP ActionCode="11" text="由于系统原因请求处理失败" />
+    	<TICP ActionCode="12" text="当前信息没有通过系统验证" />
+    	<TICP ActionCode="13" text="由于系统原因播放请求失败" />
+    	<TICP ActionCode="14" text="由于系统原因播放请求失败" />
+    	<TICP ActionCode="15" text="由于系统原因播放请求失败" />
+    	<TICP ActionCode="16" text="由于系统原因播放请求失败" />
+    	<TICP ActionCode="17" text="快进失败" />
+    	<TICP ActionCode="18" text="快退失败" />
+    	<TICP ActionCode="19" text="暂停失败" />
+    	<TICP ActionCode="20" text="继续播放失败" />
+    	<TICP ActionCode="21" text="请求处理失败" />
+    	<TICP ActionCode="22" text="请求处理失败" />
+    	<TICP ActionCode="23" text="请求处理失败" />
+    	<TICP ActionCode="24" text="请求处理失败" />
+    	<TICP ActionCode="25" text="播放控制请求处理失败" />
+    	<TICP ActionCode="26" text="播放控制请求处理失败" />
+    	<TICP ActionCode="27" text="播放控制请求处理失败" />
+    	<TICP ActionCode="31" text="录制成功" SuccessFlag="1" />
+    	<TICP ActionCode="32" text="节目正在播出，录像可能不完整" />
+    	<TICP ActionCode="33" text="节目结束，无法录像" />
+    	<TICP ActionCode="34" text="请求处理失败" />
+    	<TICP ActionCode="35" text="录像成功" />
+    	<TICP ActionCode="36" text="取消录像成功" />
+    	<TICP ActionCode="37" text="取消录像成功" />
+    	<TICP ActionCode="38" text="取消录像成功" />
+    	<TICP ActionCode="39" text="本月录像时间已用完" />
+    	<TICP ActionCode="40" text="删除节目成功" />
+    	<TICP ActionCode="41" text="删除节目成功" />
+    	<TICP ActionCode="42" text="节目尚没播放，节目将被完整录制" />
+    	<TICP ActionCode="43" text="取消录像失败" />
+    	<TICP ActionCode="44" text="删除节目失败" />
+    	<TICP ActionCode="45" text="当前信息没有通过系统验证" />
+    	<TICP ActionCode="46" text="当前信息没有通过系统验证" />
+    	<TICP ActionCode="47" text="当前信息没有通过系统验证" />
+    	<TICP ActionCode="48" text="当前信息没有通过系统验证" />
+    	<TICP ActionCode="49" text="当前信息没有通过系统验证" />
+        <TICP ActionCode="50" text="节目播放失败" />
+    	<TICP ActionCode="51" text="由于系统原因发送消息处理失败" />
+        <TICP ActionCode="52" text="由于系统原因发送消息处理失败" />
+    	<TICP ActionCode="71" text="当前信息没有通过系统验证" />
+    	<TICP ActionCode="72" text="当前信息没有通过系统验证" />
+        <TICP ActionCode="73" text="节目播放控制失败" />
+        <TICP ActionCode="74" text="注册昵称失败" />
+        <TICP ActionCode="75" text="用户不存在,注册昵称失败" />
+        <TICP ActionCode="76" text="昵称已存在,注册失败" />
+	<TICP ActionCode="77" text="昵称不合法,注册失败" />
+        <TICP ActionCode="78" text="取消昵称失败" />
+        <TICP ActionCode="79" text="用户不存在,取消昵称失败" />
+        <TICP ActionCode="80" text="昵称不存在,取消昵称失败" />
+        <TICP ActionCode="81" text="发送消息失败" />
+	<TICP ActionCode="82" text="用户不存在,发送失败" />
+        <TICP ActionCode="83" text="消息被拒绝,发送失败" />
+        <TICP ActionCode="84" text="聊天室不存在，请检查聊天室代码是否正确" />
+        <TICP ActionCode="85" text="聊天室已关闭，请关注本聊天室开放时间" />
+    </ReturnText>
+</Config>

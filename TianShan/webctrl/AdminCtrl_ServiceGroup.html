@@ -1,0 +1,116 @@
+<script type='text/javascript' src='AdminCtrl_Util.js'></script>
+<script type='text/javascript'>
+// typedef
+function TSServiceGroup(id, desc, type){
+    this.id = id;
+    this.desc = desc;
+    this.type = ('' == type) ? 'ServiceGroup' : type;
+} 
+// global vars
+var _sgs = new Array();
+var _template = '';
+var _endpoint = '';
+var _srvrloadpath = '';
+
+function indexOfSG(id){
+    for(var i in _sgs){
+        if(_sgs[i].id == id)
+            return i;
+    }
+    return _sgs.length;
+}
+
+function updateSG(){
+    var idNode = document.getElementById('sg-id');
+    // validity check
+    if(!idNode.value.match(/[0-9]+/)){
+        idNode.select();
+        return;
+    }
+    // submmit form
+    idNode.name = 'path.sg#id';
+    document.getElementById('sg-desc').name = 'path.sg#desc';
+    document.getElementById('ctrl-action').value = 'u';
+    idNode.form.submit();
+}
+function removeSG(){
+    var idNode = document.getElementById('sg-id');
+    // validity check
+    if(indexOfSG(idNode.value) == _sgs.length){
+        idNode.select();
+        return;
+    }
+    if(!confirm("Delete ServiceGroup " + idNode.value))
+        return;
+
+    // submmit form
+    idNode.name = 'path.sg#id';
+    document.getElementById('ctrl-action').value = 'r';
+    idNode.form.submit();
+}
+function sgDetail(idx){
+    var sg = _sgs[idx];
+    // modify form fields
+    document.getElementById('sg-id').value = sg.id;
+    document.getElementById('sg-desc').value = sg.desc;
+    document.getElementById('sg-type').value = sg.type;
+    // back to top
+    document.getElementById('current').getElementsByTagName('a')[0].focus();
+}
+function sgReset(){
+    document.getElementById('sg-id').value = '';
+    document.getElementById('sg-desc').value = '';
+    document.getElementById('sg-type').value = '';
+}
+
+function display(){
+    // service group table
+    var tblNode = document.getElementById("sg-tbl");
+    var tbodyNode = document.createElement("tbody");
+    for(var i = 0; i < _sgs.length; ++i){
+        var trNode = document.createElement("tr");
+        trNode.className = 'lnk';
+        trNode.onclick = new Function("sgDetail(" + i + ");");
+
+        var tdNode = document.createElement('td');
+        var spanNode = document.createElement("span");
+        spanNode.onclick = new Function("sgDetail(" + i + ");removeSG();");
+        spanNode.className = 'ctrl';
+        spanNode.appendChild(document.createTextNode('r'));
+        tdNode.appendChild(spanNode);
+        trNode.appendChild(tdNode);
+
+        trNode.appendChild(createTableCell(_sgs[i].id));
+        trNode.appendChild(createTableCell(_sgs[i].desc));
+        trNode.appendChild(createTableCell(_sgs[i].type));
+
+        tbodyNode.appendChild(trNode);
+    }
+    tblNode.appendChild(tbodyNode);
+    // setup page info
+    document.getElementById('page-tmpl').value = _template;
+    document.getElementById('page-endpoint').value = _endpoint;
+    document.getElementById('page-srvrloadpath').value = _srvrloadpath;
+    sgReset();
+}</script>
+<div id='display-area'>
+<h3>Service Group</h3>
+<form id='ctrl-form' method=post action="ServiceGroupPage.ac.tswl">
+<input id = 'page-tmpl' type=hidden name='#template' value=''>
+<input id = 'page-endpoint' type=hidden name='#endpoint' value=''>
+<input id = 'page-srvrloadpath' type=hidden name='srvrloadpath' value=''>
+<input id = 'ctrl-action' type=hidden name='#action' value=''>
+<table>
+<tr><td>id</td><td>:</td><td><input id='sg-id' type=text size='30' value=''></td></tr>
+<tr><td>desc</td><td>:</td><td><input id='sg-desc' type=text size='30' value=''></td></tr>
+<tr><td>type</td><td>:</td><td><input id='sg-type' type=text size='30' value='' disabled></td></tr>
+</table>
+<input type=button value='clear' onclick="sgReset();">
+<input type=button value=update onclick="updateSG();">
+</form>
+<hr>
+<table id='sg-tbl' class='listTable'>
+<tr class='heading'><th>ctrl</th><th>id</th><th>desc</th><th>type</th></tr>
+</table>
+</div>
+

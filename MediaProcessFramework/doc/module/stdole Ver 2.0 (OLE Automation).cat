@@ -1,0 +1,3238 @@
+
+(object Petal
+    version    	47
+    _written   	"Rose 8.0.0303.1400"
+    charSet    	134)
+
+(object Class_Category "stdole Ver 2.0 (OLE Automation)"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    attributes 	(list Attribute_Set
+	(object Attribute
+	    tool       	"sc"
+	    name       	"SourceControlSpec"
+	    value      	
+|"$/ZQProjs/MediaProcessFramework/doc/module", CYIAAAAA
+	    ))
+    quid       	"41C153B50155"
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "GUID"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"attributes"
+		    value      	"hidden")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"00000000-0000-0000-0000-000000000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 101))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B50158"
+	    stereotype 	"struct"
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM")
+	(object Class "DISPPARAMS"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"attributes"
+		    value      	"restricted")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"00000000-0000-0000-0000-000000000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 101))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B5016A"
+	    stereotype 	"struct"
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM")
+	(object Class "EXCEPINFO"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"attributes"
+		    value      	"restricted")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"00000000-0000-0000-0000-000000000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 101))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B5017D"
+	    stereotype 	"struct"
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM")
+	(object Class "IUnknown"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"attributes"
+		    value      	"hidden")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"00000000-0000-0000-C000-000000000046")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 103))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B50188"
+	    stereotype 	"Interface"
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM"
+	    abstract   	TRUE)
+	(object Class "IDispatch"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"attributes"
+		    value      	"restricted")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"00020400-0000-0000-C000-000000000046")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 103))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B5019C"
+	    stereotype 	"Interface"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"41C153B60360"
+		    supplier   	"Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::IUnknown"
+		    quidu      	"41C153B50188"))
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM"
+	    abstract   	TRUE)
+	(object Class "IEnumVARIANT"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"attributes"
+		    value      	"hidden")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"00020404-0000-0000-C000-000000000046")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 103))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B501B0"
+	    stereotype 	"Interface"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"41C153B6037D"
+		    supplier   	"Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::IUnknown"
+		    quidu      	"41C153B50188"))
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM"
+	    abstract   	TRUE)
+	(object Class "OLE_COLOR"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"66504301-BE0F-101A-8BBB-00AA00300CAB")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 106))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"alias"
+		    value      	"unsigned long")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B501C4"
+	    stereotype 	"alias"
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM")
+	(object Class "OLE_XPOS_PIXELS"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"attributes"
+		    value      	"hidden")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"66504302-BE0F-101A-8BBB-00AA00300CAB")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 106))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"alias"
+		    value      	"long")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B501D8"
+	    stereotype 	"alias"
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM")
+	(object Class "OLE_YPOS_PIXELS"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"attributes"
+		    value      	"hidden")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"66504303-BE0F-101A-8BBB-00AA00300CAB")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 106))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"alias"
+		    value      	"long")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B501EB"
+	    stereotype 	"alias"
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM")
+	(object Class "OLE_XSIZE_PIXELS"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"attributes"
+		    value      	"hidden")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"66504304-BE0F-101A-8BBB-00AA00300CAB")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 106))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"alias"
+		    value      	"long")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B501FF"
+	    stereotype 	"alias"
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM")
+	(object Class "OLE_YSIZE_PIXELS"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"attributes"
+		    value      	"hidden")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"66504305-BE0F-101A-8BBB-00AA00300CAB")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 106))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"alias"
+		    value      	"long")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B50213"
+	    stereotype 	"alias"
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM")
+	(object Class "OLE_XPOS_HIMETRIC"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"attributes"
+		    value      	"hidden")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"66504306-BE0F-101A-8BBB-00AA00300CAB")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 106))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"alias"
+		    value      	"long")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B5021E"
+	    stereotype 	"alias"
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM")
+	(object Class "OLE_YPOS_HIMETRIC"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"attributes"
+		    value      	"hidden")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"66504307-BE0F-101A-8BBB-00AA00300CAB")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 106))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"alias"
+		    value      	"long")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B50232"
+	    stereotype 	"alias"
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM")
+	(object Class "OLE_XSIZE_HIMETRIC"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"attributes"
+		    value      	"hidden")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"66504308-BE0F-101A-8BBB-00AA00300CAB")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 106))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"alias"
+		    value      	"long")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B50246"
+	    stereotype 	"alias"
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM")
+	(object Class "OLE_YSIZE_HIMETRIC"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"attributes"
+		    value      	"hidden")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"66504309-BE0F-101A-8BBB-00AA00300CAB")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 106))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"alias"
+		    value      	"long")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B5025A"
+	    stereotype 	"alias"
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM")
+	(object Class "OLE_XPOS_CONTAINER"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"attributes"
+		    value      	"hidden")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"BF030640-9069-101B-AE2D-08002B2EC713")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 106))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"alias"
+		    value      	"float")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B50265"
+	    stereotype 	"alias"
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM")
+	(object Class "OLE_YPOS_CONTAINER"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"attributes"
+		    value      	"hidden")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"BF030641-9069-101B-AE2D-08002B2EC713")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 106))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"alias"
+		    value      	"float")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B50282"
+	    stereotype 	"alias"
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM")
+	(object Class "OLE_XSIZE_CONTAINER"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"attributes"
+		    value      	"hidden")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"BF030642-9069-101B-AE2D-08002B2EC713")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 106))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"alias"
+		    value      	"float")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B50296"
+	    stereotype 	"alias"
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM")
+	(object Class "OLE_YSIZE_CONTAINER"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"attributes"
+		    value      	"hidden")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"BF030643-9069-101B-AE2D-08002B2EC713")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 106))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"alias"
+		    value      	"float")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B502AA"
+	    stereotype 	"alias"
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM")
+	(object Class "OLE_HANDLE"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"66504313-BE0F-101A-8BBB-00AA00300CAB")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 106))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"alias"
+		    value      	"int")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B502C9"
+	    stereotype 	"alias"
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM")
+	(object Class "OLE_OPTEXCLUSIVE"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"6650430B-BE0F-101A-8BBB-00AA00300CAB")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 106))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"alias"
+		    value      	"VARIANT_BOOL")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B502E6"
+	    stereotype 	"alias"
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM")
+	(object Class "OLE_CANCELBOOL"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"BF030644-9069-101B-AE2D-08002B2EC713")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 106))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"alias"
+		    value      	"VARIANT_BOOL")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B502F1"
+	    stereotype 	"alias"
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM")
+	(object Class "OLE_ENABLEDEFAULTBOOL"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"attributes"
+		    value      	"hidden")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"BF030645-9069-101B-AE2D-08002B2EC713")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 106))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"alias"
+		    value      	"VARIANT_BOOL")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B50305"
+	    stereotype 	"alias"
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM")
+	(object Class "OLE_TRISTATE"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"6650430A-BE0F-101A-8BBB-00AA00300CAB")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 100))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B50319"
+	    stereotype 	"enum"
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM")
+	(object Class "FONTNAME"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"attributes"
+		    value      	"hidden")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"6650430D-BE0F-101A-8BBB-00AA00300CAB")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 106))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"alias"
+		    value      	"BSTR")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B50340"
+	    stereotype 	"alias"
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM")
+	(object Class "FONTSIZE"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"attributes"
+		    value      	"hidden")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"6650430E-BE0F-101A-8BBB-00AA00300CAB")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 106))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"alias"
+		    value      	"CURRENCY")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B50354"
+	    stereotype 	"alias"
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM")
+	(object Class "FONTBOLD"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"attributes"
+		    value      	"hidden")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"6650430F-BE0F-101A-8BBB-00AA00300CAB")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 106))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"alias"
+		    value      	"VARIANT_BOOL")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B50368"
+	    stereotype 	"alias"
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM")
+	(object Class "FONTITALIC"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"attributes"
+		    value      	"hidden")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"66504310-BE0F-101A-8BBB-00AA00300CAB")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 106))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"alias"
+		    value      	"VARIANT_BOOL")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B5037D"
+	    stereotype 	"alias"
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM")
+	(object Class "FONTUNDERSCORE"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"attributes"
+		    value      	"hidden")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"66504311-BE0F-101A-8BBB-00AA00300CAB")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 106))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"alias"
+		    value      	"VARIANT_BOOL")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B50390"
+	    stereotype 	"alias"
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM")
+	(object Class "FONTSTRIKETHROUGH"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"attributes"
+		    value      	"hidden")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"66504312-BE0F-101A-8BBB-00AA00300CAB")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 106))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"alias"
+		    value      	"VARIANT_BOOL")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B503A4"
+	    stereotype 	"alias"
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM")
+	(object Class "IFont"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"attributes"
+		    value      	"hidden")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"BEF6E002-A874-101A-8BBA-00AA00300CAB")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpstring"
+		    value      	"Font Object")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 103))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B503B8"
+	    documentation 	"Font Object"
+	    stereotype 	"Interface"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"41C153B60387"
+		    supplier   	"Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::IUnknown"
+		    quidu      	"41C153B50188"))
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM"
+	    abstract   	TRUE)
+	(object Class "Font"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"attributes"
+		    value      	"oleautomation")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"BEF6E003-A874-101A-8BBA-00AA00300CAB")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 104))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B503CC"
+	    stereotype 	"Interface"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"41C153B60388"
+		    supplier   	"Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::IDispatch"
+		    quidu      	"41C153B5019C"))
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM"
+	    abstract   	TRUE)
+	(object Class "IFontDisp"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"00000000-0000-0000-0000-000000000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 106))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"alias"
+		    value      	"Font")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B503E0"
+	    stereotype 	"alias"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"41C153B60389"
+		    supplier   	"Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::IDispatch"
+		    quidu      	"41C153B5019C"))
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM")
+	(object Class "StdFont"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"0BE35203-8F91-11CE-9DE3-00AA004BB851")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 105))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B6000C"
+	    stereotype 	"coclass"
+	    realized_interfaces 	(list realize_rel_list
+		(object Realize_Relationship
+		    quid       	"41C153B6039C"
+		    stereotype 	"default"
+		    supplier   	"Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::Font"
+		    quidu      	"41C153B503CC")
+		(object Realize_Relationship
+		    quid       	"41C153B6039E"
+		    stereotype 	"default, source"
+		    supplier   	"Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::FontEvents"
+		    quidu      	"41C153B6008F")
+		(object Realize_Relationship
+		    quid       	"41C153B603AA"
+		    supplier   	"Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::IFont"
+		    quidu      	"41C153B503B8"))
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM")
+	(object Class "IPicture"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"attributes"
+		    value      	"hidden")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"7BF80980-BF32-101A-8BBB-00AA00300CAB")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpstring"
+		    value      	"Picture Object")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 103))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B60020"
+	    documentation 	"Picture Object"
+	    stereotype 	"Interface"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"41C153B60391"
+		    supplier   	"Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::IUnknown"
+		    quidu      	"41C153B50188"))
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM"
+	    abstract   	TRUE)
+	(object Class "Picture"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"attributes"
+		    value      	"oleautomation")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"7BF80981-BF32-101A-8BBB-00AA00300CAB")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 104))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B60034"
+	    stereotype 	"Interface"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"41C153B60392"
+		    supplier   	"Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::IDispatch"
+		    quidu      	"41C153B5019C"))
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM"
+	    abstract   	TRUE)
+	(object Class "IPictureDisp"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"00000000-0000-0000-0000-000000000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 106))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"alias"
+		    value      	"Picture")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B60048"
+	    stereotype 	"alias"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"41C153B60393"
+		    supplier   	"Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::IDispatch"
+		    quidu      	"41C153B5019C"))
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM")
+	(object Class "StdPicture"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"0BE35204-8F91-11CE-9DE3-00AA004BB851")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 105))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B6005C"
+	    stereotype 	"coclass"
+	    realized_interfaces 	(list realize_rel_list
+		(object Realize_Relationship
+		    quid       	"41C153B603AB"
+		    stereotype 	"default"
+		    supplier   	"Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::Picture"
+		    quidu      	"41C153B60034")
+		(object Realize_Relationship
+		    quid       	"41C153B603AD"
+		    supplier   	"Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::IPicture"
+		    quidu      	"41C153B60020"))
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM")
+	(object Class "LoadPictureConstants"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"E6C8FA08-BD9F-11D0-985E-00C04FC29993")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 100))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B60070"
+	    stereotype 	"enum"
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM")
+	(object Class_Utility "StdFunctions"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"91209AC0-60F6-11CF-9C5D-00AA00C1489E")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00002775")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpstring"
+		    value      	"Functions for Standard OLE Objects")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 102))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B6007B"
+	    documentation 	"Functions for Standard OLE Objects"
+	    stereotype 	"module"
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM")
+	(object Class "FontEvents"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"attributes"
+		    value      	"oleautomation, hidden")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"4EF6100A-AF88-11D0-9846-00C04FC29993")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpstring"
+		    value      	"Event interface for the Font object")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 104))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B6008F"
+	    documentation 	"Event interface for the Font object"
+	    stereotype 	"Interface"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"41C153B60394"
+		    supplier   	"Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::IDispatch"
+		    quidu      	"41C153B5019C"))
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM"
+	    abstract   	TRUE)
+	(object Class "IFontEventsDisp"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"COM"
+		    name       	"uuid"
+		    value      	"00000000-0000-0000-0000-000000000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"version"
+		    value      	"0.0")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"helpcontext"
+		    value      	"0x00000000")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"kind"
+		    value      	("TypeKinds" 106))
+		(object Attribute
+		    tool       	"COM"
+		    name       	"alias"
+		    value      	"FontEvents")
+		(object Attribute
+		    tool       	"COM"
+		    name       	"_state"
+		    value      	"0"))
+	    quid       	"41C153B600A3"
+	    stereotype 	"alias"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"41C153B6039B"
+		    supplier   	"Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::IDispatch"
+		    quidu      	"41C153B5019C"))
+	    module     	"Component View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::stdole"
+	    quidu      	"41C153A7034B"
+	    language   	"COM"))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Overview of stdole"
+	    quid       	"41C153B50157"
+	    title      	"Overview of stdole"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::GUID" @1
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(270, 120)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@1
+			location   	(136, 90)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	268
+			justify    	0
+			label      	"GUID")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@1
+			location   	(136, 40)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	268
+			justify    	0
+			label      	"<<struct>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153B50158"
+		    width      	286
+		    height     	188
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::DISPPARAMS" @2
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(720, 120)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(507, 90)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	426
+			justify    	0
+			label      	"DISPPARAMS")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@2
+			location   	(507, 40)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	426
+			justify    	0
+			label      	"<<struct>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153B5016A"
+		    width      	444
+		    height     	188
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::EXCEPINFO" @3
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(270, 480)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@3
+			location   	(77, 450)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	386
+			justify    	0
+			label      	"EXCEPINFO")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@3
+			location   	(77, 400)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	386
+			justify    	0
+			label      	"<<struct>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153B5017D"
+		    width      	404
+		    height     	188
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::IUnknown" @4
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    location   	(1216, 483)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	TRUE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@4
+			location   	(1215, 591)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	1010
+			justify    	0
+			label      	"IUnknown")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153B50188"
+		    width      	58
+		    height     	58
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::IDispatch" @5
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    location   	(1668, 213)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	TRUE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@5
+			location   	(1667, 321)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	1016
+			justify    	0
+			label      	"IDispatch")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153B5019C"
+		    width      	58
+		    height     	58
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "" @6
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"41C153B60360"
+		    client     	@5
+		    supplier   	@4
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::IEnumVARIANT" @7
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    location   	(2389, 573)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	TRUE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@7
+			location   	(2388, 681)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	1019
+			justify    	0
+			label      	"IEnumVARIANT")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153B501B0"
+		    width      	58
+		    height     	58
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "" @8
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"41C153B6037D"
+		    client     	@7
+		    supplier   	@4
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::OLE_COLOR" @9
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(270, 840)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@9
+			location   	(72, 822)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	396
+			justify    	0
+			label      	"OLE_COLOR")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@9
+			location   	(72, 772)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	396
+			justify    	0
+			label      	"<<alias>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153B501C4"
+		    width      	414
+		    height     	165
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::OLE_XPOS_PIXELS" @10
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(810, 840)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@10
+			location   	(513, 822)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	594
+			justify    	0
+			label      	"OLE_XPOS_PIXELS")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@10
+			location   	(513, 772)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	594
+			justify    	0
+			label      	"<<alias>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153B501D8"
+		    width      	612
+		    height     	165
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::OLE_YPOS_PIXELS" @11
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(1440, 840)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@11
+			location   	(1148, 822)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	584
+			justify    	0
+			label      	"OLE_YPOS_PIXELS")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@11
+			location   	(1148, 772)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	584
+			justify    	0
+			label      	"<<alias>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153B501EB"
+		    width      	602
+		    height     	165
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::OLE_XSIZE_PIXELS" @12
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(2070, 930)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@12
+			location   	(1773, 912)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	594
+			justify    	0
+			label      	"OLE_XSIZE_PIXELS")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@12
+			location   	(1773, 862)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	594
+			justify    	0
+			label      	"<<alias>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153B501FF"
+		    width      	612
+		    height     	165
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::OLE_YSIZE_PIXELS" @13
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(302, 1200)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@13
+			location   	(9, 1182)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	586
+			justify    	0
+			label      	"OLE_YSIZE_PIXELS")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@13
+			location   	(9, 1132)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	586
+			justify    	0
+			label      	"<<alias>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153B50213"
+		    width      	604
+		    height     	165
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::OLE_XPOS_HIMETRIC" @14
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(900, 1200)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@14
+			location   	(564, 1182)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	672
+			justify    	0
+			label      	"OLE_XPOS_HIMETRIC")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@14
+			location   	(564, 1132)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	672
+			justify    	0
+			label      	"<<alias>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153B5021E"
+		    width      	690
+		    height     	165
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::OLE_YPOS_HIMETRIC" @15
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(1530, 1200)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@15
+			location   	(1206, 1182)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	648
+			justify    	0
+			label      	"OLE_YPOS_HIMETRIC")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@15
+			location   	(1206, 1132)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	648
+			justify    	0
+			label      	"<<alias>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153B50232"
+		    width      	666
+		    height     	165
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::OLE_XSIZE_HIMETRIC" @16
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(2160, 1290)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@16
+			location   	(1834, 1272)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	652
+			justify    	0
+			label      	"OLE_XSIZE_HIMETRIC")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@16
+			location   	(1834, 1222)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	652
+			justify    	0
+			label      	"<<alias>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153B50246"
+		    width      	670
+		    height     	165
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::OLE_YSIZE_HIMETRIC" @17
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(341, 1560)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@17
+			location   	(16, 1542)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	650
+			justify    	0
+			label      	"OLE_YSIZE_HIMETRIC")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@17
+			location   	(16, 1492)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	650
+			justify    	0
+			label      	"<<alias>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153B5025A"
+		    width      	668
+		    height     	165
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::OLE_XPOS_CONTAINER" @18
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(990, 1560)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@18
+			location   	(624, 1542)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	732
+			justify    	0
+			label      	"OLE_XPOS_CONTAINER")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@18
+			location   	(624, 1492)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	732
+			justify    	0
+			label      	"<<alias>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153B50265"
+		    width      	750
+		    height     	165
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::OLE_YPOS_CONTAINER" @19
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(1710, 1560)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@19
+			location   	(1350, 1542)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	720
+			justify    	0
+			label      	"OLE_YPOS_CONTAINER")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@19
+			location   	(1350, 1492)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	720
+			justify    	0
+			label      	"<<alias>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153B50282"
+		    width      	738
+		    height     	165
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::OLE_XSIZE_CONTAINER" @20
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(2520, 120)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@20
+			location   	(2157, 102)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	726
+			justify    	0
+			label      	"OLE_XSIZE_CONTAINER")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@20
+			location   	(2157, 52)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	726
+			justify    	0
+			label      	"<<alias>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153B50296"
+		    width      	744
+		    height     	165
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::OLE_YSIZE_CONTAINER" @21
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(2700, 930)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@21
+			location   	(2338, 912)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	724
+			justify    	0
+			label      	"OLE_YSIZE_CONTAINER")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@21
+			location   	(2338, 862)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	724
+			justify    	0
+			label      	"<<alias>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153B502AA"
+		    width      	742
+		    height     	165
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::OLE_HANDLE" @22
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(2430, 1650)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@22
+			location   	(2214, 1632)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	432
+			justify    	0
+			label      	"OLE_HANDLE")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@22
+			location   	(2214, 1582)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	432
+			justify    	0
+			label      	"<<alias>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153B502C9"
+		    width      	450
+		    height     	165
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::OLE_OPTEXCLUSIVE" @23
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(332, 1920)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@23
+			location   	(9, 1902)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	646
+			justify    	0
+			label      	"OLE_OPTEXCLUSIVE")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@23
+			location   	(9, 1852)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	646
+			justify    	0
+			label      	"<<alias>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153B502E6"
+		    width      	664
+		    height     	165
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::OLE_CANCELBOOL" @24
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(990, 1920)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@24
+			location   	(686, 1902)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	608
+			justify    	0
+			label      	"OLE_CANCELBOOL")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@24
+			location   	(686, 1852)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	608
+			justify    	0
+			label      	"<<alias>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153B502F1"
+		    width      	626
+		    height     	165
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::OLE_ENABLEDEFAULTBOOL" @25
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(1620, 1920)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@25
+			location   	(1190, 1902)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	860
+			justify    	0
+			label      	"OLE_ENABLEDEFAULTBOOL")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@25
+			location   	(1190, 1852)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	860
+			justify    	0
+			label      	"<<alias>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153B50305"
+		    width      	878
+		    height     	165
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::OLE_TRISTATE" @26
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(2790, 1290)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@26
+			location   	(2553, 1260)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	474
+			justify    	0
+			label      	"OLE_TRISTATE")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@26
+			location   	(2553, 1210)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	474
+			justify    	0
+			label      	"<<enum>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153B50319"
+		    width      	492
+		    height     	188
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::FONTNAME" @27
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(2340, 2010)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@27
+			location   	(2157, 1992)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	366
+			justify    	0
+			label      	"FONTNAME")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@27
+			location   	(2157, 1942)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	366
+			justify    	0
+			label      	"<<alias>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153B50340"
+		    width      	384
+		    height     	165
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::FONTSIZE" @28
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(270, 2280)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@28
+			location   	(108, 2262)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	324
+			justify    	0
+			label      	"FONTSIZE")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@28
+			location   	(108, 2212)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	324
+			justify    	0
+			label      	"<<alias>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153B50354"
+		    width      	342
+		    height     	165
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::FONTBOLD" @29
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(720, 2280)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@29
+			location   	(538, 2262)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	364
+			justify    	0
+			label      	"FONTBOLD")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@29
+			location   	(538, 2212)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	364
+			justify    	0
+			label      	"<<alias>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153B50368"
+		    width      	382
+		    height     	165
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::FONTITALIC" @30
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(1260, 2280)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@30
+			location   	(1074, 2262)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	372
+			justify    	0
+			label      	"FONTITALIC")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@30
+			location   	(1074, 2212)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	372
+			justify    	0
+			label      	"<<alias>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153B5037D"
+		    width      	390
+		    height     	165
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::FONTUNDERSCORE" @31
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(1800, 2280)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@31
+			location   	(1497, 2262)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	606
+			justify    	0
+			label      	"FONTUNDERSCORE")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@31
+			location   	(1497, 2212)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	606
+			justify    	0
+			label      	"<<alias>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153B50390"
+		    width      	624
+		    height     	165
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::FONTSTRIKETHROUGH" @32
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(3240, 120)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@32
+			location   	(2895, 102)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	690
+			justify    	0
+			label      	"FONTSTRIKETHROUGH")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@32
+			location   	(2895, 52)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	690
+			justify    	0
+			label      	"<<alias>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153B503A4"
+		    width      	708
+		    height     	165
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::IFont" @33
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    location   	(3651, 483)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	TRUE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@33
+			location   	(3650, 591)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	1022
+			justify    	0
+			label      	"IFont")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153B503B8"
+		    width      	58
+		    height     	58
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "" @34
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"41C153B60387"
+		    client     	@33
+		    supplier   	@4
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::Font" @35
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    location   	(3382, 1653)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	TRUE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@35
+			location   	(3381, 1761)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	1025
+			justify    	0
+			label      	"Font")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153B503CC"
+		    width      	58
+		    height     	58
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "" @36
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"41C153B60388"
+		    client     	@35
+		    supplier   	@5
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::IFontDisp" @37
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(3690, 840)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@37
+			location   	(3542, 822)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	296
+			justify    	0
+			label      	"IFontDisp")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@37
+			location   	(3542, 772)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	296
+			justify    	0
+			label      	"<<alias>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153B503E0"
+		    width      	314
+		    height     	165
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "" @38
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"41C153B60389"
+		    client     	@37
+		    supplier   	@5
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::StdFont" @39
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(3690, 1200)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	TRUE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	16777215
+			default_color 	FALSE)
+		    label      	(object ItemLabel
+			Parent_View 	@39
+			location   	(3497, 1167)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	386
+			justify    	0
+			label      	"StdFont")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@39
+			location   	(3497, 1117)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	386
+			justify    	0
+			label      	"<<coclass>>")
+		    icon_style 	"Icon"
+		    line_color 	16711422
+		    fill_color 	8421376
+		    quidu      	"41C153B6000C"
+		    width      	404
+		    height     	195
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object RealizeView "" @40
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    stereotype 	(object SegLabel @41
+			Parent_View 	@40
+			location   	(3608, 1529)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	10
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"<<default>>"
+			pctDist    	0.500000
+			height     	120
+			orientation 	0)
+		    line_color 	3342489
+		    quidu      	"41C153B6039C"
+		    client     	@39
+		    supplier   	@35
+		    line_style 	0)
+		(object RealizeView "" @42
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"41C153B603AA"
+		    client     	@39
+		    supplier   	@33
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::IPicture" @43
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    location   	(2844, 2373)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	TRUE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@43
+			location   	(2843, 2481)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	1028
+			justify    	0
+			label      	"IPicture")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153B60020"
+		    width      	58
+		    height     	58
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "" @44
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"41C153B60391"
+		    client     	@43
+		    supplier   	@4
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::Picture" @45
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    location   	(1676, 2643)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	TRUE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@45
+			location   	(1675, 2751)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	1031
+			justify    	0
+			label      	"Picture")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153B60034"
+		    width      	58
+		    height     	58
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "" @46
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"41C153B60392"
+		    client     	@45
+		    supplier   	@5
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::IPictureDisp" @47
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(3870, 210)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@47
+			location   	(3687, 192)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	366
+			justify    	0
+			label      	"IPictureDisp")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@47
+			location   	(3687, 142)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	366
+			justify    	0
+			label      	"<<alias>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153B60048"
+		    width      	384
+		    height     	165
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "" @48
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"41C153B60393"
+		    client     	@47
+		    supplier   	@5
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::StdPicture" @49
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(2520, 2730)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	TRUE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	16777215
+			default_color 	FALSE)
+		    label      	(object ItemLabel
+			Parent_View 	@49
+			location   	(2327, 2697)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	386
+			justify    	0
+			label      	"StdPicture")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@49
+			location   	(2327, 2647)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	386
+			justify    	0
+			label      	"<<coclass>>")
+		    icon_style 	"Icon"
+		    line_color 	16711422
+		    fill_color 	8421376
+		    quidu      	"41C153B6005C"
+		    width      	404
+		    height     	195
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object RealizeView "" @50
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    stereotype 	(object SegLabel @51
+			Parent_View 	@50
+			location   	(2234, 2819)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	10
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"<<default>>"
+			pctDist    	0.500000
+			height     	120
+			orientation 	0)
+		    line_color 	3342489
+		    quidu      	"41C153B603AB"
+		    client     	@49
+		    supplier   	@45
+		    line_style 	0)
+		(object RealizeView "" @52
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"41C153B603AD"
+		    client     	@49
+		    supplier   	@43
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::LoadPictureConstants" @53
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(317, 2640)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@53
+			location   	(9, 2610)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	616
+			justify    	0
+			label      	"LoadPictureConstants")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@53
+			location   	(9, 2560)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	616
+			justify    	0
+			label      	"<<enum>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153B60070"
+		    width      	634
+		    height     	188
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "ClassUtility" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::StdFunctions" @54
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(900, 2640)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@54
+			location   	(716, 2610)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	368
+			justify    	0
+			label      	"StdFunctions")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@54
+			location   	(716, 2560)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	368
+			justify    	0
+			label      	"<<module>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153B6007B"
+		    width      	386
+		    height     	188
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::FontEvents" @55
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    location   	(3567, 2013)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	TRUE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@55
+			location   	(3566, 2121)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	1035
+			justify    	0
+			label      	"FontEvents")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153B6008F"
+		    width      	58
+		    height     	58
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object RealizeView "" @56
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    stereotype 	(object SegLabel @57
+			Parent_View 	@56
+			location   	(3740, 1659)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	10
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"<<default, source>>"
+			pctDist    	0.500000
+			height     	120
+			orientation 	0)
+		    line_color 	3342489
+		    quidu      	"41C153B6039E"
+		    client     	@39
+		    supplier   	@55
+		    line_style 	0)
+		(object InheritView "" @58
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"41C153B60394"
+		    client     	@55
+		    supplier   	@5
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::DirectX SDK::stdole Ver 2.0 (OLE Automation)::IFontEventsDisp" @59
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(4140, 840)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@59
+			location   	(3905, 822)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	470
+			justify    	0
+			label      	"IFontEventsDisp")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@59
+			location   	(3905, 772)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	470
+			justify    	0
+			label      	"<<alias>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"41C153B600A3"
+		    width      	488
+		    height     	165
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "" @60
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"41C153B6039B"
+		    client     	@59
+		    supplier   	@5
+		    line_style 	0)))))

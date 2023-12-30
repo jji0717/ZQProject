@@ -1,0 +1,41 @@
+// PlaylistAS.cpp : Defines the entry point for the console application.
+#include "Log.h"
+#include "streamsession.h"
+#include "ScLog.h"
+#include <string>
+
+using namespace ZQ::common;
+
+int main()
+{
+	pGlog = new ScLog(L"E:\\bernieworkpath\\ZQProjs\\PlaylistAS\\pas.log", Log::L_DEBUG, 8*1024*1024);
+
+	TYPEINST typeInst;
+	typeInst.s.dwType = ITV_TYPE_PRIMARY_ZQ_MUSICPLAYLIST;
+	typeInst.s.dwInst = 0x1;
+//	CStreamSession TheSSMan = CStreamSession::Instance(typeInst, 0x80003);
+	
+	PlaylistSoapProxy TheProxy;
+	try {
+		TheProxy.Initialize(
+			L"E:\\bernieworkpath\\ZQProjs\\PlaylistAS\\PlaylistSoapInterface.wsdl", 
+			L"E:\\bernieworkpath\\ZQProjs\\PlaylistAS\\PlaylistSoapInterface.wsml", 
+			L"PlaylistSoapInterfaceService", 
+			L"PlaylistSoapInterface", 
+			L"http://localhost:8080/telewest/services/PlaylistSoapInterface");
+		
+		
+		AELIST newAELIST= TheProxy.OnSetupSoapCall("","","","");
+		for(int i=0; i<newAELIST.AECount; i++) {
+		}
+	}
+	catch( _com_error Error )
+	{
+		std::wstring Msg;
+		Msg += L"";
+		Msg += Error.Description();
+		glog(Log::L_ERROR, Msg.c_str());
+	}
+
+	return 0;
+}

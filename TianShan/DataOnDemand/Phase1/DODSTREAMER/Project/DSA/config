@@ -1,0 +1,15 @@
+Ice.Warn.Connections=1
+#Ice.Trace.Network=3
+#Ice.Trace.Protocol=1
+
+Freeze.Trace.Map=1
+Freeze.Trace.Evictor=2
+
+DODStreamer.Endpoints=default -p 10000
+DODStreamer.EvictorSize=3
+DODStreamer.Proxy=DODStreamer:default -p 10000
+
+Ice.ThreadPool.Server.Size = 5
+Ice.ThreadPool.Server.SizeMax = 10
+Ice.Override.ConnectTimeout = 5000
+# Ice.Override.Timeout = 5000
